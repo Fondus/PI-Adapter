@@ -192,6 +192,7 @@
 	</dependencies>
 	
 	<build>
+		<!-- Copy resources -->
 		<resources>
         	<resource>
             	<directory>src/main/java</directory>
@@ -200,7 +201,28 @@
             	</includes>
         	</resource>
     	</resources>
+    	<pluginManagement>
+			<plugins>
+				<!-- Copy dependencies to target folder -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<executions>
+						<execution>
+							<phase>install</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.build.directory}/libs</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
+			<!-- Build with 1.8 -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.5.1</version>
@@ -210,20 +232,7 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>install</phase>
-						<goals>
-                  			<goal>copy-dependencies</goal>
-                		</goals>
-                		<configuration>
-                  			<outputDirectory>${project.build.directory}/lib</outputDirectory>
-                		</configuration>
-					</execution>
-				</executions>
-			</plugin>
+			<!-- Skip unit tests -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.12.4</version>

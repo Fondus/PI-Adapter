@@ -15,11 +15,11 @@
 
 	<name>The NCHC Hydrological Rain-Runoff models Published Interface Adapter</name>
 	<url>https://www.nchc.org.tw/tw/</url>
-	
+
 	<description>
 		The FEWS Published Interface Adapter of NCHC Hydrological Rain-Runoff models is used to data exchange with Delft-FEWS system.
 	</description>
-	
+
 	<dependencies>
 		<!-- Strman -->
 		<dependency>
@@ -92,4 +92,13 @@
 			<artifactId>commons-fews-xml</artifactId>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<!-- Copy dependencies to target folder -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>
