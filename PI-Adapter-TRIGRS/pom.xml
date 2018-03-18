@@ -91,4 +91,13 @@
 			<artifactId>commons-fews-xml</artifactId>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<!-- Copy dependencies to target folder -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>
