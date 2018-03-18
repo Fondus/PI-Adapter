@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>tw.fondus.fews.adapter</groupId>
@@ -10,16 +11,16 @@
 	<name>The FEWS Published Interface Adapters</name>
 	<url>https://publicwiki.deltares.nl/display/FEWSDOC/Developing+a+FEWS+%28Compliant%29+Adapter</url>
 	<inceptionYear>2017</inceptionYear>
-	
+
 	<description>
 		The FEWS Published Interface Adapters is a set of Java model adapters as described in this manual provides the interface between a so-called model and the Delft-FEWS system. It enables FEWS to run such a model, thus providing the essential forecasting functionality.
 	</description>
-	
+
 	<organization>
-        <name>FondUS Technology Co., Ltd., TW</name>
-        <url>https://github.com/Fondus</url>
-    </organization>
-	 <!-- groupId, developers and build sections are all inherited by child modules -->
+		<name>FondUS Technology Co., Ltd., TW</name>
+		<url>https://github.com/Fondus</url>
+	</organization>
+	<!-- groupId, developers and build sections are all inherited by child modules -->
 	<developers>
 		<developer>
 			<name>Brad Chen</name>
@@ -27,7 +28,7 @@
 			<email>vipcube@gmail.com</email>
 		</developer>
 	</developers>
-	
+
 	<properties>
 		<adapter.version>0.5.0</adapter.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -46,7 +47,7 @@
 		<commons.version>0.6.5</commons.version>
 		<commons.utils.version>0.7.0</commons.utils.version>
 	</properties>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<!-- Strman -->
@@ -99,7 +100,7 @@
 			<!-- JCommander -->
 			<dependency>
 				<groupId>com.beust</groupId>
-    			<artifactId>jcommander</artifactId>
+				<artifactId>jcommander</artifactId>
 				<version>${jcommand.verison}</version>
 			</dependency>
 			<!-- MagicCommand -->
@@ -136,9 +137,9 @@
 			</dependency>
 			<!-- Xerces Impl -->
 			<dependency>
-			    <groupId>xerces</groupId>
-			    <artifactId>xercesImpl</artifactId>
-			    <version>${xerces.version}</version>
+				<groupId>xerces</groupId>
+				<artifactId>xercesImpl</artifactId>
+				<version>${xerces.version}</version>
 			</dependency>
 			<!-- Commons-Utils -->
 			<dependency>
@@ -181,7 +182,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -190,18 +191,18 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<!-- Copy resources -->
 		<resources>
-        	<resource>
-            	<directory>src/main/java</directory>
-            	<includes>
-                	<include>*.properties</include>
-            	</includes>
-        	</resource>
-    	</resources>
-    	<pluginManagement>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>*.properties</include>
+				</includes>
+			</resource>
+		</resources>
+		<pluginManagement>
 			<plugins>
 				<!-- Copy dependencies to target folder -->
 				<plugin>
@@ -219,6 +220,15 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!-- Skip unit tests -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.12.4</version>
+					<configuration>
+						<skipTests>true</skipTests>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -232,22 +242,14 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
-			<!-- Skip unit tests -->
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.12.4</version>
-				<configuration>
-          			<skipTests>true</skipTests>
-        		</configuration>
-			</plugin>
 		</plugins>
 	</build>
-	
+
 	<issueManagement>
-        <system>GitHub Issues</system>
-    </issueManagement>
+		<system>GitHub Issues</system>
+	</issueManagement>
 	<modules>
 		<module>PI-Adapter-TRIGRS</module>
-    <module>PI-Adapter-NCHC-RainRunoff</module>
-  </modules>
+		<module>PI-Adapter-NCHC-RainRunoff</module>
+	</modules>
 </project>
