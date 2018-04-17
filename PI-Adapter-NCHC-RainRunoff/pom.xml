@@ -9,7 +9,7 @@
 		<version>${adapter.version}</version>
 	</parent>
 
-	<artifactId>PI-Adapter-NCHC-RainRunoff</artifactId>
+	<artifactId>pi-adapter-nchc-rr</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.0</version>
 
