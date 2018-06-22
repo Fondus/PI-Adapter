@@ -44,8 +44,8 @@
 		<fews.version>2017.01</fews.version>
 		<xerces.version>2.11.0</xerces.version>
 		<junit.version>4.12</junit.version>
-		<commons.version>0.6.5</commons.version>
-		<commons.utils.version>0.7.0</commons.utils.version>
+		<commons.version>0.7.0</commons.version>
+		<commons.utils.version>0.7.2</commons.utils.version>
 	</properties>
 
 	<dependencyManagement>
