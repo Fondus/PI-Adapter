@@ -18,7 +18,7 @@ public class RunArguments extends PiArguments {
 	private String executablePath;
 	
 	@Parameter(names = { "--executable", "-e" }, required = true, description = "The model executable.")
-	private String executble;
+	private String executable;
 
 	public String getParametersPath() {
 		return parametersPath;
@@ -36,11 +36,11 @@ public class RunArguments extends PiArguments {
 		this.executablePath = executablePath;
 	}
 
-	public String getExecutble() {
-		return executble;
+	public String getExecutable() {
+		return executable;
 	}
 
-	public void setExecutble(String executble) {
-		this.executble = executble;
+	public void setExecutable( String executable ) {
+		this.executable = executable;
 	}
 }

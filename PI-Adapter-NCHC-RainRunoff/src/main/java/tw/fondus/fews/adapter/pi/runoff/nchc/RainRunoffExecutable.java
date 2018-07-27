@@ -56,12 +56,12 @@ public abstract class RainRunoffExecutable extends PiCommandLineExecute {
 		this.readParameters(parameterDir, parameterPrefix);
 		
 		/** Create executble command **/
-		String executble = modelArguments.getExecutble();
-		Command command = new Command( Strman.append( executableDir.getPath(), StringUtils.PATH, executble));
+		String executable = modelArguments.getExecutable();
+		Command command = new Command( Strman.append( executableDir.getPath(), StringUtils.PATH, executable));
 		command.setCommandListener(new CommandListener() {
 			@Override
 			public void commandStart(String id) {
-				log.info("NCHC RainRunoff ExecutableAdapter: Start {} simulation.", executble );
+				log.info("NCHC RainRunoff ExecutableAdapter: Start {} simulation.", executable );
 				piDiagnostics.addMessage(LogLevel.INFO.value(), "NCHC RainRunoff ExecutableAdapter: Start RainRunoff simulation.");
 			}
 
@@ -72,13 +72,13 @@ public abstract class RainRunoffExecutable extends PiCommandLineExecute {
 
 			@Override
 			public void commandException(String id, Exception e) {
-				log.error("NCHC RainRunoff ExecutableAdapter: when {} running has something wrong!", executble, e);
+				log.error("NCHC RainRunoff ExecutableAdapter: when {} running has something wrong!", executable, e);
 				piDiagnostics.addMessage(LogLevel.ERROR.value(), "NCHC RainRunoff ExecutableAdapter: when model running has something wrong!.");
 			}
 
 			@Override
 			public void commandEnd(String id, int returnValue) {
-				log.info("NCHC RainRunoff ExecutableAdapter: {} simulation end.", executble);
+				log.info("NCHC RainRunoff ExecutableAdapter: {} simulation end.", executable);
 				piDiagnostics.addMessage(LogLevel.INFO.value(), "NCHC RainRunoff ExecutableAdapter: Finished RainRunoff simulation.");
 			}
 		});
