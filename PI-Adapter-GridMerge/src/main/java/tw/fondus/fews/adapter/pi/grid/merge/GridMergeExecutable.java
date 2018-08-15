@@ -41,8 +41,11 @@ import tw.fondus.fews.adapter.pi.grid.merge.util.RunArguments;
  */
 public class GridMergeExecutable extends PiCommandLineExecute {
 	private Logger log = LoggerFactory.getLogger( this.getClass() );
-	protected PiDiagnostics piDiagnostics;
-
+	
+	public GridMergeExecutable(){
+		super();
+	}
+	
 	public static void main( String[] args ) {
 		RunArguments arguments = new RunArguments();
 		new GridMergeExecutable().execute( args, arguments );
@@ -53,7 +56,6 @@ public class GridMergeExecutable extends PiCommandLineExecute {
 			File logFile, File inputDir, File outputDir ) throws Exception {
 		/** Cast PiArguments to expand arguments **/
 		RunArguments modelArguments = (RunArguments) arguments;
-		this.piDiagnostics = piDiagnostics;
 
 		Preconditions.checkState( modelArguments.getInputs().size() > 0 && modelArguments.getInputs().size() == 4,
 				"GridMergeAdapter: The input Mapstacks.xml name, ZONE_List, ZONE_ID configuration and template ASC not give by command." );

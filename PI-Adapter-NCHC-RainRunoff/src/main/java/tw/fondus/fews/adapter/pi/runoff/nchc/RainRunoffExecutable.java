@@ -32,12 +32,9 @@ import tw.fondus.fews.adapter.pi.runoff.nchc.util.RunArguments;
 public abstract class RainRunoffExecutable extends PiCommandLineExecute {
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	protected final Map<String, String> parametersMap = new HashMap<String, String>();
-	protected PiDiagnostics piDiagnostics;
 	
 	@Override
 	protected void run(PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File logDir, File logFile, File inputDir, File outputDir){
-		this.piDiagnostics = piDiagnostics;
-		
 		RunArguments modelArguments = (RunArguments) arguments;
 		
 		File executableDir = new File( Strman.append(baseDir.getPath(), StringUtils.PATH, modelArguments.getExecutablePath()) );
