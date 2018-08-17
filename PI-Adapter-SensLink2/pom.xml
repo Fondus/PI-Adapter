@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>tw.fondus.fews.adapter</groupId>
+		<artifactId>pi-adapter</artifactId>
+		<version>${adapter.version}</version>
+	</parent>
+
+	<artifactId>pi-adapter-senslink2</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0.0</version>
+
+	<name>The SensLink 2.0 Published Interface Adapter</name>
+	<url>http://www.anasystem.com.tw/senslink/</url>
+	
+	<description>
+		The FEWS Published Interface Adapter of SensLink 2.0 API is used to data exchange with Delft-FEWS system.
+	</description>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<dependencies>
+		<!-- Commons-SensLink -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-senslink</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<!-- Copy dependencies to target folder -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+			<!-- Skip unit tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
