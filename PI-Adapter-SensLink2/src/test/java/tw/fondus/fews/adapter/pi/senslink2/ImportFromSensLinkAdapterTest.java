@@ -15,7 +15,7 @@ public class ImportFromSensLinkAdapterTest {
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"D:\\SensLink",
+				"\\SensLink",
 				"-t",
 				"201808161100",
 				"-ti",
