@@ -9,17 +9,29 @@
 		<version>${adapter.version}</version>
 	</parent>
 
-	<artifactId>pi-adapter-trigrs</artifactId>
+	<artifactId>pi-adapter-senslink2</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.0</version>
 
-	<name>The TRIGRS Published Interface Adapter</name>
-	<url>https://github.com/usgs/landslides-trigrs</url>
-
+	<name>The SensLink 2.0 Published Interface Adapter</name>
+	<url>http://www.anasystem.com.tw/senslink/</url>
+	
 	<description>
-		The FEWS Published Interface Adapter of TRIGRS Model is used to data exchange with Delft-FEWS system.
+		The FEWS Published Interface Adapter of SensLink 2.0 API is used to data exchange with Delft-FEWS system.
 	</description>
-
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<dependencies>
+		<!-- Commons-SensLink -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-senslink</artifactId>
+		</dependency>
+	</dependencies>
+	
 	<build>
 		<plugins>
 			<!-- Copy dependencies to target folder -->

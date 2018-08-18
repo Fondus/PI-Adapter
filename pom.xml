@@ -30,7 +30,7 @@
 	</developers>
 
 	<properties>
-		<adapter.version>0.5.0</adapter.version>
+		<adapter.version>1.0.0</adapter.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -44,146 +44,137 @@
 		<fews.version>2017.01</fews.version>
 		<xerces.version>2.11.0</xerces.version>
 		<junit.version>4.12</junit.version>
-		<commons.version>0.6.5</commons.version>
-		<commons.utils.version>0.7.0</commons.utils.version>
+		<commons.version>0.7.0</commons.version>
+		<commons.utils.version>0.7.2</commons.utils.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- Strman -->
-			<dependency>
-				<groupId>com.shekhargulati</groupId>
-				<artifactId>strman</artifactId>
-				<version>${string.version}</version>
-			</dependency>
-			<!-- Joda-time -->
-			<dependency>
-				<groupId>joda-time</groupId>
-				<artifactId>joda-time</artifactId>
-				<version>${jodatime.version}</version>
-			</dependency>
-			<!-- Log4J -->
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
-			<!-- Slf4J -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>jcl-over-slf4j</artifactId>
-				<version>${slf4j.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-jdk14</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>${slf4j.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>log4j</groupId>
-						<artifactId>log4j</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<!-- Google Guava -->
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>${guava.version}</version>
-			</dependency>
-			<!-- JCommander -->
-			<dependency>
-				<groupId>com.beust</groupId>
-				<artifactId>jcommander</artifactId>
-				<version>${jcommand.verison}</version>
-			</dependency>
-			<!-- MagicCommand -->
-			<dependency>
-				<groupId>org.magiclen</groupId>
-				<artifactId>magiccommand</artifactId>
-				<version>${command.magic.verison}</version>
-			</dependency>
-			<!-- Delft-FEWS -->
-			<dependency>
-				<groupId>nl.wldelft.fews</groupId>
-				<artifactId>fews-openapi</artifactId>
-				<version>${fews.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>nl.wldelft.fews</groupId>
-				<artifactId>fews-pi</artifactId>
-				<version>${fews.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>nl.wldelft.fews</groupId>
-				<artifactId>fews-pi-castor</artifactId>
-				<version>${fews.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>nl.wldelft.fews</groupId>
-				<artifactId>fews-util</artifactId>
-				<version>${fews.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>nl.wldelft.fews</groupId>
-				<artifactId>castor</artifactId>
-				<version>${fews.version}</version>
-			</dependency>
-			<!-- Xerces Impl -->
-			<dependency>
-				<groupId>xerces</groupId>
-				<artifactId>xercesImpl</artifactId>
-				<version>${xerces.version}</version>
-			</dependency>
-			<!-- Commons-Utils -->
+			<!-- Commons-SensLink -->
 			<dependency>
 				<groupId>tw.fondus.commons</groupId>
-				<artifactId>commons-utils</artifactId>
-				<version>${commons.utils.version}</version>
-				<scope>provided</scope>
-				<exclusions>
-					<exclusion>
-						<groupId>org.dom4j</groupId>
-						<artifactId>dom4j</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.apache.xmlgraphics</groupId>
-						<artifactId>batik-transcoder</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.apache.xmlgraphics</groupId>
-						<artifactId>fop</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<!-- Commons-FEWS -->
-			<dependency>
-				<groupId>tw.fondus.commons</groupId>
-				<artifactId>commons-fews</artifactId>
+				<artifactId>commons-senslink</artifactId>
 				<version>${commons.version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<!-- Commons-FEWS XML -->
-			<dependency>
-				<groupId>tw.fondus.commons</groupId>
-				<artifactId>commons-fews-xml</artifactId>
-				<version>${commons.version}</version>
-				<scope>provided</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
+		<!-- Strman -->
+		<dependency>
+			<groupId>com.shekhargulati</groupId>
+			<artifactId>strman</artifactId>
+			<version>${string.version}</version>
+		</dependency>
+		<!-- Joda-time -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${jodatime.version}</version>
+		</dependency>
+		<!-- Log4J -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<!-- Slf4J -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-jdk14</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Google Guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+		<!-- JCommander -->
+		<dependency>
+			<groupId>com.beust</groupId>
+			<artifactId>jcommander</artifactId>
+			<version>${jcommand.verison}</version>
+		</dependency>
+		<!-- MagicCommand -->
+		<dependency>
+			<groupId>org.magiclen</groupId>
+			<artifactId>magiccommand</artifactId>
+			<version>${command.magic.verison}</version>
+		</dependency>
+		<!-- Delft-FEWS -->
+		<dependency>
+			<groupId>nl.wldelft.fews</groupId>
+			<artifactId>fews-openapi</artifactId>
+			<version>${fews.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>nl.wldelft.fews</groupId>
+			<artifactId>fews-pi</artifactId>
+			<version>${fews.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>nl.wldelft.fews</groupId>
+			<artifactId>fews-pi-castor</artifactId>
+			<version>${fews.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>nl.wldelft.fews</groupId>
+			<artifactId>fews-util</artifactId>
+			<version>${fews.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>nl.wldelft.fews</groupId>
+			<artifactId>castor</artifactId>
+			<version>${fews.version}</version>
+		</dependency>
+		<!-- Xerces Impl -->
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>${xerces.version}</version>
+		</dependency>
+		<!-- Commons-Utils -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-utils</artifactId>
+			<version>${commons.utils.version}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.dom4j</groupId>
+					<artifactId>dom4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Commons-FEWS -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-fews</artifactId>
+			<version>${commons.version}</version>
+		</dependency>
+		<!-- Junit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -193,15 +184,6 @@
 	</dependencies>
 
 	<build>
-		<!-- Copy resources -->
-		<resources>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>*.properties</include>
-				</includes>
-			</resource>
-		</resources>
 		<pluginManagement>
 			<plugins>
 				<!-- Copy dependencies to target folder -->
@@ -251,5 +233,7 @@
 	<modules>
 		<module>PI-Adapter-TRIGRS</module>
 		<module>PI-Adapter-NCHC-RainRunoff</module>
+		<module>PI-Adapter-GridMerge</module>
+		<module>PI-Adapter-SensLink2</module>
 	</modules>
 </project>

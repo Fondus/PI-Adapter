@@ -23,7 +23,6 @@ import tw.fondus.fews.adapter.pi.trigrs.util.RunArguments;
  */
 public class TRIGRSExecutable extends PiCommandLineExecute {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
-	protected PiDiagnostics piDiagnostics;
 	
 	public static void main(String[] args){
 		RunArguments arguments = new RunArguments();
@@ -34,8 +33,6 @@ public class TRIGRSExecutable extends PiCommandLineExecute {
 	protected void run(PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File logDir, File logFile, File inputDir, File outputDir) throws Exception {	
 		/** Cast PiArguments to expand arguments **/
 		RunArguments modelArguments = (RunArguments) arguments;
-		
-		this.piDiagnostics = piDiagnostics;
 		
 		String executeModel = modelArguments.getExecutable();
 		String commandString = Strman.append("cmd /c start ", baseDir.getPath(), StringUtils.PATH, executeModel);
