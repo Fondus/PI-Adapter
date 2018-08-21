@@ -48,7 +48,7 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 	}
 	
 	@Override
-	protected void run(PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File logDir, File logFile, File inputDir, File outputDir)
+	protected void run(PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File inputDir, File outputDir)
 			throws Exception {
 		/** Cast PiArguments to expand arguments **/
 		RunArguments modelArguments = (RunArguments) arguments;

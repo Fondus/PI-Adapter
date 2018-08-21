@@ -35,7 +35,7 @@ public abstract class RainRunoffPostAdapter extends PiCommandLineExecute {
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	protected void run(PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File logDir, File logFile, File inputDir, File outputDir){
+	protected void run(PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File inputDir, File outputDir){
 		PiArguments modelArguments = (PiArguments) arguments;
 		
 		try {
