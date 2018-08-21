@@ -37,7 +37,7 @@ public class TRIGRSPostAdapter extends PiCommandLineExecute {
 	}
 	
 	@Override
-	protected void run(PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File logDir, File logFile, File inputDir, File outputDir)
+	protected void run(PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File inputDir, File outputDir)
 			throws Exception {
 		/** Cast PiArguments to expand arguments **/
 		PostArguments modelArguments = (PostArguments) arguments;

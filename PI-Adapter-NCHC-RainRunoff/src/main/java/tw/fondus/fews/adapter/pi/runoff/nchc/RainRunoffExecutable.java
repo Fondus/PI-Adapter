@@ -34,7 +34,7 @@ public abstract class RainRunoffExecutable extends PiCommandLineExecute {
 	protected final Map<String, String> parametersMap = new HashMap<String, String>();
 	
 	@Override
-	protected void run(PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File logDir, File logFile, File inputDir, File outputDir){
+	protected void run(PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File inputDir, File outputDir){
 		RunArguments modelArguments = (RunArguments) arguments;
 		
 		File executableDir = new File( Strman.append(baseDir.getPath(), StringUtils.PATH, modelArguments.getExecutablePath()) );
