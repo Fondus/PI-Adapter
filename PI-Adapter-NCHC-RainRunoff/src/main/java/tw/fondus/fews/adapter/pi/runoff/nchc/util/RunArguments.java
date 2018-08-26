@@ -11,10 +11,10 @@ import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
  *
  */
 public class RunArguments extends PiArguments {
-	@Parameter(names = { "--parametersPath", "-pp" }, required = true, description = "The model parameters directory, relative to the current working directory.")
+	@Parameter(names = { "--pdir", "-pd" }, required = true, description = "The model parameters directory, relative to the current working directory.")
 	private String parametersPath;
 	
-	@Parameter(names = { "--executablePath", "-ep" }, required = true, description = "The model executable directory path, relative to the current working directory.")
+	@Parameter(names = { "--edir", "-ed" }, required = true, description = "The model executable directory path, relative to the current working directory.")
 	private String executablePath;
 	
 	@Parameter(names = { "--executable", "-e" }, required = true, description = "The model executable.")

@@ -11,7 +11,7 @@ import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
  *
  */
 public class PostArguments extends PiArguments {
-	@Parameter(names = { "--endperiod", "-e" }, required = true, description = "The Model metainfo end period of index.")
+	@Parameter(names = { "--duration", "-d" }, required = true, description = "The Model time duration of end period.")
 	private int after;
 
 	public int getAfter() {

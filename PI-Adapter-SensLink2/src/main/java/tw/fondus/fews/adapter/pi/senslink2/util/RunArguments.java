@@ -11,7 +11,7 @@ import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
  *
  */
 public class RunArguments extends PiArguments {
-	@Parameter(names = { "--index", "-ti" }, required = true, description = "The time index of the TimeSeriesArray index position")
+	@Parameter(names = { "--timeindex", "-ti" }, required = true, description = "The time index of the TimeSeriesArray index position")
 	private int index;
 	
 	@Parameter(names = { "--duration", "-d" }, required = true, description = "The minus duration relative to the current time.")

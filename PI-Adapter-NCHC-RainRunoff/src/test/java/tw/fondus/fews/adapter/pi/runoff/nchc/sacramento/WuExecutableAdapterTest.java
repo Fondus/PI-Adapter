@@ -23,9 +23,9 @@ public class WuExecutableAdapterTest {
 				"OUTPUT_EST_FLOW.TXT",
 				"-e",
 				"Est_Runoff__SACSMA_NCHC.exe",
-				"-ep",
+				"-ed",
 				"Work/",
-				"-pp",
+				"-pd",
 				"Parameters/"
 				};
 		

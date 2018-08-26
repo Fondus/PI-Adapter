@@ -23,9 +23,9 @@ public class MSFRMExecutableAdapterTest {
 				"OUTPUT_EST_FLOW_MSFRM.TXT",
 				"-e",
 				"pro_est_flow_msfrm.exe",
-				"-ep",
+				"-ed",
 				"Work/",
-				"-pp",
+				"-pd",
 				"Parameters/"
 				};
 		
