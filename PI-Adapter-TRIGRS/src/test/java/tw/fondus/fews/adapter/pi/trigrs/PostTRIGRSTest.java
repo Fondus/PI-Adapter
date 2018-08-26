@@ -22,7 +22,7 @@ public class PostTRIGRSTest {
 				"TRIGRS",
 				"-p",
 				"Factor.safety",
-				"-e",
+				"-d",
 				"47",
 				"-id",
 				"../Input/",
