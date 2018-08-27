@@ -4,6 +4,12 @@ import java.math.BigDecimal;
 
 import org.simpleframework.xml.Element;
 
+/**
+ * POJO disaster loss of API XML configuration.
+ * 
+ * @author Chao
+ *
+ */
 public class Loss {
 	@Element( name = "TOWN_ID" )
 	private String townId;

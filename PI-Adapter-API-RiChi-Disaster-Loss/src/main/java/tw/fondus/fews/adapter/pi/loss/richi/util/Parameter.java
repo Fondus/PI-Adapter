@@ -1,5 +1,11 @@
 package tw.fondus.fews.adapter.pi.loss.richi.util;
 
+/**
+ * Parameter of Disaster Loss API.
+ * 
+ * @author Chao
+ *
+ */
 public enum Parameter {
 	C1LOSS ( "C1LOSS","10K TWD" ),
 	C1AREA ( "C1AREA" , "m^2" ),
