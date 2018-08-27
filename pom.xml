@@ -235,5 +235,6 @@
 		<module>PI-Adapter-NCHC-RainRunoff</module>
 		<module>PI-Adapter-GridMerge</module>
 		<module>PI-Adapter-SensLink2</module>
+		<module>PI-Adapter-API-RiChi-Disaster-Loss</module>
 	</modules>
 </project>
