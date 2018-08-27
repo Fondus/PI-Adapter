@@ -12,6 +12,12 @@ import com.google.common.base.Preconditions;
 
 import tw.fondus.commons.fews.pi.config.xml.util.XMLUtils;
 
+/**
+ * The unit test of Disaster Loss entity.
+ * 
+ * @author Chao
+ *
+ */
 public class DisasterLossTest {
 	private Path path;
 

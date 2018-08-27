@@ -14,11 +14,24 @@ import tw.fondus.commons.util.http.HttpUtils;
 import tw.fondus.commons.util.string.StringUtils;
 import tw.fondus.commons.util.time.TimeUtils;
 
+/**
+ * The utils of Disaster Loss Adapter.
+ * 
+ * @author Chao
+ *
+ */
 public class DisasterLossUtils {
 	public static final String URL = "localhost";
 	public static final String EVENT = "event";
 	public static final String KEY = "file";
 	
+	/**
+	 * Get data date long value with mapstacks file.
+	 * 
+	 * @param mapStacksPath
+	 * @return
+	 * @throws Exception
+	 */
 	public static long getDataDateLong( Path mapStacksPath ) throws Exception {
 		MapStacks mapStacks = XMLUtils.fromXML( mapStacksPath.toFile(), MapStacks.class );
 
@@ -28,6 +41,12 @@ public class DisasterLossUtils {
 				TimeUtils.YMDHMS, TimeUtils.GMT0 ).getTime();
 	}
 	
+	/**
+	 * Build OkHttpClient with timeout setting.
+	 * 
+	 * @param timeout
+	 * @return
+	 */
 	public static OkHttpClient buildClientWithTimeout( long timeout ){
 		return new OkHttpClient().newBuilder()
 				.connectTimeout( timeout, TimeUnit.SECONDS )
@@ -36,12 +55,43 @@ public class DisasterLossUtils {
 				.build();
 	}
 
+	/**
+	 * Post API of RiChi Disaster Loss.
+	 * 
+	 * @param client
+	 * @param ascPath
+	 * @return
+	 * @throws IOException
+	 */
 	public static String postDisasterLossAPI( HttpClient client, Path ascPath ) throws IOException{
 		return postDisasterLossAPI( client, ascPath, EVENT );
 	}
 	
+	/**
+	 * Post API of RiChi Disaster Loss.
+	 * 
+	 * @param client
+	 * @param ascPath
+	 * @param event
+	 * @return
+	 * @throws IOException
+	 */
 	public static String postDisasterLossAPI( HttpClient client, Path ascPath, String event ) throws IOException{
+		return postDisasterLossAPI( client, ascPath, event, URL );
+	}
+	
+	/**
+	 * Post API of RiChi Disaster Loss.
+	 * 
+	 * @param client
+	 * @param ascPath
+	 * @param event
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 */
+	public static String postDisasterLossAPI( HttpClient client, Path ascPath, String event, String url ) throws IOException{
 		RequestBody requestBody = HttpUtils.createFormDataBody( KEY, ascPath.toFile().getName(), ascPath.toFile() );
-		return client.postForm( Strman.append( URL, event ), requestBody );
+		return client.postForm( Strman.append( url, event ), requestBody );
 	}
 }
