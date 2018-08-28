@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nl.wldelft.util.FileUtils;
 import nl.wldelft.util.timeseries.SimpleTimeSeriesContentHandler;
 import strman.Strman;
 import tw.fondus.commons.fews.pi.adapter.PiCommandLineExecute;
@@ -40,56 +41,77 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 	protected Logger log = LoggerFactory.getLogger( this.getClass() );
 	private List<Loss> lossList = new ArrayList<>();
 	private long timeLong;
-	
+
 	public static void main( String[] args ) {
 		PiBasicArguments arguments = new PiArguments();
-		new DisasterLossAdapter().execute(args, arguments);
+		new DisasterLossAdapter().execute( args, arguments );
 	}
-	
+
 	@Override
 	protected void run( PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File inputDir,
 			File outputDir ) throws Exception {
-		log.info( "Start adapter of RiChi Disaster Loss API." );
-		piDiagnostics.addMessage( LogLevel.INFO.value(), "Start adapter of RiChi Disaster Loss API." );
+		log.info( "DisasterLossAdapter: Start adapter of RiChi Disaster Loss API." );
+		piDiagnostics.addMessage( LogLevel.INFO.value(),
+				"DisasterLossAdapter: Start adapter of RiChi Disaster Loss API." );
 
 		PiArguments piArguments = (PiArguments) arguments;
 		Path mapStacksPath = Paths
 				.get( Strman.append( inputDir.getAbsolutePath(), StringUtils.PATH, piArguments.getInputs().get( 0 ) ) );
 		timeLong = DisasterLossUtils.getDataDateLong( mapStacksPath );
-		
+
 		try (Stream<Path> ascPaths = Files.list( inputDir.toPath() ) ) {
 			HttpClient client = new HttpClient();
 			client.setClient( DisasterLossUtils.buildClientWithTimeout( (long) 900 ) );
-			
-			/** Collect all disaster loss with ASC file **/
-			ascPaths.filter( asc -> asc.toFile().getName().endsWith( FileType.ASC.getType() ) )
-					.forEach( asc -> {
-						log.info( Strman.append( "Connecting disaster loss API with ", asc.toFile().getName() ) );
-						piDiagnostics.addMessage( LogLevel.INFO.value(),
-								Strman.append( "Connecting disaster loss API with ", asc.toFile().getName() ) );	
-						try {
-							Data data = XMLUtils.fromXML( DisasterLossUtils.postDisasterLossAPI( client, asc ), Data.class );
-							data.getLossList().forEach( loss -> {
-								lossList.add( loss );
-							} );
-						} catch (IOException e) {
-							log.error( "Post form has something wrong." );
-							piDiagnostics.addMessage( LogLevel.ERROR.value(), "Post form has something wrong." );
-						} catch (Exception e) {
-							log.error( "Parsing xml has something wrong." );
-							piDiagnostics.addMessage( LogLevel.ERROR.value(), "Parsing xml has something wrong." );
-						}
-					} );
-		}
 
+			/** Collect all disaster loss with ASC file **/
+			ascPaths.filter( asc -> !FileUtils.getFileExt( asc.toFile() ).equals( FileType.XML.getType() ) )
+				.forEach( asc -> {
+					try {
+						Path rename = DisasterLossUtils.renameToASC( asc, inputDir );
+					
+						log.info( "DisasterLossAdapter: Connecting disaster loss API with {}.", rename.toFile().getName() );
+						piDiagnostics.addMessage( LogLevel.INFO.value(), Strman
+								.append( "DisasterLossAdapter: Connecting disaster loss API with ", rename.toFile().getName() ) );
+						
+						Data data = XMLUtils.fromXML( DisasterLossUtils.postDisasterLossAPI( client, rename ), Data.class );
+						data.getLossList().forEach( loss -> {
+							lossList.add( loss );
+						} );
+					} catch (IOException e) {
+						log.error( "DisasterLossAdapter: Post form has something wrong.", e );
+						piDiagnostics.addMessage( LogLevel.ERROR.value(),
+								"DisasterLossAdapter: Post form has something wrong." );
+					} catch (Exception e) {
+						log.error( "DisasterLossAdapter: Parsing xml has something wrong.", e );
+						piDiagnostics.addMessage( LogLevel.ERROR.value(),
+								"DisasterLossAdapter: Parsing xml has something wrong." );
+					}
+				} );
+		}
+		
+		log.info( "DisasterLossAdapter: Start create the FEWS PI-XML." );
+		piDiagnostics.addMessage( LogLevel.INFO.value(), "DisasterLossAdapter: Start create the FEWS PI-XML." );
+		
 		/** Fill all disaster loss data by loss type parameter **/
 		Stream.of( Parameter.values() ).forEach( parameter -> {
 			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
 			this.fillDataProcess( parameter, outputDir, handler, piDiagnostics );
 		} );
+		
+		log.info( "DisasterLossAdapter: End the DisasterLossAdapter." );
+		piDiagnostics.addMessage( LogLevel.INFO.value(), "DisasterLossAdapter: End the DisasterLossAdapter." );
 	}
 
-	private void fillDataProcess( Parameter parameter, File outputDir, SimpleTimeSeriesContentHandler handler, PiDiagnostics piDiagnostics ) {
+	/**
+	 * 
+	 * 
+	 * @param parameter
+	 * @param outputDir
+	 * @param handler
+	 * @param piDiagnostics
+	 */
+	private void fillDataProcess( Parameter parameter, File outputDir, SimpleTimeSeriesContentHandler handler,
+			PiDiagnostics piDiagnostics ) {
 		lossList.forEach( loss -> {
 			switch ( parameter ) {
 			case C1LOSS:
@@ -172,20 +194,35 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 				break;
 			}
 		} );
-		try {
-			TimeSeriesUtils.writePIFile( handler, Strman.append( outputDir.getAbsolutePath(), StringUtils.PATH,
-					parameter.getType(), StringUtils.DOT, FileType.XML.getType() ) );
-		} catch (InterruptedException e) {
-			log.error( "Writing pi xml file has something worng." );
-			piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something worng." );
-		} catch (IOException e) {
-			log.error( "Writing pi xml file has something worng." );
-			piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something worng." );
-		} finally {
-			handler.clear();
+
+		if ( this.lossList.size() > 0 ) {
+			try {
+				TimeSeriesUtils.writePIFile( handler, Strman.append( outputDir.getAbsolutePath(), StringUtils.PATH,
+						parameter.getType(), StringUtils.DOT, FileType.XML.getType() ) );
+			} catch (InterruptedException e) {
+				log.error( "Writing pi xml file has something worng.", e );
+				piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
+			} catch (IOException e) {
+				log.error( "Writing pi xml file has something worng.", e );
+				piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
+			} finally {
+				handler.clear();
+			}
+		} else {
+			log.warn( "DisasterLossAdapter: Nothing has the disaster loss data." );
+			piDiagnostics.addMessage( LogLevel.WARN.value(),
+					"DisasterLossAdapter: Nothing has the disaster loss data." );
 		}
 	}
 
+	/**
+	 * Fill the Delft-FEWS TimeSeries content.
+	 * 
+	 * @param townId
+	 * @param parameter
+	 * @param value
+	 * @param handler
+	 */
 	private void fillValue( String townId, Parameter parameter, BigDecimal value,
 			SimpleTimeSeriesContentHandler handler ) {
 		TimeSeriesUtils.fillPiTimeSeriesHeader( handler, townId, parameter.getType().toLowerCase(),
