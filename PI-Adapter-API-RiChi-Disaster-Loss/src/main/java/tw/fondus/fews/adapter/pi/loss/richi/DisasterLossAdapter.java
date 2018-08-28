@@ -40,7 +40,12 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 	protected Logger log = LoggerFactory.getLogger( this.getClass() );
 	private List<Loss> lossList = new ArrayList<>();
 	private long timeLong;
-
+	
+	public static void main( String[] args ) {
+		PiBasicArguments arguments = new PiArguments();
+		new DisasterLossAdapter().execute(args, arguments);
+	}
+	
 	@Override
 	protected void run( PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File inputDir,
 			File outputDir ) throws Exception {
