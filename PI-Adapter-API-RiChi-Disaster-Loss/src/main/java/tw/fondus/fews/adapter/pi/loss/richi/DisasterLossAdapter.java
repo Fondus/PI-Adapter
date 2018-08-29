@@ -93,17 +93,23 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 		piDiagnostics.addMessage( LogLevel.INFO.value(), "DisasterLossAdapter: Start create the FEWS PI-XML." );
 		
 		/** Fill all disaster loss data by loss type parameter **/
-		Stream.of( Parameter.values() ).forEach( parameter -> {
-			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
-			this.fillDataProcess( parameter, outputDir, handler, piDiagnostics );
-		} );
+		if ( this.lossList.size() > 0 ) { 
+			Stream.of( Parameter.values() ).forEach( parameter -> {
+				SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
+				this.fillDataProcess( parameter, outputDir, handler, piDiagnostics );
+			} );
+		} else {
+			log.warn( "DisasterLossAdapter: Nothing has the disaster loss data." );
+			piDiagnostics.addMessage( LogLevel.WARN.value(),
+					"DisasterLossAdapter: Nothing has the disaster loss data." );
+		}
 		
 		log.info( "DisasterLossAdapter: End the DisasterLossAdapter." );
 		piDiagnostics.addMessage( LogLevel.INFO.value(), "DisasterLossAdapter: End the DisasterLossAdapter." );
 	}
 
 	/**
-	 * 
+	 * Fill the data process.
 	 * 
 	 * @param parameter
 	 * @param outputDir
@@ -195,23 +201,17 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 			}
 		} );
 
-		if ( this.lossList.size() > 0 ) {
-			try {
-				TimeSeriesUtils.writePIFile( handler, Strman.append( outputDir.getAbsolutePath(), StringUtils.PATH,
-						parameter.getType(), StringUtils.DOT, FileType.XML.getType() ) );
-			} catch (InterruptedException e) {
-				log.error( "Writing pi xml file has something worng.", e );
-				piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
-			} catch (IOException e) {
-				log.error( "Writing pi xml file has something worng.", e );
-				piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
-			} finally {
-				handler.clear();
-			}
-		} else {
-			log.warn( "DisasterLossAdapter: Nothing has the disaster loss data." );
-			piDiagnostics.addMessage( LogLevel.WARN.value(),
-					"DisasterLossAdapter: Nothing has the disaster loss data." );
+		try {
+			TimeSeriesUtils.writePIFile( handler, Strman.append( outputDir.getAbsolutePath(), StringUtils.PATH,
+					parameter.getType(), StringUtils.DOT, FileType.XML.getType() ) );
+		} catch (InterruptedException e) {
+			log.error( "Writing pi xml file has something worng.", e );
+			piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
+		} catch (IOException e) {
+			log.error( "Writing pi xml file has something worng.", e );
+			piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
+		} finally {
+			handler.clear();
 		}
 	}
 
