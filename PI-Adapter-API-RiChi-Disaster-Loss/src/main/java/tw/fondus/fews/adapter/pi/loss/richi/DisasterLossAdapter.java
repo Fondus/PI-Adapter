@@ -65,39 +65,48 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 
 			/** Collect all disaster loss with ASC file **/
 			ascPaths.filter( asc -> !FileUtils.getFileExt( asc.toFile() ).equals( FileType.XML.getType() ) )
-				.forEach( asc -> {
-					try {
-						Path rename = DisasterLossUtils.renameToASC( asc, inputDir );
-					
-						log.info( "DisasterLossAdapter: Connecting disaster loss API with {}.", rename.toFile().getName() );
-						piDiagnostics.addMessage( LogLevel.INFO.value(), Strman
-								.append( "DisasterLossAdapter: Connecting disaster loss API with ", rename.toFile().getName() ) );
-						
-						Data data = XMLUtils.fromXML( DisasterLossUtils.postDisasterLossAPI( client, rename ), Data.class );
-						data.getLossList().forEach( loss -> {
-							lossList.add( loss );
-						} );
-					} catch (IOException e) {
-						log.error( "DisasterLossAdapter: Post form has something wrong.", e );
-						piDiagnostics.addMessage( LogLevel.ERROR.value(),
-								"DisasterLossAdapter: Post form has something wrong." );
-					} catch (Exception e) {
-						log.error( "DisasterLossAdapter: Parsing xml has something wrong.", e );
-						piDiagnostics.addMessage( LogLevel.ERROR.value(),
-								"DisasterLossAdapter: Parsing xml has something wrong." );
-					}
-				} );
+					.forEach( asc -> {
+						try {
+							Path rename = DisasterLossUtils.renameToASC( asc, inputDir );
+
+							log.info( "DisasterLossAdapter: Connecting disaster loss API with {}.",
+									rename.toFile().getName() );
+							piDiagnostics.addMessage( LogLevel.INFO.value(),
+									Strman.append( "DisasterLossAdapter: Connecting disaster loss API with ",
+											rename.toFile().getName() ) );
+
+							Data data = XMLUtils.fromXML( DisasterLossUtils.postDisasterLossAPI( client, rename ),
+									Data.class );
+							data.getLossList().forEach( loss -> {
+								lossList.add( loss );
+							} );
+						} catch (IOException e) {
+							log.error( "DisasterLossAdapter: Post form has something wrong.", e );
+							piDiagnostics.addMessage( LogLevel.ERROR.value(),
+									"DisasterLossAdapter: Post form has something wrong." );
+						} catch (Exception e) {
+							log.error( "DisasterLossAdapter: Parsing xml has something wrong.", e );
+							piDiagnostics.addMessage( LogLevel.ERROR.value(),
+									"DisasterLossAdapter: Parsing xml has something wrong." );
+						}
+					} );
 		}
-		
+
 		log.info( "DisasterLossAdapter: Start create the FEWS PI-XML." );
 		piDiagnostics.addMessage( LogLevel.INFO.value(), "DisasterLossAdapter: Start create the FEWS PI-XML." );
-		
+
 		/** Fill all disaster loss data by loss type parameter **/
-		Stream.of( Parameter.values() ).forEach( parameter -> {
-			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
-			this.fillDataProcess( parameter, outputDir, handler, piDiagnostics );
-		} );
-		
+		if ( this.lossList.size() > 0 ) {
+			Stream.of( Parameter.values() ).forEach( parameter -> {
+				SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
+				this.fillDataProcess( parameter, outputDir, handler, piDiagnostics );
+			} );
+		} else {
+			log.warn( "DisasterLossAdapter: Nothing has the disaster loss data." );
+			piDiagnostics.addMessage( LogLevel.WARN.value(),
+					"DisasterLossAdapter: Nothing has the disaster loss data." );
+		}
+
 		log.info( "DisasterLossAdapter: End the DisasterLossAdapter." );
 		piDiagnostics.addMessage( LogLevel.INFO.value(), "DisasterLossAdapter: End the DisasterLossAdapter." );
 	}
@@ -195,23 +204,17 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 			}
 		} );
 
-		if ( this.lossList.size() > 0 ) {
-			try {
-				TimeSeriesUtils.writePIFile( handler, Strman.append( outputDir.getAbsolutePath(), StringUtils.PATH,
-						parameter.getType(), StringUtils.DOT, FileType.XML.getType() ) );
-			} catch (InterruptedException e) {
-				log.error( "Writing pi xml file has something worng.", e );
-				piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
-			} catch (IOException e) {
-				log.error( "Writing pi xml file has something worng.", e );
-				piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
-			} finally {
-				handler.clear();
-			}
-		} else {
-			log.warn( "DisasterLossAdapter: Nothing has the disaster loss data." );
-			piDiagnostics.addMessage( LogLevel.WARN.value(),
-					"DisasterLossAdapter: Nothing has the disaster loss data." );
+		try {
+			TimeSeriesUtils.writePIFile( handler, Strman.append( outputDir.getAbsolutePath(), StringUtils.PATH,
+					parameter.getType(), StringUtils.DOT, FileType.XML.getType() ) );
+		} catch (InterruptedException e) {
+			log.error( "Writing pi xml file has something worng.", e );
+			piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
+		} catch (IOException e) {
+			log.error( "Writing pi xml file has something worng.", e );
+			piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
+		} finally {
+			handler.clear();
 		}
 	}
 
