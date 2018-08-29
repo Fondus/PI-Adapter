@@ -23,9 +23,9 @@ public class TankExecutableAdapterTest {
 				"OUTPUT_FLOW_TANK.TXT",
 				"-e",
 				"est_flow_Tank.exe",
-				"-ep",
+				"-ed",
 				"Tank/",
-				"-pp",
+				"-pd",
 				"Parameters/"
 				};
 		

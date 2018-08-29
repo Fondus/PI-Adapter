@@ -1,14 +1,18 @@
 package tw.fondus.fews.adapter.pi.loss.richi.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
+import nl.wldelft.util.FileUtils;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import strman.Strman;
 import tw.fondus.commons.fews.pi.config.xml.mapstacks.MapStacks;
 import tw.fondus.commons.fews.pi.config.xml.util.XMLUtils;
+import tw.fondus.commons.util.file.FileType;
 import tw.fondus.commons.util.http.HttpClient;
 import tw.fondus.commons.util.http.HttpUtils;
 import tw.fondus.commons.util.string.StringUtils;
@@ -24,6 +28,35 @@ public class DisasterLossUtils {
 	public static final String URL = "localhost";
 	public static final String EVENT = "event";
 	public static final String KEY = "file";
+	
+	/**
+	 * 
+	 * 
+	 * @param path
+	 * @param inputDir
+	 * @throws IOException
+	 */
+	/**
+	 * Rename file extension when if not a asc file extension.
+	 * 
+	 * @param path
+	 * @param inputDir
+	 * @return
+	 * @throws IOException
+	 */
+	public static Path renameToASC( Path path, File inputDir ) throws IOException{
+		File file = path.toFile();
+		if ( !FileUtils.getFileExt( file ).equals( FileType.ASC.getType() ) ){
+			String fileName = FileUtils.getNameWithoutExt( file );
+			
+			Path newPath = Paths.get( Strman.append( inputDir.getPath(), StringUtils.PATH, fileName, StringUtils.DOT, FileType.ASC.getType() ) );
+			FileUtils.move( file.getPath(), newPath.toFile().getPath() );
+			
+			return newPath;
+		} else {
+			return path;
+		}
+	}
 	
 	/**
 	 * Get data date long value with mapstacks file.

@@ -15,11 +15,18 @@
 
 	<name>The API of RiChi Disaster Loss Published Interface Adapter</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<description>
 		The FEWS Published Interface Adapter of RiChi Disaster Loss API is used to data exchange with Delft-FEWS system.
 	</description>
 	
+	<developers>
+		<developer>
+			<name>Bo-Chao Liang</name>
+			<organization>FondUS Technology Co., Ltd., TW</organization>
+		</developer>
+	</developers>
+
 	<build>
 		<plugins>
 			<!-- Copy dependencies to target folder -->
