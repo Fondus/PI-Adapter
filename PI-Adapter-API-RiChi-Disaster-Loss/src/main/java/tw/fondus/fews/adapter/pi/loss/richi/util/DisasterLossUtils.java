@@ -4,14 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 
 import nl.wldelft.util.FileUtils;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import strman.Strman;
-import tw.fondus.commons.fews.pi.config.xml.mapstacks.MapStacks;
-import tw.fondus.commons.fews.pi.config.xml.util.XMLUtils;
+import tw.fondus.commons.fews.pi.config.xml.mapstacks.MapStack;
 import tw.fondus.commons.util.file.FileType;
 import tw.fondus.commons.util.http.HttpClient;
 import tw.fondus.commons.util.http.HttpUtils;
@@ -28,14 +28,62 @@ public class DisasterLossUtils {
 	public static final String URL = "localhost";
 	public static final String EVENT = "event";
 	public static final String KEY = "file";
+
+	public static final String DAY = "day";
+	public static final String HOUR = "hour";
+	public static final String MINUTE = "minute";
+
+	public static final int DAY_MILLISECOND = 86400000;
+	public static final int HOUR_MILLISECOND = 3600000;
+	public static final int MINUTE_MILLISECOND = 60000;
+
+	/**
+	 * Get ASC file absolute path.
+	 * 
+	 * @param inputDir
+	 * @param mapStack
+	 * @param step
+	 * @return
+	 */
+	public static String getASCAbsolutePath( File inputDir, MapStack mapStack, int step){
+		String fileName = mapStack.getFile().getPattern().getFile();
+		return Strman.append( inputDir.getAbsolutePath(), StringUtils.PATH, fileName.substring( 0, fileName.indexOf( "?" ) ), getFileExtWithNumber( step ));
+	}
 	
 	/**
+	 * Get file name extension with time step.
+	 * EX: Test????.??? -> Test0000.001
 	 * 
-	 * 
-	 * @param path
-	 * @param inputDir
-	 * @throws IOException
+	 * @param step
+	 * @return
 	 */
+	private static String getFileExtWithNumber( int step ){
+		String result = String.format( "%07d", step );
+		return Strman.append( result.substring( 0, 4 ), StringUtils.DOT,result.substring( 4, result.length() ) );
+	}
+	
+	/**
+	 * Calculate time steps with map stack.
+	 * 
+	 * @param mapStack
+	 * @return
+	 * @throws Exception
+	 */
+	public static int calculateTimeSteps( MapStack mapStack ) throws Exception {
+		long start = TimeUtils.toDate( Strman.append( mapStack.getStartDate().getDate(), StringUtils.SPACE_WHITE,
+				mapStack.getStartDate().getTime() ), TimeUtils.YMDHMS, TimeUtils.GMT0 ).getTime();
+		long end = TimeUtils.toDate( Strman.append( mapStack.getEndDate().getDate(), StringUtils.SPACE_WHITE,
+				mapStack.getEndDate().getTime() ), TimeUtils.YMDHMS, TimeUtils.GMT0 ).getTime();
+
+		if ( mapStack.getTimeStep().getUnit().equals( DAY ) ) {
+			return (int) ((end - start) / (DAY_MILLISECOND));
+		} else if ( mapStack.getTimeStep().getUnit().equals( HOUR ) ) {
+			return (int) ((end - start) / (HOUR_MILLISECOND));
+		} else {
+			return (int) ((end - start) / (MINUTE_MILLISECOND));
+		}
+	}
+
 	/**
 	 * Rename file extension when if not a asc file extension.
 	 * 
@@ -44,14 +92,15 @@ public class DisasterLossUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static Path renameToASC( Path path, File inputDir ) throws IOException{
+	public static Path renameToASC( Path path, File inputDir ) throws IOException {
 		File file = path.toFile();
-		if ( !FileUtils.getFileExt( file ).equals( FileType.ASC.getType() ) ){
+		if ( !FileUtils.getFileExt( file ).equals( FileType.ASC.getType() ) ) {
 			String fileName = FileUtils.getNameWithoutExt( file );
-			
-			Path newPath = Paths.get( Strman.append( inputDir.getPath(), StringUtils.PATH, fileName, StringUtils.DOT, FileType.ASC.getType() ) );
+
+			Path newPath = Paths.get( Strman.append( inputDir.getPath(), StringUtils.PATH, fileName, StringUtils.DOT,
+					FileType.ASC.getType() ) );
 			FileUtils.move( file.getPath(), newPath.toFile().getPath() );
-			
+
 			return newPath;
 		} else {
 			return path;
@@ -59,28 +108,33 @@ public class DisasterLossUtils {
 	}
 	
 	/**
-	 * Get data date long value with mapstacks file.
+	 * Get data date long value with map stack.
 	 * 
 	 * @param mapStacksPath
 	 * @return
+	 * @throws ParseException 
 	 * @throws Exception
 	 */
-	public static long getDataDateLong( Path mapStacksPath ) throws Exception {
-		MapStacks mapStacks = XMLUtils.fromXML( mapStacksPath.toFile(), MapStacks.class );
+	public static long getDataDateLong( MapStack mapStack, int step ) throws ParseException {
+		long start = TimeUtils.toDate( Strman.append( mapStack.getStartDate().getDate(), StringUtils.SPACE_WHITE,
+				mapStack.getStartDate().getTime() ), TimeUtils.YMDHMS, TimeUtils.GMT0 ).getTime();
 
-		return TimeUtils.toDate(
-				Strman.append( mapStacks.getMapStacks().get( 0 ).getStartDate().getDate(), StringUtils.SPACE_WHITE,
-						mapStacks.getMapStacks().get( 0 ).getStartDate().getTime() ),
-				TimeUtils.YMDHMS, TimeUtils.GMT0 ).getTime();
+		if ( mapStack.getTimeStep().getUnit().equals( DAY ) ) {
+			return (start + (step * DAY_MILLISECOND));
+		} else if ( mapStack.getTimeStep().getUnit().equals( HOUR ) ) {
+			return (start + (step * HOUR_MILLISECOND));
+		} else {
+			return (start + (step * MINUTE_MILLISECOND));
+		}
 	}
-	
+
 	/**
 	 * Build OkHttpClient with timeout setting.
 	 * 
 	 * @param timeout
 	 * @return
 	 */
-	public static OkHttpClient buildClientWithTimeout( long timeout ){
+	public static OkHttpClient buildClientWithTimeout( long timeout ) {
 		return new OkHttpClient().newBuilder()
 				.connectTimeout( timeout, TimeUnit.SECONDS )
 				.readTimeout( timeout, TimeUnit.SECONDS )
@@ -96,10 +150,10 @@ public class DisasterLossUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String postDisasterLossAPI( HttpClient client, Path ascPath ) throws IOException{
+	public static String postDisasterLossAPI( HttpClient client, Path ascPath ) throws IOException {
 		return postDisasterLossAPI( client, ascPath, EVENT );
 	}
-	
+
 	/**
 	 * Post API of RiChi Disaster Loss.
 	 * 
@@ -109,10 +163,10 @@ public class DisasterLossUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String postDisasterLossAPI( HttpClient client, Path ascPath, String event ) throws IOException{
+	public static String postDisasterLossAPI( HttpClient client, Path ascPath, String event ) throws IOException {
 		return postDisasterLossAPI( client, ascPath, event, URL );
 	}
-	
+
 	/**
 	 * Post API of RiChi Disaster Loss.
 	 * 
@@ -123,7 +177,8 @@ public class DisasterLossUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String postDisasterLossAPI( HttpClient client, Path ascPath, String event, String url ) throws IOException{
+	public static String postDisasterLossAPI( HttpClient client, Path ascPath, String event, String url )
+			throws IOException {
 		RequestBody requestBody = HttpUtils.createFormDataBody( KEY, ascPath.toFile().getName(), ascPath.toFile() );
 		return client.postForm( Strman.append( url, event ), requestBody );
 	}
