@@ -59,7 +59,7 @@ public abstract class RainRunoffExecutable extends PiCommandLineExecute {
 			@Override
 			public void commandStart(String id) {
 				log.info("NCHC RainRunoff ExecutableAdapter: Start {} simulation.", executable );
-				piDiagnostics.addMessage(LogLevel.INFO.value(), "NCHC RainRunoff ExecutableAdapter: Start RainRunoff simulation.");
+				log( LogLevel.INFO, "NCHC RainRunoff ExecutableAdapter: Start {} simulation.", executable );
 			}
 
 			@Override
@@ -70,13 +70,13 @@ public abstract class RainRunoffExecutable extends PiCommandLineExecute {
 			@Override
 			public void commandException(String id, Exception e) {
 				log.error("NCHC RainRunoff ExecutableAdapter: when {} running has something wrong!", executable, e);
-				piDiagnostics.addMessage(LogLevel.ERROR.value(), "NCHC RainRunoff ExecutableAdapter: when model running has something wrong!.");
+				log( LogLevel.ERROR, "NCHC RainRunoff ExecutableAdapter: when {} running has something wrong!", executable );
 			}
 
 			@Override
 			public void commandEnd(String id, int returnValue) {
 				log.info("NCHC RainRunoff ExecutableAdapter: {} simulation end.", executable);
-				piDiagnostics.addMessage(LogLevel.INFO.value(), "NCHC RainRunoff ExecutableAdapter: Finished RainRunoff simulation.");
+				log( LogLevel.INFO, "NCHC RainRunoff ExecutableAdapter: {} simulation end.", executable );
 			}
 		});
 		
@@ -89,13 +89,12 @@ public abstract class RainRunoffExecutable extends PiCommandLineExecute {
 				if ( this.parametersMap.containsKey(locationId)){
 					/** Move model input to executable directory **/
 					log.info("NCHC RainRunoff ExecutableAdapter: Copy model input to executable directory. Processing {} now.", locationId);
-					piDiagnostics.addMessage(LogLevel.INFO.value(),
-							Strman.append("NCHC RainRunoff ExecutableAdapter: Copy model input to executable directory.", "Processing ", locationId, " now."));
+					this.log( LogLevel.INFO, "NCHC RainRunoff ExecutableAdapter: Copy model input to executable directory. Processing {} now.", locationId );
 					
 					FileUtils.move(modelInput.getPath(), executableInput);
 					
 					log.info("NCHC RainRunoff ExecutableAdapter: Copy input parameter file to executable directory.");
-					piDiagnostics.addMessage(LogLevel.INFO.value(), "NCHC RainRunoff ExecutableAdapter: Copy input parameter file to executable directory.");
+					this.log( LogLevel.INFO, "NCHC RainRunoff ExecutableAdapter: Copy input parameter file to executable directory." );
 					
 					FileUtils.copy( this.parametersMap.get(locationId), parameterInput);
 					
@@ -107,13 +106,12 @@ public abstract class RainRunoffExecutable extends PiCommandLineExecute {
 							Strman.append(outputDir.getPath(), StringUtils.PATH, modelInput.getName()));
 				} else {
 					log.warn("NCHC RainRunoff ExecutableAdapter: Parameter file directory not contain {}.", locationId);
-					piDiagnostics.addMessage(LogLevel.WARN.value(),
-							Strman.append("NCHC RainRunoff ExecutableAdapter: Parameter file directory not contain ", locationId, " ."));
+					this.log( LogLevel.WARN, "NCHC RainRunoff ExecutableAdapter: Parameter file directory not contain {}.", locationId );
 				}
 				
 			} catch (IOException e) {
 				log.info("NCHC RainRunoff ExecutableAdapter: Copy file has something wrong.");
-				piDiagnostics.addMessage(LogLevel.ERROR.value(), "NCHC RainRunoff ExecutableAdapter: Copy file has something wrong.");
+				this.log( LogLevel.ERROR, "NCHC RainRunoff ExecutableAdapter: Copy file has something wrong." );
 			}
 		});
 	}

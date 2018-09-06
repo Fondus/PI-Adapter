@@ -59,14 +59,13 @@ public class GridMergeExecutable extends PiCommandLineExecute {
 		Preconditions.checkState( modelArguments.getInputs().size() > 0 && modelArguments.getInputs().size() == 4,
 				"GridMergeAdapter: The input Mapstacks.xml name, ZONE_List, ZONE_ID configuration and template ASC not give by command." );
 		Preconditions.checkState( modelArguments.getOutputs().size() > 0 && modelArguments.getOutputs().size() == 3,
-				"GridMergeAdapter: The output prefix name, Mapstacks.xml file name and name pattern and the  not give by command." );
+				"GridMergeAdapter: The output prefix name, Mapstacks.xml file name and name pattern and the not give by command." );
 		
 		Path inputXML = Paths
 				.get( Strman.append( inputDir.getPath(), StringUtils.PATH, modelArguments.getInputs().get( 0 ) ) );
 		if ( !Files.exists( inputXML ) ) {
 			log.error( "GridMergeAdapter: The input Mapstacks.xml do not exists!.", new FileNotFoundException() );
-			piDiagnostics.addMessage( LogLevel.ERROR.value(),
-					"GridMergeAdapter: The input Mapstacks.xml do not exists!." );
+			this.log( LogLevel.ERROR, "GridMergeAdapter: The input Mapstacks.xml do not exists!." );
 		} else {
 			/** Create command **/
 			String executable = modelArguments.getExecutable();
@@ -99,7 +98,7 @@ public class GridMergeExecutable extends PiCommandLineExecute {
 						FileUtils.move( source.getPath(), Strman.append( tempDir.getPath(), StringUtils.PATH, target ) );
 					} catch ( IOException e ) {
 						log.error( "GridMergeAdapter: move the unit member grid has somthing wrong!", e );
-						piDiagnostics.addMessage( LogLevel.ERROR.value(), "GridMergeAdapter: move the unit member grid has somthing wrong!" );
+						this.log( LogLevel.ERROR, "GridMergeAdapter: move the unit member grid has somthing wrong!" );
 					}
 				} );
 				
@@ -113,7 +112,7 @@ public class GridMergeExecutable extends PiCommandLineExecute {
 					command.run( programDir );
 					
 					log.info( "GridMergeAdapter: Run the merge grids to combine. Unit Member: {}.", i );
-					piDiagnostics.addMessage( LogLevel.INFO.value(), Strman.append( "GridMergeAdapter: Run the merge grids to combine. Unit Member: ", String.valueOf( i ), "." ) );
+					this.log( LogLevel.INFO, "GridMergeAdapter: Run the merge grids to combine. Unit Member: {}.", String.valueOf( i ) );
 					
 					/** Copy to merged grid outputs **/
 					File memberOutputASC = Paths.get( Strman.append( outputDir.getPath(), StringUtils.PATH,
@@ -125,7 +124,7 @@ public class GridMergeExecutable extends PiCommandLineExecute {
 					
 				} catch ( IOException e ) {
 					log.error( "GridMergeAdapter: copy the grid has somthing wrong!", e );
-					piDiagnostics.addMessage( LogLevel.ERROR.value(), "GridMergeAdapter: copy the grid has somthing wrong!" );
+					this.log( LogLevel.ERROR, "GridMergeAdapter: copy the grid has somthing wrong!" );
 				}	
 			} );
 		}
@@ -175,6 +174,6 @@ public class GridMergeExecutable extends PiCommandLineExecute {
 		MapStacks mapstacks = XMLUtils.fromXML( inputXML.toFile(), MapStacks.class );
 		MapStack mapstack = mapstacks.getMapStacks().get( 0 );
 		mapstack.getFile().getPattern().setFile( pattern );
-		XMLUtils.toXML( new File( Strman.append( output ) ), mapstacks );
+		XMLUtils.toXML( new File( output ), mapstacks );
 	}
 }

@@ -54,8 +54,7 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 	protected void run( PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File inputDir,
 			File outputDir ) throws Exception {
 		log.info( "DisasterLossAdapter: Start adapter of RiChi Disaster Loss API." );
-		piDiagnostics.addMessage( LogLevel.INFO.value(),
-				"DisasterLossAdapter: Start adapter of RiChi Disaster Loss API." );
+		this.log( LogLevel.INFO, "DisasterLossAdapter: Start adapter of RiChi Disaster Loss API." );
 
 		PiArguments piArguments = (PiArguments) arguments;
 		Path mapStacksPath = Paths
@@ -77,9 +76,8 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 
 						log.info( "DisasterLossAdapter: Connecting disaster loss API with {}.",
 								rename.toFile().getName() );
-						piDiagnostics.addMessage( LogLevel.INFO.value(),
-								Strman.append( "DisasterLossAdapter: Connecting disaster loss API with ",
-										rename.toFile().getName() ) );
+						this.log( LogLevel.INFO, "DisasterLossAdapter: Connecting disaster loss API with {}.",
+								rename.toFile().getName() );
 
 						Data data = XMLUtils.fromXML( DisasterLossUtils.postDisasterLossAPI( client, rename ),
 								Data.class );
@@ -93,31 +91,26 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 											DisasterLossUtils.getDataDateLong( mapStack, i ) ) );
 								}
 							} catch (ParseException e) {
-								log.error( "DisasterLossAdapter: Get data time from map stack has something wrong.",
-										e );
-								piDiagnostics.addMessage( LogLevel.ERROR.value(),
-										"DisasterLossAdapter: Get data time from map stack has something wrong." );
+								log.error( "DisasterLossAdapter: Get data time from map stack has something wrong.", e );
+								this.log( LogLevel.ERROR, "DisasterLossAdapter: Get data time from map stack has something wrong." );
 							}
 						} );
 					} catch (IOException e) {
 						log.error( "DisasterLossAdapter: Post form has something wrong.", e );
-						piDiagnostics.addMessage( LogLevel.ERROR.value(),
-								"DisasterLossAdapter: Post form has something wrong." );
+						this.log( LogLevel.ERROR, "DisasterLossAdapter: Post form has something wrong." );
 					} catch (Exception e) {
 						log.error( "DisasterLossAdapter: Parsing xml has something wrong.", e );
-						piDiagnostics.addMessage( LogLevel.ERROR.value(),
-								"DisasterLossAdapter: Parsing xml has something wrong." );
+						this.log( LogLevel.ERROR, "DisasterLossAdapter: Parsing xml has something wrong." );
 					}
 				} );
 			} catch (Exception e) {
 				log.error( "DisasterLossAdapter: Transform time has something wrong.", e );
-				piDiagnostics.addMessage( LogLevel.ERROR.value(),
-						"DisasterLossAdapter: Transform time has something wrong." );
+				this.log( LogLevel.ERROR, "DisasterLossAdapter: Transform time has something wrong." );
 			}
 		} );
 
 		log.info( "DisasterLossAdapter: Start create the FEWS PI-XML." );
-		piDiagnostics.addMessage( LogLevel.INFO.value(), "DisasterLossAdapter: Start create the FEWS PI-XML." );
+		this.log( LogLevel.INFO, "DisasterLossAdapter: Start create the FEWS PI-XML." );
 
 		/** Fill all disaster loss data by loss type parameter **/
 		if ( this.lossMap.size() > 0 ) {
@@ -127,12 +120,11 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 			} );
 		} else {
 			log.warn( "DisasterLossAdapter: Nothing has the disaster loss data." );
-			piDiagnostics.addMessage( LogLevel.WARN.value(),
-					"DisasterLossAdapter: Nothing has the disaster loss data." );
+			this.log( LogLevel.WARN, "DisasterLossAdapter: Nothing has the disaster loss data." );
 		}
 
 		log.info( "DisasterLossAdapter: End the DisasterLossAdapter." );
-		piDiagnostics.addMessage( LogLevel.INFO.value(), "DisasterLossAdapter: End the DisasterLossAdapter." );
+		this.log( LogLevel.INFO, "DisasterLossAdapter: End the DisasterLossAdapter."  );
 	}
 
 	/**
@@ -154,10 +146,10 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 					parameter.getType(), StringUtils.DOT, FileType.XML.getType() ) );
 		} catch (InterruptedException e) {
 			log.error( "Writing pi xml file has something worng.", e );
-			piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
+			this.log( LogLevel.ERROR, "Writing pi xml file has something wrong." );
 		} catch (IOException e) {
 			log.error( "Writing pi xml file has something worng.", e );
-			piDiagnostics.addMessage( LogLevel.ERROR.value(), "Writing pi xml file has something wrong." );
+			this.log( LogLevel.ERROR, "Writing pi xml file has something wrong." );
 		} finally {
 			handler.clear();
 		}
