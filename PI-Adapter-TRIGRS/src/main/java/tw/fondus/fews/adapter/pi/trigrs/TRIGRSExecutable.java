@@ -42,7 +42,7 @@ public class TRIGRSExecutable extends PiCommandLineExecute {
 			@Override
 			public void commandStart(String id) {
 				log.info("TRIGRS Executable Adapter: Start TRIGRS simulation.");
-				piDiagnostics.addMessage(LogLevel.INFO.value(), "TRIGRS Executable Adapter: Start TRIGRS simulation.");
+				log( LogLevel.INFO, "TRIGRS Executable Adapter: Start TRIGRS simulation." );
 			}
 
 			@Override
@@ -52,13 +52,13 @@ public class TRIGRSExecutable extends PiCommandLineExecute {
 			@Override
 			public void commandException(String id, Exception e) {
 				log.error("TRIGRS Executable Adapter: when model running has something wrong!", e);
-				piDiagnostics.addMessage(LogLevel.ERROR.value(), "TRIGRS Executable Adapter: when model running has something wrong!.");
+				log( LogLevel.ERROR, "TRIGRS Executable Adapter: when model running has something wrong!." );
 			}
 	
 			@Override
 			public void commandEnd(String id, int returnValue) {
 				log.info("TRIGRS Executable Adapter: TRIGRS simulation end.");
-				piDiagnostics.addMessage(LogLevel.INFO.value(), "TRIGRS Executable Adapter: Finished TRIGRS simulation.");
+				log( LogLevel.INFO, "TRIGRS Executable Adapter: Finished TRIGRS simulation." );
 			}
 		});
 			

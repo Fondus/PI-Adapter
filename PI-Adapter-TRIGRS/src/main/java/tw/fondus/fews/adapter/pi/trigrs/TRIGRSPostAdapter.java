@@ -18,6 +18,7 @@ import tw.fondus.commons.fews.pi.config.xml.mapstacks.MapStack;
 import tw.fondus.commons.fews.pi.config.xml.mapstacks.MapStacks;
 import tw.fondus.commons.fews.pi.config.xml.util.XMLUtils;
 import tw.fondus.commons.fews.pi.util.adapter.PiBasicArguments;
+import tw.fondus.commons.util.file.FileType;
 import tw.fondus.commons.util.string.StringUtils;
 import tw.fondus.commons.util.time.TimeUtils;
 import tw.fondus.fews.adapter.pi.trigrs.util.PostArguments;
@@ -53,7 +54,7 @@ public class TRIGRSPostAdapter extends PiCommandLineExecute {
 			String outputPath = Strman.append(outputDir.getPath(), StringUtils.PATH);
 			
 			log.info("TRIGRS Post Adapter: create model output MapStacks XML.");
-			piDiagnostics.addMessage(LogLevel.INFO.value(), "TRIGRS Post Adapter: create model output MapStacks XML.");
+			this.log( LogLevel.INFO, "TRIGRS Post Adapter: create model output MapStacks XML." );
 			
 			this.createMapStacks(inputXML, outputPath,
 					namePrefix,
@@ -63,14 +64,14 @@ public class TRIGRSPostAdapter extends PiCommandLineExecute {
 			this.applyMapStacksNamePattern(outputPath, namePrefix);
 			
 			log.info("TRIGRS Post Adapter: apply name to model output files.");
-			piDiagnostics.addMessage(LogLevel.INFO.value(), "TRIGRS Post Adapter: apply name to model output files.");
+			this.log( LogLevel.INFO, "TRIGRS Post Adapter: apply name to model output files." );
 		
 		} catch (FileNotFoundException e) {
 			log.error("TRIGRS Post Adapter: MapStacks XML or Output Directory not exits!", e);
-			piDiagnostics.addMessage(LogLevel.ERROR.value(), "TRIGRS Post Adapter: MapStacks XML or Output Directory not exits!");
+			this.log( LogLevel.ERROR, "TRIGRS Post Adapter: MapStacks XML or Output Directory not exits!");
 		} catch (Exception e) {
 			log.error("TRIGRS Post Adapter: has somthing wrong!", e);
-			piDiagnostics.addMessage(LogLevel.ERROR.value(), "TRIGRS Post Adapter: has somthing wrong!");
+			this.log( LogLevel.ERROR, "TRIGRS Post Adapter: has somthing wrong!");
 		} 
 	}
 	
@@ -138,6 +139,6 @@ public class TRIGRSPostAdapter extends PiCommandLineExecute {
 		mapstack.getEndDate().setTime(endTimeStrings[1]);
 		mapstack.getFile().getPattern().setFile( Strman.append(namePrefix, "????.asc") );
 		
-		XMLUtils.toXML(new File( Strman.append(outputDir, namePrefix, ".xml") ), mapstacks);
+		XMLUtils.toXML(new File( Strman.append(outputDir, namePrefix, StringUtils.DOT, FileType.XML.getType() ) ), mapstacks);
 	}
 }
