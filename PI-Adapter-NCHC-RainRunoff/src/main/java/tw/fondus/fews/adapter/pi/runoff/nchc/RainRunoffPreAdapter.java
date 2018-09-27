@@ -56,10 +56,10 @@ public abstract class RainRunoffPreAdapter extends PiCommandLineExecute {
 			
 		} catch (FileNotFoundException e) {
 			log.error("NCHC RainRunoff PreAdapter: Input XML not exits!", e);
-			this.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: Input XML not exits!");
+			this.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: Input XML not exists!");
 		} catch (OperationNotSupportedException e) {
 			log.error("NCHC RainRunoff PreAdapter: Read XML not exits!", e);
-			this.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: Read XML not exits!");
+			this.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: Read XML not exists!");
 		} catch (IOException e) {
 			log.error("NCHC RainRunoff PreAdapter: IOException!", e);
 			this.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: IOException!");
