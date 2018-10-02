@@ -80,22 +80,22 @@ public class ExportToSensLinkAdapter extends PiCommandLineExecute {
 					
 					try {
 						/** Historical **/
-						AuthenticationAction authHistorical = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.ACTION_WRITE_HISTORICAL );
+						AuthenticationAction authHistorical = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.WRITE_HISTORICAL );
 						WriteQueryParameter qpHistorical = new WriteQueryParameter();
 						qpHistorical.setAuthAction( authHistorical );
 						qpHistorical.setDatas( datas.toArray( new PQDataWrite[0] ) );
 							
-						int writedHistorical = SensLinkUtils.writeHistorical( qpHistorical );
+						int writedHistorical = SensLinkUtils.writeHistorical( SensLinkUtils.HOST_TEST, qpHistorical );
 						log.info("SensLink 2.0 Export Adapter: success write {} historical datas to the SensLink System.", writedHistorical);
 						this.log( LogLevel.INFO, "SensLink 2.0 Export Adapter: success write {} historical datas to the SensLink System.", String.valueOf( writedHistorical ));
 						
 						/** Real-Time **/
-						AuthenticationAction authRealTime = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.ACTION_WRITE_REALTIME );
+						AuthenticationAction authRealTime = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.WRITE_REALTIME );
 						WriteQueryParameter qpRealTime = new WriteQueryParameter();
 						qpRealTime.setAuthAction( authRealTime );
 						qpRealTime.setDatas( datas.toArray( new PQDataWrite[0] ) );
 							
-						int writedRealTime = SensLinkUtils.writeRealTime( qpRealTime );
+						int writedRealTime = SensLinkUtils.writeRealTime( SensLinkUtils.HOST_TEST, qpRealTime );
 						log.info("SensLink 2.0 Export Adapter: success write {} real-time datas to the SensLink System.", writedRealTime );
 						this.log( LogLevel.INFO, "SensLink 2.0 Export Adapter: success write {} real-time datas to the SensLink System.", String.valueOf( writedRealTime ));
 						

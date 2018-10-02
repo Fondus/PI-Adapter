@@ -73,10 +73,11 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 			OptionalUtils.ifPresentOrElse( optAuth, auth -> {
 				
 				try {
-					AuthenticationAction authentication = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.ACTION_GET_HISTORICAL_BYIDS );
+					AuthenticationAction authentication = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.GET_HISTORICAL_BYIDS );
 					
-					Optional<List<PQHistoricalData>> optionalDatas = SensLinkUtils.getDataByPhysicalQuantityIds( authentication,
-							locationIds.toArray( new String[0] ),
+					Optional<List<PQHistoricalData>> optionalDatas = SensLinkUtils.getDataByPQIds( authentication,
+							SensLinkUtils.HOST_TEST,
+							locationIds.toArray( new String[0]),
 							timeZero,
 							modelArguments.getDuration(),
 							0 );
