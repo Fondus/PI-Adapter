@@ -30,6 +30,7 @@ import tw.fondus.commons.json.senslink2.util.SensLinkUtils;
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.optional.OptionalUtils;
 import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.fews.adapter.pi.senslink2.util.AdapterUtils;
 import tw.fondus.fews.adapter.pi.senslink2.util.RunArguments;
 
 /**
@@ -72,8 +73,9 @@ public class ExportToSensLinkAdapter extends PiCommandLineExecute {
 				
 				String username = modelArguments.getUsername();
 				String password = modelArguments.getPassword();
+				String host = AdapterUtils.getHost( modelArguments.getServer() );
 				
-				Optional<AuthInfoResponse> optAuth = SensLinkUtils.login( username, password );
+				Optional<AuthInfoResponse> optAuth = SensLinkUtils.login( host, username, password );
 				OptionalUtils.ifPresentOrElse( optAuth, auth -> {
 					log.info("SensLink 2.0 Export Adapter: The SensLink 2.0 system login successfully, try to write data to the SensLink 2.0 system.");
 					this.log( LogLevel.INFO, "SensLink 2.0 Export Adapter: The SensLink 2.0 system login successfully, try to write data to the SensLink 2.0 system.");
@@ -85,7 +87,7 @@ public class ExportToSensLinkAdapter extends PiCommandLineExecute {
 						qpHistorical.setAuthAction( authHistorical );
 						qpHistorical.setDatas( datas.toArray( new PQDataWrite[0] ) );
 							
-						int writedHistorical = SensLinkUtils.writeHistorical( SensLinkUtils.HOST_TEST, qpHistorical );
+						int writedHistorical = SensLinkUtils.writeHistorical( host, qpHistorical );
 						log.info("SensLink 2.0 Export Adapter: success write {} historical datas to the SensLink System.", writedHistorical);
 						this.log( LogLevel.INFO, "SensLink 2.0 Export Adapter: success write {} historical datas to the SensLink System.", String.valueOf( writedHistorical ));
 						
@@ -95,7 +97,7 @@ public class ExportToSensLinkAdapter extends PiCommandLineExecute {
 						qpRealTime.setAuthAction( authRealTime );
 						qpRealTime.setDatas( datas.toArray( new PQDataWrite[0] ) );
 							
-						int writedRealTime = SensLinkUtils.writeRealTime( SensLinkUtils.HOST_TEST, qpRealTime );
+						int writedRealTime = SensLinkUtils.writeRealTime( host, qpRealTime );
 						log.info("SensLink 2.0 Export Adapter: success write {} real-time datas to the SensLink System.", writedRealTime );
 						this.log( LogLevel.INFO, "SensLink 2.0 Export Adapter: success write {} real-time datas to the SensLink System.", String.valueOf( writedRealTime ));
 						
