@@ -156,18 +156,13 @@
 			<artifactId>commons-utils</artifactId>
 			<version>${commons.utils.version}</version>
 			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<!-- Commons-FEWS -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-fews</artifactId>
 			<version>${commons.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- Junit -->
 		<dependency>
