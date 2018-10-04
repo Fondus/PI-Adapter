@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>tw.fondus.fews.adapter</groupId>
@@ -44,7 +43,7 @@
 		<fews.version>2017.01</fews.version>
 		<xerces.version>2.11.0</xerces.version>
 		<junit.version>4.12</junit.version>
-		<commons.version>0.7.0</commons.version>
+		<commons.version>0.8.0</commons.version>
 		<commons.utils.version>0.7.2</commons.utils.version>
 	</properties>
 
@@ -157,22 +156,13 @@
 			<artifactId>commons-utils</artifactId>
 			<version>${commons.utils.version}</version>
 			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.dom4j</groupId>
-					<artifactId>dom4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<!-- Commons-FEWS -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-fews</artifactId>
 			<version>${commons.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- Junit -->
 		<dependency>
@@ -229,12 +219,13 @@
 
 	<issueManagement>
 		<system>GitHub Issues</system>
+		<url>https://github.com/Fondus/PI-Adapter/issues</url>
 	</issueManagement>
 	<modules>
 		<module>PI-Adapter-TRIGRS</module>
 		<module>PI-Adapter-NCHC-RainRunoff</module>
 		<module>PI-Adapter-GridMerge</module>
 		<module>PI-Adapter-SensLink2</module>
-		<module>PI-Adapter-API-RiChi-Disaster-Loss</module>
-	</modules>
+    	<module>PI-Adapter-API-RiChi-Disaster-Loss</module>
+  </modules>
 </project>

@@ -31,6 +31,7 @@ import tw.fondus.commons.json.senslink2.util.SensLinkUtils;
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.optional.OptionalUtils;
 import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.fews.adapter.pi.senslink2.util.AdapterUtils;
 import tw.fondus.fews.adapter.pi.senslink2.util.RunArguments;
 
 /**
@@ -68,15 +69,17 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 			DateTime timeZero = modelArguments.getTimeZero();
 			String username = modelArguments.getUsername();
 			String password = modelArguments.getPassword();
+			String host = AdapterUtils.getHost( modelArguments.getServer() );
 			
-			Optional<AuthInfoResponse> optAuth = SensLinkUtils.login( username, password );
+			Optional<AuthInfoResponse> optAuth = SensLinkUtils.login( host, username, password );
 			OptionalUtils.ifPresentOrElse( optAuth, auth -> {
 				
 				try {
-					AuthenticationAction authentication = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.ACTION_GET_HISTORICAL_BYIDS );
+					AuthenticationAction authentication = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.GET_HISTORICAL_BYIDS );
 					
-					Optional<List<PQHistoricalData>> optionalDatas = SensLinkUtils.getDataByPhysicalQuantityIds( authentication,
-							locationIds.toArray( new String[0] ),
+					Optional<List<PQHistoricalData>> optionalDatas = SensLinkUtils.getDataByPQIds( authentication,
+							host,
+							locationIds.toArray( new String[0]),
 							timeZero,
 							modelArguments.getDuration(),
 							0 );
