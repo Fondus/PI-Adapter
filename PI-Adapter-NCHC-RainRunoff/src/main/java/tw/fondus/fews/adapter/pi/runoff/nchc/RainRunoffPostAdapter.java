@@ -51,7 +51,7 @@ public abstract class RainRunoffPostAdapter extends PiCommandLineExecute {
 				long timeStepMillis = Long.valueOf(temps[1]);
 				
 				log.info("NCHC RainRunoff PostAdapter: Start read model output files to PiXML.");
-				piDiagnostics.addMessage(LogLevel.INFO.value(), "NCHC RainRunoff PostAdapter: Start read model output files to PiXML.");
+				this.log( LogLevel.INFO, "NCHC RainRunoff PostAdapter: Start read model output files to PiXML.");
 				
 				/** Read model output and create XML content **/
 				SimpleTimeSeriesContentHandler contentHandler = new SimpleTimeSeriesContentHandler();
@@ -66,26 +66,26 @@ public abstract class RainRunoffPostAdapter extends PiCommandLineExecute {
 						
 					} catch (IOException e) {
 						log.info("NCHC RainRunoff PostAdapter: Read model output file has something wrong.");
-						piDiagnostics.addMessage(LogLevel.ERROR.value(), "NCHC RainRunoff PostAdapter: Read model output has something wrong.");
+						this.log( LogLevel.ERROR, "NCHC RainRunoff PostAdapter: Read model output has something wrong.");
 					}
 				});
 				
 				TimeSeriesUtils.writePIFile(contentHandler, Strman.append(outputDir.getPath(), StringUtils.PATH, modelArguments.getOutputs().get(0)));
 				
 				log.info("NCHC RainRunoff PostAdapter: Finished read model output files to PiXML.");
-				piDiagnostics.addMessage(LogLevel.INFO.value(), "NCHC RainRunoff PostAdapter: Finished read model output files to PiXML.");
-				
+				this.log( LogLevel.INFO, "NCHC RainRunoff PostAdapter: Finished read model output files to PiXML.");
+
 			} else {
 				log.warn("NCHC RainRunoff PostAdapter: The temporary Time Meta information file has not content.");
-				piDiagnostics.addMessage(LogLevel.WARN.value(), "NCHC RainRunoff PostAdapter: The temporary Time Meta information file has not content!");
+				this.log( LogLevel.WARN, "NCHC RainRunoff PostAdapter: The temporary Time Meta information file has not content!");
 			}
 			
 		} catch (IOException e) {
 			log.error("NCHC RainRunoff PostAdapter: IOException!", e);
-			piDiagnostics.addMessage(LogLevel.ERROR.value(), "NCHC RainRunoff PostAdapter: IOException!");
+			this.log( LogLevel.ERROR, "NCHC RainRunoff PostAdapter: IOException!");
 		} catch (InterruptedException e) {
 			log.error("NCHC RainRunoff PostAdapter: Write XML has something wrong!", e);
-			piDiagnostics.addMessage(LogLevel.ERROR.value(), "NCHC RainRunoff PostAdapter: Write XML has something wrongs!");
+			this.log( LogLevel.ERROR, "NCHC RainRunoff PostAdapter: Write XML has something wrongs!");
 		}
 	}
 	

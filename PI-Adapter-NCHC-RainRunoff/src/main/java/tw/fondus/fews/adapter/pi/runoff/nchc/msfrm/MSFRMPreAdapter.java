@@ -26,7 +26,7 @@ public class MSFRMPreAdapter extends RainRunoffPreAdapter {
 	@Override
 	protected String createFileContent(TimeSeriesArray array) {
 		StringJoiner content = new StringJoiner(StringUtils.BREAKLINE,
-				"",
+				StringUtils.BLANK,
 				Strman.append(StringUtils.BREAKLINE, "-999 -999     ! INDICATOR OF IMPORTING DATA NECESSARY", StringUtils.BREAKLINE));
 		
 		IntStream.range(0, array.size()).forEach(i -> {

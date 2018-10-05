@@ -31,6 +31,7 @@ import tw.fondus.commons.json.senslink2.util.SensLinkUtils;
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.optional.OptionalUtils;
 import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.fews.adapter.pi.senslink2.util.AdapterUtils;
 import tw.fondus.fews.adapter.pi.senslink2.util.RunArguments;
 
 /**
@@ -63,28 +64,29 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 			List<String> locationIds = TimeSeriesUtils.toLocationIds( timeSeriesArrays );
 			
 			log.info("SensLink 2.0 Import Adapter: Start import {} datas from the SensLink System.", locationIds.size());
-			piDiagnostics.addMessage( LogLevel.INFO.value(), Strman.append( "SensLink 2.0 Import Adapter: import ", String.valueOf( locationIds.size() ), " datas from the SensLink System." ));
+			this.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Start import {} datas from the SensLink System.", String.valueOf( locationIds.size() ) );
 			
 			DateTime timeZero = modelArguments.getTimeZero();
 			String username = modelArguments.getUsername();
 			String password = modelArguments.getPassword();
+			String host = AdapterUtils.getHost( modelArguments.getServer() );
 			
-			Optional<AuthInfoResponse> optAuth = SensLinkUtils.login( username, password );
+			Optional<AuthInfoResponse> optAuth = SensLinkUtils.login( host, username, password );
 			OptionalUtils.ifPresentOrElse( optAuth, auth -> {
 				
 				try {
-					AuthenticationAction authentication = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.ACTION_GET_HISTORICAL_BYIDS );
+					AuthenticationAction authentication = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.GET_HISTORICAL_BYIDS );
 					
-					Optional<List<PQHistoricalData>> optionalDatas = SensLinkUtils.getDataByPhysicalQuantityIds( authentication,
-							locationIds.toArray( new String[0] ),
+					Optional<List<PQHistoricalData>> optionalDatas = SensLinkUtils.getDataByPQIds( authentication,
+							host,
+							locationIds.toArray( new String[0]),
 							timeZero,
 							modelArguments.getDuration(),
 							0 );
 					
 					OptionalUtils.ifPresentOrElse( optionalDatas, datas -> {
-						
 						log.info("SensLink 2.0 Import Adapter: Start translate SensLink PhysicalQuantity Data to PI-XML.");
-						piDiagnostics.addMessage( LogLevel.INFO.value(), "SensLink 2.0 Import Adapter: Start translate SensLink PhysicalQuantity Data to PI-XML.");
+						this.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Start translate SensLink PhysicalQuantity Data to PI-XML.");
 						
 						SimpleTimeSeriesContentHandler contentHandler = SensLinkUtils.toTimeSeriesArraysIrregular( datas, modelArguments.getParameter(), modelArguments.getUnit() );
 						try {
@@ -92,31 +94,31 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 									Strman.append( outputDir.getPath(), StringUtils.PATH, modelArguments.getOutputs().get( 0 ) ) );
 						} catch (InterruptedException | IOException e) {
 							log.error( "SensLink 2.0 Import Adapter: adapter write PI-XML has something wrong!.", e );
-							piDiagnostics.addMessage( LogLevel.ERROR.value(), "SensLink 2.0 Import Adapter: adapter write PI-XML has something wrong!." );
+							this.log( LogLevel.ERROR, "SensLink 2.0 Import Adapter: adapter write PI-XML has something wrong!.");
 						}
 						
 						log.info("SensLink 2.0 Import Adapter: Finished Adapter process.");
-						piDiagnostics.addMessage( LogLevel.INFO.value(), "SensLink 2.0 Import Adapter: Finished Adapter process.");
+						this.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Finished Adapter process.");
 						
 					}, () -> {
 						log.warn("SensLink 2.0 Import Adapter: Nothing PhysicalQuantity Histroical Data of Station from the SensLink System.");
-						piDiagnostics.addMessage( LogLevel.WARN.value(), "SensLink 2.0 Import Adapter: Nothing PhysicalQuantity Histroical Data of Station from the SensLink System." );
+						this.log( LogLevel.WARN, "SensLink 2.0 Import Adapter: Nothing PhysicalQuantity Histroical Data of Station from the SensLink System.");
 					} );
 					
 				} catch (InvalidKeyException | SignatureException | NoSuchAlgorithmException
 						| UnsupportedEncodingException e) {
 					log.error( "SensLink 2.0 Import Adapter: adapter has something wrong!.", e );
-					piDiagnostics.addMessage( LogLevel.ERROR.value(), "SensLink 2.0 Import Adapter: adapter has something wrong!." );
+					this.log( LogLevel.ERROR, "SensLink 2.0 Import Adapter: adapter has something wrong!.");
 				} 
 				
 			}, () -> { 
 				log.warn( "SensLink 2.0 Import Adapter: SensLink System Login failed." );
-				piDiagnostics.addMessage( LogLevel.WARN.value(), "SensLink 2.0 Import Adapter: SensLink System Login failed." );
+				this.log( LogLevel.WARN, "SensLink 2.0 Import Adapter: SensLink System Login failed.");
 			} );
 			
 		} catch (FileNotFoundException e) {
 			log.error("SensLink 2.0 Import Adapter: Input XML not exits!", e);
-			piDiagnostics.addMessage( LogLevel.ERROR.value(), "SensLink 2.0 Import Adapter: Input XML not exits!");
+			this.log( LogLevel.ERROR, "SensLink 2.0 Import Adapter: Input XML not exits!");
 		}
 	}
 }

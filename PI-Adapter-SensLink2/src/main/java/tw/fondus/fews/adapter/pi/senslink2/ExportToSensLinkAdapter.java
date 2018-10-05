@@ -30,6 +30,7 @@ import tw.fondus.commons.json.senslink2.util.SensLinkUtils;
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.optional.OptionalUtils;
 import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.fews.adapter.pi.senslink2.util.AdapterUtils;
 import tw.fondus.fews.adapter.pi.senslink2.util.RunArguments;
 
 /**
@@ -59,70 +60,72 @@ public class ExportToSensLinkAdapter extends PiCommandLineExecute {
 			}
 			
 			log.info("SensLink 2.0 Export Adapter: Start translate PI-XML to SensLink PhysicalQuantity Data.");
-			piDiagnostics.addMessage( LogLevel.INFO.value(), "SensLink 2.0 Export Adapter: Start translate PI-XML to SensLink PhysicalQuantity Data.");
+			this.log( LogLevel.INFO, "SensLink 2.0 Export Adapter: Start translate PI-XML to SensLink PhysicalQuantity Data.");
 			
 			int index = modelArguments.getIndex();
 			
 			TimeSeriesArrays timeSeriesArrays = TimeSeriesUtils.readPiTimeSeries( xmlPath.toFile() );
-			List<PQDataWrite> datas = SensLinkUtils.toWriteDatas( timeSeriesArrays, index );
+			List<PQDataWrite> datas = SensLinkUtils.toWriteDatas( timeSeriesArrays, 0, index );
 			
 			if ( datas.size() > 0 ){
 				log.info("SensLink 2.0 Export Adapter: export {} datas to the SensLink System.", datas.size());
-				piDiagnostics.addMessage( LogLevel.INFO.value(), Strman.append( "SensLink 2.0 Export Adapter: export ", String.valueOf( datas.size() ), " datas to the SensLink System." ));
+				this.log( LogLevel.INFO, "SensLink 2.0 Export Adapter: export {} datas to the SensLink System.", String.valueOf( datas.size() ));
 				
 				String username = modelArguments.getUsername();
 				String password = modelArguments.getPassword();
+				String host = AdapterUtils.getHost( modelArguments.getServer() );
 				
-				Optional<AuthInfoResponse> optAuth = SensLinkUtils.login( username, password );
+				Optional<AuthInfoResponse> optAuth = SensLinkUtils.login( host, username, password );
 				OptionalUtils.ifPresentOrElse( optAuth, auth -> {
+					log.info("SensLink 2.0 Export Adapter: The SensLink 2.0 system login successfully, try to write data to the SensLink 2.0 system.");
+					this.log( LogLevel.INFO, "SensLink 2.0 Export Adapter: The SensLink 2.0 system login successfully, try to write data to the SensLink 2.0 system.");
 					
-						try {
-							/** Historical **/
-							AuthenticationAction authHistorical = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.ACTION_WRITE_HISTORICAL );
-							WriteQueryParameter qpHistorical = new WriteQueryParameter();
-							qpHistorical.setAuthAction( authHistorical );
-							qpHistorical.setDatas( datas.toArray( new PQDataWrite[0] ) );
+					try {
+						/** Historical **/
+						AuthenticationAction authHistorical = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.WRITE_HISTORICAL );
+						WriteQueryParameter qpHistorical = new WriteQueryParameter();
+						qpHistorical.setAuthAction( authHistorical );
+						qpHistorical.setDatas( datas.toArray( new PQDataWrite[0] ) );
 							
-							int writedHistorical = SensLinkUtils.writeHistorical( qpHistorical );
-							log.info("SensLink 2.0 Export Adapter: success write {} historical datas to the SensLink System.", writedHistorical);
-							piDiagnostics.addMessage( LogLevel.INFO.value(), Strman.append( "SensLink 2.0 Export Adapter: success write ", String.valueOf( writedHistorical ), " historical datas to the SensLink System." ));
+						int writedHistorical = SensLinkUtils.writeHistorical( host, qpHistorical );
+						log.info("SensLink 2.0 Export Adapter: success write {} historical datas to the SensLink System.", writedHistorical);
+						this.log( LogLevel.INFO, "SensLink 2.0 Export Adapter: success write {} historical datas to the SensLink System.", String.valueOf( writedHistorical ));
+						
+						/** Real-Time **/
+						AuthenticationAction authRealTime = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.WRITE_REALTIME );
+						WriteQueryParameter qpRealTime = new WriteQueryParameter();
+						qpRealTime.setAuthAction( authRealTime );
+						qpRealTime.setDatas( datas.toArray( new PQDataWrite[0] ) );
 							
-							/** Real-Time **/
-							AuthenticationAction authRealTime = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.ACTION_WRITE_REALTIME );
-							WriteQueryParameter qpRealTime = new WriteQueryParameter();
-							qpRealTime.setAuthAction( authRealTime );
-							qpRealTime.setDatas( datas.toArray( new PQDataWrite[0] ) );
-							
-							int writedRealTime = SensLinkUtils.writeRealTime( qpRealTime );
-							log.info("SensLink 2.0 Export Adapter: success write {} real-time datas to the SensLink System.", writedRealTime );
-							piDiagnostics.addMessage( LogLevel.INFO.value(), Strman.append( "SensLink 2.0 Export Adapter: success write ", String.valueOf( writedRealTime ), " real-time datas to the SensLink System." ));
-							
-							log.info("SensLink 2.0 Export Adapter: Finished Adapter process.");
-							piDiagnostics.addMessage( LogLevel.INFO.value(), "SensLink 2.0 Export Adapter: Finished Adapter process.");
-							
-						} catch (InvalidKeyException | SignatureException | NoSuchAlgorithmException
-								| UnsupportedEncodingException e) {
-							log.error( "SensLink 2.0 Export Adapter: adapter has something wrong!.", e );
-							piDiagnostics.addMessage( LogLevel.ERROR.value(), "SensLink 2.0 Export Adapter: adapter has something wrong!." );
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							log.error( "SensLink 2.0 Export Adapter: write data has something wrong!.", e );
-							piDiagnostics.addMessage( LogLevel.ERROR.value(), "SensLink 2.0 Export Adapter: write data has something wrong!." );
-						}
+						int writedRealTime = SensLinkUtils.writeRealTime( host, qpRealTime );
+						log.info("SensLink 2.0 Export Adapter: success write {} real-time datas to the SensLink System.", writedRealTime );
+						this.log( LogLevel.INFO, "SensLink 2.0 Export Adapter: success write {} real-time datas to the SensLink System.", String.valueOf( writedRealTime ));
+						
+						log.info("SensLink 2.0 Export Adapter: Finished Adapter process.");
+						this.log( LogLevel.INFO, "SensLink 2.0 Export Adapter: Finished Adapter process.");
+						
+					} catch (InvalidKeyException | SignatureException | NoSuchAlgorithmException
+							| UnsupportedEncodingException e) {
+						log.error( "SensLink 2.0 Export Adapter: adapter has something wrong!.", e );
+						this.log( LogLevel.ERROR, "SensLink 2.0 Export Adapter: adapter has something wrong!.");
+					} catch (IOException e) {
+						log.error( "SensLink 2.0 Export Adapter: write data has something wrong!.", e );
+						this.log( LogLevel.ERROR, "SensLink 2.0 Export Adapter: write data has something wrong!.");
+					}
 						
 				}, () -> { 
 					log.warn( "SensLink 2.0 Export Adapter: SensLink System Login failed." );
-					piDiagnostics.addMessage( LogLevel.WARN.value(), "SensLink 2.0 Export Adapter: SensLink System Login failed." );
+					this.log( LogLevel.WARN, "SensLink 2.0 Export Adapter: SensLink System Login failed.");
 				} );
 				
 			} else {
 				log.info("SensLink 2.0 Export Adapter: PI-XML hasn't datas to export.");
-				piDiagnostics.addMessage( LogLevel.WARN.value(), "SensLink 2.0 Export Adapter: PI-XML hasn't datas to export.");
+				this.log( LogLevel.WARN, "SensLink 2.0 Export Adapter: PI-XML hasn't datas to export.");
 			}
 			
 		} catch (FileNotFoundException e) {
 			log.error("SensLink 2.0 Export Adapter: Input XML not exits!", e);
-			piDiagnostics.addMessage( LogLevel.ERROR.value(), "SensLink Export Adapter: Input XML not exits!");
+			this.log( LogLevel.ERROR, "SensLink 2.0 Export Adapter: Input XML not exits!");
 		}
 	}
 }

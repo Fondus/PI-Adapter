@@ -22,6 +22,9 @@ public class RunArguments extends PiArguments {
 	
 	@Parameter(names = { "--password", "-pw" }, required = true, description = "The account password.")
 	private String password;
+	
+	@Parameter(names = { "--server", "-s" }, required = true, description = "The target server, value can be 0 or 1 only.")
+	private int server;
 
 	public int getIndex() {
 		return index;
@@ -53,5 +56,13 @@ public class RunArguments extends PiArguments {
 
 	public void setPassword( String password ) {
 		this.password = password;
+	}
+
+	public int getServer() {
+		return server;
+	}
+
+	public void setServer( int server ) {
+		this.server = server;
 	}
 }

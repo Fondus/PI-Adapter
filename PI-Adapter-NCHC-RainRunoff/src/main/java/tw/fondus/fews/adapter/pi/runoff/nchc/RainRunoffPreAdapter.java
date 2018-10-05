@@ -21,6 +21,7 @@ import tw.fondus.commons.fews.pi.config.xml.log.PiDiagnostics;
 import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
 import tw.fondus.commons.fews.pi.util.adapter.PiBasicArguments;
 import tw.fondus.commons.fews.pi.util.timeseries.TimeSeriesUtils;
+import tw.fondus.commons.util.file.FileType;
 import tw.fondus.commons.util.string.StringUtils;
 
 /**
@@ -46,21 +47,22 @@ public abstract class RainRunoffPreAdapter extends PiCommandLineExecute {
 			TimeSeriesArrays timeSeriesArrays = TimeSeriesUtils.readPiTimeSeries(inputXML);
 			
 			log.info("NCHC RainRunoff PreAdapter: Start create model input files.");
-			piDiagnostics.addMessage(LogLevel.INFO.value(), "NCHC RainRunoff PreAdapter: Start create model input files.");
+			this.log( LogLevel.INFO, "NCHC RainRunoff PreAdapter: Start create model input files.");
 			
 			this.writeModelInput(piDiagnostics, timeSeriesArrays, inputDir, modelArguments.getOutputs().get(0));
 			
 			log.info("NCHC RainRunoff PreAdapter: Finished create model input files.");
+			this.log( LogLevel.INFO, "NCHC RainRunoff PreAdapter: Start create model input files.");
 			
 		} catch (FileNotFoundException e) {
 			log.error("NCHC RainRunoff PreAdapter: Input XML not exits!", e);
-			piDiagnostics.addMessage(LogLevel.ERROR.value(), "NCHC RainRunoff PreAdapter: Input XML not exits!");
+			this.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: Input XML not exists!");
 		} catch (OperationNotSupportedException e) {
 			log.error("NCHC RainRunoff PreAdapter: Read XML not exits!", e);
-			piDiagnostics.addMessage(LogLevel.ERROR.value(), "NCHC RainRunoff PreAdapter: Read XML not exits!");
+			this.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: Read XML not exists!");
 		} catch (IOException e) {
 			log.error("NCHC RainRunoff PreAdapter: IOException!", e);
-			piDiagnostics.addMessage(LogLevel.ERROR.value(), "NCHC RainRunoff PreAdapter: IOException!");
+			this.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: IOException!");
 		}
 	}
 	
@@ -83,9 +85,10 @@ public abstract class RainRunoffPreAdapter extends PiCommandLineExecute {
 			String modelInput = this.createFileContent(array);
 			
 			try {
-				FileUtils.writeText( Strman.append(outputPath, array.getHeader().getLocationId(), ".txt") , modelInput);
+				FileUtils.writeText( Strman.append(outputPath, array.getHeader().getLocationId(), StringUtils.DOT, FileType.TXT.getType()) , modelInput);
 			} catch (IOException e) {
-				piDiagnostics.addMessage(LogLevel.ERROR.value(), "Write model input faild.");
+				log.error( "NCHC RainRunoff PreAdapter: Write model input faild.", e );
+				this.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: Write model input faild.");
 			}
 		});
 	}
