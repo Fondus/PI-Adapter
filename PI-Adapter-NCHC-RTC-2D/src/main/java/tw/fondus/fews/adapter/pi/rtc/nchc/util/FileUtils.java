@@ -11,8 +11,13 @@ import strman.Strman;
 import tw.fondus.commons.util.file.FileType;
 import tw.fondus.commons.util.string.StringUtils;
 
+/**
+ * The file utils for project PI-Adapter-NCHC-RTC-2D.
+ * 
+ * @author Chao
+ *
+ */
 public class FileUtils {
-
 	/**
 	 * Copy file with same file name and different directory.
 	 * 
