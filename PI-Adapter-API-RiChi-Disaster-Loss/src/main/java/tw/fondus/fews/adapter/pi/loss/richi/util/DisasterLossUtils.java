@@ -25,7 +25,7 @@ import tw.fondus.commons.util.time.TimeUtils;
  *
  */
 public class DisasterLossUtils {
-	public static final String URL = "localhost";
+	public static final String URL = "http://124.219.79.145/FloodWebDev/api/Fews/UploadAsc?name=";
 	public static final String EVENT = "event";
 	public static final String KEY = "file";
 
@@ -97,8 +97,7 @@ public class DisasterLossUtils {
 		if ( !FileUtils.getFileExt( file ).equals( FileType.ASC.getType() ) ) {
 			String fileName = FileUtils.getNameWithoutExt( file );
 
-			Path newPath = Paths.get( Strman.append( inputDir.getPath(), StringUtils.PATH, fileName, StringUtils.DOT,
-					FileType.ASC.getType() ) );
+			Path newPath = Paths.get( Strman.append( inputDir.getPath(), StringUtils.PATH, fileName, FileType.ASC.getExtension()) );
 			FileUtils.move( file.getPath(), newPath.toFile().getPath() );
 
 			return newPath;

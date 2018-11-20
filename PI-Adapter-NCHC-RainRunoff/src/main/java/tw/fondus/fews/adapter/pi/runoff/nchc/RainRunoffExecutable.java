@@ -47,7 +47,7 @@ public abstract class RainRunoffExecutable extends PiCommandLineExecute {
 		String executableInput =  Strman.append(executableDirPath, modelArguments.getInputs().get(0));
 		String parameterInput = Strman.append(executableDirPath, modelArguments.getInputs().get(1));
 		String modelOutput = Strman.append(executableDirPath, modelArguments.getOutputs().get(0));
-		String parameterPrefix = Strman.append(FileUtils.getNameWithoutExt(parameterInput), "_");
+		String parameterPrefix = Strman.append(FileUtils.getNameWithoutExt(parameterInput), StringUtils.UNDERLINE);
 		
 		/** Get model parameters use recursive **/
 		this.readParameters(parameterDir, parameterPrefix);
