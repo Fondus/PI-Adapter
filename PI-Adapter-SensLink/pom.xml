@@ -9,7 +9,7 @@
 		<version>${adapter.version}</version>
 	</parent>
 
-	<artifactId>pi-adapter-senslink2</artifactId>
+	<artifactId>pi-adapter-senslink</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.0</version>
 
@@ -17,7 +17,7 @@
 	<url>http://www.anasystem.com.tw/senslink/</url>
 	
 	<description>
-		The FEWS Published Interface Adapter of SensLink 2.0 API is used to data exchange with Delft-FEWS system.
+		The FEWS Published Interface Adapter of SensLink API is used to data exchange with Delft-FEWS system.
 	</description>
 	
 	<properties>

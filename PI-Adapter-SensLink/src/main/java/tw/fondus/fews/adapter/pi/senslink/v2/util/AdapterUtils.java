@@ -1,6 +1,6 @@
-package tw.fondus.fews.adapter.pi.senslink2.util;
+package tw.fondus.fews.adapter.pi.senslink.v2.util;
 
-import tw.fondus.commons.json.senslink2.util.SensLinkUtils;
+import tw.fondus.commons.json.senslink.v2.util.SensLinkUtils;
 
 /**
  * The tools of PiAdaper-SensLink 2.0.

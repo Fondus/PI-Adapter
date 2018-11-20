@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.senslink2.util;
+package tw.fondus.fews.adapter.pi.senslink.v2.util;
 
 import com.beust.jcommander.Parameter;
 

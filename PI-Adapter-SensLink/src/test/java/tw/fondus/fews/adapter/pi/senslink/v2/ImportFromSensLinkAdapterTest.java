@@ -1,8 +1,9 @@
-package tw.fondus.fews.adapter.pi.senslink2;
+package tw.fondus.fews.adapter.pi.senslink.v2;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.senslink2.util.RunArguments;
+import tw.fondus.fews.adapter.pi.senslink.v2.ImportFromSensLinkAdapter;
+import tw.fondus.fews.adapter.pi.senslink.v2.util.RunArguments;
 
 /**
  * Unit test of Model adapter for import data from the SensLink 2.0.
@@ -17,7 +18,7 @@ public class ImportFromSensLinkAdapterTest {
 				"-b",
 				"\\SensLink",
 				"-t",
-				"201808231600",
+				"201810021600",
 				"-ti",
 				"0",
 				"-d",

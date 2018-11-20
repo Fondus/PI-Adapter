@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.senslink2;
+package tw.fondus.fews.adapter.pi.senslink.v2;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,16 +22,16 @@ import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.fews.pi.config.xml.log.PiDiagnostics;
 import tw.fondus.commons.fews.pi.util.adapter.PiBasicArguments;
 import tw.fondus.commons.fews.pi.util.timeseries.TimeSeriesUtils;
-import tw.fondus.commons.json.senslink2.authentication.AuthInfoResponse;
-import tw.fondus.commons.json.senslink2.authentication.AuthenticationAction;
-import tw.fondus.commons.json.senslink2.data.PQDataWrite;
-import tw.fondus.commons.json.senslink2.query.WriteQueryParameter;
-import tw.fondus.commons.json.senslink2.util.SensLinkUtils;
+import tw.fondus.commons.json.senslink.v2.authenticatio.AuthInfoResponse;
+import tw.fondus.commons.json.senslink.v2.authenticatio.AuthenticationAction;
+import tw.fondus.commons.json.senslink.v2.data.PQDataWrite;
+import tw.fondus.commons.json.senslink.v2.query.WriteQueryParameter;
+import tw.fondus.commons.json.senslink.v2.util.SensLinkUtils;
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.optional.OptionalUtils;
 import tw.fondus.commons.util.string.StringUtils;
-import tw.fondus.fews.adapter.pi.senslink2.util.AdapterUtils;
-import tw.fondus.fews.adapter.pi.senslink2.util.RunArguments;
+import tw.fondus.fews.adapter.pi.senslink.v2.util.AdapterUtils;
+import tw.fondus.fews.adapter.pi.senslink.v2.util.RunArguments;
 
 /**
  * Model adapter for export data to SensLink 2.0 with Delft-FEWS.
