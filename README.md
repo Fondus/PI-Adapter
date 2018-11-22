@@ -8,7 +8,8 @@ Delft-FEWS System will pass arguments by `standard arguments object`, and `PiCom
 - [USGS TRGIRS landslide model](https://github.com/usgs/landslides-trigrs)
 - [NCHC Rainfall Runoff models](https://www.nchc.org.tw/tw/)
 - [NCHC Grid models](https://www.nchc.org.tw/tw/)
-- [SensLink 2.0](http://www.anasystem.com.tw/senslink/)
+- [NCHC RTC-2D models](https://www.nchc.org.tw/tw/)
+- [SensLink 2.0 & 3.0](http://www.anasystem.com.tw/senslink/)
 
 ## How to work with PI-Adapter connected to Delft-FEWS
 ![Flow charts](https://i.imgur.com/BKosuN1.png)
