@@ -89,7 +89,7 @@ public class TRIGRSPostAdapter extends PiCommandLineExecute {
 			StringBuilder sb = new StringBuilder();
 			File[] mapStacksFiles = baseDir.listFiles(FileUtils.TXT_FILE_FILTER);
 			IntStream.range(0, mapStacksFiles.length).forEach(i -> {
-				sb.append( Strman.append(outputDir, namePrefix, String.format( "%04d", i), ".asc") );
+				sb.append( Strman.append(outputDir, namePrefix, String.format( "%04d", i), FileType.ASC.getExtension()) );
 				
 				try {
 					FileUtils.copy( mapStacksFiles[i].getPath(), sb.toString());
@@ -137,8 +137,8 @@ public class TRIGRSPostAdapter extends PiCommandLineExecute {
 		mapstack.setParameterId(parameter);
 		mapstack.getEndDate().setDate(endTimeStrings[0]);
 		mapstack.getEndDate().setTime(endTimeStrings[1]);
-		mapstack.getFile().getPattern().setFile( Strman.append(namePrefix, "????.asc") );
+		mapstack.getFile().getPattern().setFile( Strman.append(namePrefix, "????", FileType.ASC.getExtension()) );
 		
-		XMLUtils.toXML(new File( Strman.append(outputDir, namePrefix, StringUtils.DOT, FileType.XML.getType() ) ), mapstacks);
+		XMLUtils.toXML(new File( Strman.append(outputDir, namePrefix, FileType.XML.getExtension() ) ), mapstacks);
 	}
 }

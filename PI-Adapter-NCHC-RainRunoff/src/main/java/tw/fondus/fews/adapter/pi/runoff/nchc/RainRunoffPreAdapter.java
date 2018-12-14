@@ -85,7 +85,7 @@ public abstract class RainRunoffPreAdapter extends PiCommandLineExecute {
 			String modelInput = this.createFileContent(array);
 			
 			try {
-				FileUtils.writeText( Strman.append(outputPath, array.getHeader().getLocationId(), StringUtils.DOT, FileType.TXT.getType()) , modelInput);
+				FileUtils.writeText( Strman.append(outputPath, array.getHeader().getLocationId(), FileType.TXT.getExtension()) , modelInput);
 			} catch (IOException e) {
 				log.error( "NCHC RainRunoff PreAdapter: Write model input faild.", e );
 				this.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: Write model input faild.");

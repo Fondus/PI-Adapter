@@ -93,7 +93,7 @@ public class GridMergeExecutable extends PiCommandLineExecute {
 				map.values().forEach( list -> {
 					try {
 						File source = Paths.get( list.get( i ) ).toFile();
-						String target = Strman.append( source.getName().split( "_" )[0], StringUtils.DOT, FileType.ASC.getType() );
+						String target = Strman.append( source.getName().split( "_" )[0], FileType.ASC.getExtension() );
 						
 						FileUtils.move( source.getPath(), Strman.append( tempDir.getPath(), StringUtils.PATH, target ) );
 					} catch ( IOException e ) {
@@ -116,7 +116,7 @@ public class GridMergeExecutable extends PiCommandLineExecute {
 					
 					/** Copy to merged grid outputs **/
 					File memberOutputASC = Paths.get( Strman.append( outputDir.getPath(), StringUtils.PATH,
-							FileUtils.getNameWithoutExt( outputASC ), String.format( "%04d", i ), StringUtils.DOT, FileType.ASC.getType() ) ).toFile();
+							FileUtils.getNameWithoutExt( outputASC ), String.format( "%04d", i ), FileType.ASC.getExtension() ) ).toFile();
 					FileUtils.copy( outputASC, memberOutputASC);
 					
 					/** Clear the tempDir **/

@@ -1,8 +1,9 @@
-package tw.fondus.fews.adapter.pi.senslink2;
+package tw.fondus.fews.adapter.pi.senslink.v2;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.senslink2.util.RunArguments;
+import tw.fondus.fews.adapter.pi.senslink.v2.ExportToSensLinkAdapter;
+import tw.fondus.fews.adapter.pi.senslink.v2.util.RunArguments;
 
 /**
  * Unit test of Model adapter for export data to the SensLink 2.0.
