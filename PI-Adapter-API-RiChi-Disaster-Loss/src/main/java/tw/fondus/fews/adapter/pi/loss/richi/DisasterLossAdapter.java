@@ -71,7 +71,6 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 						Path asc = Paths.get( DisasterLossUtils.getASCAbsolutePath( inputDir, mapStack, i ) );
 						Preconditions.checkState( Files.exists( asc ),
 								"DisasterLossAdapter: Can not find ASC file exist." );
-						
 						Path rename = DisasterLossUtils.renameToASC( asc, inputDir );
 
 						log.info( "DisasterLossAdapter: Connecting disaster loss API with {}.",
@@ -222,7 +221,7 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 						lossCollection.getLossList().get( i ).getH1Loss().floatValue() );
 			} );
 			break;
-		case H1COUNT:
+		case H1UNIT:
 			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
 				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
 						lossCollection.getLossList().get( i ).getH1Count().floatValue() );
@@ -234,7 +233,7 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 						lossCollection.getLossList().get( i ).getH2Loss().floatValue() );
 			} );
 			break;
-		case H2COUNT:
+		case H2UNIT:
 			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
 				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
 						lossCollection.getLossList().get( i ).getH2Count().floatValue() );
@@ -322,6 +321,78 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
 				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
 						lossCollection.getLossList().get( i ).getpArea().floatValue() );
+			} );
+			break;
+		case L1LOSS:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL1Loss().floatValue() );
+			} );
+			break;
+		case L1NUMBER:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL1Number().floatValue() );
+			} );
+			break;
+		case L2LOSS:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL2Loss().floatValue() );
+			} );
+			break;
+		case L2NUMBER:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL2Number().floatValue() );
+			} );
+			break;
+		case L3LOSS:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL3Loss().floatValue() );
+			} );
+			break;
+		case L3NUMBER:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL3Number().floatValue() );
+			} );
+			break;
+		case L4LOSS:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL4Loss().floatValue() );
+			} );
+			break;
+		case L4NUMBER:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL4Number().floatValue() );
+			} );
+			break;
+		case L5LOSS:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL5Loss().floatValue() );
+			} );
+			break;
+		case L5NUMBER:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL5Number().floatValue() );
+			} );
+			break;
+		case L6LOSS:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL6Loss().floatValue() );
+			} );
+			break;
+		case L6NUMBER:
+			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
+				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
+						lossCollection.getLossList().get( i ).getL6Number().floatValue() );
 			} );
 			break;
 		}

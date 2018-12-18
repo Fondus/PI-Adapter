@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import nl.wldelft.util.FileUtils;
@@ -15,6 +16,7 @@ import tw.fondus.commons.fews.pi.config.xml.mapstacks.MapStack;
 import tw.fondus.commons.util.file.FileType;
 import tw.fondus.commons.util.http.HttpClient;
 import tw.fondus.commons.util.http.HttpUtils;
+import tw.fondus.commons.util.optional.OptionalUtils;
 import tw.fondus.commons.util.string.StringUtils;
 import tw.fondus.commons.util.time.TimeUtils;
 
@@ -25,7 +27,6 @@ import tw.fondus.commons.util.time.TimeUtils;
  *
  */
 public class DisasterLossUtils {
-	public static final String URL = "http://124.219.79.145/FloodWebDev/api/Fews/UploadAsc?name=";
 	public static final String EVENT = "event";
 	public static final String KEY = "file";
 
@@ -97,7 +98,7 @@ public class DisasterLossUtils {
 		if ( !FileUtils.getFileExt( file ).equals( FileType.ASC.getType() ) ) {
 			String fileName = FileUtils.getNameWithoutExt( file );
 
-			Path newPath = Paths.get( Strman.append( inputDir.getPath(), StringUtils.PATH, fileName, FileType.ASC.getExtension()) );
+			Path newPath = Paths.get( Strman.append( inputDir.getPath(), StringUtils.PATH, fileName, FileType.ASC.getExtension() ) );
 			FileUtils.move( file.getPath(), newPath.toFile().getPath() );
 
 			return newPath;
@@ -150,35 +151,15 @@ public class DisasterLossUtils {
 	 * @throws IOException
 	 */
 	public static String postDisasterLossAPI( HttpClient client, Path ascPath ) throws IOException {
-		return postDisasterLossAPI( client, ascPath, EVENT );
-	}
-
-	/**
-	 * Post API of RiChi Disaster Loss.
-	 * 
-	 * @param client
-	 * @param ascPath
-	 * @param event
-	 * @return
-	 * @throws IOException
-	 */
-	public static String postDisasterLossAPI( HttpClient client, Path ascPath, String event ) throws IOException {
-		return postDisasterLossAPI( client, ascPath, event, URL );
-	}
-
-	/**
-	 * Post API of RiChi Disaster Loss.
-	 * 
-	 * @param client
-	 * @param ascPath
-	 * @param event
-	 * @param url
-	 * @return
-	 * @throws IOException
-	 */
-	public static String postDisasterLossAPI( HttpClient client, Path ascPath, String event, String url )
-			throws IOException {
-		RequestBody requestBody = HttpUtils.createFormDataBody( KEY, ascPath.toFile().getName(), ascPath.toFile() );
-		return client.postForm( Strman.append( url, event ), requestBody );
+		Optional<String> optURL = DisasterLossProperties.getProperty( DisasterLossProperties.URL );
+		Optional<String> optKeyName = DisasterLossProperties.getProperty( DisasterLossProperties.API_KEY_NAME );
+		Optional<String> optKeyValue = DisasterLossProperties.getProperty( DisasterLossProperties.API_KEY_VALUE );
+		
+		if( OptionalUtils.allMatch( optURL, optKeyName, optKeyValue ) ){
+			RequestBody requestBody = HttpUtils.createFormDataBody( KEY, ascPath.toFile().getName(), ascPath.toFile() );
+			return client.postForm( Strman.append( optURL.get(), EVENT ), requestBody, optKeyName.get(), optKeyValue.get() );
+		}else {
+			throw new IOException( "There are empty value of disaster loss properties" );
+		}
 	}
 }
