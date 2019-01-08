@@ -44,13 +44,13 @@ public class Loss {
 	@Element( name = "H1LOSS" )
 	private BigDecimal h1Loss;
 	
-	@Element( name = "H1COUNT" )
+	@Element( name = "H1UNIT" )
 	private BigDecimal h1Count;
 
 	@Element( name = "H2LOSS" )
 	private BigDecimal h2Loss;
 	
-	@Element( name = "H2COUNT" )
+	@Element( name = "H2UNIT" )
 	private BigDecimal h2Count;
 
 	@Element( name = "F1LOSS" )
@@ -94,6 +94,42 @@ public class Loss {
 	
 	@Element( name = "PAREA" )
 	private BigDecimal pArea;
+	
+	@Element( name = "L1LOSS" )
+	private BigDecimal l1Loss;
+	
+	@Element( name = "L1NUMBER" )
+	private BigDecimal l1Number;
+	
+	@Element( name = "L2LOSS" )
+	private BigDecimal l2Loss;
+	
+	@Element( name = "L2NUMBER" )
+	private BigDecimal l2Number;
+	
+	@Element( name = "L3LOSS" )
+	private BigDecimal l3Loss;
+	
+	@Element( name = "L3NUMBER" )
+	private BigDecimal l3Number;
+	
+	@Element( name = "L4LOSS" )
+	private BigDecimal l4Loss;
+	
+	@Element( name = "L4NUMBER" )
+	private BigDecimal l4Number;
+	
+	@Element( name = "L5LOSS" )
+	private BigDecimal l5Loss;
+	
+	@Element( name = "L5NUMBER" )
+	private BigDecimal l5Number;
+	
+	@Element( name = "L6LOSS" )
+	private BigDecimal l6Loss;
+	
+	@Element( name = "L6NUMBER" )
+	private BigDecimal l6Number;
 
 	public String getTownId() {
 		return townId;
@@ -318,5 +354,101 @@ public class Loss {
 	public void setpArea( BigDecimal pArea ) {
 		this.pArea = pArea;
 	}
-	
+
+	public BigDecimal getL1Loss() {
+		return l1Loss;
+	}
+
+	public void setL1Loss( BigDecimal l1Loss ) {
+		this.l1Loss = l1Loss;
+	}
+
+	public BigDecimal getL1Number() {
+		return l1Number;
+	}
+
+	public void setL1Number( BigDecimal l1Number ) {
+		this.l1Number = l1Number;
+	}
+
+	public BigDecimal getL2Loss() {
+		return l2Loss;
+	}
+
+	public void setL2Loss( BigDecimal l2Loss ) {
+		this.l2Loss = l2Loss;
+	}
+
+	public BigDecimal getL2Number() {
+		return l2Number;
+	}
+
+	public void setL2Number( BigDecimal l2Number ) {
+		this.l2Number = l2Number;
+	}
+
+	public BigDecimal getL3Loss() {
+		return l3Loss;
+	}
+
+	public void setL3Loss( BigDecimal l3Loss ) {
+		this.l3Loss = l3Loss;
+	}
+
+	public BigDecimal getL3Number() {
+		return l3Number;
+	}
+
+	public void setL3Number( BigDecimal l3Number ) {
+		this.l3Number = l3Number;
+	}
+
+	public BigDecimal getL4Loss() {
+		return l4Loss;
+	}
+
+	public void setL4Loss( BigDecimal l4Loss ) {
+		this.l4Loss = l4Loss;
+	}
+
+	public BigDecimal getL4Number() {
+		return l4Number;
+	}
+
+	public void setL4Number( BigDecimal l4Number ) {
+		this.l4Number = l4Number;
+	}
+
+	public BigDecimal getL5Loss() {
+		return l5Loss;
+	}
+
+	public void setL5Loss( BigDecimal l5Loss ) {
+		this.l5Loss = l5Loss;
+	}
+
+	public BigDecimal getL5Number() {
+		return l5Number;
+	}
+
+	public void setL5Number( BigDecimal l5Number ) {
+		this.l5Number = l5Number;
+	}
+
+	public BigDecimal getL6Loss() {
+		return l6Loss;
+	}
+
+	public void setL6Loss( BigDecimal l6Loss ) {
+		this.l6Loss = l6Loss;
+	}
+
+	public BigDecimal getL6Number() {
+		return l6Number;
+	}
+
+	public void setL6Number( BigDecimal l6Number ) {
+		this.l6Number = l6Number;
+	}
+
 }
