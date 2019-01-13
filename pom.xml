@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"><modelVersion>4.0.0</modelVersion>
 
 	<groupId>tw.fondus.fews.adapter</groupId>
 	<artifactId>pi-adapter</artifactId>
@@ -38,18 +38,25 @@
 		<jodatime.version>2.9.9</jodatime.version>
 		<log4j.version>1.2.17</log4j.version>
 		<slf4j.version>1.7.25</slf4j.version>
+		<commons-lang.version>3.8.1</commons-lang.version>
 		<guava.version>23.4-jre</guava.version>
 		<jcommand.verison>1.72</jcommand.verison>
 		<command.magic.verison>1.2.0</command.magic.verison>
 		<fews.version>2017.01</fews.version>
 		<xerces.version>2.11.0</xerces.version>
 		<junit.version>4.12</junit.version>
-		<commons.version>0.8.0</commons.version>
-		<commons.utils.version>0.7.2</commons.utils.version>
+		<commons.version>0.8.5</commons.version>
+		<commons.utils.version>0.8.0</commons.utils.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- Apache Commons Lang -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang.version}</version>
+			</dependency>
 			<!-- Commons-SensLink -->
 			<dependency>
 				<groupId>tw.fondus.commons</groupId>
@@ -227,7 +234,5 @@
 		<module>PI-Adapter-NCHC-RainRunoff</module>
 		<module>PI-Adapter-GridMerge</module>
 		<module>PI-Adapter-SensLink</module>
-		<module>PI-Adapter-API-RiChi-Disaster-Loss</module>
 		<module>PI-Adapter-NCHC-RTC-2D</module>
-	</modules>
 </project>
