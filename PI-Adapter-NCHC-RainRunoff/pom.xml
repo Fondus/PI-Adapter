@@ -9,17 +9,29 @@
 		<version>${adapter.version}</version>
 	</parent>
 
-	<artifactId>pi-adapter-nchc-rr</artifactId>
+	<artifactId>pi-adapter-senslink</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.0</version>
 
-	<name>The NCHC Hydrological Rain-Runoff models Published Interface Adapter</name>
-	<url>https://www.nchc.org.tw/tw/</url>
-
+	<name>The SensLink Published Interface Adapter</name>
+	<url>http://www.anasystem.com.tw/senslink/</url>
+	
 	<description>
-		The FEWS Published Interface Adapter of NCHC Hydrological Rain-Runoff models is used to data exchange with Delft-FEWS system.
+		The FEWS Published Interface Adapter of SensLink API is used to data exchange with Delft-FEWS system.
 	</description>
-
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<dependencies>
+		<!-- Commons-SensLink -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-senslink</artifactId>
+		</dependency>
+	</dependencies>
+	
 	<build>
 		<plugins>
 			<!-- Copy dependencies to target folder -->
