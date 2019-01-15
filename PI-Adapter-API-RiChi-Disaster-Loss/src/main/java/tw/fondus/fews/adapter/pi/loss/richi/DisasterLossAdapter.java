@@ -33,6 +33,7 @@ import tw.fondus.fews.adapter.pi.loss.richi.util.DisasterLossUtils;
 import tw.fondus.fews.adapter.pi.loss.richi.util.LossCollection;
 import tw.fondus.fews.adapter.pi.loss.richi.util.Parameter;
 import tw.fondus.fews.adapter.pi.loss.richi.xml.Data;
+import tw.fondus.fews.adapter.pi.loss.richi.xml.ErrorData;
 
 /**
  * The adapter of RiChi Disaster Loss API for running from Delft-FEWS.
@@ -71,40 +72,51 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 						Path asc = Paths.get( DisasterLossUtils.getASCAbsolutePath( inputDir, mapStack, i ) );
 						Preconditions.checkState( Files.exists( asc ),
 								"DisasterLossAdapter: Can not find ASC file exist." );
+
+						String fileName = asc.toFile().getName();
 						Path rename = DisasterLossUtils.renameToASC( asc, inputDir );
 
-						log.info( "DisasterLossAdapter: Connecting disaster loss API with {}.",
-								rename.toFile().getName() );
+						log.info( "DisasterLossAdapter: Connecting disaster loss API with {}.", fileName );
 						this.log( LogLevel.INFO, "DisasterLossAdapter: Connecting disaster loss API with {}.",
-								rename.toFile().getName() );
+								fileName );
 
-						Data data = XMLUtils.fromXML( DisasterLossUtils.postDisasterLossAPI( client, rename ),
-								Data.class );
-						data.getLossList().forEach( loss -> {
-							try {
-								if ( lossMap.containsKey( loss.getTownId() ) ) {
-									lossMap.get( loss.getTownId() ).addData( loss,
-											DisasterLossUtils.getDataDateLong( mapStack, i ) );
-								} else {
-									lossMap.put( loss.getTownId(), new LossCollection( loss,
-											DisasterLossUtils.getDataDateLong( mapStack, i ) ) );
+						String result = DisasterLossUtils.postDisasterLossAPI( client, rename );
+
+						if ( result.contains( "<Code>" ) ) {
+							ErrorData errorData = XMLUtils.fromXML( result, ErrorData.class );
+							log.error( "DisasterLossAdapter: {}", errorData.getMessage() );
+							this.log( LogLevel.ERROR, "DisasterLossAdapter: {}", errorData.getMessage() );
+							throw new Exception();
+						} else {
+							Data data = XMLUtils.fromXML( result, Data.class );
+							data.getLossList().forEach( loss -> {
+								try {
+									if ( lossMap.containsKey( loss.getTownId() ) ) {
+										lossMap.get( loss.getTownId() ).addData( loss,
+												DisasterLossUtils.getDataDateLong( mapStack, i ) );
+									} else {
+										lossMap.put( loss.getTownId(), new LossCollection( loss,
+												DisasterLossUtils.getDataDateLong( mapStack, i ) ) );
+									}
+								} catch (ParseException e) {
+									log.error( "DisasterLossAdapter: Get data time from map stack has something wrong.",
+											e );
+									this.log( LogLevel.ERROR,
+											"DisasterLossAdapter: Get data time from map stack has something wrong." );
 								}
-							} catch (ParseException e) {
-								log.error( "DisasterLossAdapter: Get data time from map stack has something wrong.", e );
-								this.log( LogLevel.ERROR, "DisasterLossAdapter: Get data time from map stack has something wrong." );
-							}
-						} );
+							} );
+						}
 					} catch (IOException e) {
-						log.error( "DisasterLossAdapter: Post form has something wrong.", e );
-						this.log( LogLevel.ERROR, "DisasterLossAdapter: Post form has something wrong." );
+						log.error( "DisasterLossAdapter: Post ASC to API has something wrong.", e );
+						this.log( LogLevel.ERROR, "DisasterLossAdapter: Post ASC to API has something wrong." );
 					} catch (Exception e) {
 						log.error( "DisasterLossAdapter: Parsing xml has something wrong.", e );
 						this.log( LogLevel.ERROR, "DisasterLossAdapter: Parsing xml has something wrong." );
 					}
 				} );
-			} catch (Exception e) {
-				log.error( "DisasterLossAdapter: Transform time has something wrong.", e );
-				this.log( LogLevel.ERROR, "DisasterLossAdapter: Transform time has something wrong." );
+			} catch (ParseException e) {
+				log.error( "DisasterLossAdapter: Calculate timesteps has something wrong.", e );
+				this.log( LogLevel.ERROR, "DisasterLossAdapter: Calculate timesteps has something wrong." );
 			}
 		} );
 
@@ -123,7 +135,7 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 		}
 
 		log.info( "DisasterLossAdapter: End the DisasterLossAdapter." );
-		this.log( LogLevel.INFO, "DisasterLossAdapter: End the DisasterLossAdapter."  );
+		this.log( LogLevel.INFO, "DisasterLossAdapter: End the DisasterLossAdapter." );
 	}
 
 	/**
@@ -189,7 +201,8 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
 				TimeSeriesUtils.addPiTimeSeriesValue( handler, lossCollection.getDataTimeLongList().get( i ),
 						lossCollection.getLossList().get( i ).getC2Area().floatValue() );
-			} );;
+			} );
+			;
 			break;
 		case C3LOSS:
 			IntStream.range( 0, lossCollection.getLossList().size() ).forEach( i -> {
