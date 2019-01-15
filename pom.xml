@@ -236,6 +236,6 @@
 		<module>PI-Adapter-GridMerge</module>
 		<module>PI-Adapter-SensLink</module>
 		<module>PI-Adapter-API-RiChi-Disaster-Loss</module>
-		<module>PI-Adapter-NCTU-AI</module>
+		<module>PI-Adapter-NCTU-RTC-2D</module>
 	</modules>
 </project>
