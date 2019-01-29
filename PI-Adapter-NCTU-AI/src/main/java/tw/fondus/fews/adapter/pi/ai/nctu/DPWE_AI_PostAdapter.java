@@ -35,7 +35,6 @@ import tw.fondus.commons.util.time.TimeUtils;
  */
 public class DPWE_AI_PostAdapter extends PiCommandLineExecute {
 	private static final String LOCATION_ID = "map";
-	private static final String PARAMETER_ID = "Depth";
 	private static final String PATTERN = "dm1d????.asc";
 	private static final String GEODATUM = "TWD 1997";
 	private static final String TIME_ZONE = "8.0";
@@ -81,7 +80,7 @@ public class DPWE_AI_PostAdapter extends PiCommandLineExecute {
 			/** Read time info and create the map stacks meta info **/
 			DateTime timeZero = this.readTimeInfo( timeInfoPath );
 			File mapMetaInfo = PathUtils.get( Strman.append( outputDir.getPath(), StringUtils.SLASH, modelArguments.getOutputs().get( 0 ) ) ).toFile();
-			this.createMapStacks( timeZero, mapMetaInfo );
+			this.createMapStacks( timeZero, mapMetaInfo, modelArguments.getParameter() );
 			
 			log.info( "DPWE AI PostAdapter: End the PostAdapter to process with model output." );
 			this.log( LogLevel.INFO, "DPWE AI PostAdapter: End the PostAdapter to process with model output.");
@@ -128,9 +127,10 @@ public class DPWE_AI_PostAdapter extends PiCommandLineExecute {
 	 * 
 	 * @param timeZero
 	 * @param target
+	 * @param parameterId
 	 * @throws Exception 
 	 */
-	private void createMapStacks( DateTime timeZero, File target ) throws Exception {
+	private void createMapStacks( DateTime timeZero, File target, String parameterId ) throws Exception {
 		log.info( "DPWE AI PostAdapter: Create the MapStacks.xml with file name: {}.", target.getName()  );
 		this.log( LogLevel.INFO, "DPWE AI PostAdapter: Create the MapStacks.xml with file name: {}.", target.getName());
 		
@@ -145,7 +145,7 @@ public class DPWE_AI_PostAdapter extends PiCommandLineExecute {
 		
 		mapstack.getFile().getPattern().setFile( PATTERN );
 		mapstack.setLocationId( LOCATION_ID );
-		mapstack.setParameterId( PARAMETER_ID );
+		mapstack.setParameterId( parameterId );
 		
 		MapStacks mapStacks = new MapStacks();
 		mapStacks.setGeoDatum( GEODATUM );
