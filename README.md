@@ -10,6 +10,7 @@ Delft-FEWS System will pass arguments by `standard arguments object`, and `PiCom
 - [NCHC Grid models](https://www.nchc.org.tw/tw/)
 - [NCHC RTC-2D models](https://www.nchc.org.tw/tw/)
 - [SensLink 2.0 & 3.0](http://www.anasystem.com.tw/senslink/)
+- [NCTU DPWE AI Model](http://dpwe.nctu.edu.tw/)
 
 ## How to work with PI-Adapter connected to Delft-FEWS
 ![Flow charts](https://i.imgur.com/BKosuN1.png)
