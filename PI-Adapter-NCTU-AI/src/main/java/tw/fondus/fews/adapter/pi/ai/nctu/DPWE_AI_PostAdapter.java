@@ -62,6 +62,9 @@ public class DPWE_AI_PostAdapter extends PiCommandLineExecute {
 				"DPWE AI PostAdapter: The Output map stacks meta info file name not give by command -o." );
 		
 		try {
+			log.info( "DPWE AI PostAdapter: Start the PostAdapter to process with model output." );
+			this.log( LogLevel.INFO, "DPWE AI PostAdapter: Start the PostAdapter to process with model output.");
+			
 			/** Check state **/
 			Path timeInfoPath = this.checkExists( inputDir.getPath(), modelArguments.getInputs().get( 0 ), "DPWE AI PostAdapter: The input time.txt do not exists." );
 			Path time0ZIP = this.checkExists( inputDir.getPath(), modelArguments.getInputs().get( 1 ), "DPWE AI PostAdapter: The input T.zip do not exists." );
@@ -79,6 +82,9 @@ public class DPWE_AI_PostAdapter extends PiCommandLineExecute {
 			DateTime timeZero = this.readTimeInfo( timeInfoPath );
 			File mapMetaInfo = PathUtils.get( Strman.append( outputDir.getPath(), StringUtils.SLASH, modelArguments.getOutputs().get( 0 ) ) ).toFile();
 			this.createMapStacks( timeZero, mapMetaInfo );
+			
+			log.info( "DPWE AI PostAdapter: End the PostAdapter to process with model output." );
+			this.log( LogLevel.INFO, "DPWE AI PostAdapter: End the PostAdapter to process with model output.");
 			
 		} catch ( FileNotFoundException e ) {
 			log.error("DPWE AI PostAdapter: The input files not exits!", e);
@@ -125,6 +131,9 @@ public class DPWE_AI_PostAdapter extends PiCommandLineExecute {
 	 * @throws Exception 
 	 */
 	private void createMapStacks( DateTime timeZero, File target ) throws Exception {
+		log.info( "DPWE AI PostAdapter: Create the MapStacks.xml with file name: {}.", target.getName()  );
+		this.log( LogLevel.INFO, "DPWE AI PostAdapter: Create the MapStacks.xml with file name: {}.", target.getName());
+		
 		MapStack mapstack = new MapStack();
 		mapstack.getStartDate().setDate( TimeUtils.toString( timeZero, TimeUtils.YMD ) );
 		mapstack.getStartDate().setTime( Strman.append( String.valueOf( timeZero.getHourOfDay() ), TIME_SUFFIX ) );
@@ -163,6 +172,9 @@ public class DPWE_AI_PostAdapter extends PiCommandLineExecute {
 		ZipUtils.unzip( zipPath.toFile().getPath(), outputFolder );
 		
 		PathUtils.rename( sourceFilePath, outputFileName );
+		
+		log.info( "DPWE AI PostAdapter: Unzip process with the zip file: {} to pattern name: {}.", PathUtils.getName( zipPath ), outputFileName );
+		this.log( LogLevel.INFO, "DPWE AI PostAdapter: Unzip process with the zip file: {} to pattern name: {}.", PathUtils.getName( zipPath ), outputFileName );
 	}
 	
 	/**
