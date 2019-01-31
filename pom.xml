@@ -237,5 +237,6 @@
 		<module>PI-Adapter-SensLink</module>
 		<module>PI-Adapter-API-RiChi-Disaster-Loss</module>
 		<module>PI-Adapter-NCHC-RTC-2D</module>
+		<module>PI-Adapter-NCHC-LongTimeFlow</module>
 	</modules>
 </project>
