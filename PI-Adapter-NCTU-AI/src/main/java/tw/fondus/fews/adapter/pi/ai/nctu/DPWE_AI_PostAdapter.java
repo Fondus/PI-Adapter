@@ -136,9 +136,9 @@ public class DPWE_AI_PostAdapter extends PiCommandLineExecute {
 		
 		MapStack mapstack = new MapStack();
 		mapstack.getStartDate().setDate( TimeUtils.toString( timeZero, TimeUtils.YMD ) );
-		mapstack.getStartDate().setTime( Strman.append( String.valueOf( timeZero.getHourOfDay() ), TIME_SUFFIX ) );
+		mapstack.getStartDate().setTime( Strman.append( TimeUtils.toString( timeZero, "HH" ), TIME_SUFFIX ) );
 		mapstack.getEndDate().setDate( TimeUtils.toString( timeZero.plusHours( 3 ), TimeUtils.YMD ) );
-		mapstack.getEndDate().setTime( Strman.append( String.valueOf( timeZero.plusHours( 3 ).getHourOfDay() ), TIME_SUFFIX ) );
+		mapstack.getEndDate().setTime( Strman.append( TimeUtils.toString( timeZero.plusHours( 3 ), "HH" ), TIME_SUFFIX ) );
 		
 		mapstack.getTimeStep().setMultiplier( TIME_STEP );
 		mapstack.getTimeStep().setUnit( TIME_UNIT );;
