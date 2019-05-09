@@ -10,17 +10,17 @@ import com.beust.jcommander.Parameter;
  * @author Chao
  *
  */
-public class RunArguments extends PreArguments {
+public class RunArguments extends PreAdapterArguments {
 	@Parameter( names = { "--edir",
-			"-ed" }, required = true, description = "The model executable directory path, relative to the current working directory." )
-	private String executableDir;
+			"-ed" }, description = "The model executable directory path, relative to the current working directory." )
+	private String executableDir = "Work/";
 
 	@Parameter( names = { "--executable", "-e" }, required = true, description = "The model executable." )
 	private List<String> executable;
-
+	
 	@Parameter( names = { "--tdir",
-			"-td" }, description = "The template directory of temp file of model input or output." )
-	protected String tempDir = "Template/";
+			"-td" }, required = true, description = "The template directory of model file." )
+	protected String templateDir;
 
 	@Parameter( names = { "--pname",
 			"-pn" }, description = "The project name for backup output file name." )
@@ -42,12 +42,12 @@ public class RunArguments extends PreArguments {
 		this.executable = executable;
 	}
 
-	public String getTempDir() {
-		return tempDir;
+	public String getTemplateDir() {
+		return templateDir;
 	}
 
-	public void setTempDir( String tempDir ) {
-		this.tempDir = tempDir;
+	public void setTemplateDir( String templateDir ) {
+		this.templateDir = templateDir;
 	}
 
 	public String getProjectName() {
