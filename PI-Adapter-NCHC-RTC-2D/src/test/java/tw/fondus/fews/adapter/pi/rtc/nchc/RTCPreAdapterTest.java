@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.rtc.nchc;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.rtc.nchc.util.PreArguments;
+import tw.fondus.fews.adapter.pi.rtc.nchc.util.PreAdapterArguments;
 
 /**
  * Unit test of Model pre-adapter for running NCHC RTC model. 
@@ -17,14 +17,14 @@ public class RTCPreAdapterTest {
 				"-b",
 				"src/test/resources/",
 				"-i",
-				"Similation.xml,Observation.xml",
+				"Simulation.xml,Observation.xml",
 				"-o",
-				"INPUT_CORR_SIM_WH.TXT,INPUT_WH_EST_OBS_GAUGES.TXT",
+				"",
 				"-f",
-				"4"
+				"3"
 		};
 		
-		PreArguments arguments = new PreArguments();
+		PreAdapterArguments arguments = new PreAdapterArguments();
 		new RTCPreAdapter().execute( args, arguments );
 	}
 }

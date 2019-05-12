@@ -63,20 +63,20 @@ public class ContentBuilder {
 			IntStream.range( 0, similationTimeSeriesArray[timeSeries].size() ).forEach( data -> {
 				if ( data == 0 ) {
 					sj.add( Strman.append( StringUtils.SPACE_WHITE,
-							String.valueOf( similationTimeSeriesArray[timeSeries].getValue( data ) ),
+							getDataString( similationTimeSeriesArray[timeSeries].getValue( data ) ),
 							StringUtils.SPACE_WHITE,
-							String.valueOf( observationTimeSeriesArray[timeSeries].getValue( data ) ),
+							getDataString( observationTimeSeriesArray[timeSeries].getValue( data ) ),
 							StringUtils.SPACE_WHITE, dataInfo ) );
 				} else {
 					if ( data >= observationTimeSeriesArray[timeSeries].size() ) {
 						sj.add( Strman.append( StringUtils.SPACE_WHITE,
-								String.valueOf( similationTimeSeriesArray[timeSeries].getValue( data ) ),
+								getDataString( similationTimeSeriesArray[timeSeries].getValue( data ) ),
 								StringUtils.SPACE_WHITE, missingValue ) );
 					} else {
 						sj.add( Strman.append( StringUtils.SPACE_WHITE,
-								String.valueOf( similationTimeSeriesArray[timeSeries].getValue( data ) ),
+								getDataString( similationTimeSeriesArray[timeSeries].getValue( data ) ),
 								StringUtils.SPACE_WHITE,
-								String.valueOf( observationTimeSeriesArray[timeSeries].getValue( data ) ) ) );
+								getDataString( observationTimeSeriesArray[timeSeries].getValue( data ) ) ) );
 					}
 				}
 			} );
@@ -86,5 +86,15 @@ public class ContentBuilder {
 		} );
 
 		return sj.toString();
+	}
+	
+	private static String getDataString( float value ){
+		String stringData = String.valueOf( value );
+		if( stringData.equals( "NaN" ) ){
+			stringData = "0";
+			return stringData;
+		}else {
+			return stringData;
+		}
 	}
 }
