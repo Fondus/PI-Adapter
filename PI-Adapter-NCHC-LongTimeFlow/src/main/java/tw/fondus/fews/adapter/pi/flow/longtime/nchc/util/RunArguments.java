@@ -1,16 +1,18 @@
-package tw.fondus.fews.adapter.pi.rtc.nchc.util;
+package tw.fondus.fews.adapter.pi.flow.longtime.nchc.util;
 
 import java.util.List;
 
 import com.beust.jcommander.Parameter;
 
+import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
+
 /**
- * Model executable-adapter arguments for running NCHC RTC model.
+ * Model executable-adapter arguments for running NCHC long time flow model.
  * 
  * @author Chao
  *
  */
-public class RunArguments extends PreAdapterArguments {
+public class RunArguments extends PiArguments {
 	@Parameter( names = { "--edir",
 			"-ed" }, description = "The model executable directory path, relative to the current working directory." )
 	private String executableDir = "Work/";
@@ -19,8 +21,8 @@ public class RunArguments extends PreAdapterArguments {
 	private List<String> executable;
 	
 	@Parameter( names = { "--tdir",
-			"-td" }, required = true, description = "The template directory of model file." )
-	protected String templateDir;
+			"-td" }, description = "The template directory of model file." )
+	protected String templateDir = "Template/";
 
 	@Parameter( names = { "--pname",
 			"-pn" }, description = "The project name for backup output file name." )

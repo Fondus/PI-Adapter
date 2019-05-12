@@ -70,7 +70,7 @@ public class DisasterLossUtils {
 	 * @return
 	 * @throws Exception
 	 */
-	public static int calculateTimeSteps( MapStack mapStack ) throws Exception {
+	public static int calculateTimeSteps( MapStack mapStack ) throws ParseException {
 		long start = TimeUtils.toDate( Strman.append( mapStack.getStartDate().getDate(), StringUtils.SPACE_WHITE,
 				mapStack.getStartDate().getTime() ), TimeUtils.YMDHMS, TimeUtils.GMT0 ).getTime();
 		long end = TimeUtils.toDate( Strman.append( mapStack.getEndDate().getDate(), StringUtils.SPACE_WHITE,
