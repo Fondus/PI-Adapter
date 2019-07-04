@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>tw.fondus.fews.adapter</groupId>
+		<artifactId>pi-adapter</artifactId>
+		<version>${adapter.version}</version>
+	</parent>
+	
+	<artifactId>pi-adapter-example</artifactId>
+	<packaging>jar</packaging>
+	<version>2.0.0</version>
+	
+	<name>The Example models Published Interface Adapter</name>
+	
+	<description>
+		The FEWS Published Interface Adapter of Example model is used to show how to data exchange with Delft-FEWS system.
+	</description>
+	
+	<dependencies>
+		<!-- PI-Adapter Commons -->
+		<dependency>
+			<groupId>tw.fondus.fews.adapter</groupId>
+			<artifactId>pi-adapter-commons</artifactId>
+		</dependency>
+	</dependencies>
+</project>
