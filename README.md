@@ -15,7 +15,7 @@ Three adapters through the `Published Interface` to synchronous communication wi
 
 ## Commons Adapter Module
 
-The [Commons Adapter Module](/PI-Adapter-Commons/)'s `PiCommandLineExecute`  will receive the Delft-FEWS System pass information by `standard arguments`, so you can focus implements your adapter logic.
+The [Commons Adapter Module](/PI-Adapter-Commons/)'s `PiCommandLineExecute` will receive the Delft-FEWS System pass information by `standard arguments`, so you can focus implements your adapter logic.
 
 If you want see the **fully integrate model example** with PreAdapter, Executable Adapter and Post Adapter, please have a look at [here](/PI-Adapter-Example/).
 
