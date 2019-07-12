@@ -12,7 +12,7 @@
 
 	<artifactId>pi-adapter-nchc-rr</artifactId>
 	<packaging>jar</packaging>
-	<version>2.0.0-SNAPSHOT</version>
+	<version>2.0.0</version>
 
 	<name>The NCHC Hydrological Rain-Runoff models Published Interface Adapter</name>
 	<url>https://www.nchc.org.tw/tw/</url>
