@@ -2,7 +2,9 @@ package tw.fondus.fews.adapter.pi.runoff.nchc.util;
 
 import com.beust.jcommander.Parameter;
 
-import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 /**
  * Model executable-adapter arguments for running NCHC RR model.
@@ -10,7 +12,9 @@ import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
  * @author Brad Chen
  *
  */
-public class RunArguments extends PiArguments {
+@Data
+@EqualsAndHashCode( callSuper = false )
+public class RunArguments extends PiIOArguments {
 	@Parameter(names = { "--pdir", "-pd" }, required = true, description = "The model parameters directory, relative to the current working directory.")
 	private String parametersPath;
 	
@@ -19,28 +23,4 @@ public class RunArguments extends PiArguments {
 	
 	@Parameter(names = { "--executable", "-e" }, required = true, description = "The model executable.")
 	private String executable;
-
-	public String getParametersPath() {
-		return parametersPath;
-	}
-
-	public void setParametersPath(String parametersPath) {
-		this.parametersPath = parametersPath;
-	}
-
-	public String getExecutablePath() {
-		return executablePath;
-	}
-
-	public void setExecutablePath(String executablePath) {
-		this.executablePath = executablePath;
-	}
-
-	public String getExecutable() {
-		return executable;
-	}
-
-	public void setExecutable( String executable ) {
-		this.executable = executable;
-	}
 }

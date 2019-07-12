@@ -5,10 +5,10 @@ import java.util.stream.IntStream;
 
 import nl.wldelft.util.timeseries.TimeSeriesArray;
 import strman.Strman;
-import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
-import tw.fondus.commons.fews.pi.util.timeseries.TimeSeriesUtils;
 import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 import tw.fondus.fews.adapter.pi.runoff.nchc.RainRunoffPreAdapter;
+import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 
 /**
  * Model pre-adapter for running NCHC Tank model from Delft-FEWS.
@@ -19,18 +19,18 @@ import tw.fondus.fews.adapter.pi.runoff.nchc.RainRunoffPreAdapter;
 public class TankPreAdapter extends RainRunoffPreAdapter {
 	
 	public static void main(String[] args) {
-		PiArguments arguments = new PiArguments();
-		new TankPreAdapter().execute(args, arguments);
+		PiIOArguments arguments = new PiIOArguments();
+		new TankPreAdapter().execute( args, arguments );
 	}
-	
+
 	@Override
-	protected String createFileContent(TimeSeriesArray array) {
+	protected String createModelInputContent( TimeSeriesArray array ) {
 		StringJoiner content = new StringJoiner(StringUtils.BREAKLINE,
 				StringUtils.BLANK,
 				Strman.append(StringUtils.BREAKLINE, "-999"));
 		
 		IntStream.range(0, array.size()).forEach(i -> {		
-			content.add(String.valueOf( TimeSeriesUtils.getValue(array, i, 0.0F) ));
+			content.add( String.valueOf( TimeSeriesLightUtils.getValue(array, i, 0.0F) ));
 		});
 		
 		return content.toString();

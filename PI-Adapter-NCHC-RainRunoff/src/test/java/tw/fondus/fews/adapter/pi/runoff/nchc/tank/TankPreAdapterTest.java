@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.runoff.nchc.tank;
 
 import org.junit.Test;
 
-import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
+import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 /**
  * Unit test of Model pre-adapter for running NCHC Tank model.
@@ -16,14 +16,14 @@ public class TankPreAdapterTest {
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\RR_NCHC_Tank",
+				"src/test/resources/Tank",
 				"-i",
 				"Rainfall.xml",
 				"-o",
 				"Time.DAT"
 				};
 		
-		PiArguments arguments = new PiArguments();
+		PiIOArguments arguments = new PiIOArguments();
 		new TankPreAdapter().execute(args, arguments);
 	}
 	

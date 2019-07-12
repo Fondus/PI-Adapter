@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.runoff.nchc.sacramento;
 
 import org.junit.Test;
 
-import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
+import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 /**
  * Unit test of Model pre-adapter for running NCHC Wu Sacramento model.
@@ -16,15 +16,15 @@ public class WuPreAdapterTest {
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\RR_NCHC_Sacramento",
+				"src/test/resources/Sacramento",
 				"-i",
 				"Rainfall.xml",
 				"-o",
 				"Time.DAT"
 				};
 		
-		PiArguments arguments = new PiArguments();
-		new WuSacramentoPreAdapter().execute(args, arguments);
+		PiIOArguments arguments = new PiIOArguments();
+		new WuSacramentoPreAdapter().execute( args, arguments );
 	}
 	
 }
