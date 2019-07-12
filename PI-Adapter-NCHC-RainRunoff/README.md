@@ -14,7 +14,7 @@ The models use to simulation rain-runoff of NCHC.
     - est_flow_Tank.exe
 
 #### Environment PreSetting:
-- Non need
+- No need
 
 #### Runtime Command:
 - Sacramento
@@ -69,5 +69,14 @@ The models use to simulation rain-runoff of NCHC.
 #### Post Adaprer
 - PiIOArguments
 - Read model output to Output.xml
+
+
+#### Model Folder Structure:
+- **Work/**: The model main work folder.
+  - **Input/**
+  - **Output/**
+  - **Diagnostics/Diagnostics.xml**
+  - **Parameters/**
+  - **Work/ or Tank/**
 
 ###### tags: `Github` `FEWS` `Adapter`
