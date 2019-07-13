@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TimeSeries xmlns="http://www.wldelft.nl/fews/PI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_timeseries.xsd" version="1.8">
+    <timeZone>0.0</timeZone>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>3cdd21a7-04b1-412b-887c-3665b37aa73d</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>西新店二中排_上游</stationName>
+            <lat>23.332343652034</lat>
+            <lon>120.19157628746983</lon>
+            <x>167329.022</x>
+            <y>2581316.294</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>1e06f275-0f2b-46ad-8d3b-a06be8696e07</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>西新店二中排_中游</stationName>
+            <lat>23.335002124224648</lat>
+            <lon>120.19011875998872</lon>
+            <x>167181.614</x>
+            <y>2581611.541</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>ef2d3337-9007-411b-a6ca-8bcf740494be</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>西新店二中排_下游</stationName>
+            <lat>23.338191983625237</lat>
+            <lon>120.19142414818656</lon>
+            <x>167317.084</x>
+            <y>2581964.056</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>d991368e-1d58-4410-b80e-a85bc0a7704a</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>國安一中排_上游</stationName>
+            <lat>23.127569686162545</lat>
+            <lon>120.09997319843578</lon>
+            <x>157820.489</x>
+            <y>2558693.792</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>5241832f-bc39-4ee6-9793-328b00821a16</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>國安一中排_中遊</stationName>
+            <lat>23.12786757954862</lat>
+            <lon>120.09102261674981</lon>
+            <x>156903.935</x>
+            <y>2558732.467</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>a245808d-e7b2-42c7-ac90-aeca8f70f4a6</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>國安一中排_下游</stationName>
+            <lat>23.135605108878607</lat>
+            <lon>120.08960418365533</lon>
+            <x>156764.002</x>
+            <y>2559590.262</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>b862eeda-01c7-475e-b0c4-716fc0d3c32b</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>雙春四中排上游站</stationName>
+            <lat>23.310839921755004</lat>
+            <lon>120.13423999361561</lon>
+            <x>161451.156</x>
+            <y>2578968.77</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>62bd07fe-c73b-4cd9-81bf-cac2b6362ab8</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>雙春四中排中游站</stationName>
+            <lat>23.31564992755628</lat>
+            <lon>120.13400999118542</lon>
+            <x>161430.817</x>
+            <y>2579501.6</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>c87b569f-d735-4c81-b16c-240a5b1852ba</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>雙春四中排下游站</stationName>
+            <lat>23.319769961836307</lat>
+            <lon>120.13691999273331</lon>
+            <x>161731.174</x>
+            <y>2579956.1</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>9660633f-487d-440c-bb19-24d3a93dc261</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>新港北一中排上游站</stationName>
+            <lat>23.577299986018552</lat>
+            <lon>120.16001999818847</lon>
+            <x>164260.169</x>
+            <y>2608462.99</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>501d3b17-1418-466f-be2d-82a9b1a4cc4f</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>新港北一中排中游站</stationName>
+            <lat>23.575719919383758</lat>
+            <lon>120.15449000047943</lon>
+            <x>163694.641</x>
+            <y>2608291.32</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>1508589f-cd23-448c-b7e9-d0a1b07ed2d4</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="01:00:00"/>
+            <endDate date="2018-08-25" time="02:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>新港北一中排下游站</stationName>
+            <lat>23.573899921275384</lat>
+            <lon>120.15131999872227</lon>
+            <x>163369.853</x>
+            <y>2608091.67</y>
+            <z>0.0</z>
+            <units>m</units>
+        </header>
+        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
+    </series>
+</TimeSeries>
