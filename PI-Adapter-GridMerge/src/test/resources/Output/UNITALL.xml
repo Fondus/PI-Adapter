@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<MapStacks version="1.2" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_mapstacks.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.wldelft.nl/fews/PI">
+   <geoDatum>TWD 1997</geoDatum>
+   <timeZone>0.0</timeZone>
+   <mapStack>
+      <locationId>Grid_Tainan_Sobek</locationId>
+      <parameterId>Depth.simulated</parameterId>
+      <timeStep unit="hour" multiplier="1"/>
+      <startDate date="2018-08-29" time="00:00:00"/>
+      <endDate date="2018-08-29" time="03:00:00"/>
+      <file>
+         <ascii file="UNITALL????.asc"/>
+      </file>
+   </mapStack>
+</MapStacks>

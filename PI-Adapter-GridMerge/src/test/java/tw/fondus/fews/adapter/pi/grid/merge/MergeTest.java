@@ -16,7 +16,7 @@ public class MergeTest {
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\Merge",
+				"src/test/resources",
 				"-e",
 				"GridMerge.exe",
 				"-i",
@@ -32,5 +32,4 @@ public class MergeTest {
 		RunArguments arguments = new RunArguments();
 		new GridMergeExecutable().execute( args, arguments );
 	}
-
 }
