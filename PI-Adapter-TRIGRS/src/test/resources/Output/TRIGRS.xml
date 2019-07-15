@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<MapStacks version="1.2" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_mapstacks.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.wldelft.nl/fews/PI">
+   <geoDatum>TWD 1997</geoDatum>
+   <timeZone>0.0</timeZone>
+   <mapStack>
+      <locationId>Grids_Feitsu_TRIGRS</locationId>
+      <parameterId>Factor.safety</parameterId>
+      <timeStep unit="hour" multiplier="1"/>
+      <startDate date="2017-06-18" time="16:00:00"/>
+      <endDate date="2017-06-20" time="15:00:00"/>
+      <file>
+         <ascii file="TRIGRS????.asc"/>
+      </file>
+   </mapStack>
+</MapStacks>

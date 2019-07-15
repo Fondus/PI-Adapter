@@ -62,12 +62,6 @@
 				<version>${commons.utils.version}</version>
 				<scope>provided</scope>
 			</dependency>
-			<dependency>
-				<groupId>tw.fondus.commons</groupId>
-				<artifactId>commons-fews</artifactId>
-				<version>${commons.version}</version>
-				<scope>provided</scope>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

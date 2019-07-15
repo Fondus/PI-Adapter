@@ -15,7 +15,7 @@ public class PostTRIGRSTest {
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\TRIGRS\\bin",
+				"src/test/resources/bin",
 				"-i",
 				"map.xml",
 				"-o",

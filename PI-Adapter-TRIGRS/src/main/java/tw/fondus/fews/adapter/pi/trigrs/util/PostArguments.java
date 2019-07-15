@@ -2,7 +2,9 @@ package tw.fondus.fews.adapter.pi.trigrs.util;
 
 import com.beust.jcommander.Parameter;
 
-import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 /**
  * Model post-adapter arguments for running TRIGRS landslide model.
@@ -10,15 +12,9 @@ import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
  * @author Brad Chen
  *
  */
-public class PostArguments extends PiArguments {
+@Data
+@EqualsAndHashCode( callSuper = false )
+public class PostArguments extends PiIOArguments {
 	@Parameter(names = { "--duration", "-d" }, required = true, description = "The Model time duration of end period.")
 	private int after;
-
-	public int getAfter() {
-		return after;
-	}
-
-	public void setAfter(int after) {
-		this.after = after;
-	}
 }

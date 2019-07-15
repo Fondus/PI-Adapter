@@ -6,6 +6,8 @@ bin/
 Work/
 Tank/
 Programs/
+data/
+data2/
 
 # Compiled class file
 *.class

@@ -15,7 +15,7 @@ public class ExecuteTRIGRSTest {
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\TRIGRS\\bin",
+				"src/test/resources/bin",
 				"-e",
 				"trigrs_64bit.exe",
 				"-id",
