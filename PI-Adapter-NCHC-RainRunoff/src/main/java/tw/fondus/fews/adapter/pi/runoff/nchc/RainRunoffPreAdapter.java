@@ -3,7 +3,6 @@ package tw.fondus.fews.adapter.pi.runoff.nchc;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.stream.Stream;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -67,7 +66,7 @@ public abstract class RainRunoffPreAdapter extends PiCommandLineExecute {
 		String modelInputPath = Strman.append( inputPath.toString(), PATH );
 		this.writeTimeMetaInfo( modelInputPath, fileName, timeSeriesArrays.get( 0 ).getTime(0), timeSeriesArrays.get( 0 ).getTimeStep() );
 		
-		Stream.of( timeSeriesArrays.toArray() ).forEach( array -> {
+		timeSeriesArrays.forEach( array -> {
 			String modelInput = this.createModelInputContent( array );
 			
 			try {
