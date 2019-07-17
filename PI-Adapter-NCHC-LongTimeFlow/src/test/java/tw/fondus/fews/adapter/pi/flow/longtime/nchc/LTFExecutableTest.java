@@ -16,10 +16,6 @@ public class LTFExecutableTest {
 		String[] args = new String[]{
 				"-b",
 				"src/test/resources/",
-				"-i",
-				"",
-				"-o",
-				"",
 				"-e",
 				"PRO_EST_FLOW_ANN_GA-SA_MTF.exe"
 		};

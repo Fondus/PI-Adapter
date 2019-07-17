@@ -11,10 +11,24 @@
 	</parent>
 
 	<artifactId>pi-adapter-nchc-longtimeflow</artifactId>
+	<packaging>jar</packaging>
+	<version>2.0.0</version>
+	
+	<name>The NCHC LongTimeFlow model Published Interface Adapter</name>
 
-	<name>PI-Adapter-NCHC-LongTimeFlow</name>
-	<url>http://maven.apache.org</url>
-
+	<dependencies>
+		<!-- PI-Adapter Commons -->
+		<dependency>
+			<groupId>tw.fondus.fews.adapter</groupId>
+			<artifactId>pi-adapter-commons</artifactId>
+		</dependency>
+		<!-- FondUS SDK: The open source project can't use this -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-utils</artifactId>
+		</dependency>
+	</dependencies>
+	
 	<build>
 		<plugins>
 			<!-- Copy dependencies to target folder -->
