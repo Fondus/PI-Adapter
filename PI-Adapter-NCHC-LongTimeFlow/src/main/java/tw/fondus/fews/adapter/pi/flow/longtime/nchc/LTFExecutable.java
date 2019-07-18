@@ -17,7 +17,7 @@ import tw.fondus.commons.util.file.FileType;
 import tw.fondus.commons.util.string.StringUtils;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
-import tw.fondus.fews.adapter.pi.flow.longtime.nchc.util.RunArguments;
+import tw.fondus.fews.adapter.pi.flow.longtime.nchc.argument.RunArguments;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 
 /**

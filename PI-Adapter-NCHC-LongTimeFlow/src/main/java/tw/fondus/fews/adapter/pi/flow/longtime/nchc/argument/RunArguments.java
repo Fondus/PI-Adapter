@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.flow.longtime.nchc.util;
+package tw.fondus.fews.adapter.pi.flow.longtime.nchc.argument;
 
 import java.util.List;
 
