@@ -18,7 +18,7 @@ import tw.fondus.commons.util.optional.OptionalUtils;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
-import tw.fondus.fews.adapter.pi.senslink.v3.util.RunArguments;
+import tw.fondus.fews.adapter.pi.senslink.v3.argument.RunArguments;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 
 /**

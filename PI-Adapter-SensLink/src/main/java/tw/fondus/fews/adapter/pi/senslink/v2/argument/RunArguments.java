@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.senslink.v3.util;
+package tw.fondus.fews.adapter.pi.senslink.v2.argument;
 
 import com.beust.jcommander.Parameter;
 
@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 /**
- * Model adapter arguments for data exchange with SensLink 3.0.
+ * Model adapter arguments for data exchange with SensLink 2.0.
  * 
  * @author Brad Chen
  *
@@ -26,4 +26,7 @@ public class RunArguments extends PiIOArguments {
 	
 	@Parameter(names = { "--password", "-pw" }, required = true, description = "The account password.")
 	private String password;
+	
+	@Parameter(names = { "--server", "-s" }, required = true, description = "The target server, value can be 0 or 1 only.")
+	private int server;
 }
