@@ -6,8 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
 import tw.fondus.commons.util.file.PathUtils;
+import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 /**
  * The unit test of DPWE AI Model adapter for post process.
@@ -46,7 +46,7 @@ public class DPWE_AI_PostAdapterTest {
 				"Depth.simulated"
 				};
 		
-		PiArguments arguments = new PiArguments();
+		PiIOArguments arguments = new PiIOArguments();
 		new DPWE_AI_PostAdapter().execute( args, arguments );
 	}
 
