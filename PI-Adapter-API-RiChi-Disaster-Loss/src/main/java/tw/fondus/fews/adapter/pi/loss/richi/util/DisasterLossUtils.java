@@ -41,14 +41,14 @@ public class DisasterLossUtils {
 	/**
 	 * Get ASC file absolute path.
 	 * 
-	 * @param inputDir
+	 * @param inputPath
 	 * @param mapStack
 	 * @param step
 	 * @return
 	 */
-	public static String getASCAbsolutePath( File inputDir, MapStack mapStack, int step){
+	public static String getASCAbsolutePath( Path inputPath, MapStack mapStack, int step){
 		String fileName = mapStack.getFile().getPattern().getFile();
-		return Strman.append( inputDir.getAbsolutePath(), StringUtils.PATH, fileName.substring( 0, fileName.indexOf( "?" ) ), getFileExtWithNumber( step ));
+		return Strman.append( inputPath.toString(), StringUtils.PATH, fileName.substring( 0, fileName.indexOf( "?" ) ), getFileExtWithNumber( step ));
 	}
 	
 	/**
@@ -89,16 +89,16 @@ public class DisasterLossUtils {
 	 * Rename file extension when if not a asc file extension.
 	 * 
 	 * @param path
-	 * @param inputDir
+	 * @param inputPath
 	 * @return
 	 * @throws IOException
 	 */
-	public static Path renameToASC( Path path, File inputDir ) throws IOException {
+	public static Path renameToASC( Path path, Path inputPath ) throws IOException {
 		File file = path.toFile();
 		if ( !FileUtils.getFileExt( file ).equals( FileType.ASC.getType() ) ) {
 			String fileName = FileUtils.getNameWithoutExt( file );
 
-			Path newPath = Paths.get( Strman.append( inputDir.getPath(), StringUtils.PATH, fileName, FileType.ASC.getExtension() ) );
+			Path newPath = Paths.get( Strman.append( inputPath.toString(), StringUtils.PATH, fileName, FileType.ASC.getExtension() ) );
 			FileUtils.move( file.getPath(), newPath.toFile().getPath() );
 
 			return newPath;

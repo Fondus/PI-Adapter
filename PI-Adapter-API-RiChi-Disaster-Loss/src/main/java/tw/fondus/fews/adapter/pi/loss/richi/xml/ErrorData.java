@@ -3,6 +3,15 @@ package tw.fondus.fews.adapter.pi.loss.richi.xml;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import lombok.Data;
+
+/**
+ * 
+ * 
+ * @author Chao
+ *
+ */
+@Data
 @Root( name = "DATA" )
 public class ErrorData {
 	@Element( name = "Code" )
@@ -10,21 +19,4 @@ public class ErrorData {
 	
 	@Element( name = "Message" )
 	private String message;
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode( String code ) {
-		this.code = code;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage( String message ) {
-		this.message = message;
-	}
-	
 }

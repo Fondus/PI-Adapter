@@ -2,8 +2,7 @@ package tw.fondus.fews.adapter.pi.loss.richi;
 
 import org.junit.Test;
 
-import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
-import tw.fondus.commons.fews.pi.util.adapter.PiBasicArguments;
+import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 /**
  * The unit test of Disaster Loss Adapter.
@@ -12,6 +11,7 @@ import tw.fondus.commons.fews.pi.util.adapter.PiBasicArguments;
  *
  */
 public class DisasterLossAdapterTest {
+	
 	@Test
 	public void test() {
 		String[] args = new String[]{
@@ -23,7 +23,7 @@ public class DisasterLossAdapterTest {
 				""
 				};
 		
-		PiBasicArguments arguments = new PiArguments();
+		PiIOArguments arguments = new PiIOArguments();
 		new DisasterLossAdapter().execute(args, arguments);
 	}
 }
