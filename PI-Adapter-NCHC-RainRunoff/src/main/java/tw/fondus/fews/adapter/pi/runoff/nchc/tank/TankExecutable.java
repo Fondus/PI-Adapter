@@ -4,7 +4,7 @@ import java.nio.file.Path;
 
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.fews.adapter.pi.runoff.nchc.RainRunoffExecutable;
-import tw.fondus.fews.adapter.pi.runoff.nchc.util.RunArguments;
+import tw.fondus.fews.adapter.pi.runoff.nchc.argument.RunArguments;
 
 /**
  * Model executable-adapter for running NCHC Tank model from Delft-FEWS.

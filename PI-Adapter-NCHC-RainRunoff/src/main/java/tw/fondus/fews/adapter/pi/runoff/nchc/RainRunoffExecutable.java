@@ -23,7 +23,7 @@ import tw.fondus.commons.util.string.StringUtils;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
-import tw.fondus.fews.adapter.pi.runoff.nchc.util.RunArguments;
+import tw.fondus.fews.adapter.pi.runoff.nchc.argument.RunArguments;
 
 /**
  * Parent class with Model executable-adapter for running NCHC RR model from Delft-FEWS.

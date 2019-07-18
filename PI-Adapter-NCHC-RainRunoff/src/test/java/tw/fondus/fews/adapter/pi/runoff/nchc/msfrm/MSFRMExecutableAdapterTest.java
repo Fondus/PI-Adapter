@@ -1,6 +1,6 @@
 package tw.fondus.fews.adapter.pi.runoff.nchc.msfrm;
 
-import tw.fondus.fews.adapter.pi.runoff.nchc.util.RunArguments;
+import tw.fondus.fews.adapter.pi.runoff.nchc.argument.RunArguments;
 
 /**
  * Unit test of Model executable-adapter for running NCHC MSFRM model.

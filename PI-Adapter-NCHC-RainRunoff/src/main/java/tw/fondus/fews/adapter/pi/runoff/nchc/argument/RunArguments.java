@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.runoff.nchc.util;
+package tw.fondus.fews.adapter.pi.runoff.nchc.argument;
 
 import com.beust.jcommander.Parameter;
 
