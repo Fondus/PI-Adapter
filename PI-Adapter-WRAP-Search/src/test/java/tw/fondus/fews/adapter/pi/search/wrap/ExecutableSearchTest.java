@@ -16,9 +16,9 @@ public class ExecutableSearchTest {
 
 		String[] args = new String[] {
 				"-b",
-				"localhost:\\Search_Flooded_Graph",
+				"src/test/reousrces",
 				"-i",
-				"",
+				"Rainfall.xml,Level.txt",
 				"-o",
 				"",
 				"-r",
