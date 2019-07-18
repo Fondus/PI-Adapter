@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.search.wrap;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.search.wrap.util.RunArguments;
+import tw.fondus.fews.adapter.pi.search.wrap.argument.RunArguments;
 /**
  * The Unit Test for WRAP Search.
  * 

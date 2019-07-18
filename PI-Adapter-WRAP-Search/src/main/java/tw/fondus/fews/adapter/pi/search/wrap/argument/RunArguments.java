@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.search.wrap.util;
+package tw.fondus.fews.adapter.pi.search.wrap.argument;
 
 import com.beust.jcommander.Parameter;
 
