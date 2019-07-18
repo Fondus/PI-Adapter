@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.grid.merge;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.grid.merge.util.RunArguments;
+import tw.fondus.fews.adapter.pi.grid.merge.argument.RunArguments;
 
 /**
  * Unit test of Model executable-adapter for running ESRI Grid ASCII merged model.

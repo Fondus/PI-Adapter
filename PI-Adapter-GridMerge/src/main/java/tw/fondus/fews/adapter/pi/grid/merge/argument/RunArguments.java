@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.grid.merge.util;
+package tw.fondus.fews.adapter.pi.grid.merge.argument;
 
 import com.beust.jcommander.Parameter;
 
