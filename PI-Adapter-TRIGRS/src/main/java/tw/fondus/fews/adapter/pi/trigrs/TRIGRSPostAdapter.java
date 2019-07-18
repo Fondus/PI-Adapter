@@ -22,7 +22,7 @@ import tw.fondus.commons.util.time.TimeUtils;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
-import tw.fondus.fews.adapter.pi.trigrs.util.PostArguments;
+import tw.fondus.fews.adapter.pi.trigrs.argument.PostArguments;
 
 /**
  * Model post-adapter for running TRIGRS landslide model from Delft-FEWS.

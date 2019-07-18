@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.trigrs.util;
+package tw.fondus.fews.adapter.pi.trigrs.argument;
 
 import com.beust.jcommander.Parameter;
 

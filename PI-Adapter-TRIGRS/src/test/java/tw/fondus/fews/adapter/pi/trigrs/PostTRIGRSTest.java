@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.trigrs;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.trigrs.util.PostArguments;
+import tw.fondus.fews.adapter.pi.trigrs.argument.PostArguments;
 
 /**
  * Unit test of Model post-adapter for running TRIGRS landslide model.

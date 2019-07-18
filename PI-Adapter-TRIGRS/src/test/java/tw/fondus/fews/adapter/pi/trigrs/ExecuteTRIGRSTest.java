@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.trigrs;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.trigrs.util.RunArguments;
+import tw.fondus.fews.adapter.pi.trigrs.argument.RunArguments;
 
 /**
  * Unit test of Model executable-adapter for running TRIGRS landslide model.
