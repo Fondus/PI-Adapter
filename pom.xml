@@ -35,7 +35,6 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<commons-lang.version>3.8.1</commons-lang.version>
-		<command.magic.verison>1.2.0</command.magic.verison>
 		<junit.version>4.12</junit.version>
 		<commons.version>1.0.0</commons.version>
 		<commons.utils.version>0.8.5</commons.utils.version>

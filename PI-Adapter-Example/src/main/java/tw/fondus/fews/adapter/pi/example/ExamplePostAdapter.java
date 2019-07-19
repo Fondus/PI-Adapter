@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import nl.wldelft.util.FileUtils;
@@ -39,8 +38,9 @@ public class ExamplePostAdapter extends PiCommandLineExecute {
 		PiIOArguments modelArguments = (PiIOArguments) arguments;
 		
 		try {
-			Path modelOutputPath = Paths.get( Strman.append( outputPath.toString(), PATH, modelArguments.getInputs().get(0) ) );
-			Prevalidated.checkExists( modelOutputPath, "Example PostAdapter: The model output do not exists!" );
+			Path modelOutputPath = Prevalidated.checkExists( 
+					Strman.append( outputPath.toString(), PATH, modelArguments.getInputs().get(0) ),
+					"Example PostAdapter: The model output do not exists!" );
 			
 			logger.log( LogLevel.INFO, "Example PostAdapter: Start read model output files to PiXML.");
 			

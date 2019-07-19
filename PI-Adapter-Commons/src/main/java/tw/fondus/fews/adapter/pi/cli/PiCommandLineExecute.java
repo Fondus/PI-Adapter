@@ -1,7 +1,6 @@
 package tw.fondus.fews.adapter.pi.cli;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import lombok.extern.slf4j.Slf4j;
 import strman.Strman;
@@ -31,12 +30,14 @@ public abstract class PiCommandLineExecute extends BasicCommandLineExecute {
 		PiBasicArguments piArguments = (PiBasicArguments) arguments;
 		
 		// Check the diagnostics folder
-		this.logPath = Paths.get( Strman.append( basePath.toString(), PATH, piArguments.getLogPath() ) );
-		Prevalidated.checkExists( this.logPath, "PI-CommandLineExecute: The diagnostics directory not exist." );
+		this.logPath = Prevalidated.checkExists(
+				Strman.append( basePath.toString(), PATH, piArguments.getLogPath() ),
+				"PI-CommandLineExecute: The diagnostics directory not exist." );
 		
 		// Check the diagnostics file
-		this.diagnosticsFile = Paths.get( Strman.append( this.logPath.toString(), PATH, piArguments.getDagnostics() ) );
-		Prevalidated.checkExists( this.diagnosticsFile, "PI-CommandLineExecute: The diagnostics file not exist." );
+		this.diagnosticsFile = Prevalidated.checkExists( 
+				Strman.append( this.logPath.toString(), PATH, piArguments.getDagnostics() ),
+				"PI-CommandLineExecute: The diagnostics file not exist." );
 		
 		/** Manual log with PiDiagnostics **/
 		this.diagnostics = XMLUtils.fromXML( this.diagnosticsFile, PiDiagnostics.class );

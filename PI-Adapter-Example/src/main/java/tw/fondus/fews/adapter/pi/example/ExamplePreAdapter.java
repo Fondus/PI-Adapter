@@ -2,7 +2,6 @@ package tw.fondus.fews.adapter.pi.example;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -44,9 +43,9 @@ public class ExamplePreAdapter extends PiCommandLineExecute {
 		PiIOArguments modelArguments = (PiIOArguments) arguments;
 		
 		try {
-			String inputXMLPath = Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0));
-			Path inputXML = Paths.get( inputXMLPath );
-			Prevalidated.checkExists( inputXML, "Example PreAdapter: The input XML do not exists!" );
+			Path inputXML = Prevalidated.checkExists( 
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+					"Example PreAdapter: The input XML do not exists!" );
 			
 			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( inputXML );
 			
