@@ -3,7 +3,6 @@ package tw.fondus.fews.adapter.pi.ai.nctu;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.zip.ZipEntry;
 
@@ -60,20 +59,25 @@ public class DPWE_AI_PostAdapter extends PiCommandLineExecute {
 			logger.log( LogLevel.INFO, "DPWE AI PostAdapter: Start the PostAdapter to process with model output.");
 			
 			/** Check state **/
-			Path timeInfoPath = Paths.get( Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 0 ) ) );
-			Prevalidated.checkExists( timeInfoPath, "DPWE AI PostAdapter: The input time.txt do not exists." );
+			Path timeInfoPath = Prevalidated.checkExists( 
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 0 ) ),
+					"DPWE AI PostAdapter: The input time.txt do not exists." );
 			
-			Path time0ZIP = Paths.get( Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 1 ) ) );
-			Prevalidated.checkExists( time0ZIP, "DPWE AI PostAdapter: The input T.zip do not exists." );
+			Path time0ZIP = Prevalidated.checkExists( 
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 1 ) ),
+					"DPWE AI PostAdapter: The input T.zip do not exists." );
 			
-			Path time1ZIP = Paths.get( Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 2 ) ) );
-			Prevalidated.checkExists( time1ZIP, "DPWE AI PostAdapter: The input T+1.zip do not exists." );
+			Path time1ZIP = Prevalidated.checkExists( 
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 2 ) ),
+					"DPWE AI PostAdapter: The input T+1.zip do not exists." );
 			
-			Path time2ZIP = Paths.get( Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 3 ) ) );
-			Prevalidated.checkExists( time2ZIP, "DPWE AI PostAdapter: The input T+2.zip do not exists." );
+			Path time2ZIP = Prevalidated.checkExists( 
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 3 ) ),
+					"DPWE AI PostAdapter: The input T+2.zip do not exists." );
 			
-			Path time3ZIP = Paths.get( Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 4 ) ) );
-			Prevalidated.checkExists( time3ZIP, "DPWE AI PostAdapter: The input T+3.zip do not exists." );
+			Path time3ZIP = Prevalidated.checkExists( 
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 4 ) ),
+					"DPWE AI PostAdapter: The input T+3.zip do not exists." );
 			
 			/** Unzip the files and rename to pattern **/
 			this.unzipProcess( logger, time1ZIP, outputPath );

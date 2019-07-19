@@ -2,7 +2,6 @@ package tw.fondus.fews.adapter.pi.flow.longtime.nchc;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
@@ -47,13 +46,13 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 		
 		try {
 			// Check the XML exists
-			String rainfallPath = Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0));
-			Path rainfallXML = Paths.get( rainfallPath );
-			Prevalidated.checkExists( rainfallXML, "NCHC LTF PreAdapter: The XML file of rainfall is not exist." );
+			Path rainfallXML = Prevalidated.checkExists( 
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+					"NCHC LTF PreAdapter: The XML file of rainfall is not exist." );
 			
-			String flowPath = Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(1));
-			Path flowXML = Paths.get( flowPath );
-			Prevalidated.checkExists( flowXML, "NCHC LTF PreAdapter: The XML file of flow is not exist." );
+			Path flowXML = Prevalidated.checkExists( 
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(1) ),
+					"NCHC LTF PreAdapter: The XML file of flow is not exist." );
 			
 			TimeSeriesArray tempRainfallArray = TimeSeriesLightUtils.readPiTimeSeries( rainfallXML ).get( 0 );
 			TimeSeriesArray tempFlowArray = TimeSeriesLightUtils.readPiTimeSeries( flowXML ).get( 0 );

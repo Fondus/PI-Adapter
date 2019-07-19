@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
@@ -39,11 +38,13 @@ public abstract class RainRunoffExecutable extends PiCommandLineExecute {
 			Path outputPath ) {
 		RunArguments modelArguments = (RunArguments) arguments;
 		
-		Path executablePath = Paths.get( Strman.append( basePath.toString(), PATH, modelArguments.getExecutablePath()) );
-		Prevalidated.checkExists( executablePath, "NCHC RainRunoff ExecutableAdapter: The model executable directory not exist." );
+		Path executablePath = Prevalidated.checkExists( 
+				Strman.append( basePath.toString(), PATH, modelArguments.getExecutablePath()),
+				"NCHC RainRunoff ExecutableAdapter: The model executable directory not exist." );
 		
-		Path parameterPath = Paths.get( Strman.append( basePath.toString(), PATH, modelArguments.getParametersPath()) );
-		Prevalidated.checkExists( parameterPath, "NCHC RainRunoff ExecutableAdapter: The model parameters directory not exist." );
+		Path parameterPath = Prevalidated.checkExists( 
+				Strman.append( basePath.toString(), PATH, modelArguments.getParametersPath()),
+				"NCHC RainRunoff ExecutableAdapter: The model parameters directory not exist." );
 		
 		String executableDirPath = Strman.append( executablePath.toString(), StringUtils.PATH);
 		String executableInput =  Strman.append( executableDirPath, modelArguments.getInputs().get(0) );

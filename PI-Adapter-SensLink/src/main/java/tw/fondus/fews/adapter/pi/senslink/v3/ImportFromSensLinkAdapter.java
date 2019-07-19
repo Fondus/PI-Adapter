@@ -2,7 +2,6 @@ package tw.fondus.fews.adapter.pi.senslink.v3;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,9 +45,9 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 		/** Cast PiArguments to expand arguments **/
 		RunArguments modelArguments = (RunArguments) arguments;
 		
-		String inputXMLPath = Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0));
-		Path inputXML = Paths.get( inputXMLPath );
-		Prevalidated.checkExists( inputXML, "SensLink 3.0 Import Adapter: The input XML not exists!" );
+		Path inputXML = Prevalidated.checkExists( 
+				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+				"SensLink 3.0 Import Adapter: The input XML not exists!" );
 		
 		try {
 			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( inputXML );

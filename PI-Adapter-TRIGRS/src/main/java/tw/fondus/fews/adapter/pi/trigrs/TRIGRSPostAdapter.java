@@ -43,9 +43,9 @@ public class TRIGRSPostAdapter extends PiCommandLineExecute {
 		/** Cast PiArguments to expand arguments **/
 		PostArguments modelArguments = (PostArguments) arguments;
 		
-		String inputXMLPath = Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0));
-		Path inputXML = Paths.get( inputXMLPath );
-		Prevalidated.checkExists( inputXML, "SensLink 3.0 Import Adapter: The input XML not exists!" );
+		Path inputXML = Prevalidated.checkExists( 
+				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+				"SensLink 3.0 Import Adapter: The input XML not exists!" );
 		
 		String namePrefix = modelArguments.getOutputs().get(0);
 		

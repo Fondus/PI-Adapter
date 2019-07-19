@@ -45,19 +45,23 @@ public class SearchExecutable extends PiCommandLineExecute {
 		/** Cast PiArguments to expand arguments **/
 		RunArguments modelArguments = (RunArguments) arguments;
 		
-		Path mergePath = Paths.get( Strman.append( basePath.toString(), PATH, modelArguments.getMergeDir()) );
-		Prevalidated.checkExists( mergePath, "WRAP Flood Search GDAL Adapter: The merge path not exists!" );
+		Path mergePath = Prevalidated.checkExists( 
+				Strman.append( basePath.toString(), PATH, modelArguments.getMergeDir()),
+				"WRAP Flood Search GDAL Adapter: The merge path not exists!" );
 		
-		Path searchTargetPath = Paths.get( Strman.append( basePath.toString(),
-				PATH, modelArguments.getFloodMapDir(),
-				PATH, modelArguments.getRegion(), PATH, modelArguments.getCounty() ));
-		Prevalidated.checkExists( searchTargetPath, "WRAP Flood Search GDAL Adapter: The flood map database search target not exists!" );
+		Path searchTargetPath = Prevalidated.checkExists( 
+				Strman.append( basePath.toString(),
+						PATH, modelArguments.getFloodMapDir(),
+						PATH, modelArguments.getRegion(), PATH, modelArguments.getCounty() ),
+				"WRAP Flood Search GDAL Adapter: The flood map database search target not exists!" );
 		
-		Path inputXML = Paths.get( Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)) );
-		Prevalidated.checkExists( inputXML, "WRAP Flood Search GDAL Adapter: The input PI-XML not exists!" );
+		Path inputXML = Prevalidated.checkExists( 
+				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+				"WRAP Flood Search GDAL Adapter: The input PI-XML not exists!" );
 		
-		Path thresholdPath = Paths.get( Strman.append( searchTargetPath.toString(), PATH, modelArguments.getInputs().get(1) ) );
-		Prevalidated.checkExists( thresholdPath, "WRAP Flood Search GDAL Adapter: The flood map database search target threshold not exists!" );
+		Path thresholdPath = Prevalidated.checkExists( 
+				Strman.append( searchTargetPath.toString(), PATH, modelArguments.getInputs().get(1) ),
+				"WRAP Flood Search GDAL Adapter: The flood map database search target threshold not exists!" );
 		
 		try {
 			logger.log( LogLevel.INFO, "WRAP Flood Search GDAL Adapter: Read time-series PI-XML." );

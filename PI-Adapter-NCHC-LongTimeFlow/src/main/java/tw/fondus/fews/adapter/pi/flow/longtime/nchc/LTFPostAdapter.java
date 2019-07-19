@@ -2,7 +2,6 @@ package tw.fondus.fews.adapter.pi.flow.longtime.nchc;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -43,13 +42,14 @@ public class LTFPostAdapter extends PiCommandLineExecute {
 		/** Cast PiArguments to expand arguments **/
 		PiIOArguments modelArguments = (PiIOArguments) arguments;
 		
-		String inputXMLPath = Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0));
-		Path inputXML = Paths.get( inputXMLPath );
-		Prevalidated.checkExists( inputXML, "NCHC NCHC LTF PostAdapter: The input XML not exists!" );
+		Path inputXML = Prevalidated.checkExists( 
+				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+				"NCHC NCHC LTF PostAdapter: The input XML not exists!" );
 		
 		/** Get model output file **/
-		Path modelOutput = Paths.get( Strman.append( outputPath.toString(), PATH, "OUTPUT_EST_FLOW_ANN_GA-SA_MTF.TXT" ) );
-		Prevalidated.checkExists( inputXML, "NCHC LTF PostAdapter: The file of model output is not exist." );
+		Path modelOutput = Prevalidated.checkExists( 
+				Strman.append( outputPath.toString(), PATH, "OUTPUT_EST_FLOW_ANN_GA-SA_MTF.TXT" ),
+				"NCHC LTF PostAdapter: The file of model output is not exist." );
 		
 		try {
 			TimeSeriesArray timeSeriesArray = TimeSeriesLightUtils.readPiTimeSeries( inputXML ).get( 0 );

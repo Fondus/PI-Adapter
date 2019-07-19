@@ -49,8 +49,9 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 			Path outputPath ) {
 		PiIOArguments piArguments = (PiIOArguments) arguments;
 		
-		Path mapStacksPath = Paths.get( Strman.append( inputPath.toString(), PATH, piArguments.getInputs().get( 0 ) ) );
-		Prevalidated.checkExists( mapStacksPath, "DisasterLossAdapter: Can not find map stack file exist." );
+		Path mapStacksPath = Prevalidated.checkExists( 
+				Paths.get( Strman.append( inputPath.toString(), PATH, piArguments.getInputs().get( 0 ) ) ),
+				"DisasterLossAdapter: Can not find map stack file exist." );
 		
 		client.setClient( DisasterLossUtils.buildClientWithTimeout( 900 ) );
 		
@@ -62,8 +63,9 @@ public class DisasterLossAdapter extends PiCommandLineExecute {
 				try {
 					IntStream.rangeClosed( 0, DisasterLossUtils.calculateTimeSteps( mapStack ) ).forEach( i -> {
 						try {
-							Path asc = Paths.get( DisasterLossUtils.getASCAbsolutePath( inputPath, mapStack, i ) );
-							Prevalidated.checkExists( asc, "DisasterLossAdapter: Can not find ASC file exist." );
+							Path asc = Prevalidated.checkExists( 
+									Paths.get( DisasterLossUtils.getASCAbsolutePath( inputPath, mapStack, i ) ),
+									"DisasterLossAdapter: Can not find ASC file exist." );
 							
 							String fileName = asc.toFile().getName();
 							Path rename = DisasterLossUtils.renameToASC( asc, inputPath );

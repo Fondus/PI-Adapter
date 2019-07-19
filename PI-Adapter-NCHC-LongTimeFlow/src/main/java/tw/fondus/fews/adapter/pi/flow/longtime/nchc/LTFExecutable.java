@@ -2,7 +2,6 @@ package tw.fondus.fews.adapter.pi.flow.longtime.nchc;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Stream;
 
@@ -45,11 +44,13 @@ public class LTFExecutable extends PiCommandLineExecute {
 		/** Cast PiArguments to expand arguments **/
 		RunArguments modelArguments = (RunArguments) arguments;
 		
-		Path executablePath = Paths.get( Strman.append( basePath.toString(), PATH, modelArguments.getExecutableDir()) );
-		Prevalidated.checkExists( executablePath, "NCHC LTF Executable: The model executable directory not exist." );
+		Path executablePath = Prevalidated.checkExists( 
+				Strman.append( basePath.toString(), PATH, modelArguments.getExecutableDir()),
+				"NCHC LTF Executable: The model executable directory not exist." );
 		
-		Path templatePath = Paths.get( Strman.append( basePath.toString(), PATH, modelArguments.getTemplateDir() ) );
-		Prevalidated.checkExists( templatePath, "NCHC LTF Executable: The template directory is not exist." );
+		Path templatePath = Prevalidated.checkExists( 
+				Strman.append( basePath.toString(), PATH, modelArguments.getTemplateDir() ),
+				"NCHC LTF Executable: The template directory is not exist." );
 		
 		logger.log( LogLevel.INFO, "NCHC LTF Executable: Start the executable process." );
 		
@@ -63,8 +64,9 @@ public class LTFExecutable extends PiCommandLineExecute {
 			/** Copy model to executable directory from template directory **/
 			FileUtils.copy( templatePath.toFile().listFiles(), executablePath.toFile() );
 			
-			Path executable = Paths.get( Strman.append( executablePath.toString(), PATH, modelArguments.getExecutable().get( 0 ) ) );
-			Prevalidated.checkExists( executable, "NCHC LTF Executable: The executable is not exist." );
+			Path executable = Prevalidated.checkExists( 
+					Strman.append( executablePath.toString(), PATH, modelArguments.getExecutable().get( 0 ) ),
+					"NCHC LTF Executable: The executable is not exist." );
 			
 			/** Run model **/
 			Executions.execute( executor -> executor.directory( executablePath.toFile() ),

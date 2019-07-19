@@ -3,7 +3,6 @@ package tw.fondus.fews.adapter.pi.senslink.v2;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
@@ -50,9 +49,9 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 		/** Cast PiArguments to expand arguments **/
 		RunArguments modelArguments = (RunArguments) arguments;
 		
-		String inputXMLPath = Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0));
-		Path inputXML = Paths.get( inputXMLPath );
-		Prevalidated.checkExists( inputXML, "SensLink 2.0 Import Adapter: The input XML not exists!" );
+		Path inputXML = Prevalidated.checkExists( 
+				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+				"SensLink 2.0 Import Adapter: The input XML not exists!" );
 		
 		try {
 			// Read PI-XML

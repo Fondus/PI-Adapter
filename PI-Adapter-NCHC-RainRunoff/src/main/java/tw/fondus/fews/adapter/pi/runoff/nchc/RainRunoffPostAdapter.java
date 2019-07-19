@@ -3,7 +3,6 @@ package tw.fondus.fews.adapter.pi.runoff.nchc;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -36,9 +35,9 @@ public abstract class RainRunoffPostAdapter extends PiCommandLineExecute {
 		PiIOArguments modelArguments = (PiIOArguments) arguments;
 		
 		try {
-			String timeMetaInfo = Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0) );
-			Path timeMetaInfoPath = Paths.get( timeMetaInfo );
-			Prevalidated.checkExists( timeMetaInfoPath, "NCHC RainRunoffPostAdapter: The time meta-information not exists!" );
+			Path timeMetaInfoPath = Prevalidated.checkExists( 
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0) ),
+					"NCHC RainRunoffPostAdapter: The time meta-information not exists!" );
 			
 			// Read time meta-information
 			Optional<String> optTimeInfos = this.readTimeMeta( timeMetaInfoPath );

@@ -2,7 +2,6 @@ package tw.fondus.fews.adapter.pi.runoff.nchc;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -33,9 +32,9 @@ public abstract class RainRunoffPreAdapter extends PiCommandLineExecute {
 			Path outputPath ) {
 		PiIOArguments modelArguments = (PiIOArguments) arguments;
 		try {
-			String inputXMLPath = Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0));
-			Path inputXML = Paths.get( inputXMLPath );
-			Prevalidated.checkExists( inputXML, "NCHC RainRunoffPreAdapter: The input XML not exists!" );
+			Path inputXML = Prevalidated.checkExists( 
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+					"NCHC RainRunoffPreAdapter: The input XML not exists!" );
 			
 			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( inputXML );
 			logger.log( LogLevel.INFO, "NCHC RainRunoff PreAdapter: Start create model input files.");

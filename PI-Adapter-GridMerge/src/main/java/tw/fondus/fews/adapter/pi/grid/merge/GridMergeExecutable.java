@@ -56,9 +56,9 @@ public class GridMergeExecutable extends PiCommandLineExecute {
 		Preconditions.checkState( modelArguments.getOutputs().size() > 0 && modelArguments.getOutputs().size() == 3,
 				"GridMergeAdapter: The output prefix name, Mapstacks.xml file name and name pattern and the not give by command." );
 		
-		String inputXMLPath = Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0) );
-		Path inputXML = Paths.get( inputXMLPath );
-		Prevalidated.checkExists( inputXML, "GridMergeAdapter: The input Mapstacks.xml do not exists!." );
+		Path inputXML = Prevalidated.checkExists( 
+				 Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0) ),
+				"GridMergeAdapter: The input Mapstacks.xml do not exists!." );
 		
 		/** Create executable command **/
 		String executable = modelArguments.getExecutable();
