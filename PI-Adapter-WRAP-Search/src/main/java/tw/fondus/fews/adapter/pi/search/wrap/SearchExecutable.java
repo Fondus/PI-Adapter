@@ -1,165 +1,131 @@
 package tw.fondus.fews.adapter.pi.search.wrap;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.naming.OperationNotSupportedException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Preconditions;
-
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import strman.Strman;
-import tw.fondus.commons.fews.pi.adapter.PiCommandLineExecute;
+import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
-import tw.fondus.commons.fews.pi.config.xml.log.PiDiagnostics;
-import tw.fondus.commons.fews.pi.util.adapter.PiBasicArguments;
-import tw.fondus.commons.fews.pi.util.timeseries.TimeSeriesUtils;
 import tw.fondus.commons.util.file.FileType;
 import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
+import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
+import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
+import tw.fondus.fews.adapter.pi.search.wrap.argument.RunArguments;
 import tw.fondus.fews.adapter.pi.search.wrap.util.GDALUtils;
-import tw.fondus.fews.adapter.pi.search.wrap.util.RunArguments;
 import tw.fondus.fews.adapter.pi.search.wrap.util.SearchUtils;
+import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 
 /**
  * The model excute-adapter for running WRAP search map model from Delft-FEWS.
  * 
  * @author shepherd
- *
+ * @author Brad Chen :improve the code
  */
 public class SearchExecutable extends PiCommandLineExecute {
-
-	private Logger log = LoggerFactory.getLogger( this.getClass() );
-
+	
 	public static void main( String[] args ) {
-
 		RunArguments arguments = new RunArguments();
 		new SearchExecutable().execute( args, arguments );
 	}
-
+	
 	@Override
-	protected void run( PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File inputDir,
-			File outputDir ) {
+	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
+			Path outputPath ) {
+		/** Cast PiArguments to expand arguments **/
+		RunArguments modelArguments = (RunArguments) arguments;
+		
+		Path mergePath = Prevalidated.checkExists( 
+				Strman.append( basePath.toString(), PATH, modelArguments.getMergeDir()),
+				"WRAP Flood Search GDAL Adapter: The merge path not exists!" );
+		
+		Path searchTargetPath = Prevalidated.checkExists( 
+				Strman.append( basePath.toString(),
+						PATH, modelArguments.getFloodMapDir(),
+						PATH, modelArguments.getRegion(), PATH, modelArguments.getCounty() ),
+				"WRAP Flood Search GDAL Adapter: The flood map database search target not exists!" );
+		
+		Path inputXML = Prevalidated.checkExists( 
+				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+				"WRAP Flood Search GDAL Adapter: The input PI-XML not exists!" );
+		
+		Path thresholdPath = Prevalidated.checkExists( 
+				Strman.append( searchTargetPath.toString(), PATH, modelArguments.getInputs().get(1) ),
+				"WRAP Flood Search GDAL Adapter: The flood map database search target threshold not exists!" );
+		
 		try {
-			log.info( "Search: Step 1 Read rainfall.xml" );
-			this.log( LogLevel.INFO, "Search: Step 1 Read rainfall.xml" );
-
-			RunArguments moduleArguments = (RunArguments) arguments;
-			String inputPath = inputDir.getAbsolutePath();
-			String outputPath = outputDir.getAbsolutePath();
-			String mergePath = Strman.append( moduleArguments.getBasePath(), StringUtils.PATH,
-					moduleArguments.getMergeDir() );
-			Preconditions.checkState( Paths.get( mergePath ).toFile().exists(),
-					"WRAP Search Executable: The merge directory is not exist." );
-			String floodMapPath = Strman.append( moduleArguments.getBasePath(), StringUtils.PATH,
-					moduleArguments.getFloodMapDir(), StringUtils.PATH, moduleArguments.getRegion(), StringUtils.PATH,
-					moduleArguments.getCounty() );
-			Preconditions.checkState( Paths.get( floodMapPath ).toFile().exists(),
-					"WRAP Search Executable: The floodMapData directory is not exist." );
-
-			/** Get XML file of rainfall for rainfall data **/
-			File rainfall = Paths.get( Strman.append( inputPath, StringUtils.PATH, "Rainfall.xml" ) ).toFile();
-			TimeSeriesArrays rainfallTimeSeriesArrays = TimeSeriesUtils.readPiTimeSeries( rainfall );
-
-			/** Get Rainfall Level file for judgment rainfall data. **/
-			List<String> rainfallLevelFile = SearchUtils
-					.readQuantitativeRainfallLevel( Strman.append( floodMapPath, StringUtils.PATH, "Level.txt" ) );
-
-			/**
-			 * Check every location rainfall level and save each flood map file
-			 * path.
-			 **/
-			log.info( "Search: Step 2 Get location flood map file list." );
-			this.log( LogLevel.INFO, "Search: Step 2 Get location flood map file list." );
-
-			List<String> mergeFile = new ArrayList<>();
-			rainfallTimeSeriesArrays.forEach( timeSeriseArray -> {
-				String loctionID = timeSeriseArray.getHeader().getLocationId();
-				String rainfallIntensity = SearchUtils.determineRainfallIntensity(
-						Double.valueOf( timeSeriseArray.getValue( 0 ) ), rainfallLevelFile );
-				if ( !rainfallIntensity.equals( StringUtils.BLANK ) ) {
-					mergeFile.add( Strman.append( loctionID, StringUtils.UNDERLINE, moduleArguments.getDuration(),
-							StringUtils.UNDERLINE, rainfallIntensity, FileType.ASC.getExtension() ) );
-				}
-
-			} );
-			String depthFileName = "Depth0000.asc";
-
+			logger.log( LogLevel.INFO, "WRAP Flood Search GDAL Adapter: Read time-series PI-XML." );
+			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( inputXML );
+			
+			logger.log( LogLevel.INFO, "WRAP Flood Search GDAL Adapter: Collect the files need to be merge from flood database when cross the rainfall threshold." );
+			List<Double> thresholds = SearchUtils.readQuantitativeRainfallThreshold( thresholdPath );
+			List<String> mergeFiles = new ArrayList<>();
+			timeSeriesArrays.forEach( array -> {
+				String loctionID = array.getHeader().getLocationId();
+				
+				Optional<String> optIntensity = SearchUtils.determineRainfallIntensity( array.getValue( 0 ), thresholds );
+				optIntensity.ifPresent( intensity -> {
+					mergeFiles.add( Strman.append( loctionID, StringUtils.UNDERLINE, modelArguments.getDuration(),
+							StringUtils.UNDERLINE, intensity, FileType.ASC.getExtension() ) );
+				} );
+			});
+			
 			/** Follow flood map file list to move file **/
-			if ( mergeFile.size() > 0 ) {
-				log.info( "Search: Step 3 Has merge files, Start Run." );
-				this.log( LogLevel.INFO, "Search: Step 3 Has merge files, Start Run." );
-
-				mergeFile.forEach( file -> {
+			String depthFileName = "Depth0000.asc";
+			if ( mergeFiles.size() > 0 ) {
+				logger.log( LogLevel.INFO, "WRAP Flood Search GDAL Adapter: Found the merge files from flood database, start prepare process for merged." );
+				
+				mergeFiles.forEach( mergeFile -> {
 					try {
-						Files.copy( Paths.get( Strman.append( floodMapPath, StringUtils.PATH, file ) ),
-								Paths.get( Strman.append( mergePath, StringUtils.PATH, file ) ),
+						Files.copy( Paths.get( Strman.append( searchTargetPath.toString(), PATH, mergeFile ) ),
+								Paths.get( Strman.append( mergePath.toString(), PATH, mergeFile ) ),
 								StandardCopyOption.REPLACE_EXISTING );
 					} catch (IOException e) {
+						logger.log( LogLevel.ERROR, "WRAP Flood Search GDAL Adapter: Copy merge file has something wrong." );
 					}
-
 				} );
-
-				log.info( "Search: Run GDAL" );
-				this.log( LogLevel.INFO, "Search: Run GDAL" );
+				
+				logger.log( LogLevel.INFO, "WRAP Flood Search GDAL Adapter: Copy done, start process for merged." );
+				
+				/** Use GDAL to merge files to GTIFF type, then transformation to ASCII. **/
 				String GDALPath = "%GDAL_PATH%";
-
-				/** Use GADL merge flood map file to GTIFF type. **/
-				/**
-				 * Use GDAL tansformation flood map form GTIFF type to ASCII
-				 * type.
-				 **/
-
-				GDALUtils.GDALMerge( GDALPath, mergePath, mergePath, depthFileName, "AAIGrid" );
-				GDALUtils.GDALTransformation( GDALPath, mergePath, mergePath, "GTiff", "AAIGrid" );
+				GDALUtils.merge( GDALPath, mergePath.toString(), mergePath.toString(), depthFileName, "AAIGrid" );
+				GDALUtils.transformation( GDALPath, mergePath.toString(), mergePath.toString(), "GTiff", "AAIGrid" );
+				
 				/** Copy merged file result to output path. **/
-				log.info( "Search: Step 4 Copy result." );
-				this.log( LogLevel.INFO, "Search: Step 4 Copy result." );
-				Files.copy( Paths.get( Strman.append( mergePath, StringUtils.PATH, depthFileName ) ),
-						Paths.get( Strman.append( outputPath, StringUtils.PATH, depthFileName ) ),
+				logger.log( LogLevel.INFO, "Search: Step 4 Copy result." );
+				Files.copy( Paths.get( Strman.append( mergePath.toString(), PATH, depthFileName ) ),
+						Paths.get( Strman.append( outputPath.toString(), PATH, depthFileName ) ),
 						StandardCopyOption.REPLACE_EXISTING );
-
 			} else {
-				log.info( "Search: Step 3 Not found flood map, use default result." );
-				this.log( LogLevel.INFO, "Search: Step 3 Not found flood map, use default result." );
-				/**
-				 * If no area be up to the standard. Will use maxaera flood map
-				 * file be result .
-				 **/
-				log.info( "Search: Step 4 Copy default result." );
-				this.log( LogLevel.INFO, "Search: Step 4 Copy default result." );
-				try {
-					Files.copy(
-							Paths.get( Strman.append( floodMapPath, StringUtils.PATH, "MaxArea",
-									FileType.ASC.getExtension() ) ),
-							Paths.get( Strman.append( outputPath, StringUtils.PATH, depthFileName ) ),
+				logger.log( LogLevel.INFO, "WRAP Flood Search GDAL Adapter: Not found merge files from flood database, use result of default." );
+				
+				Files.copy( Paths.get( Strman.append( searchTargetPath.toString(), PATH, "MaxArea", FileType.ASC.getExtension() ) ),
+							Paths.get( Strman.append( outputPath.toString(), PATH, depthFileName ) ),
 							StandardCopyOption.REPLACE_EXISTING );
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
-
-			/** Follow result to creat mapstacks.xml. **/
-
-			log.info( "Search: Step 5 Follow result to creat mapstacks.xml." );
-			this.log( LogLevel.INFO, "Search: Step 5 Follow result to creat mapstacks.xml." );
-			SearchUtils.creatMapXml( outputPath, moduleArguments.getCounty(),
-					SearchUtils.getStingTime( rainfallTimeSeriesArrays.get( 0 ).getForecastTime() ) );
-		} catch (IOException | OperationNotSupportedException e) {
-			log.error( "Read XML: has somthing wrong!", e );
-			this.log( LogLevel.ERROR, "Read XML: has somthing wrong!" );
+			
+			/** Follow result to create mapstacks.xml. **/
+			logger.log( LogLevel.INFO, "WRAP Flood Search GDAL Adapter: Follow result to create the mapstacks meta-information." );
+			SearchUtils.creatMapXml( outputPath.toString(), modelArguments.getCounty(),
+					SearchUtils.getStringTime( timeSeriesArrays.get( 0 ).getForecastTime() ) );
+			
+		} catch ( OperationNotSupportedException | IOException e ) {
+			logger.log( LogLevel.ERROR, "WRAP Flood Search GDAL Adapter: Read the PI-XML has something wrong!" );
+		} catch (ParseException e) {
+			logger.log( LogLevel.ERROR, "WRAP Flood Search GDAL Adapter: Parse time has something wrong!" );
 		} catch (Exception e) {
-			log.error( "Search Excutable: has somthing wrong!", e );
-			this.log( LogLevel.ERROR, "Search Excutable: has somthing wrong!" );
-		}
-
+			logger.log( LogLevel.ERROR, "WRAP Flood Search GDAL Adapter: Adapter has something wrong!" );
+		} 
 	}
 }

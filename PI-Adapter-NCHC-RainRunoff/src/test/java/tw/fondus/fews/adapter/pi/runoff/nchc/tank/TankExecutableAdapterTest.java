@@ -1,8 +1,6 @@
 package tw.fondus.fews.adapter.pi.runoff.nchc.tank;
 
-import org.junit.Test;
-
-import tw.fondus.fews.adapter.pi.runoff.nchc.util.RunArguments;
+import tw.fondus.fews.adapter.pi.runoff.nchc.argument.RunArguments;
 
 /**
  * Unit test of Model executable-adapter for running NCHC Tank model.
@@ -12,11 +10,11 @@ import tw.fondus.fews.adapter.pi.runoff.nchc.util.RunArguments;
  */
 public class TankExecutableAdapterTest {
 
-	@Test
+//	@Test
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\RR_NCHC_Tank",
+				"src/test/resources/Tank",
 				"-i",
 				"INPUT_RAIN_TANK.txt,INPUT_PARS_TANK.TXT",
 				"-o",

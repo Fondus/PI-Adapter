@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TimeSeries xmlns="http://www.wldelft.nl/fews/PI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_timeseries.xsd" version="1.2">
+    <timeZone>0.0</timeZone>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>TestLocation</locationId>
+            <parameterId>H.obs</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-07-04" time="02:00:00"/>
+            <endDate date="2019-07-04" time="09:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2019-07-04" time="02:00:00" value="0.12970397" flag="0"/>
+        <event date="2019-07-04" time="03:00:00" value="0.7155926" flag="0"/>
+        <event date="2019-07-04" time="04:00:00" value="0.44737074" flag="0"/>
+        <event date="2019-07-04" time="05:00:00" value="0.87245566" flag="0"/>
+        <event date="2019-07-04" time="06:00:00" value="0.5827064" flag="0"/>
+        <event date="2019-07-04" time="07:00:00" value="0.1401003" flag="0"/>
+        <event date="2019-07-04" time="08:00:00" value="0.7398107" flag="0"/>
+        <event date="2019-07-04" time="09:00:00" value="0.30581763" flag="0"/>
+    </series>
+</TimeSeries>

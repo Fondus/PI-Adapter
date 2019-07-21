@@ -1,35 +1,67 @@
 # PI-Adapter
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](./LICENSE)
 
-The PI-Adapter is use `Commons General Adapter interface` to run Model Adapter connected to Delft-FEWS system.
-Delft-FEWS System will pass arguments by `standard arguments object`, and `PiCommandLineExecute` will receive the need information, so you can implements your adater logic.
+The PI-Adapter is used `Commons Adapter Module` to run Model with Adapter connected integrate with Delft-FEWS system.
 
-## Which Models implements with PI-Adapter now
-- [USGS TRGIRS landslide model](https://github.com/usgs/landslides-trigrs)
-- [NCHC Rainfall Runoff models](https://www.nchc.org.tw/tw/)
-- [NCHC Grid models](https://www.nchc.org.tw/tw/)
-- [NCHC RTC-2D models](https://www.nchc.org.tw/tw/)
-- [SensLink 2.0 & 3.0](http://www.anasystem.com.tw/senslink/)
-- [NCTU DPWE AI Model](http://dpwe.nctu.edu.tw/)
-
-## How to work with PI-Adapter connected to Delft-FEWS
+## How to work with PI-Adapter integrate to Delft-FEWS
 ![Flow charts](https://i.imgur.com/BKosuN1.png)
 
-## The Standard Published Interface Arguments
+The Delft-FEWS System run the workflow with model can be three parts:
+- **Pre Adapter**: Convert Delft-FEWS export to the model input.
+- **Executable Adapter**: Control the model executable process.
+- **Post Adapter**: Convert model output to the Delft-FEWS import.
 
-- `PiBasicArguments`: If you **don't need the input/output files list**, just need execute program with Delft-FEWS System, use this please.
+Three adapters through the `Published Interface` to synchronous communication with Delft-FEWS System. 
+
+## Commons Adapter Module
+
+The [Commons Adapter Module](/PI-Adapter-Commons/)'s `PiCommandLineExecute` will receive the Delft-FEWS System pass information by `standard arguments`, so you can focus implements your adapter logic.
+
+If you want see the **fully integrate model example** with PreAdapter, Executable Adapter and Post Adapter, please have a look at [here](/PI-Adapter-Example/).
+
+The example implements code as blew:
+```java
+public class ExamplePreAdapter extends PiCommandLineExecute {
+    // Main process
+    public static void main(String[] args) {
+        PiIOArguments arguments = new PiIOArguments();
+        new ExamplePreAdapter().execute( args, arguments );
+    }
+    
+    @Override
+    protected void adapterRun( PiBasicArguments arguments, 
+        PiDiagnosticsLogger logger,
+        Path basePath, Path inputPath, Path outputPath ) {
+        // Your adapter logic
+    }
+}
+```
+
+### The Model Folder Structure:
+When start adapter with extends `PiCommandLineExecute`, program will check the model folder structure is **follow the Delft-FEWS standard**, the standard is show as below:
+
+- **Work/**: The model main work folder.
+  - **Input/**: The Delft-FEWS System exports place folder.
+  - **Output/**: The Delft-FEWS System imports place folder.
+  - **Diagnostics/Diagnostics.xml**: It's used to synchronous adaper logging message to Delft-FEWS System.
+
+### The Standard Arguments:
+
+The arguments is extends from the [BasicArguments](https://github.com/Fondus/Commons-CLI/blob/master/src/main/java/tw/fondus/commons/cli/argument/BasicArguments.java):
+
+- `PiBasicArguments`: - Basic arguments to run the command-Line interface, **Not included input and output files**, if you need this, use `PiIOArguments` please.
 
 | Argument | Description | Default | Required |
 |:------ |:----------- |:-----------:|:-----------:|
 | -b / --base | The current working directory. | - | true |
-| -t / --time | The T0. TimeZone is UTC. | - | false |
 | -h / --help | Show how to usage. | - | false |
-| -l / --log | The Pi Diagnostics log file name. | Diagnostics.xml | false |
-| -ld / --ldir | The Pi Diagnostics log folder, relative to the current working directory. | Diagnostics/ | false |
 | -id / --idir | The input file folder, relative to the current working directory. | Input/ | false |
 | -od / --odir | The output file folder, relative to the current working directory. | Output/ | false |
+| -ld / --ldir | The Pi Diagnostics log folder, relative to the current working directory. | Diagnostics/ | false |
+| -l / --log | The Pi Diagnostics log file name. | Diagnostics.xml | false |
+| -t / --time | The T0. TimeZone is UTC. | - | false |
 
-- `PiArguments`: If you **need the input/output files list**, use this please.
+- `PiIOArguments`: Standard arguments use for the **included input, output files**, parameter and unit to run the command-Line interface.
 
 | Argument | Description | Default | Required |
 |:------ |:----------- |:-----------:|:-----------:|
@@ -38,15 +70,22 @@ Delft-FEWS System will pass arguments by `standard arguments object`, and `PiCom
 | -p / --parameter | The parameter name of model output, use only when program need it. | - | false |
 | -u / --unit | The unit name of model output, use only when program need it. | - | false |
 
-- `Expand Arguments`: The customermized standard arguments.
+## Which Models implements with PI-Adapter now
+| Model | URL | Provider | Type | Adapter |
+|:------ |:----------- |:-----------:|:-----------:|:-----------:|
+| USGS TRGIRS landslide Model | [link](https://github.com/usgs/landslides-trigrs) | NCDR | 2D | [link](/PI-Adapter-TRIGRS/) |
+| NCHC Rainfall Runoff Models | [link](ttps://www.nchc.org.tw/tw/) | NCHC | 1D | [link](/PI-Adapter-NCHC-RainRunoff/) |
+| NCHC LongTimeFlow Model | [link](ttps://www.nchc.org.tw/tw/) | NCHC | 1D | [link](/PI-Adapter-NCHC-LongTimeFlow/) |
+| NCHC Grid Merged Model | [link](ttps://www.nchc.org.tw/tw/) | NCHC | - | [link](/PI-Adapter-GridMerge/) |
+| NCHC RTC-2D Model | [link](ttps://www.nchc.org.tw/tw/) | NCHC | 2D | [link](/PI-Adapter-NCHC-RTC-2D/) |
+| SensLink 2.0 & 3.0 Import/Export | [link](http://www.anasystem.com.tw/) | AnaSystem | - | [link](/PI-Adapter-SensLink/) |
+| NCTU DPWE AI Model Import | [link](http://dpwe.nctu.edu.tw/) | NCTU | - | [link](/PI-Adapter-NCTU-AI/) |
+| WRAP Flood Search with GDAL| [link](https://www.wrap.gov.tw/) | WRAP | 2D | [link](/PI-Adapter-WRAP-Search/) |
 
-| Argument | Description | Default | Required |
-|:------ |:----------- |:-----------:|:-----------:|
-| -e / --executable | The model executable. | - | true |
-| -td / --tdir | The temp folder, relative to the current working directory. | - | true |
-| -ed / --edir | The executable folder, relative to the current working directory. | - | true |
-| -pd / --pdir | The parameter folder, relative to the current working directory. | - | true |
-| -ti / --timeindex | The time series array index. | - | true |
-| -d / --duration | The index duration. | - | true |
-| -us / --username | The username. | - | true |
-| -pw / --password | The password. | - | true |
+## Dependencies
+- [Commons-CLI](https://github.com/Fondus/Commons-CLI): The standard commons interface of FondUS to write command-line program.
+- [Commons-FEWS-XML](https://github.com/Fondus/Commons-FEWS-XML): The tools of FondUS to communication with Delft-FEWS System parts `Published Interface` XML.
+- Delft-FEWS library: You still need provide the Delft-FEWS library youself.
+
+## Authors and Contributors
+The PI-Adapter are developed by the FondUS Technology Co., Ltd. and are maintained by [@Vipcube](https://github.com/Vipcube).

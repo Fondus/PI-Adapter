@@ -3,7 +3,7 @@ package tw.fondus.fews.adapter.pi.senslink.v2;
 import org.junit.Test;
 
 import tw.fondus.fews.adapter.pi.senslink.v2.ImportFromSensLinkAdapter;
-import tw.fondus.fews.adapter.pi.senslink.v2.util.RunArguments;
+import tw.fondus.fews.adapter.pi.senslink.v2.argument.RunArguments;
 
 /**
  * Unit test of Model adapter for import data from the SensLink 2.0.
@@ -12,11 +12,12 @@ import tw.fondus.fews.adapter.pi.senslink.v2.util.RunArguments;
  *
  */
 public class ImportFromSensLinkAdapterTest {
+	
 	@Test
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\SensLink",
+				"src/test/resources",
 				"-t",
 				"201810021600",
 				"-ti",

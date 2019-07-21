@@ -1,19 +1,18 @@
 package tw.fondus.fews.adapter.pi.trigrs;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.concurrent.TimeoutException;
 
-import org.magiclen.magiccommand.Command;
-import org.magiclen.magiccommand.CommandListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.zeroturnaround.exec.InvalidExitValueException;
 
 import strman.Strman;
-import tw.fondus.commons.fews.pi.adapter.PiCommandLineExecute;
+import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
-import tw.fondus.commons.fews.pi.config.xml.log.PiDiagnostics;
-import tw.fondus.commons.fews.pi.util.adapter.PiBasicArguments;
-import tw.fondus.commons.util.string.StringUtils;
-import tw.fondus.fews.adapter.pi.trigrs.util.RunArguments;
+import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
+import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
+import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
+import tw.fondus.fews.adapter.pi.trigrs.argument.RunArguments;
 
 /**
  * Model executable-adapter for running TRIGRS landslide model from Delft-FEWS.
@@ -22,46 +21,30 @@ import tw.fondus.fews.adapter.pi.trigrs.util.RunArguments;
  *
  */
 public class TRIGRSExecutable extends PiCommandLineExecute {
-	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	public static void main(String[] args){
 		RunArguments arguments = new RunArguments();
 		new TRIGRSExecutable().execute(args, arguments);
 	}
-
+	
 	@Override
-	protected void run(PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File inputDir, File outputDir) throws Exception {	
+	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
+			Path outputPath ) {
 		/** Cast PiArguments to expand arguments **/
 		RunArguments modelArguments = (RunArguments) arguments;
 		
 		String executeModel = modelArguments.getExecutable();
-		String commandString = Strman.append("cmd /c start ", baseDir.getPath(), StringUtils.PATH, executeModel);
-			
-		Command command = new Command(commandString);
-		command.setCommandListener(new CommandListener() {
-			@Override
-			public void commandStart(String id) {
-				log.info("TRIGRS Executable Adapter: Start TRIGRS simulation.");
-				log( LogLevel.INFO, "TRIGRS Executable Adapter: Start TRIGRS simulation." );
-			}
-
-			@Override
-			public void commandRunning(String id, String message, boolean isError) {
-			}
-	
-			@Override
-			public void commandException(String id, Exception e) {
-				log.error("TRIGRS Executable Adapter: when model running has something wrong!", e);
-				log( LogLevel.ERROR, "TRIGRS Executable Adapter: when model running has something wrong!." );
-			}
-	
-			@Override
-			public void commandEnd(String id, int returnValue) {
-				log.info("TRIGRS Executable Adapter: TRIGRS simulation end.");
-				log( LogLevel.INFO, "TRIGRS Executable Adapter: Finished TRIGRS simulation." );
-			}
-		});
-			
-		command.run(baseDir);
+		String command = Strman.append( basePath.toString(), PATH, executeModel );
+		
+		logger.log( LogLevel.INFO, "TRIGRS Executable Adapter: Start TRIGRS simulation." );
+		
+		try {
+			Executions.execute( executor -> executor.directory( basePath.toFile() ),
+					command );
+		} catch (InvalidExitValueException | IOException | InterruptedException | TimeoutException e) {
+			logger.log( LogLevel.ERROR, "TRIGRS Executable Adapter: Running TRIGRS simulation has something wrong." );
+		}
+		
+		logger.log( LogLevel.INFO, "TRIGRS Executable Adapter: Finished TRIGRS simulation." );
 	}
 }

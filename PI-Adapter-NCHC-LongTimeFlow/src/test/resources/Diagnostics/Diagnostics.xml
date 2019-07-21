@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<Diag version="1.2" xsi:schemaLocation="http://www.wldelft.nl/fews/PI HTTP://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_diag.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.wldelft.nl/fews/PI">
+   <line level="3" description="NCHC LTF Executable: Start the executable process."/>
+   <line level="3" description="NCHC LTF Executable: Backup output file: OUTPUT_EST_FLOW_ANN_GA-SA_MTF.TXT to OUTPUT_EST_FLOW_ANN_GA-SA_MTF_ProjectName.txt."/>
+   <line level="3" description="NCHC LTF Executable: Backup output file: SUMMARY_RESULTS_EST_FLOW_ANN_GA-SA_MTF.TXT to SUMMARY_RESULTS_EST_FLOW_ANN_GA-SA_MTF_ProjectName.txt."/>
+   <line level="3" description="NCHC LTF Executable: Backup output file: OUTPUT_EST_RAIN_ANN_GA-SA_MTF.TXT to OUTPUT_EST_RAIN_ANN_GA-SA_MTF_ProjectName.txt."/>
+   <line level="3" description="NCHC LTF Executable: Backup output file: OUTPUT_EST_RAIN_FLOW_ANN_GA-SA_MTF.TXT to OUTPUT_EST_RAIN_FLOW_ANN_GA-SA_MTF_ProjectName.txt."/>
+   <line level="3" description="NCHC LTF Executable: Finished the executable process."/>
+</Diag>

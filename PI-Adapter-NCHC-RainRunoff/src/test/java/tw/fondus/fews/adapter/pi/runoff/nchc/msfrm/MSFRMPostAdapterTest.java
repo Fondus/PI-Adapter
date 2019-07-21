@@ -1,8 +1,6 @@
 package tw.fondus.fews.adapter.pi.runoff.nchc.msfrm;
 
-import org.junit.Test;
-
-import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
+import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 /**
  * Unit test of Model post-adapter for running NCHC MSFRM model.
@@ -12,11 +10,11 @@ import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
  */
 public class MSFRMPostAdapterTest {
 
-	@Test
+//	@Test
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\RR_NCHC_MSFRM",
+				"src/test/resources/MSFRM",
 				"-i",
 				"Time.DAT",
 				"-o",
@@ -27,7 +25,7 @@ public class MSFRMPostAdapterTest {
 				"Discharge (m³/s)"
 				};
 		
-		PiArguments arguments = new PiArguments();
+		PiIOArguments arguments = new PiIOArguments();
 		new MSFRMPostAdapter().execute(args, arguments);
 	}
 	

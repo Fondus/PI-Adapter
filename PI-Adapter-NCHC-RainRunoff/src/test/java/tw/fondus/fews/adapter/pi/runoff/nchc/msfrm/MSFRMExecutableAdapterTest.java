@@ -1,8 +1,6 @@
 package tw.fondus.fews.adapter.pi.runoff.nchc.msfrm;
 
-import org.junit.Test;
-
-import tw.fondus.fews.adapter.pi.runoff.nchc.util.RunArguments;
+import tw.fondus.fews.adapter.pi.runoff.nchc.argument.RunArguments;
 
 /**
  * Unit test of Model executable-adapter for running NCHC MSFRM model.
@@ -12,11 +10,11 @@ import tw.fondus.fews.adapter.pi.runoff.nchc.util.RunArguments;
  */
 public class MSFRMExecutableAdapterTest {
 
-	@Test
+//	@Test
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\RR_NCHC_MSFRM",
+				"src/test/resources/MSFRM",
 				"-i",
 				"INPUT_DATA_RAIN_EV.TXT,INPUT_EST_FLOW_MSFRM.TXT",
 				"-o",

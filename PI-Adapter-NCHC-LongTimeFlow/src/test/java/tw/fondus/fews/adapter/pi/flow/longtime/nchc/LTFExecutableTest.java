@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.flow.longtime.nchc;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.flow.longtime.nchc.util.RunArguments;
+import tw.fondus.fews.adapter.pi.flow.longtime.nchc.argument.RunArguments;
 
 /**
  * Unit test of Model executable-adapter for running NCHC long time flow model from Delft-FEWS.
@@ -16,10 +16,6 @@ public class LTFExecutableTest {
 		String[] args = new String[]{
 				"-b",
 				"src/test/resources/",
-				"-i",
-				"",
-				"-o",
-				"",
 				"-e",
 				"PRO_EST_FLOW_ANN_GA-SA_MTF.exe"
 		};

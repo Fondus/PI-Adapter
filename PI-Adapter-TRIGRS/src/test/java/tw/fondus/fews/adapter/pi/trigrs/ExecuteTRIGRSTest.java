@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.trigrs;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.trigrs.util.RunArguments;
+import tw.fondus.fews.adapter.pi.trigrs.argument.RunArguments;
 
 /**
  * Unit test of Model executable-adapter for running TRIGRS landslide model.
@@ -15,7 +15,7 @@ public class ExecuteTRIGRSTest {
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\TRIGRS\\bin",
+				"src/test/resources/bin",
 				"-e",
 				"trigrs_64bit.exe",
 				"-id",

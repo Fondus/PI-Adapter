@@ -2,26 +2,26 @@ package tw.fondus.fews.adapter.pi.search.wrap.util;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import strman.Strman;
 import tw.fondus.commons.util.file.FileType;
+import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.string.StringUtils;
 
 /**
- * The tools is base GADL libray to develop.
+ * The tools is base GADL library to develop.
  * 
  * @author shepherd
- *
+ * @author Brad Chen :improve the code
  */
-
 public class GDALUtils {
-
 	private static final String AAIGRID_STRING = "AAIGrid";
 	private static final String GTIFF_STRING = "GTiff";
 
@@ -35,7 +35,7 @@ public class GDALUtils {
 	 * @param inputFormat
 	 * @throws IOException
 	 */
-	public static void GDALMerge( String GDALPath, String mergedDataPath, String exportPath, String fileName,
+	public static void merge( String GDALPath, String mergedDataPath, String exportPath, String fileName,
 			String inputFormat ) throws IOException {
 
 		List<String> mergeData = readDataListAttachedFormat( mergedDataPath, checkFileType( inputFormat ) );
@@ -56,7 +56,6 @@ public class GDALUtils {
 		Path exportFilePath = Paths.get( Strman.append( mergedDataPath, StringUtils.PATH, "mergeBatRun.bat" ) );
 		writeFile( exportFilePath, joiner.toString() );
 		runBatch( exportFilePath );
-
 	}
 
 	/**
@@ -69,13 +68,12 @@ public class GDALUtils {
 	 * @param outputFormat
 	 * @throws IOException
 	 */
-	public static void GDALTransformation( String GDALPath, String transformationDataPath, String exportPath,
+	public static void transformation( String GDALPath, String transformationDataPath, String exportPath,
 			String inputFormat, String outputFormat ) throws IOException {
 		List<String> transformationData = readDataListAttachedFormat( transformationDataPath,
 				checkFileType( inputFormat ) );
 		StringJoiner joiner = new StringJoiner( StringUtils.SPACE_WHITE );
 		transformationData.forEach( data -> {
-
 			joiner.add( Strman.append( GDALPath, StringUtils.PATH, "gdal_translate.exe" ) );
 			joiner.add( "-a_nodata" );
 			joiner.add( "-999" );
@@ -94,19 +92,16 @@ public class GDALUtils {
 				.get( Strman.append( transformationDataPath, StringUtils.PATH, "transformationBatRun.bat" ) );
 		writeFile( transformationFilePath, joiner.toString() );
 		runBatch( transformationFilePath );
-
 	}
 
 	private static void runBatch( Path path ) throws IOException {
 		try {
 			Process rnuBat = Runtime.getRuntime().exec( Strman.append( "cmd /c start /wait ", path.toString() ) );
-
 			rnuBat.waitFor();
 		} catch (InterruptedException e) {
 			throw new IOException( "Runbat has something wrong." );
 
 		}
-
 	}
 
 	/**
@@ -115,15 +110,14 @@ public class GDALUtils {
 	 * @param path
 	 * @param format
 	 * @return
+	 * @throws IOException 
 	 */
-	private static List<String> readDataListAttachedFormat( String path, String format ) {
-		List<String> dataArrayList = new ArrayList<>();
-		Stream.of( Paths.get( path ).toFile().listFiles() )
-				.filter( a -> a.getName().toString().endsWith( format ) )
-				.forEach( data -> dataArrayList.add( data.toString() ) );
-
-		return dataArrayList;
-
+	private static List<String> readDataListAttachedFormat( String path, String format ) throws IOException {
+		try ( Stream<Path> paths = Files.list( Paths.get( path ) ) ){
+			return paths.filter( filePath -> PathUtils.getFileExtension( filePath ).equals( format ) )
+					.map( filePath -> filePath.toString() )
+					.collect( Collectors.toList() );
+		}
 	}
 
 	/**
@@ -150,12 +144,10 @@ public class GDALUtils {
 	 * @throws IOException
 	 */
 	private static void writeFile( Path path, String content ) throws IOException {
-		try (FileWriter fw = new FileWriter( path.toFile() ) ) {
+		try ( FileWriter fw = new FileWriter( path.toFile() ) ) {
 			fw.write( content );
 		} catch (IOException e) {
 			throw new IOException( "Write File has something wrong." );
-
 		}
 	}
-
 }
