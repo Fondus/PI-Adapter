@@ -1,30 +1,22 @@
 package tw.fondus.fews.adapter.pi.rtc.nchc;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javax.naming.OperationNotSupportedException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Preconditions;
 
 import nl.wldelft.util.FileUtils;
 import nl.wldelft.util.timeseries.TimeSeriesArray;
 import strman.Strman;
-import tw.fondus.commons.fews.pi.adapter.PiCommandLineExecute;
+import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
-import tw.fondus.commons.fews.pi.config.xml.log.PiDiagnostics;
-import tw.fondus.commons.fews.pi.util.adapter.PiBasicArguments;
-import tw.fondus.commons.fews.pi.util.timeseries.TimeSeriesUtils;
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
+import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
+import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
+import tw.fondus.fews.adapter.pi.rtc.nchc.argument.PreAdapterArguments;
 import tw.fondus.fews.adapter.pi.rtc.nchc.util.CommonString;
 import tw.fondus.fews.adapter.pi.rtc.nchc.util.ContentBuilder;
-import tw.fondus.fews.adapter.pi.rtc.nchc.util.PreAdapterArguments;
+import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 
 /**
  * Model pre-adapter for running NCHC RTC model from Delft-FEWS.
@@ -33,62 +25,60 @@ import tw.fondus.fews.adapter.pi.rtc.nchc.util.PreAdapterArguments;
  *
  */
 public class RTCPreAdapter extends PiCommandLineExecute {
-	protected Logger log = LoggerFactory.getLogger( this.getClass() );
-	
 	
 	public static void main( String[] args ) {
 		PreAdapterArguments arguments = new PreAdapterArguments();
 		new RTCPreAdapter().execute( args, arguments );
 	}
-
+	
 	@Override
-	protected void run( PiBasicArguments arguments, PiDiagnostics piDiagnostics, File baseDir, File inputDir,
-			File outputDir ) throws Exception {
+	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
+			Path outputPath ) {
 		PreAdapterArguments modelArguments = (PreAdapterArguments) arguments;
+		
+		Path simulationXMLPath = Prevalidated.checkExists( 
+				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0) ),
+				"NCHC RTC PreAdapter: The XML file of simulation is not exist!" );
+		
+		Path observationXMLPath = Prevalidated.checkExists( 
+				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(1) ),
+				"NCHC RTC PreAdapter: The XML file of observation is not exist!" );
+		
 		try {
-			/** Get water level station simulation and observation data. **/
-			Path similationXMLPath = Paths
-					.get( Strman.append( inputDir.getPath(), StringUtils.PATH, modelArguments.getInputs().get( 0 ) ) );
-			Preconditions.checkState( Files.exists( similationXMLPath ), "NCHC RTC PreAdapter: The XML file of simulation is not exist." );
+			TimeSeriesArray[] similationTimeSeriesArray = TimeSeriesLightUtils.readPiTimeSeries( simulationXMLPath ).toArray();
+			TimeSeriesArray[] observationTimeSeriesArray = TimeSeriesLightUtils.readPiTimeSeries( observationXMLPath ).toArray();
 			
-			Path observationXMLPath = Paths
-					.get( Strman.append( inputDir.getPath(), StringUtils.PATH, modelArguments.getInputs().get( 1 ) ) );
-			Preconditions.checkState( Files.exists( observationXMLPath ), "NCHC RTC PreAdapter: The XML file of observation is not exist." );
+			logger.log( LogLevel.INFO, "NCHC RTC PreAdapter: Start create model input files." );
 			
-			TimeSeriesArray[] similationTimeSeriesArray = TimeSeriesUtils.readPiTimeSeries( similationXMLPath.toFile() )
-					.toArray();
-			TimeSeriesArray[] observationTimeSeriesArray = TimeSeriesUtils
-					.readPiTimeSeries( observationXMLPath.toFile() ).toArray();
-
-			log.info( "NCHC RTC PreAdapter: Start create model input files." );
-			this.log( LogLevel.INFO, "NCHC RTC PreAdapter: Start create model input files." );
-
 			/** Write model input **/
-			this.writeModelInput( similationTimeSeriesArray, observationTimeSeriesArray, inputDir, modelArguments.getForecast() );
-
-			log.info( "NCHC RTC PreAdapter: Finished create model input files." );
-			this.log( LogLevel.INFO, "NCHC RTC PreAdapter: Finished create model input files." );
-		} catch (OperationNotSupportedException e) {
-			log.error( "NCHC RTC PreAdapter: Read XML not exits!", e );
-			this.log( LogLevel.ERROR, "NCHC RTC PreAdapter: Read XML not exits!" );
-		} catch (IOException e) {
-			log.error( "NCHC RTC PreAdapter: IOException!", e );
-			this.log( LogLevel.ERROR, "NCHC RTC PreAdapter: IOException!" );
+			this.writeModelInput( logger, similationTimeSeriesArray,
+					observationTimeSeriesArray, inputPath, modelArguments.getForecast() );
+			
+			logger.log( LogLevel.INFO, "NCHC RTC PreAdapter: Finished create model input files." );
+		} catch (OperationNotSupportedException | IOException e) {
+			logger.log( LogLevel.ERROR, "NCHC RTC PreAdapter: Read XML has something wrong!" );
 		}
 	}
-
-	protected void writeModelInput( TimeSeriesArray[] similationTimeSeriesArray,
-			TimeSeriesArray[] observationTimeSeriesArray, File inputDir, int forecast ) {
+	
+	/**
+	 * Write the model inputs.
+	 * 
+	 * @param logger
+	 * @param similationTimeSeriesArray
+	 * @param observationTimeSeriesArray
+	 * @param inputPath
+	 * @param forecast
+	 */
+	private void writeModelInput( PiDiagnosticsLogger logger, 
+			TimeSeriesArray[] similationTimeSeriesArray,
+			TimeSeriesArray[] observationTimeSeriesArray, Path inputPath, int forecast ) {
 		try {
-			FileUtils.writeText( Strman.append( inputDir.getPath(), StringUtils.PATH, CommonString.INPUT_CORR_SIM_WH ),
+			FileUtils.writeText( Strman.append( inputPath.toString(), PATH, CommonString.INPUT_CORR_SIM_WH ),
 					ContentBuilder.buildInputCorr( similationTimeSeriesArray.length, forecast ) );
-			FileUtils.writeText( Strman.append( inputDir.getPath(), StringUtils.PATH, CommonString.INPUT_WH_EST_OBS_GAUGES ),
+			FileUtils.writeText( Strman.append( inputPath.toString(), PATH, CommonString.INPUT_WH_EST_OBS_GAUGES ),
 					ContentBuilder.buildInputGauges( similationTimeSeriesArray, observationTimeSeriesArray ) );
 		} catch (IOException e) {
-			log.error( "NCHC RTC PreAdapter: Write model input faild." );
-			this.log( LogLevel.ERROR, "NCHC RTC PreAdapter: Write model input faild." );
+			logger.log( LogLevel.ERROR, "NCHC RTC PreAdapter: Write model input faild." );
 		}
-
 	}
-
 }

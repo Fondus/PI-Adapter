@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.rtc.nchc;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.rtc.nchc.util.RunArguments;
+import tw.fondus.fews.adapter.pi.rtc.nchc.argument.RunArguments;
 
 /**
  * Unit test of Model executable-adapter for running NCHC RTC model from Delft-FEWS.
