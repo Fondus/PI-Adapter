@@ -9,6 +9,7 @@ Programs/
 data/
 data2/
 Template/
+.factorypath
 
 # Compiled class file
 *.class
