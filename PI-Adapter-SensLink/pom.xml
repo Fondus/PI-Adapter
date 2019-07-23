@@ -7,12 +7,11 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>${adapter.version}</version>
+		<version>2.0.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-senslink</artifactId>
 	<packaging>jar</packaging>
-	<version>2.0.0-SNAPSHOT</version>
 
 	<name>The SensLink Published Interface Adapter</name>
 	<url>http://www.anasystem.com.tw/senslink/</url>
