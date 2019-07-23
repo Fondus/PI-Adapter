@@ -95,7 +95,7 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 			}
 			
 			tenDaysRainfall.add( rainfall );
-			tenDaysFlow.add( flow );
+			tenDaysFlow.add( flow / 10 );
 		});
 		
 		// Create the content and suffix
