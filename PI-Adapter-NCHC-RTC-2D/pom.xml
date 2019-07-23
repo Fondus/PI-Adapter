@@ -28,11 +28,10 @@
 			<groupId>tw.fondus.fews.adapter</groupId>
 			<artifactId>pi-adapter-commons</artifactId>
 		</dependency>
-		<!-- FondUS SDK: Commons-SensLink -->
+		<!-- FondUS SDK: The open source project can't use this -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-senslink</artifactId>
-			<version>${commons.version}</version>
+			<artifactId>commons-utils</artifactId>
 		</dependency>
 	</dependencies>
 	
