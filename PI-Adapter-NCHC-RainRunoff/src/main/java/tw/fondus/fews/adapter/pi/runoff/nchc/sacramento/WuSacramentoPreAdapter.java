@@ -1,17 +1,17 @@
 package tw.fondus.fews.adapter.pi.runoff.nchc.sacramento;
 
 import java.util.StringJoiner;
+import java.util.TimeZone;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import nl.wldelft.util.timeseries.TimeSeriesArray;
 import strman.Strman;
-import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
-import tw.fondus.commons.fews.pi.util.timeseries.TimeSeriesUtils;
 import tw.fondus.commons.util.string.StringUtils;
-import tw.fondus.commons.util.time.TimeUtils;
+import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 import tw.fondus.fews.adapter.pi.runoff.nchc.RainRunoffPreAdapter;
+import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 
 /**
  * Model pre-adapter for running NCHC Wu Sacramento model from Delft-FEWS.
@@ -22,20 +22,20 @@ import tw.fondus.fews.adapter.pi.runoff.nchc.RainRunoffPreAdapter;
 public class WuSacramentoPreAdapter extends RainRunoffPreAdapter {
 	
 	public static void main(String[] args) {
-		PiArguments arguments = new PiArguments();
-		new WuSacramentoPreAdapter().execute(args, arguments);
+		PiIOArguments arguments = new PiIOArguments();
+		new WuSacramentoPreAdapter().execute( args, arguments );
 	}
-	
+
 	@Override
-	protected String createFileContent(TimeSeriesArray array) {
-		StringJoiner content = new StringJoiner(StringUtils.BREAKLINE,
+	protected String createModelInputContent( TimeSeriesArray array ) {
+		StringJoiner content = new StringJoiner( StringUtils.BREAKLINE,
 				Strman.append( array.getHeader().getLocationId(), StringUtils.BREAKLINE ),
-				Strman.append(StringUtils.BREAKLINE, "-9999 -9999 -9999", StringUtils.BREAKLINE));
+				Strman.append( StringUtils.BREAKLINE, "-9999 -9999 -9999", StringUtils.BREAKLINE ));
 		
-		IntStream.range(0, array.size()).forEach(i -> {
+		IntStream.range(0, array.size()).forEach( i -> {
 			content.add(
-					Strman.append(DateFormatUtils.format(array.getTime(i), "ddMMyyyy HHmm ", TimeUtils.GMT0),
-					String.valueOf( TimeSeriesUtils.getValue(array, i, 0.0F) ))
+					Strman.append( DateFormatUtils.format( array.getTime( i ), "ddMMyyyy HHmm ", TimeZone.getTimeZone( "GMT" ) ),
+					String.valueOf( TimeSeriesLightUtils.getValue( array, i, 0.0F ) ))
 					);
 		});
 		

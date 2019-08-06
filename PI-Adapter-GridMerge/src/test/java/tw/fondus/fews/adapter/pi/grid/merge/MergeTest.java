@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.grid.merge;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.grid.merge.util.RunArguments;
+import tw.fondus.fews.adapter.pi.grid.merge.argument.RunArguments;
 
 /**
  * Unit test of Model executable-adapter for running ESRI Grid ASCII merged model.
@@ -16,7 +16,7 @@ public class MergeTest {
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\Merge",
+				"src/test/resources",
 				"-e",
 				"GridMerge.exe",
 				"-i",
@@ -32,5 +32,4 @@ public class MergeTest {
 		RunArguments arguments = new RunArguments();
 		new GridMergeExecutable().execute( args, arguments );
 	}
-
 }

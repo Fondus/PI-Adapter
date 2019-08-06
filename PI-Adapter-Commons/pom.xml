@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>tw.fondus.fews.adapter</groupId>
+		<artifactId>pi-adapter</artifactId>
+		<version>2.0.0</version>
+	</parent>
+	
+	<artifactId>pi-adapter-commons</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>The Commons Published Interface Adapter</name>
+	
+	<description>
+		The Commons Published Interface Adapter is development adapter tools to data exchange with Delft-FEWS system.
+	</description>
+	
+	<properties>
+		<log4j.version>1.2.17</log4j.version>
+		<slf4j.version>1.7.25</slf4j.version>
+		<guava.version>27.1-jre</guava.version>
+		<fews.version>2017.01</fews.version>
+		<commons.cli.version>0.2.1</commons.cli.version>
+		<commons.fews.xml.version>1.0.0</commons.fews.xml.version>
+	</properties>
+	
+	<dependencies>
+		<!-- Google Guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+		<!-- Log4J -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<!-- Slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- Delft-FEWS Starter -->
+		<dependency>
+			<groupId>nl.wldelft.fews</groupId>
+			<artifactId>delft-fews-starter-commons</artifactId>
+			<version>${fews.version}</version>
+		</dependency>
+		<!-- Commons-CLI -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>${commons.cli.version}</version>
+		</dependency>
+		<!-- Commons-FEWS-XML -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-fews-xml</artifactId>
+			<version>${commons.fews.xml.version}</version>
+		</dependency>
+	</dependencies>
+</project>

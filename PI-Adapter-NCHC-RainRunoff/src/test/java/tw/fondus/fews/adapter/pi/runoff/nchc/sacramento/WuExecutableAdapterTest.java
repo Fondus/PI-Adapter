@@ -1,8 +1,6 @@
 package tw.fondus.fews.adapter.pi.runoff.nchc.sacramento;
 
-import org.junit.Test;
-
-import tw.fondus.fews.adapter.pi.runoff.nchc.util.RunArguments;
+import tw.fondus.fews.adapter.pi.runoff.nchc.argument.RunArguments;
 
 /**
  * Unit test of Model executable-adapter for running NCHC Wu Sacramento model.
@@ -12,11 +10,11 @@ import tw.fondus.fews.adapter.pi.runoff.nchc.util.RunArguments;
  */
 public class WuExecutableAdapterTest {
 
-	@Test
+//	@Test
 	public void test() {
 		String[] args = new String[]{
 				"-b",
-				"\\RR_NCHC_Sacramento",
+				"src/test/resources/Sacramento",
 				"-i",
 				"INPUT_DATA_RAIN.TXT,INPUT_PARS_SACSMA.TXT",
 				"-o",
@@ -32,5 +30,4 @@ public class WuExecutableAdapterTest {
 		RunArguments arguments = new RunArguments();
 		new WuSacramentoExecutable().execute(args, arguments);
 	}
-	
 }

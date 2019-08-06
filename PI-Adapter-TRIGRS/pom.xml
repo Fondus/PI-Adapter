@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>${adapter.version}</version>
+		<version>2.0.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-trigrs</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.0</version>
 
 	<name>The TRIGRS Published Interface Adapter</name>
 	<url>https://github.com/usgs/landslides-trigrs</url>
@@ -19,6 +19,19 @@
 	<description>
 		The FEWS Published Interface Adapter of TRIGRS Model is used to data exchange with Delft-FEWS system.
 	</description>
+
+	<dependencies>
+		<!-- PI-Adapter Commons -->
+		<dependency>
+			<groupId>tw.fondus.fews.adapter</groupId>
+			<artifactId>pi-adapter-commons</artifactId>
+		</dependency>
+		<!-- FondUS SDK: The open source project can't use this -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-utils</artifactId>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TimeSeries xmlns="http://www.wldelft.nl/fews/PI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_timeseries.xsd" version="1.2">
+    <timeZone>0.0</timeZone>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <locationId>C1420H049</locationId>
+            <parameterId>P.merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="16:00:00"/>
+            <endDate date="2018-08-28" time="16:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>大甲溪橋</stationName>
+            <units>mm</units>
+        </header>
+        <event date="2018-08-25" time="16:00:00" value="0" flag="0"/>
+        <event date="2018-08-25" time="17:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="18:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="19:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-25" time="20:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-25" time="21:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="22:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-25" time="23:00:00" value="0" flag="0"/>
+        <event date="2018-08-26" time="00:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-26" time="01:00:00" value="0.21" flag="0"/>
+        <event date="2018-08-26" time="02:00:00" value="0.92" flag="0"/>
+        <event date="2018-08-26" time="03:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="05:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="06:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="07:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="08:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="09:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="10:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="11:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="12:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="13:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="14:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="15:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="16:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="17:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="18:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="19:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="20:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="21:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="22:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="23:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="00:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="02:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="03:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="05:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="06:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="07:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="08:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="09:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="10:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="11:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="12:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="13:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="14:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="15:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="16:00:00" value="0.87" flag="0"/>
+        <event date="2018-08-27" time="17:00:00" value="1.06" flag="0"/>
+        <event date="2018-08-27" time="18:00:00" value="0.64" flag="0"/>
+        <event date="2018-08-27" time="19:00:00" value="0.25" flag="0"/>
+        <event date="2018-08-27" time="20:00:00" value="0.17" flag="0"/>
+        <event date="2018-08-27" time="21:00:00" value="0.45" flag="0"/>
+        <event date="2018-08-27" time="22:00:00" value="0.48" flag="0"/>
+        <event date="2018-08-27" time="23:00:00" value="0.35" flag="0"/>
+        <event date="2018-08-28" time="00:00:00" value="0.15" flag="0"/>
+        <event date="2018-08-28" time="01:00:00" value="0.43" flag="0"/>
+        <event date="2018-08-28" time="02:00:00" value="0.37" flag="0"/>
+        <event date="2018-08-28" time="03:00:00" value="0.46" flag="0"/>
+        <event date="2018-08-28" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-28" time="05:00:00" value="2.5" flag="0"/>
+        <event date="2018-08-28" time="06:00:00" value="2.6" flag="0"/>
+        <event date="2018-08-28" time="07:00:00" value="1.17" flag="0"/>
+        <event date="2018-08-28" time="08:00:00" value="0.68" flag="0"/>
+        <event date="2018-08-28" time="09:00:00" value="1.22" flag="0"/>
+        <event date="2018-08-28" time="10:00:00" value="0.49" flag="0"/>
+        <event date="2018-08-28" time="11:00:00" value="0.11" flag="0"/>
+        <event date="2018-08-28" time="12:00:00" value="0.24" flag="0"/>
+        <event date="2018-08-28" time="13:00:00" value="0.64" flag="0"/>
+        <event date="2018-08-28" time="14:00:00" value="0.31" flag="0"/>
+        <event date="2018-08-28" time="15:00:00" value="0.08" flag="0"/>
+        <event date="2018-08-28" time="16:00:00" value="0.15" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <locationId>C1420H054</locationId>
+            <parameterId>P.merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="16:00:00"/>
+            <endDate date="2018-08-28" time="16:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>谷關大橋</stationName>
+            <units>mm</units>
+        </header>
+        <event date="2018-08-25" time="16:00:00" value="0" flag="0"/>
+        <event date="2018-08-25" time="17:00:00" value="0.03" flag="0"/>
+        <event date="2018-08-25" time="18:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="19:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="20:00:00" value="0" flag="0"/>
+        <event date="2018-08-25" time="21:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-25" time="22:00:00" value="0" flag="0"/>
+        <event date="2018-08-25" time="23:00:00" value="0" flag="0"/>
+        <event date="2018-08-26" time="00:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-26" time="01:00:00" value="0.33" flag="0"/>
+        <event date="2018-08-26" time="02:00:00" value="1.45" flag="0"/>
+        <event date="2018-08-26" time="03:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="05:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="06:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="07:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="08:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="09:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="10:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="11:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="12:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="13:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="14:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="15:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="16:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="17:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="18:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="19:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="20:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="21:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="22:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="23:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="00:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="02:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="03:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="05:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="06:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="07:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="08:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="09:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="10:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="11:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="12:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="13:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="14:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="15:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="16:00:00" value="1.4" flag="0"/>
+        <event date="2018-08-27" time="17:00:00" value="1.71" flag="0"/>
+        <event date="2018-08-27" time="18:00:00" value="0.97" flag="0"/>
+        <event date="2018-08-27" time="19:00:00" value="0.23" flag="0"/>
+        <event date="2018-08-27" time="20:00:00" value="0.24" flag="0"/>
+        <event date="2018-08-27" time="21:00:00" value="0.71" flag="0"/>
+        <event date="2018-08-27" time="22:00:00" value="0.77" flag="0"/>
+        <event date="2018-08-27" time="23:00:00" value="0.56" flag="0"/>
+        <event date="2018-08-28" time="00:00:00" value="0.23" flag="0"/>
+        <event date="2018-08-28" time="01:00:00" value="0.62" flag="0"/>
+        <event date="2018-08-28" time="02:00:00" value="0.54" flag="0"/>
+        <event date="2018-08-28" time="03:00:00" value="0.73" flag="0"/>
+        <event date="2018-08-28" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-28" time="05:00:00" value="3.98" flag="0"/>
+        <event date="2018-08-28" time="06:00:00" value="4.13" flag="0"/>
+        <event date="2018-08-28" time="07:00:00" value="1.86" flag="0"/>
+        <event date="2018-08-28" time="08:00:00" value="1.08" flag="0"/>
+        <event date="2018-08-28" time="09:00:00" value="1.83" flag="0"/>
+        <event date="2018-08-28" time="10:00:00" value="0.71" flag="0"/>
+        <event date="2018-08-28" time="11:00:00" value="0.14" flag="0"/>
+        <event date="2018-08-28" time="12:00:00" value="0.16" flag="0"/>
+        <event date="2018-08-28" time="13:00:00" value="0.47" flag="0"/>
+        <event date="2018-08-28" time="14:00:00" value="0.26" flag="0"/>
+        <event date="2018-08-28" time="15:00:00" value="0.1" flag="0"/>
+        <event date="2018-08-28" time="16:00:00" value="0.21" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <locationId>C1420H055</locationId>
+            <parameterId>P.merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="16:00:00"/>
+            <endDate date="2018-08-28" time="16:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>東勢大橋</stationName>
+            <units>mm</units>
+        </header>
+        <event date="2018-08-25" time="16:00:00" value="0" flag="0"/>
+        <event date="2018-08-25" time="17:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="18:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="19:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-25" time="20:00:00" value="0" flag="0"/>
+        <event date="2018-08-25" time="21:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="22:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="23:00:00" value="0" flag="0"/>
+        <event date="2018-08-26" time="00:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-26" time="01:00:00" value="0.26" flag="0"/>
+        <event date="2018-08-26" time="02:00:00" value="1.11" flag="0"/>
+        <event date="2018-08-26" time="03:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="05:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="06:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="07:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="08:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="09:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="10:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="11:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="12:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="13:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="14:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="15:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="16:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="17:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="18:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="19:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="20:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="21:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="22:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="23:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="00:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="02:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="03:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="05:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="06:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="07:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="08:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="09:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="10:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="11:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="12:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="13:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="14:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="15:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="16:00:00" value="1.04" flag="0"/>
+        <event date="2018-08-27" time="17:00:00" value="1.28" flag="0"/>
+        <event date="2018-08-27" time="18:00:00" value="0.76" flag="0"/>
+        <event date="2018-08-27" time="19:00:00" value="0.27" flag="0"/>
+        <event date="2018-08-27" time="20:00:00" value="0.2" flag="0"/>
+        <event date="2018-08-27" time="21:00:00" value="0.55" flag="0"/>
+        <event date="2018-08-27" time="22:00:00" value="0.58" flag="0"/>
+        <event date="2018-08-27" time="23:00:00" value="0.42" flag="0"/>
+        <event date="2018-08-28" time="00:00:00" value="0.18" flag="0"/>
+        <event date="2018-08-28" time="01:00:00" value="0.47" flag="0"/>
+        <event date="2018-08-28" time="02:00:00" value="0.42" flag="0"/>
+        <event date="2018-08-28" time="03:00:00" value="0.55" flag="0"/>
+        <event date="2018-08-28" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-28" time="05:00:00" value="3" flag="0"/>
+        <event date="2018-08-28" time="06:00:00" value="3.12" flag="0"/>
+        <event date="2018-08-28" time="07:00:00" value="1.41" flag="0"/>
+        <event date="2018-08-28" time="08:00:00" value="0.82" flag="0"/>
+        <event date="2018-08-28" time="09:00:00" value="1.46" flag="0"/>
+        <event date="2018-08-28" time="10:00:00" value="0.55" flag="0"/>
+        <event date="2018-08-28" time="11:00:00" value="0.11" flag="0"/>
+        <event date="2018-08-28" time="12:00:00" value="0.22" flag="0"/>
+        <event date="2018-08-28" time="13:00:00" value="0.7" flag="0"/>
+        <event date="2018-08-28" time="14:00:00" value="0.29" flag="0"/>
+        <event date="2018-08-28" time="15:00:00" value="0.09" flag="0"/>
+        <event date="2018-08-28" time="16:00:00" value="0.17" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <locationId>C1420H056</locationId>
+            <parameterId>P.merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="16:00:00"/>
+            <endDate date="2018-08-28" time="16:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>后豐大橋</stationName>
+            <units>mm</units>
+        </header>
+        <event date="2018-08-25" time="16:00:00" value="0" flag="0"/>
+        <event date="2018-08-25" time="17:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="18:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="19:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-25" time="20:00:00" value="0" flag="0"/>
+        <event date="2018-08-25" time="21:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="22:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="23:00:00" value="0" flag="0"/>
+        <event date="2018-08-26" time="00:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-26" time="01:00:00" value="0.24" flag="0"/>
+        <event date="2018-08-26" time="02:00:00" value="1.02" flag="0"/>
+        <event date="2018-08-26" time="03:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="05:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="06:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="07:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="08:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="09:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="10:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="11:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="12:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="13:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="14:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="15:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="16:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="17:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="18:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="19:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="20:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="21:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="22:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="23:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="00:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="02:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="03:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="05:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="06:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="07:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="08:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="09:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="10:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="11:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="12:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="13:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="14:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="15:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="16:00:00" value="0.96" flag="0"/>
+        <event date="2018-08-27" time="17:00:00" value="1.18" flag="0"/>
+        <event date="2018-08-27" time="18:00:00" value="0.71" flag="0"/>
+        <event date="2018-08-27" time="19:00:00" value="0.28" flag="0"/>
+        <event date="2018-08-27" time="20:00:00" value="0.19" flag="0"/>
+        <event date="2018-08-27" time="21:00:00" value="0.51" flag="0"/>
+        <event date="2018-08-27" time="22:00:00" value="0.54" flag="0"/>
+        <event date="2018-08-27" time="23:00:00" value="0.39" flag="0"/>
+        <event date="2018-08-28" time="00:00:00" value="0.16" flag="0"/>
+        <event date="2018-08-28" time="01:00:00" value="0.44" flag="0"/>
+        <event date="2018-08-28" time="02:00:00" value="0.39" flag="0"/>
+        <event date="2018-08-28" time="03:00:00" value="0.51" flag="0"/>
+        <event date="2018-08-28" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-28" time="05:00:00" value="2.78" flag="0"/>
+        <event date="2018-08-28" time="06:00:00" value="2.89" flag="0"/>
+        <event date="2018-08-28" time="07:00:00" value="1.3" flag="0"/>
+        <event date="2018-08-28" time="08:00:00" value="0.76" flag="0"/>
+        <event date="2018-08-28" time="09:00:00" value="1.36" flag="0"/>
+        <event date="2018-08-28" time="10:00:00" value="0.52" flag="0"/>
+        <event date="2018-08-28" time="11:00:00" value="0.1" flag="0"/>
+        <event date="2018-08-28" time="12:00:00" value="0.21" flag="0"/>
+        <event date="2018-08-28" time="13:00:00" value="0.67" flag="0"/>
+        <event date="2018-08-28" time="14:00:00" value="0.3" flag="0"/>
+        <event date="2018-08-28" time="15:00:00" value="0.08" flag="0"/>
+        <event date="2018-08-28" time="16:00:00" value="0.16" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <locationId>C1420H057</locationId>
+            <parameterId>P.merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-08-25" time="16:00:00"/>
+            <endDate date="2018-08-28" time="16:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>松鶴橋</stationName>
+            <units>mm</units>
+        </header>
+        <event date="2018-08-25" time="16:00:00" value="0" flag="0"/>
+        <event date="2018-08-25" time="17:00:00" value="0.03" flag="0"/>
+        <event date="2018-08-25" time="18:00:00" value="0.02" flag="0"/>
+        <event date="2018-08-25" time="19:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-25" time="20:00:00" value="0" flag="0"/>
+        <event date="2018-08-25" time="21:00:00" value="0.01" flag="0"/>
+        <event date="2018-08-25" time="22:00:00" value="0" flag="0"/>
+        <event date="2018-08-25" time="23:00:00" value="0" flag="0"/>
+        <event date="2018-08-26" time="00:00:00" value="0" flag="0"/>
+        <event date="2018-08-26" time="01:00:00" value="0.32" flag="0"/>
+        <event date="2018-08-26" time="02:00:00" value="1.37" flag="0"/>
+        <event date="2018-08-26" time="03:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="05:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="06:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="07:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="08:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="09:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="10:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="11:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="12:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="13:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="14:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="15:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="16:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="17:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="18:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="19:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="20:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="21:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="22:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-26" time="23:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="00:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="01:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="02:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="03:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="05:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="06:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="07:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="08:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="09:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="10:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="11:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="12:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="13:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="14:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="15:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-27" time="16:00:00" value="1.29" flag="0"/>
+        <event date="2018-08-27" time="17:00:00" value="1.57" flag="0"/>
+        <event date="2018-08-27" time="18:00:00" value="0.89" flag="0"/>
+        <event date="2018-08-27" time="19:00:00" value="0.21" flag="0"/>
+        <event date="2018-08-27" time="20:00:00" value="0.23" flag="0"/>
+        <event date="2018-08-27" time="21:00:00" value="0.66" flag="0"/>
+        <event date="2018-08-27" time="22:00:00" value="0.71" flag="0"/>
+        <event date="2018-08-27" time="23:00:00" value="0.51" flag="0"/>
+        <event date="2018-08-28" time="00:00:00" value="0.22" flag="0"/>
+        <event date="2018-08-28" time="01:00:00" value="0.58" flag="0"/>
+        <event date="2018-08-28" time="02:00:00" value="0.5" flag="0"/>
+        <event date="2018-08-28" time="03:00:00" value="0.67" flag="0"/>
+        <event date="2018-08-28" time="04:00:00" value="-999.0" flag="8"/>
+        <event date="2018-08-28" time="05:00:00" value="3.67" flag="0"/>
+        <event date="2018-08-28" time="06:00:00" value="3.82" flag="0"/>
+        <event date="2018-08-28" time="07:00:00" value="1.72" flag="0"/>
+        <event date="2018-08-28" time="08:00:00" value="1.01" flag="0"/>
+        <event date="2018-08-28" time="09:00:00" value="1.77" flag="0"/>
+        <event date="2018-08-28" time="10:00:00" value="0.66" flag="0"/>
+        <event date="2018-08-28" time="11:00:00" value="0.13" flag="0"/>
+        <event date="2018-08-28" time="12:00:00" value="0.21" flag="0"/>
+        <event date="2018-08-28" time="13:00:00" value="0.64" flag="0"/>
+        <event date="2018-08-28" time="14:00:00" value="0.27" flag="0"/>
+        <event date="2018-08-28" time="15:00:00" value="0.09" flag="0"/>
+        <event date="2018-08-28" time="16:00:00" value="0.2" flag="0"/>
+    </series>
+</TimeSeries>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<Diag version="1.2" xsi:schemaLocation="http://www.wldelft.nl/fews/PI HTTP://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_diag.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.wldelft.nl/fews/PI">
+   <line level="3" description="GridMergeAdapter: Create the output mapstack meta-infromation."/>
+   <line level="3" description="GridMergeAdapter: Read the input grid files."/>
+   <line level="3" description="GridMergeAdapter: Prepare to run merged grid files."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT01_0000.000 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT02_0000.000 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT03_0000.000 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT04_0000.000 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Running the merge grids to combine. Unit Member: 0."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT01_0000.001 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT02_0000.001 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT03_0000.001 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT04_0000.001 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Running the merge grids to combine. Unit Member: 1."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT01_0000.002 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT02_0000.002 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT03_0000.002 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT04_0000.002 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Running the merge grids to combine. Unit Member: 2."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT01_0000.003 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT02_0000.003 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT03_0000.003 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Moveing the UNIT04_0000.003 to temporary folder, prepare to merged."/>
+   <line level="3" description="GridMergeAdapter: Running the merge grids to combine. Unit Member: 3."/>
+</Diag>

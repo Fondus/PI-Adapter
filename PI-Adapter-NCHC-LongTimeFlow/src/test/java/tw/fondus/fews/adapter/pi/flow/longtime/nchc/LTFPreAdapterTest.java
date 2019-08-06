@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.flow.longtime.nchc;
 
 import org.junit.Test;
 
-import tw.fondus.commons.fews.pi.util.adapter.PiArguments;
+import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 /**
  * Unit test of Model pre-adapter for running NCHC long time flow model from Delft-FEWS.
@@ -22,7 +22,7 @@ public class LTFPreAdapterTest {
 				""
 		};
 		
-		PiArguments arguments = new PiArguments();
+		PiIOArguments arguments = new PiIOArguments();
 		new LTFPreAdapter().execute( args, arguments );
 	}
 }

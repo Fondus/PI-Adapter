@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.rtc.nchc;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.rtc.nchc.util.PreAdapterArguments;
+import tw.fondus.fews.adapter.pi.rtc.nchc.argument.PreAdapterArguments;
 
 /**
  * Unit test of Model pre-adapter for running NCHC RTC model. 

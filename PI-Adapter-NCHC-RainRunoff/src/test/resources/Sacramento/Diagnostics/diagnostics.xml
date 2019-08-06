@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<Diag version="1.2" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_diag.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.wldelft.nl/fews/PI">
+   <line level="3" description="NCHC RainRunoff ExecutableAdapter: Move model input to executable directory. Processing C1420H049 now."/>
+   <line level="3" description="NCHC RainRunoff ExecutableAdapter: Copy input parameter file to executable directory."/>
+   <line level="3" description="NCHC RainRunoff ExecutableAdapter: Running executable."/>
+   <line level="3" description="NCHC RainRunoff ExecutableAdapter: Move model output to output directory. Processing C1420H049 now."/>
+</Diag>

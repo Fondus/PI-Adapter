@@ -6,17 +6,30 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>${adapter.version}</version>
+		<version>2.0.0</version>
 	</parent>
 	
 	<artifactId>pi-adapter-wrap-search</artifactId>
+	<packaging>jar</packaging>
 	
-	<name>The WRAP Search Map Adapter</name>
-	<url>http://maven.apache.org</url>
+	<name>The WRAP Flood Search Published Interface Adapter</name>
 
 	<description>
-		The FEWS Published Interface Adapter of WRAP Search Map Model is used to data exchange with Delft-FEWS system.
+		The FEWS Published Interface Adapter of WRAP Flood Search Model with GDAL is used to data exchange with Delft-FEWS system.
 	</description>
+	
+	<dependencies>
+		<!-- PI-Adapter Commons -->
+		<dependency>
+			<groupId>tw.fondus.fews.adapter</groupId>
+			<artifactId>pi-adapter-commons</artifactId>
+		</dependency>
+		<!-- FondUS SDK: The open source project can't use this -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-utils</artifactId>
+		</dependency>
+	</dependencies>
 	
 	<build>
 		<plugins>

@@ -6,12 +6,11 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>${adapter.version}</version>
+		<version>2.0.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-nctu-ai</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.0</version>
 
 	<name>The NCTU DPWE-AI Published Interface Adapter</name>
 	<url>http://dpwe.nctu.edu.tw/</url>
@@ -19,7 +18,20 @@
 	<description>
 		The FEWS Published Interface Adapter of NCTU DPWE-AI Model is used to data exchange with Delft-FEWS system.
 	</description>
-
+	
+	<dependencies>
+		<!-- PI-Adapter Commons -->
+		<dependency>
+			<groupId>tw.fondus.fews.adapter</groupId>
+			<artifactId>pi-adapter-commons</artifactId>
+		</dependency>
+		<!-- FondUS SDK: The open source project can't use this -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-utils</artifactId>
+		</dependency>
+	</dependencies>
+	
 	<build>
 		<plugins>
 			<!-- Copy dependencies to target folder -->

@@ -6,12 +6,46 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>${adapter.version}</version>
+		<version>2.0.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-nchc-rtc-2d</artifactId>
+	<packaging>jar</packaging>
 
-	<name>PI-Adapter-NCHC-RTC-2D</name>
-	<url>http://maven.apache.org</url>
-
+	<name>The NCHC RTC 2D Published Interface Adapter</name>
+	
+	<developers>
+		<developer>
+			<name>Bo-Chao Liang</name>
+			<organization>FondUS Technology Co., Ltd., TW</organization>
+		</developer>
+	</developers>
+	
+	<dependencies>
+		<!-- PI-Adapter Commons -->
+		<dependency>
+			<groupId>tw.fondus.fews.adapter</groupId>
+			<artifactId>pi-adapter-commons</artifactId>
+		</dependency>
+		<!-- FondUS SDK: The open source project can't use this -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-utils</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<!-- Copy dependencies to target folder -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+			<!-- Skip unit tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>
