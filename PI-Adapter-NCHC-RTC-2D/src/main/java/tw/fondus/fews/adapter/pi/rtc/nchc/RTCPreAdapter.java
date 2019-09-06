@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import javax.naming.OperationNotSupportedException;
 
 import nl.wldelft.util.FileUtils;
-import nl.wldelft.util.timeseries.TimeSeriesArray;
+import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import strman.Strman;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
@@ -45,14 +45,14 @@ public class RTCPreAdapter extends PiCommandLineExecute {
 				"NCHC RTC PreAdapter: The XML file of observation is not exist!" );
 		
 		try {
-			TimeSeriesArray[] similationTimeSeriesArray = TimeSeriesLightUtils.readPiTimeSeries( simulationXMLPath ).toArray();
-			TimeSeriesArray[] observationTimeSeriesArray = TimeSeriesLightUtils.readPiTimeSeries( observationXMLPath ).toArray();
+			TimeSeriesArrays similationTimeSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( simulationXMLPath );
+			TimeSeriesArrays observationTimeSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( observationXMLPath );
 			
 			logger.log( LogLevel.INFO, "NCHC RTC PreAdapter: Start create model input files." );
 			
 			/** Write model input **/
-			this.writeModelInput( logger, similationTimeSeriesArray,
-					observationTimeSeriesArray, inputPath, modelArguments.getForecast() );
+			this.writeModelInput( logger, similationTimeSeriesArrays,
+					observationTimeSeriesArrays, inputPath, modelArguments.getForecast() );
 			
 			logger.log( LogLevel.INFO, "NCHC RTC PreAdapter: Finished create model input files." );
 		} catch (OperationNotSupportedException | IOException e) {
@@ -70,13 +70,13 @@ public class RTCPreAdapter extends PiCommandLineExecute {
 	 * @param forecast
 	 */
 	private void writeModelInput( PiDiagnosticsLogger logger, 
-			TimeSeriesArray[] similationTimeSeriesArray,
-			TimeSeriesArray[] observationTimeSeriesArray, Path inputPath, int forecast ) {
+			TimeSeriesArrays similationTimeSeriesArrays,
+			TimeSeriesArrays observationTimeSeriesArrays, Path inputPath, int forecast ) {
 		try {
 			FileUtils.writeText( Strman.append( inputPath.toString(), PATH, CommonString.INPUT_CORR_SIM_WH ),
-					ContentBuilder.buildInputCorr( similationTimeSeriesArray.length, forecast ) );
+					ContentBuilder.buildInputCorr( similationTimeSeriesArrays.size(), forecast ) );
 			FileUtils.writeText( Strman.append( inputPath.toString(), PATH, CommonString.INPUT_WH_EST_OBS_GAUGES ),
-					ContentBuilder.buildInputGauges( similationTimeSeriesArray, observationTimeSeriesArray ) );
+					ContentBuilder.buildInputGauges( similationTimeSeriesArrays, observationTimeSeriesArrays ) );
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "NCHC RTC PreAdapter: Write model input faild." );
 		}
