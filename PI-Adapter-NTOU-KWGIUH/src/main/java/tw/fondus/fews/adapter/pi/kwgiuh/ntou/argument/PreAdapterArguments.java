@@ -14,7 +14,6 @@ import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
  * @author Chao
  *
  */
-
 @Data
 @EqualsAndHashCode( callSuper = false )
 public class PreAdapterArguments extends PiIOArguments {
