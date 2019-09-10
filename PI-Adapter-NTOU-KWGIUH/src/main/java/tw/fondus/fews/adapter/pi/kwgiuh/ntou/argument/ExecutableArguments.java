@@ -7,13 +7,13 @@ import com.beust.jcommander.Parameter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
+
 /**
  * Model executable-adapter and post-adapter arguments for running NTOU KWGIUH model.
  * 
  * @author Chao
  *
  */
-
 @Data
 @EqualsAndHashCode( callSuper = false )
 public class ExecutableArguments extends PiIOArguments{
