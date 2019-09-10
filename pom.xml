@@ -133,5 +133,6 @@
 		<module>PI-Adapter-SensLink</module>
 		<module>PI-Adapter-API-RiChi-Disaster-Loss</module>
 		<module>PI-Adapter-WRAP-Search</module>
+		<module>PI-Adapter-NTOU-KWGIUH</module>
 	</modules>
 </project>

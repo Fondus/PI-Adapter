@@ -1,0 +1,9 @@
+'src\test\resources\Work\Wagis.txt'	!地文因子檔
+60  !雨量、流量資料延時(min)
+6.5  !no
+0.03 !nc
+80  !B
+'src\test\resources\Work\Rainfall.txt'		!雨量檔
+'src\test\resources\Work\'
+UH.txt		!單位歷線輸出檔案
+Output.txt	!逕流模擬結果輸出檔案
