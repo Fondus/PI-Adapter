@@ -54,11 +54,11 @@ public class ContentBuilder {
 
 		IntStream.range( 0, observationTimeSeriesArrays.size() ).forEach( timeSeries -> {
 			sj.add( Strman.append(
-					String.valueOf( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getX( 0 ) ),
+					getGeometryString( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getX( 0 ) ),
 					StringUtils.SPACE_WHITE,
-					String.valueOf( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getY( 0 ) ),
+					getGeometryString( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getY( 0 ) ),
 					StringUtils.SPACE_WHITE,
-					String.valueOf( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getZ( 0 ) ),
+					getGeometryString( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getZ( 0 ) ),
 					locationInfo, String.valueOf( timeSeries + 1 ), geoInfo ) );
 			IntStream.range( 0, similationTimeSeriesArrays.get( timeSeries ).size() ).forEach( data -> {
 				if ( data == 0 ) {
@@ -89,12 +89,10 @@ public class ContentBuilder {
 	}
 
 	private static String getDataString( float value ) {
-		String stringData = String.valueOf( value );
-		if ( stringData.equals( "NaN" ) ) {
-			stringData = "0";
-			return stringData;
-		} else {
-			return stringData;
-		}
+		return Float.isNaN( value ) ? String.valueOf( 0 ) : String.valueOf( value );
+	}
+	
+	private static String getGeometryString( double value ) {
+		return Double.isNaN( value ) ? String.valueOf( 0 ) : String.valueOf( value );
 	}
 }
