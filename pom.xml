@@ -134,5 +134,6 @@
 		<module>PI-Adapter-API-RiChi-Disaster-Loss</module>
 		<module>PI-Adapter-WRAP-Search</module>
 		<module>PI-Adapter-NTOU-KWGIUH</module>
+		<module>PI-Adapter-NTOU-ANNFSM</module>
 	</modules>
 </project>
