@@ -17,9 +17,9 @@ public class LTFPostAdapterTest {
 				"-b",
 				"src/test/resources/",
 				"-i",
-				"Q_2018100100.xml",
+				"Rainfall.xml,WaterLevel.xml,OUTPUT_EST_10-DAYS_RAIN_FLOW_ANN_GA-SA_MTF.TXT",
 				"-o",
-				"output.xml"
+				"Rainfall.xml,WaterLevel.xml"
 		};
 		
 		PiIOArguments arguments = new PiIOArguments();

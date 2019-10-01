@@ -35,47 +35,63 @@ public class LTFPostAdapter extends PiCommandLineExecute {
 		PiIOArguments arguments = new PiIOArguments();
 		new LTFPostAdapter().execute( args, arguments );
 	}
-	
+
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
 		/** Cast PiArguments to expand arguments **/
 		PiIOArguments modelArguments = (PiIOArguments) arguments;
-		
-		Path inputXML = Prevalidated.checkExists( 
-				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
-				"NCHC NCHC LTF PostAdapter: The input XML not exists!" );
-		
+
+		// Check the XML exists
+		Path rainfallXML = Prevalidated.checkExists(
+				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 0 ) ),
+				"NCHC LTF PreAdapter: The XML file of rainfall is not exist." );
+
+		Path waterLevelXML = Prevalidated.checkExists(
+				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 1 ) ),
+				"NCHC LTF PreAdapter: The XML file of water level is not exist." );
+
 		/** Get model output file **/
-		Path modelOutput = Prevalidated.checkExists( 
-				Strman.append( outputPath.toString(), PATH, "OUTPUT_EST_FLOW_ANN_GA-SA_MTF.TXT" ),
+		Path modelOutput = Prevalidated.checkExists( outputPath.resolve( modelArguments.getInputs().get( 2 ) ),
 				"NCHC LTF PostAdapter: The file of model output is not exist." );
-		
+
 		try {
-			TimeSeriesArray timeSeriesArray = TimeSeriesLightUtils.readPiTimeSeries( inputXML ).get( 0 );
-			DateTime dateTime = new DateTime( timeSeriesArray.getEndTime() );
-			
+			TimeSeriesArray rainfallTimeSeriesArray = TimeSeriesLightUtils.readPiTimeSeries( rainfallXML ).get( 0 );
+			TimeSeriesArray waterLevelTimeSeriesArray = TimeSeriesLightUtils.readPiTimeSeries( waterLevelXML ).get( 0 );
+			DateTime endTime = new DateTime( rainfallTimeSeriesArray.getEndTime() );
+
 			// Read the output content
 			List<String> dataList = PathUtils.readAllLines( modelOutput );
-		
+
 			// Create the model PI-XML
 			logger.log( LogLevel.INFO, "NCHC NCHC LTF PostAdapter: Start read model output files to PiXML." );
-			
-			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
-			TimeSeriesLightUtils.fillPiTimeSeriesHeader( handler, timeSeriesArray.getHeader().getLocationId(),
-					timeSeriesArray.getHeader().getParameterId(), timeSeriesArray.getHeader().getUnit() );
+
+			SimpleTimeSeriesContentHandler rainfallHandler = new SimpleTimeSeriesContentHandler();
+			TimeSeriesLightUtils.fillPiTimeSeriesHeader( rainfallHandler,
+					rainfallTimeSeriesArray.getHeader().getLocationId(),
+					rainfallTimeSeriesArray.getHeader().getParameterId(),
+					rainfallTimeSeriesArray.getHeader().getUnit() );
+
+			SimpleTimeSeriesContentHandler waterLevelHandler = new SimpleTimeSeriesContentHandler();
+			TimeSeriesLightUtils.fillPiTimeSeriesHeader( waterLevelHandler,
+					waterLevelTimeSeriesArray.getHeader().getLocationId(),
+					waterLevelTimeSeriesArray.getHeader().getParameterId(),
+					waterLevelTimeSeriesArray.getHeader().getUnit() );
 			IntStream.range( 0, dataList.size() ).forEach( tenDays -> {
-				if ( dataList.get( tenDays ).split( StringUtils.SPACE_MULTIPLE ).length > 1 ) {
-					long tenDaysLong = (long) (tenDays + 1) * tenDaysMillis;
-					tenDaysLong += dateTime.getMillis();
-					TimeSeriesLightUtils.addPiTimeSeriesValue( handler, tenDaysLong,
-							Float.valueOf( dataList.get( tenDays ).split( StringUtils.SPACE_MULTIPLE )[3] ) );
-				}
-			});
-			
-			TimeSeriesLightUtils.writePIFile( handler,
-					Strman.append( outputPath.toString(), PATH, modelArguments.getOutputs().get( 0 ) ) );
-			
+				String[] split = dataList.get( tenDays ).split( StringUtils.SPACE_MULTIPLE );
+				long forecastTimeLong = (long) ((tenDays + 1) * tenDaysMillis) + endTime.getMillis();
+
+				TimeSeriesLightUtils.addPiTimeSeriesValue( rainfallHandler, forecastTimeLong,
+						Float.valueOf( split[4] ) );
+				TimeSeriesLightUtils.addPiTimeSeriesValue( waterLevelHandler, forecastTimeLong,
+						Float.valueOf( split[8] ) );
+			} );
+
+			TimeSeriesLightUtils.writePIFile( rainfallHandler,
+					outputPath.resolve( modelArguments.getOutputs().get( 0 ) ).toString() );
+			TimeSeriesLightUtils.writePIFile( waterLevelHandler,
+					outputPath.resolve( modelArguments.getOutputs().get( 1 ) ).toString() );
+
 			logger.log( LogLevel.INFO, "NCHC NCHC LTF PostAdapter: Finished read model output files to PiXML." );
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "NCHC NCHC LTF PostAdapter: Read model output has something wrong." );

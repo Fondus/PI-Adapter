@@ -17,9 +17,9 @@ public class LTFPreAdapterTest {
 				"-b",
 				"src/test/resources/",
 				"-i",
-				"Rainfall_2018100100.xml,Q_2018100100.xml",
+				"Rainfall.xml,WaterLevel.xml",
 				"-o",
-				""
+				"DATA_INP_RAIN.txt,DATA_INP_WL.txt,INPUT_DATE_DECADE.TXT"
 		};
 		
 		PiIOArguments arguments = new PiIOArguments();

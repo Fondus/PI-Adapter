@@ -1,18 +1,21 @@
 package tw.fondus.fews.adapter.pi.flow.longtime.nchc;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import org.apache.commons.io.FileUtils;
 import org.zeroturnaround.exec.InvalidExitValueException;
 
-import nl.wldelft.util.FileUtils;
 import strman.Strman;
 import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
-import tw.fondus.commons.util.file.FileType;
+import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.string.StringUtils;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
@@ -26,85 +29,66 @@ import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
  *
  */
 public class LTFExecutable extends PiCommandLineExecute {
-	private static final String[] OUTPUTS = {
-		"OUTPUT_EST_FLOW_ANN_GA-SA_MTF.TXT",
-		"SUMMARY_RESULTS_EST_FLOW_ANN_GA-SA_MTF.TXT",
-		"OUTPUT_EST_RAIN_ANN_GA-SA_MTF.TXT",
-		"OUTPUT_EST_RAIN_FLOW_ANN_GA-SA_MTF.TXT"
-	};
-	
+
 	public static void main( String[] args ) {
 		RunArguments arguments = new RunArguments();
 		new LTFExecutable().execute( args, arguments );
 	}
-	
+
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
 		/** Cast PiArguments to expand arguments **/
 		RunArguments modelArguments = (RunArguments) arguments;
-		
-		Path executablePath = Prevalidated.checkExists( 
-				Strman.append( basePath.toString(), PATH, modelArguments.getExecutableDir()),
+
+		Path executablePath = Prevalidated.checkExists(
+				Strman.append( basePath.toString(), PATH, modelArguments.getExecutableDir() ),
 				"NCHC LTF Executable: The model executable directory not exist." );
-		
-		Path templatePath = Prevalidated.checkExists( 
+
+		Path templatePath = Prevalidated.checkExists(
 				Strman.append( basePath.toString(), PATH, modelArguments.getTemplateDir() ),
 				"NCHC LTF Executable: The template directory is not exist." );
-		
+
 		logger.log( LogLevel.INFO, "NCHC LTF Executable: Start the executable process." );
-		
+
 		try {
+			FileUtils.cleanDirectory( executablePath.toFile() );
+
 			/** Copy model input file to executable directory **/
-			FileUtils.copy( Strman.append( inputPath.toString(), PATH, "DATA_INP_RAIN.TXT" ),
-					Strman.append( executablePath.toString(), PATH, "DATA_INP_RAIN.TXT" ) );
-			FileUtils.copy( Strman.append( inputPath.toString(), PATH, "DATA_INP_FLOW.TXT" ),
-					Strman.append( executablePath.toString(), PATH, "DATA_INP_FLOW.TXT" ) );
-			
+			PathUtils.copy( inputPath.resolve( modelArguments.getInputs().get( 0 ) ), executablePath );
+			PathUtils.copy( inputPath.resolve( modelArguments.getInputs().get( 1 ) ), executablePath );
+			PathUtils.copy( inputPath.resolve( modelArguments.getInputs().get( 2 ) ), executablePath );
+
 			/** Copy model to executable directory from template directory **/
-			FileUtils.copy( templatePath.toFile().listFiles(), executablePath.toFile() );
-			
-			Path executable = Prevalidated.checkExists( 
-					Strman.append( executablePath.toString(), PATH, modelArguments.getExecutable().get( 0 ) ),
-					"NCHC LTF Executable: The executable is not exist." );
-			
+			PathUtils.copyDirectory( templatePath, executablePath, true );
+			PathUtils.copyDirectory( templatePath.resolve( "Basin" ).resolve( modelArguments.getProjectName() ),
+					executablePath, false );
+
+			/** Replacing arguments of forecast and observed steps. **/
+			List<String> lines = Files.readAllLines( executablePath.resolve( modelArguments.getInputs().get( 3 ) ) );
+			IntStream.range( 0, lines.size() ).forEach( line -> {
+				if ( lines.get( line ).contains( "{forecast_steps}" ) ) {
+					lines.set( line, lines.get( line )
+							.replace( "{forecast_steps}", modelArguments.getForecastSteps().toString() ) );
+				} else if ( lines.get( line ).contains( "{observed_steps}" ) ) {
+					lines.set( line, lines.get( line )
+							.replace( "{observed_steps}", modelArguments.getObservedSteps().toString() ) );
+				}
+			} );
+			FileUtils.writeStringToFile( executablePath.resolve( modelArguments.getInputs().get( 3 ) ).toFile(),
+					lines.stream().collect( Collectors.joining( StringUtils.BREAKLINE ) ) );
+
+			String command = executablePath.resolve( modelArguments.getExecutable().get( 0 ) ).toString();
+
 			/** Run model **/
-			Executions.execute( executor -> executor.directory( executablePath.toFile() ),
-					executable.toString() );
-			
-			/** Backup model output file by project name **/
-			this.backupOutputFile( logger, executablePath, modelArguments.getProjectName() );
-			
-			/** Move model output to output directory **/
-			FileUtils.copy( Strman.append( executablePath.toString(), PATH, OUTPUTS[0] ), 
-					Strman.append( outputPath.toString(), PATH, OUTPUTS[0] ));
-			
+			Executions.execute( executor -> executor.directory( executablePath.toFile() ), command );
+			PathUtils.copy( executablePath.resolve( modelArguments.getOutputs().get( 0 ) ), outputPath );
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "NCHC LTF Executable: has IO problem." );
 		} catch (InvalidExitValueException | InterruptedException | TimeoutException e) {
-			logger.log( LogLevel.ERROR, "NCHC LTF Executable: executable has something problem.");
-		} 
-		
+			logger.log( LogLevel.ERROR, "NCHC LTF Executable: executable has something problem." );
+		}
+
 		logger.log( LogLevel.INFO, "NCHC LTF Executable: Finished the executable process." );
-	}
-	
-	/**
-	 * Backup the model outputs.
-	 * 
-	 * @param logger
-	 * @param basePath
-	 * @param projectName
-	 */
-	private void backupOutputFile( PiDiagnosticsLogger logger, Path basePath, String projectName ) {
-		Stream.of( OUTPUTS ).forEach( output -> {
-			String fileName = FileUtils.getNameWithoutExt( output );
-			String backupFileName = Strman.append( fileName, StringUtils.UNDERLINE, projectName, FileType.TXT.getExtension() );
-			try {
-				logger.log( LogLevel.INFO, "NCHC LTF Executable: Backup output file: {} to {}.", output, backupFileName );
-				FileUtils.copy( Strman.append( basePath.toString(), PATH, output ), Strman.append( basePath.toString(), PATH, backupFileName ) );
-			} catch (IOException e) {
-				logger.log( LogLevel.ERROR, "NCHC LTF Executable: Backup output file: {} has something wrong.", output );
-			}
-		} );
 	}
 }
