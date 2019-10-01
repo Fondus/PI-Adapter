@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TimeSeries xmlns="http://www.wldelft.nl/fews/PI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_timeseries.xsd" version="1.2">
+    <timeZone>0.0</timeZone>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>C1300M001S3</locationId>
+            <parameterId>P.merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-11-09" time="16:00:00"/>
+            <endDate date="2018-11-29" time="16:00:00"/>
+            <missVal>-999</missVal>
+            <units>mm</units>
+        </header>
+        <event date="2018-11-09" time="16:00:00" value="92.206" flag="0"/>
+        <event date="2018-11-19" time="16:00:00" value="103.885" flag="0"/>
+        <event date="2018-11-29" time="16:00:00" value="134.496" flag="0"/>
+    </series>
+</TimeSeries>
