@@ -4,20 +4,20 @@
     <series>
         <header>
             <type>instantaneous</type>
-            <moduleInstanceId>H_to_CMS</moduleInstanceId>
-            <locationId>1300H014</locationId>
-            <parameterId>Q.obs</parameterId>
+            <moduleInstanceId>test</moduleInstanceId>
+            <locationId>test</locationId>
+            <parameterId>H.obs</parameterId>
             <timeStep unit="second" multiplier="86400"/>
             <startDate date="2018-07-04" time="00:00:00"/>
-            <endDate date="2018-10-01" time="00:00:00"/>
-            <forecastDate date="2018-10-01" time="00:00:00"/>
+            <endDate date="2018-10-31" time="00:00:00"/>
+            <forecastDate date="2018-10-31" time="00:00:00"/>
             <missVal>0</missVal>
-            <stationName>上坪</stationName>
+            <stationName>test</stationName>
             <lat>24.669035810104</lat>
             <lon>121.11429841687607</lon>
             <x>261568.0</x>
             <y>2729125.0</y>
-            <units>m3/s</units>
+            <units>m</units>
             <creationDate>2019-01-24</creationDate>
             <creationTime>18:50:11</creationTime>
         </header>
@@ -111,5 +111,35 @@
         <event date="2018-09-29" time="00:00:00" value="0" flag="8"/>
         <event date="2018-09-30" time="00:00:00" value="0" flag="8"/>
         <event date="2018-10-01" time="00:00:00" value="0" flag="8"/>
+		<event date="2018-10-02" time="00:00:00" value="4.751" flag="0"/>
+        <event date="2018-10-03" time="00:00:00" value="4.539" flag="0"/>
+        <event date="2018-10-04" time="00:00:00" value="4.556" flag="0"/>
+        <event date="2018-10-05" time="00:00:00" value="4.353" flag="0"/>
+        <event date="2018-10-06" time="00:00:00" value="4.159" flag="0"/>
+        <event date="2018-10-07" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-08" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-09" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-10" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-11" time="00:00:00" value="0" flag="8"/>
+		<event date="2018-10-12" time="00:00:00" value="4.751" flag="0"/>
+        <event date="2018-10-13" time="00:00:00" value="4.539" flag="0"/>
+        <event date="2018-10-14" time="00:00:00" value="4.556" flag="0"/>
+        <event date="2018-10-15" time="00:00:00" value="4.353" flag="0"/>
+        <event date="2018-10-16" time="00:00:00" value="4.159" flag="0"/>
+        <event date="2018-10-17" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-18" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-19" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-20" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-21" time="00:00:00" value="0" flag="8"/>
+		<event date="2018-10-22" time="00:00:00" value="4.751" flag="0"/>
+        <event date="2018-10-23" time="00:00:00" value="4.539" flag="0"/>
+        <event date="2018-10-24" time="00:00:00" value="4.556" flag="0"/>
+        <event date="2018-10-25" time="00:00:00" value="4.353" flag="0"/>
+        <event date="2018-10-26" time="00:00:00" value="4.159" flag="0"/>
+        <event date="2018-10-27" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-28" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-29" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-30" time="00:00:00" value="0" flag="8"/>
+        <event date="2018-10-31" time="00:00:00" value="0" flag="8"/>
     </series>
 </TimeSeries>
