@@ -29,7 +29,8 @@ import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
  *
  */
 public class LTFPostAdapter extends PiCommandLineExecute {
-	public static final long tenDaysMillis = (long) 10 * 24 * 60 * 60 * 1000;
+	public static final long TEN_DAYS_MILLIS = 10 * 24 * 60 * 60 * 1000;
+	public static final long HOURLY_MILLIS = 60 * 60 * 1000;
 
 	public static void main( String[] args ) {
 		PiIOArguments arguments = new PiIOArguments();
@@ -79,12 +80,13 @@ public class LTFPostAdapter extends PiCommandLineExecute {
 					waterLevelTimeSeriesArray.getHeader().getUnit() );
 			IntStream.range( 0, dataList.size() ).forEach( tenDays -> {
 				String[] split = dataList.get( tenDays ).split( StringUtils.SPACE_MULTIPLE );
-				long forecastTimeLong = (long) ((tenDays + 1) * tenDaysMillis) + endTime.getMillis();
 
-				TimeSeriesLightUtils.addPiTimeSeriesValue( rainfallHandler, forecastTimeLong,
-						Float.valueOf( split[4] ) );
-				TimeSeriesLightUtils.addPiTimeSeriesValue( waterLevelHandler, forecastTimeLong,
-						Float.valueOf( split[8] ) );
+				this.fillHourlyValue( tenDays * TEN_DAYS_MILLIS + endTime.getMillis(),
+						(tenDays + 1) * TEN_DAYS_MILLIS + endTime.getMillis(), Float.valueOf( split[4] ),
+						rainfallHandler );
+				this.fillHourlyValue( tenDays * TEN_DAYS_MILLIS + endTime.getMillis(),
+						(tenDays + 1) * TEN_DAYS_MILLIS + endTime.getMillis(), Float.valueOf( split[8] ),
+						waterLevelHandler );
 			} );
 
 			TimeSeriesLightUtils.writePIFile( rainfallHandler,
@@ -99,6 +101,24 @@ public class LTFPostAdapter extends PiCommandLineExecute {
 			logger.log( LogLevel.ERROR, "NCHC NCHC LTF PostAdapter: Write PI-XML has something wrong." );
 		} catch (OperationNotSupportedException e) {
 			logger.log( LogLevel.ERROR, "NCHC NCHC LTF PostAdapter: Read PI-XML has something wrong." );
+		}
+	}
+
+	/**
+	 * Fill model output value by hourly.
+	 * 
+	 * @param startTime
+	 * @param endTime
+	 * @param value
+	 * @param handler
+	 */
+	private void fillHourlyValue( long startTime, long endTime, float value, SimpleTimeSeriesContentHandler handler ) {
+		long timeLag = endTime - startTime;
+		int hours = (int) (timeLag / HOURLY_MILLIS);
+		if ( hours > 1 ) {
+			IntStream.rangeClosed( 1, hours ).forEach( hour -> {
+				TimeSeriesLightUtils.addPiTimeSeriesValue( handler, startTime + hour * HOURLY_MILLIS, value );
+			} );
 		}
 	}
 }
