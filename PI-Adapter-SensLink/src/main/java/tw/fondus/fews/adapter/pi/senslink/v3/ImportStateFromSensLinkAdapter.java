@@ -35,7 +35,7 @@ public class ImportStateFromSensLinkAdapter extends PiCommandLineExecute {
 
 	public static void main(String[] args) {
 		RunArguments arguments = new RunArguments();
-		new ImportFromSensLinkAdapter().execute(args, arguments);
+		new ImportStateFromSensLinkAdapter().execute(args, arguments);
 	}
 
 	@Override
