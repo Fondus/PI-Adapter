@@ -100,7 +100,7 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 		} catch (OperationNotSupportedException e) {
 			logger.log( LogLevel.ERROR, "SensLink 3.0 Import Adapter: Read XML not exists or content empty!" );
 		} catch (IOException e) {
-			logger.log( LogLevel.ERROR, "SensLink 3.0 Import Adapter: Read XML or write the time meta-information has something faild!" );
+			logger.log( LogLevel.ERROR, "SensLink 3.0 Import Adapter: Read XML or write the time meta-information has something failed!" );
 		}
 	}
 }
