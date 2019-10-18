@@ -82,7 +82,7 @@ public class LTFPostAdapter extends PiCommandLineExecute {
 				String[] split = dataList.get( tenDays ).split( StringUtils.SPACE_MULTIPLE );
 
 				this.fillHourlyValue( tenDays * TEN_DAYS_MILLIS + endTime.getMillis(),
-						(tenDays + 1) * TEN_DAYS_MILLIS + endTime.getMillis(), Float.valueOf( split[4] ),
+						(tenDays + 1) * TEN_DAYS_MILLIS + endTime.getMillis(), Float.valueOf( split[4] )/24/10,
 						rainfallHandler );
 				this.fillHourlyValue( tenDays * TEN_DAYS_MILLIS + endTime.getMillis(),
 						(tenDays + 1) * TEN_DAYS_MILLIS + endTime.getMillis(), Float.valueOf( split[8] ),
