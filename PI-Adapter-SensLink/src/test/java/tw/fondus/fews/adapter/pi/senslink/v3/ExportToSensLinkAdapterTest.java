@@ -26,8 +26,6 @@ public class ExportToSensLinkAdapterTest {
 				"Rainfall.xml",
 				"-o",
 				"",
-				"-s",
-				"1",
 				"-us",
 				"",
 				"-pw",
