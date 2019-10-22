@@ -67,16 +67,17 @@ public class LTFPostAdapter extends PiCommandLineExecute {
 			// Create the model PI-XML
 			logger.log( LogLevel.INFO, "NCHC NCHC LTF PostAdapter: Start read model output files to PiXML." );
 
+			String[] parameterIds = modelArguments.getParameter().split( StringUtils.COMMA );
 			SimpleTimeSeriesContentHandler rainfallHandler = new SimpleTimeSeriesContentHandler();
 			TimeSeriesLightUtils.fillPiTimeSeriesHeader( rainfallHandler,
 					rainfallTimeSeriesArray.getHeader().getLocationId(),
-					rainfallTimeSeriesArray.getHeader().getParameterId(),
+					parameterIds[0],
 					rainfallTimeSeriesArray.getHeader().getUnit() );
 
 			SimpleTimeSeriesContentHandler waterLevelHandler = new SimpleTimeSeriesContentHandler();
 			TimeSeriesLightUtils.fillPiTimeSeriesHeader( waterLevelHandler,
 					waterLevelTimeSeriesArray.getHeader().getLocationId(),
-					waterLevelTimeSeriesArray.getHeader().getParameterId(),
+					parameterIds[1],
 					waterLevelTimeSeriesArray.getHeader().getUnit() );
 			IntStream.range( 0, dataList.size() ).forEach( tenDays -> {
 				String[] split = dataList.get( tenDays ).split( StringUtils.SPACE_MULTIPLE );

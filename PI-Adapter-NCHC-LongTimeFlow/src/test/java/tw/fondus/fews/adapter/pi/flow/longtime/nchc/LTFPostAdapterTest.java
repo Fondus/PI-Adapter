@@ -19,7 +19,9 @@ public class LTFPostAdapterTest {
 				"-i",
 				"Rainfall.xml,WaterLevel.xml,OUTPUT_EST_10-DAYS_RAIN_FLOW_ANN_GA-SA_MTF.TXT",
 				"-o",
-				"Rainfall.xml,WaterLevel.xml"
+				"Rainfall.xml,WaterLevel.xml",
+				"-p",
+				"P.forecast,H.simulated"
 		};
 		
 		PiIOArguments arguments = new PiIOArguments();
