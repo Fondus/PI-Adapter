@@ -45,10 +45,11 @@ public class ExportToSensLinkAdapter extends PiCommandLineExecute {
 		
 		try {
 			logger.log( LogLevel.INFO, "SensLink 3.0 Export Adapter: Start translate PI-XML to SensLink PhysicalQuantity Data." );
-			
+
+			int start = modelArguments.getStart();
 			int index = modelArguments.getIndex();
 			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( inputXML );
-			List<RawData> datas = SensLinkUtils.toWriteDatas(  timeSeriesArrays, 0, index );
+			List<RawData> datas = SensLinkUtils.toWriteDatas(  timeSeriesArrays, start, index );
 			
 			if ( datas.size() > 0 ){
 				logger.log( LogLevel.INFO, "SensLink 3.0 Export Adapter: export {} datas to the SensLink System.", String.valueOf( datas.size() ));

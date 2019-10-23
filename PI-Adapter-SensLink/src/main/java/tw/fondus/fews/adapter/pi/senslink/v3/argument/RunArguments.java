@@ -17,6 +17,9 @@ import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 public class RunArguments extends PiIOArguments {
 	@Parameter(names = { "--timeindex", "-ti" }, required = true, description = "The time index of the TimeSeriesArray index position")
 	private int index;
+
+	@Parameter(names = { "--timestart", "-ts" }, description = "The start index of the TimeSeriesArray index position")
+	private int start = 0;
 	
 	@Parameter(names = { "--duration", "-d" }, required = true, description = "The minus duration relative to the current time.")
 	private int duration;
