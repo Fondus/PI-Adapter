@@ -55,11 +55,11 @@ public class ANNFSMPostAdapter extends PiCommandLineExecute {
 			TimeSeriesLightUtils.fillPiTimeSeriesHeader( handler, tideSeriesArray.getHeader().getLocationId(),
 					"H.tide.simulated", "cm" );
 
-			DateTime inputStartTime = new DateTime( tideSeriesArray.getStartTime() );
+			DateTime inputEndTime = new DateTime( tideSeriesArray.getEndTime() );
 			List<String> lines = Files.readAllLines( modelOutputPath );
 			IntStream.range( 0, lines.size() ).forEach( data -> {
 				float value = Float.valueOf( lines.get( data ).trim() );
-				TimeSeriesLightUtils.addPiTimeSeriesValue( handler, inputStartTime.plusHours( data + 1 ).getMillis(),
+				TimeSeriesLightUtils.addPiTimeSeriesValue( handler, inputEndTime.plusHours( data + 1 ).getMillis(),
 						value );
 			} );
 
