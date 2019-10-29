@@ -73,8 +73,8 @@ public class DataUtils {
 		BigDecimal differentRadius = end.getWindDistribution().getRadius().subtract( startRadius );
 
 		return Point.of( start.getTime().plusHours( hour.intValue() ),
-				startLat.add( differentLat.divide( hours, 2 ).multiply( hour ) ),
-				startLon.add( differentLon.divide( hours, 2 ).multiply( hour ) ),
+				startLat.add( differentLat.divide( hours, 2, 2 ).multiply( hour ) ),
+				startLon.add( differentLon.divide( hours, 2, 2 ).multiply( hour ) ),
 				startMaxWind.add( differentMaxWind.divide( hours, 2 ).multiply( hour ) ),
 				startGust.add( differentGust.divide( hours, 2 ).multiply( hour ) ),
 				startCentralPressure.add( differentCentralPressure.divide( hours, 2 ).multiply( hour ) ),
@@ -134,6 +134,9 @@ public class DataUtils {
 		double differentLat = endLat.subtract( startLat ).doubleValue();
 
 		double theta = Math.atan( differentLon / differentLat );
+		if ( Double.isNaN( theta ) ) {
+			theta = 0;
+		}
 		if ( differentLon >= 0 && differentLat >= 0 ) {
 			return new BigDecimal( theta );
 		} else if ( differentLon >= 0 && differentLat < 0 ) {

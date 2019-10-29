@@ -56,8 +56,8 @@ public class KWGIUHPostAdapter extends PiCommandLineExecute {
 
 			logger.log( LogLevel.INFO, "KWGIUHPostAdapter: Filling timeseries header for model output." );
 			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
-			TimeSeriesLightUtils.fillPiTimeSeriesHeader( handler, timeSeriesArray.getHeader().getLocationId(),
-					"Q_simulated", "m^3/s" );
+			TimeSeriesLightUtils.fillPiTimeSeriesHeader( handler, executableArguments.getInputs().get( 2 ),
+					executableArguments.getParameter(), executableArguments.getUnit() );
 			DateTime startTime = new DateTime( timeSeriesArray.getStartTime() );
 
 			logger.log( LogLevel.INFO, "KWGIUHPostAdapter: Reading model output and convert to Pi-XML format." );

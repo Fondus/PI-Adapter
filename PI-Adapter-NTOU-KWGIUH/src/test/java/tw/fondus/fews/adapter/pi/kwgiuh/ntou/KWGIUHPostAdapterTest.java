@@ -17,11 +17,15 @@ public class KWGIUHPostAdapterTest {
 				"-b",
 				"src/test/resources",
 				"-i",
-				"Rainfall.xml,Output.txt",
+				"Rainfall.xml,Output.txt,LocationId",
 				"-o",
 				"Output.xml",
 				"-e",
-				""
+				"",
+				"-p",
+				"Q.simulated",
+				"-u",
+				"m^3/s"
 		};
 	
 		ExecutableArguments arguments = new ExecutableArguments();
