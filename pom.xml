@@ -189,5 +189,6 @@
 		<module>PI-Adapter-WRAP-Search</module>
 		<module>PI-Adapter-NTOU-KWGIUH</module>
 		<module>PI-Adapter-NTOU-ANNFSM</module>
+		<module>PI-Adapter-NTOU-HEC-RAS</module>
 	</modules>
 </project>
