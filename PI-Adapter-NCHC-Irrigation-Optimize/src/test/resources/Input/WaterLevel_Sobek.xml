@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TimeSeries xmlns="http://www.wldelft.nl/fews/PI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_timeseries.xsd" version="1.2">
+    <timeZone>8.0</timeZone>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>1300H014</locationId>
+            <parameterId>H.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2018-09-02" time="02:00:00"/>
+            <endDate date="2018-09-03" time="01:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>上坪</stationName>
+            <units>m</units>
+            <creationDate>2019-11-05</creationDate>
+            <creationTime>17:24:49</creationTime>
+        </header>
+        <event date="2018-09-02" time="02:00:00" value="209.174" flag="0"/>
+        <event date="2018-09-02" time="03:00:00" value="209.249" flag="0"/>
+        <event date="2018-09-02" time="04:00:00" value="209.347" flag="0"/>
+        <event date="2018-09-02" time="05:00:00" value="209.45" flag="0"/>
+        <event date="2018-09-02" time="06:00:00" value="209.527" flag="0"/>
+        <event date="2018-09-02" time="07:00:00" value="209.583" flag="0"/>
+        <event date="2018-09-02" time="08:00:00" value="209.629" flag="0"/>
+        <event date="2018-09-02" time="09:00:00" value="209.671" flag="0"/>
+        <event date="2018-09-02" time="10:00:00" value="209.71" flag="0"/>
+        <event date="2018-09-02" time="11:00:00" value="209.745" flag="0"/>
+        <event date="2018-09-02" time="12:00:00" value="209.777" flag="0"/>
+        <event date="2018-09-02" time="13:00:00" value="209.805" flag="0"/>
+        <event date="2018-09-02" time="14:00:00" value="209.805" flag="0"/>
+        <event date="2018-09-02" time="15:00:00" value="209.805" flag="0"/>
+        <event date="2018-09-02" time="16:00:00" value="209.805" flag="0"/>
+        <event date="2018-09-02" time="17:00:00" value="209.805" flag="0"/>
+        <event date="2018-09-02" time="18:00:00" value="209.806" flag="0"/>
+        <event date="2018-09-02" time="19:00:00" value="209.806" flag="0"/>
+        <event date="2018-09-02" time="20:00:00" value="209.806" flag="0"/>
+        <event date="2018-09-02" time="21:00:00" value="209.806" flag="0"/>
+        <event date="2018-09-02" time="22:00:00" value="209.806" flag="0"/>
+        <event date="2018-09-02" time="23:00:00" value="209.805" flag="0"/>
+        <event date="2018-09-03" time="00:00:00" value="209.805" flag="0"/>
+        <event date="2018-09-03" time="01:00:00" value="209.805" flag="0"/>
+    </series>
+</TimeSeries>
