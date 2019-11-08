@@ -62,7 +62,7 @@ public class IrrigationOptimizePostAdapter extends PiCommandLineExecute {
 			logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize PostAdapter: Create PI-XML content from the model output." );
 			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
 			outputMap.forEach( (id, data) -> {
-				TimeSeriesLightUtils.fillPiTimeSeriesHeader( handler, id, modelArguments.getParameter(), modelArguments.getUnit() );
+				TimeSeriesLightUtils.fillPiTimeSeriesHeader( handler, id, modelArguments.getParameter(), modelArguments.getUnit(), duration );
 
 				IntStream.range( 0, data.size() ).forEach( i -> {
 					TimeSeriesLightUtils.addPiTimeSeriesValue( handler,
