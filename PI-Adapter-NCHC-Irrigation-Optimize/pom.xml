@@ -34,6 +34,12 @@
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-utils</artifactId>
 		</dependency>
+		<!-- FondUS SDK: Commons-FEWS -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-fews</artifactId>
+			<version>${commons.version}</version>
+		</dependency>
 		<!-- FondUS SDK: Commons-JSON -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>

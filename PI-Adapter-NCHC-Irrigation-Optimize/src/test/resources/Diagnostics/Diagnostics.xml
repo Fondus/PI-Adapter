@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding= "UTF-8"?>
-<Diag version="1.2" xsi:schemaLocation="http://www.wldelft.nl/fews/PI HTTP://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_diag.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.wldelft.nl/fews/PI">
-   <line level="3" description="NCHC Irrigation-Optimize PostAdapter: Read model start time."/>
-   <line level="3" description="NCHC Irrigation-Optimize PostAdapter: Read model output file content."/>
-   <line level="3" description="NCHC Irrigation-Optimize PostAdapter: Create PI-XML content from the model output."/>
-   <line level="3" description="NCHC Irrigation-Optimize PostAdapter: Write the PI-XML."/>
-   <line level="3" description="NCHC Irrigation-Optimize PostAdapter: Finished PostAdapter."/>
-</Diag>

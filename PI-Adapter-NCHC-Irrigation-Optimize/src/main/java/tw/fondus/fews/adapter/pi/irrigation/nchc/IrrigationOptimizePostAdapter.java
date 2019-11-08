@@ -5,6 +5,7 @@ import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import org.joda.time.DateTime;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
+import tw.fondus.commons.fews.pi.util.timeseries.TimeSeriesUtils;
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.math.NumberUtils;
 import tw.fondus.commons.util.string.StringUtils;
@@ -62,7 +63,11 @@ public class IrrigationOptimizePostAdapter extends PiCommandLineExecute {
 			logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize PostAdapter: Create PI-XML content from the model output." );
 			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
 			outputMap.forEach( (id, data) -> {
-				TimeSeriesLightUtils.fillPiTimeSeriesHeader( handler, id, modelArguments.getParameter(), modelArguments.getUnit(), duration );
+				if ( duration == 86400000L ){
+					TimeSeriesUtils.fillPiTimeSeriesHeaderIrregular( handler, id, modelArguments.getParameter(), modelArguments.getUnit() );
+				} else {
+					TimeSeriesLightUtils.fillPiTimeSeriesHeader( handler, id, modelArguments.getParameter(), modelArguments.getUnit(), duration );
+				}
 
 				IntStream.range( 0, data.size() ).forEach( i -> {
 					TimeSeriesLightUtils.addPiTimeSeriesValue( handler,
