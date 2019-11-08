@@ -18,6 +18,7 @@ import strman.Strman;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.nc.NetCDFReader;
+import tw.fondus.commons.util.math.NumberUtils;
 import tw.fondus.commons.util.string.StringUtils;
 import tw.fondus.commons.util.time.TimeUtils;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
@@ -66,8 +67,8 @@ public class HECRASPostAdapter extends PiCommandLineExecute {
 					.get();
 
 			for ( int point = 0; point < rightCoorArray.getShape()[0]; point++ ) {
-				PointData pointData = new PointData( new BigDecimal( rightCoorArray.get( point, 0 ) ),
-						new BigDecimal( rightCoorArray.get( point, 1 ) ) );
+				PointData pointData = new PointData( NumberUtils.create( rightCoorArray.get( point, 0 ) ),
+						NumberUtils.create( rightCoorArray.get( point, 1 ) ) );
 				for ( int data = 0; data < rightResultArray.getShape()[0]; data++ ) {
 					pointData.addvalue( rightResultArray.get( data, point ) );
 				}
@@ -95,9 +96,9 @@ public class HECRASPostAdapter extends PiCommandLineExecute {
 			List<String> location = new ArrayList<>();
 			location.add( "locationId,x,y" );
 			for ( int i = 0; i < pointDatas.size(); i++ ) {
-				location.add( Strman.append( processArguments.getCaseName(), StringUtils.UNDERLINE,
-						String.valueOf( i ), StringUtils.COMMA, pointDatas.get( i ).getX().toString(),
-						StringUtils.COMMA, pointDatas.get( i ).getY().toString() ) );
+				location.add( Strman.append( processArguments.getCaseName(), StringUtils.UNDERLINE, String.valueOf( i ),
+						StringUtils.COMMA, pointDatas.get( i ).getX().toString(), StringUtils.COMMA,
+						pointDatas.get( i ).getY().toString() ) );
 			}
 			FileUtils.writeStringToFile( outputPath.resolve( processArguments.getOutputs().get( 0 ) ).toFile(),
 					location.stream().collect( Collectors.joining( StringUtils.BREAKLINE ) ) );
