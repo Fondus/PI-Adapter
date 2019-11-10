@@ -43,12 +43,16 @@ public class IrrigationOptimizePostAdapter extends PiCommandLineExecute {
 		/** Cast PiArguments to expand arguments **/
 		PostArguments modelArguments = (PostArguments) arguments;
 
-		Path modelOutput = Prevalidated.checkExists(
+		Path modelOutputMain = Prevalidated.checkExists(
 				outputPath.resolve( modelArguments.getInputs().get( 0  ) ),
 				"NCHC Irrigation-Optimize PostAdapter: The mode output file not exist." );
 
+		Path modelOutputSub = Prevalidated.checkExists(
+				outputPath.resolve( modelArguments.getInputs().get( 1  ) ),
+				"NCHC Irrigation-Optimize PostAdapter: The mode output file not exist." );
+
 		Path inputXML = Prevalidated.checkExists(
-				inputPath.resolve( modelArguments.getInputs().get( 1  ) ),
+				inputPath.resolve( modelArguments.getInputs().get( 2  ) ),
 				"NCHC Irrigation-Optimize PostAdapter: The XML file is not exist." );
 
 		try {
@@ -57,8 +61,11 @@ public class IrrigationOptimizePostAdapter extends PiCommandLineExecute {
 			DateTime startTime = new DateTime( timeSeriesArrays.getPeriod().getStartTime() );
 			long duration = modelArguments.getDuration();
 
-			logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize PostAdapter: Read model output file content." );
-			Map<String, List<BigDecimal>> outputMap = this.readModelOutput( modelOutput );
+			logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize PostAdapter: Read model main output file content." );
+			Map<String, List<BigDecimal>> outputMap = this.readModelOutput( modelOutputMain );
+
+			logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize PostAdapter: Read model sub output file content." );
+			this.readSubModelOutput( outputMap, modelOutputSub, modelArguments.getSubLocationId() );
 
 			logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize PostAdapter: Create PI-XML content from the model output." );
 			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
@@ -103,5 +110,23 @@ public class IrrigationOptimizePostAdapter extends PiCommandLineExecute {
 						temps -> temps[0],
 						temps -> IntStream.range( 1, temps.length ).mapToObj( i -> NumberUtils.create( temps[i] ) ).collect( Collectors.toList() )
 				) );
+	}
+
+	/**
+	 * Read the model sub output and insert to map, key is locationId.
+	 *
+	 * @param outputMap
+	 * @param modelOutput
+	 * @param locationId
+	 * @throws IOException
+	 */
+	private void readSubModelOutput( Map<String, List<BigDecimal>> outputMap, Path modelOutput, String locationId )  throws IOException{
+		List<String> lines = PathUtils.readAllLines( modelOutput );
+		List<BigDecimal> values = lines.subList( 2, lines.size() )
+				.stream()
+				.map( line -> line.trim().split( StringUtils.SPACE_MULTIPLE ) )
+				.map( temps -> NumberUtils.create( temps[temps.length - 1] ) )
+				.collect( Collectors.toList() );
+		outputMap.putIfAbsent( locationId, values );
 	}
 }

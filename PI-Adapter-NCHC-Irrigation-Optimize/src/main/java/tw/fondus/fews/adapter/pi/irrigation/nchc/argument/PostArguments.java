@@ -14,6 +14,9 @@ import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 @Data
 @EqualsAndHashCode( callSuper = false )
 public class PostArguments extends PiIOArguments {
-	@Parameter( names = { "--duration", "-d" }, description = "The time duration.." )
+	@Parameter( names = { "--duration", "-d" }, description = "The time duration." )
 	private long duration = 3600000;
+
+	@Parameter( names = { "--sub-location", "-sl" }, description = "The sub output location ID." )
+	private String subLocationId;
 }

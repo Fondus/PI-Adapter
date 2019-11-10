@@ -142,7 +142,8 @@ public class IrrigationOptimizeParameterAdapter extends PiCommandLineExecute {
 									executor.directory( executablePath.toFile() )
 											.redirectOutput( Slf4jStream.of( "NCHC Irrigation-Optimize Model" ).asDebug() )
 							,command );
-					PathUtils.copy( executablePath.resolve( ModelFileNames.OUTPUT ), outputPath );
+					PathUtils.copy( executablePath.resolve( ModelFileNames.OUTPUT_MAIN ), outputPath );
+					PathUtils.copy( executablePath.resolve( ModelFileNames.OUTPUT_SUB ), outputPath );
 
 					logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize ParameterAdapter: Finished the ParameterAdapter." );
 

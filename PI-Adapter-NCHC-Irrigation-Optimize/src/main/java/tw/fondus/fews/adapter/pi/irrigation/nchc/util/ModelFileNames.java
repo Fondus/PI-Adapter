@@ -35,5 +35,10 @@ public class ModelFileNames {
 	/**
 	 * Model output.
 	 */
-	public static final String OUTPUT = "OUTPUT_WS_EST_BL_OPT.TXT";
+	public static final String OUTPUT_MAIN = "OUTPUT_WS_EST_BL_OPT.TXT";
+
+	/**
+	 * Model output.
+	 */
+	public static final String OUTPUT_SUB = "OUTPUT_HQ_QIN_ZONE.TXT";
 }

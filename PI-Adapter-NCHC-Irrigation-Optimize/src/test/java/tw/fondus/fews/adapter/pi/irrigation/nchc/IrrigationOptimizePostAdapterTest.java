@@ -16,7 +16,7 @@ public class IrrigationOptimizePostAdapterTest {
 				"-b",
 				"src/test/resources/",
 				"-i",
-				"OUTPUT_WS_EST_BL_OPT.TXT,WaterLevel_LongTime.xml",
+				"OUTPUT_WS_EST_BL_OPT.TXT,OUTPUT_HQ_QIN_ZONE.TXT,WaterLevel_LongTime.xml",
 				"-o",
 				"Output.xml",
 				"-p",
@@ -24,7 +24,9 @@ public class IrrigationOptimizePostAdapterTest {
 				"-u",
 				"m3/s",
 				"-d",
-				"86400000"
+				"86400000",
+				"-sl",
+				"16"
 		};
 
 		PostArguments arguments = new PostArguments();
