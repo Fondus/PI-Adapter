@@ -71,18 +71,18 @@ public class ImportStateFromSensLinkAdapter extends PiCommandLineExecute {
 						String startString = TimeUtils.toString( start, TimeUtils.YMDTHMS_DOT, TimeUtils.UTC0 );
 						String endString = TimeUtils.toString( timeZero, TimeUtils.YMDTHMS_DOT, TimeUtils.UTC0 );
 
-						List<TimeStateSeries> datas = new ArrayList<>();
+						List<TimeStateSeries> data = new ArrayList<>();
 						locationIds.forEach( locationId -> {
 							SensLinkUtils.readTimeStateSeries( host, token, locationId, startString, endString, true ).ifPresent( series -> {
-								datas.add( series );
+								data.add( series );
 							} );
 						} );
 
-						if ( datas.size() > 0 ){
+						if ( data.size() > 0 ){
 							logger.log( LogLevel.INFO, "SensLink 3.0 Import State Adapter: Start translate SensLink PhysicalQuantity Data to PI-XML.");
 
 							try {
-								SimpleTimeSeriesContentHandler contentHandler = SensLinkUtils.toTimeStateSeriesArraysIrregular( datas,
+								SimpleTimeSeriesContentHandler contentHandler = SensLinkUtils.toTimeStateSeriesArraysIrregular( data,
 										modelArguments.getParameter(), modelArguments.getUnit() );
 								TimeSeriesUtils.writePIFile( contentHandler,
 										Strman.append( outputPath.toString(), PATH, modelArguments.getOutputs().get( 0 ) ) );
