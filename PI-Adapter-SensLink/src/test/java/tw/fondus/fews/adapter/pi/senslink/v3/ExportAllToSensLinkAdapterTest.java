@@ -1,7 +1,7 @@
 package tw.fondus.fews.adapter.pi.senslink.v3;
 
 import org.junit.Test;
-import tw.fondus.fews.adapter.pi.senslink.v3.argument.RunArguments;
+import tw.fondus.fews.adapter.pi.senslink.v3.argument.ExportArguments;
 
 /**
  * Unit test of Model adapter for export all data to the SensLink 3.0.
@@ -16,10 +16,6 @@ public class ExportAllToSensLinkAdapterTest {
 		String[] args = new String[]{
 				"-b",
 				"src/test/resources",
-				"-ti",
-				"0",
-				"-d",
-				"0",
 				"-i",
 				"Rainfall.xml",
 				"-o",
@@ -30,7 +26,7 @@ public class ExportAllToSensLinkAdapterTest {
 				""
 		};
 
-		RunArguments arguments = new RunArguments();
+		ExportArguments arguments = new ExportArguments();
 		new ExportAllToSensLinkAdapter().execute(args, arguments);
 	}
 }

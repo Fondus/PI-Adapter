@@ -14,19 +14,10 @@ import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
  */
 @Data
 @EqualsAndHashCode( callSuper = false )
-public class RunArguments extends PiIOArguments {
+public class RunArguments extends ExportArguments {
 	@Parameter(names = { "--timeindex", "-ti" }, required = true, description = "The time index of the TimeSeriesArray index position")
 	private int index;
-
-	@Parameter(names = { "--timestart", "-ts" }, description = "The start index of the TimeSeriesArray index position")
-	private int start = 0;
 	
 	@Parameter(names = { "--duration", "-d" }, required = true, description = "The minus duration relative to the current time.")
 	private int duration;
-	
-	@Parameter(names = { "--username", "-us" }, required = true, description = "The account username.")
-	private String username;
-	
-	@Parameter(names = { "--password", "-pw" }, required = true, description = "The account password.")
-	private String password;
 }

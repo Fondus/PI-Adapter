@@ -10,7 +10,7 @@ import tw.fondus.commons.util.optional.OptionalUtils;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
-import tw.fondus.fews.adapter.pi.senslink.v3.argument.RunArguments;
+import tw.fondus.fews.adapter.pi.senslink.v3.argument.ExportArguments;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 
 import javax.naming.OperationNotSupportedException;
@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
  */
 public class ExportAllToSensLinkAdapter extends PiCommandLineExecute {
 	public static void main(String[] args) {
-		RunArguments arguments = new RunArguments();
+		ExportArguments arguments = new ExportArguments();
 		new ExportAllToSensLinkAdapter().execute(args, arguments);
 	}
 
@@ -36,7 +36,7 @@ public class ExportAllToSensLinkAdapter extends PiCommandLineExecute {
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
 		/** Cast PiArguments to expand arguments **/
-		RunArguments modelArguments = (RunArguments) arguments;
+		ExportArguments modelArguments = (ExportArguments) arguments;
 
 		Path inputXML = Prevalidated.checkExists(
 				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
@@ -50,7 +50,7 @@ public class ExportAllToSensLinkAdapter extends PiCommandLineExecute {
 			int timeSize = timeSeriesArrays.get( 0 ).size();
 			List<RawData> data = SensLinkUtils.toWriteDatas(  timeSeriesArrays, 0, 0 );
 			IntStream.range( 1, timeSize ).forEach( i -> {
-				data.addAll( SensLinkUtils.toWriteDatas(  timeSeriesArrays, 1, 1 ) );
+				data.addAll( SensLinkUtils.toWriteDatas(  timeSeriesArrays, i, i ) );
 			} );
 
 			if ( data.size() > 0 ){
