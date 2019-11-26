@@ -1,16 +1,10 @@
 package tw.fondus.fews.adapter.pi.util.timeseries;
 
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.file.Path;
-
-import javax.naming.OperationNotSupportedException;
-
 import nl.wldelft.fews.pi.PiTimeSeriesParser;
 import nl.wldelft.fews.pi.PiTimeSeriesSerializer;
 import nl.wldelft.util.FileUtils;
 import nl.wldelft.util.timeseries.DefaultTimeSeriesHeader;
+import nl.wldelft.util.timeseries.IrregularTimeStep;
 import nl.wldelft.util.timeseries.ParameterType;
 import nl.wldelft.util.timeseries.SimpleEquidistantTimeStep;
 import nl.wldelft.util.timeseries.SimpleTimeSeriesContent;
@@ -20,6 +14,12 @@ import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import nl.wldelft.util.timeseries.TimeSeriesContentHandler;
 import nl.wldelft.util.timeseries.TimeStep;
 import tw.fondus.commons.cli.util.Prevalidated;
+
+import javax.naming.OperationNotSupportedException;
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.Path;
 
 /**
  * A light version of FondUS SDK time-series tools, <br/>
@@ -133,6 +133,44 @@ public class TimeSeriesLightUtils {
 		contentHandler.setNewTimeSeriesHeader( header );
 		return contentHandler;
 	}
+
+	/**
+	 * Apply Delft-FEWS PiTimeSeries Irregular Header.
+	 *
+	 * @param contentHandler
+	 * @param locationId
+	 * @param parameterId
+	 * @param unitId
+	 * @return
+	 */
+	public static TimeSeriesContentHandler fillPiTimeSeriesHeaderIrregular( TimeSeriesContentHandler contentHandler,
+			String locationId, String parameterId, String unitId ) {
+		return fillPiTimeSeriesHeaderIrregular( contentHandler, locationId, parameterId, unitId, TYPE_INSTANTANEOUS );
+	}
+
+	/**
+	 * Apply Delft-FEWS PiTimeSeries Irregular Header with specified type.
+	 *
+	 * @param contentHandler
+	 * @param locationId
+	 * @param parameterId
+	 * @param unitId
+	 * @param type
+	 * @return
+	 */
+	public static TimeSeriesContentHandler fillPiTimeSeriesHeaderIrregular( TimeSeriesContentHandler contentHandler,
+			String locationId, String parameterId, String unitId, ParameterType type ) {
+		Prevalidated.checkNonNull( contentHandler, "TimeSeriesLightUtils: contentHandler." );
+
+		DefaultTimeSeriesHeader header = new DefaultTimeSeriesHeader();
+		header.setParameterId( parameterId );
+		header.setUnit( unitId );
+		header.setLocationId( locationId );
+		header.setTimeStep( getTimeStepIrregular() );
+		header.setParameterType( type );
+		contentHandler.setNewTimeSeriesHeader( header );
+		return contentHandler;
+	}
 	
 	/**
 	 * Apply Delft-FEWS PiTimeSeries current fields.
@@ -229,5 +267,14 @@ public class TimeSeriesLightUtils {
 	 */
 	public static TimeStep getTimeStep( long stepMillis ) {
 		return SimpleEquidistantTimeStep.getInstance( stepMillis );
+	}
+
+	/**
+	 * Get Irregular TimeStep.
+	 *
+	 * @return
+	 */
+	public static TimeStep getTimeStepIrregular() {
+		return IrregularTimeStep.INSTANCE;
 	}
 }

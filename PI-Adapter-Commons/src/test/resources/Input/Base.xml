@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TimeSeries xmlns="http://www.wldelft.nl/fews/PI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_timeseries.xsd" version="1.2">
+    <timeZone>0.0</timeZone>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>CTM-12</locationId>
+            <parameterId>Flow</parameterId>
+            <timeStep unit="nonequidistant"/>
+            <startDate date="2019-11-20" time="16:00:00"/>
+            <endDate date="2019-12-19" time="16:00:00"/>
+            <missVal>-999.99</missVal>
+            <stationName>竹東圳上游入流量</stationName>
+            <units>m3/s</units>
+            <creationDate>2019-11-26</creationDate>
+            <creationTime>04:49:51</creationTime>
+        </header>
+        <event date="2019-11-20" time="16:00:00" value="2.165" flag="0"/>
+        <event date="2019-11-21" time="16:00:00" value="2.165" flag="0"/>
+        <event date="2019-11-22" time="16:00:00" value="2.165" flag="0"/>
+        <event date="2019-11-23" time="16:00:00" value="2.165" flag="0"/>
+        <event date="2019-11-24" time="16:00:00" value="2.165" flag="0"/>
+        <event date="2019-11-25" time="16:00:00" value="2.165" flag="0"/>
+        <event date="2019-11-26" time="16:00:00" value="2.165" flag="0"/>
+        <event date="2019-11-27" time="16:00:00" value="2.165" flag="0"/>
+        <event date="2019-11-28" time="16:00:00" value="2.165" flag="0"/>
+        <event date="2019-11-29" time="16:00:00" value="2.165" flag="0"/>
+        <event date="2019-11-30" time="16:00:00" value="2.957" flag="0"/>
+        <event date="2019-12-01" time="16:00:00" value="2.957" flag="0"/>
+        <event date="2019-12-02" time="16:00:00" value="2.957" flag="0"/>
+        <event date="2019-12-03" time="16:00:00" value="2.957" flag="0"/>
+        <event date="2019-12-04" time="16:00:00" value="2.957" flag="0"/>
+        <event date="2019-12-05" time="16:00:00" value="2.957" flag="0"/>
+        <event date="2019-12-06" time="16:00:00" value="2.957" flag="0"/>
+        <event date="2019-12-07" time="16:00:00" value="2.957" flag="0"/>
+        <event date="2019-12-08" time="16:00:00" value="2.957" flag="0"/>
+        <event date="2019-12-09" time="16:00:00" value="2.957" flag="0"/>
+        <event date="2019-12-10" time="16:00:00" value="2.939" flag="0"/>
+        <event date="2019-12-11" time="16:00:00" value="2.939" flag="0"/>
+        <event date="2019-12-12" time="16:00:00" value="2.939" flag="0"/>
+        <event date="2019-12-13" time="16:00:00" value="2.939" flag="0"/>
+        <event date="2019-12-14" time="16:00:00" value="2.939" flag="0"/>
+        <event date="2019-12-15" time="16:00:00" value="2.939" flag="0"/>
+        <event date="2019-12-16" time="16:00:00" value="2.939" flag="0"/>
+        <event date="2019-12-17" time="16:00:00" value="2.939" flag="0"/>
+        <event date="2019-12-18" time="16:00:00" value="2.939" flag="0"/>
+        <event date="2019-12-19" time="16:00:00" value="2.939" flag="0"/>
+    </series>
+</TimeSeries>

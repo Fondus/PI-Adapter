@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding= "UTF-8"?>
 <Diag version="1.2" xsi:schemaLocation="http://www.wldelft.nl/fews/PI HTTP://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_diag.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.wldelft.nl/fews/PI">
-   <line level="3" description="The PI-CommandLineExecute unit test."/>
+   <line level="3" description="AdjustTimeContentAdapter: Read the PI-XML data."/>
+   <line level="3" description="AdjustTimeContentAdapter: The input time step millis: 86400000, base time step millis: 86400000."/>
+   <line level="3" description="AdjustTimeContentAdapter: Start the adjust the with start time: 2019-11-21T00:00:00.000+08:00."/>
+   <line level="3" description="AdjustTimeContentAdapter: Write the adjust PI-XML."/>
 </Diag>
