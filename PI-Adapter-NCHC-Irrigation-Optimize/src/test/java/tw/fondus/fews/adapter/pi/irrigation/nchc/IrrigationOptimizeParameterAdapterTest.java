@@ -25,11 +25,7 @@ public class IrrigationOptimizeParameterAdapterTest {
 				"-c",
 				"Case6",
 				"-hs",
-				"員崠,寶山",
-				"-wrt",
-				"竹東圳,樹杞林",
-				"-wrf",
-				"INPUT_QD_ZONE.TXT,INPUT_QD_BL_INP.TXT"
+				"員崠,寶山"
 		};
 
 		ParameterArguments arguments = new ParameterArguments();

@@ -40,10 +40,10 @@
 			<artifactId>commons-fews</artifactId>
 			<version>${commons.version}</version>
 		</dependency>
-		<!-- FondUS SDK: Commons-JSON -->
+		<!-- FondUS SDK: Commons-SensLink -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-json</artifactId>
+			<artifactId>commons-senslink</artifactId>
 			<version>${commons.version}</version>
 		</dependency>
 	</dependencies>

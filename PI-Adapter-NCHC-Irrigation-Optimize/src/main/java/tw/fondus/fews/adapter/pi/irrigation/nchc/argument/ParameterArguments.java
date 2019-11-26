@@ -38,12 +38,4 @@ public class ParameterArguments extends PiBasicArguments {
 	@Parameter( names = { "-hs" }, required = true, description = "The hydraulic structures list with comma, and order is fixed.",
 			listConverter = FileListConverter.class )
 	private List<String> hydraulicStructures;
-
-	@Parameter( names = { "-wrt" }, required = true, description = "The water requirement target list with comma, and order is fixed.",
-			listConverter = FileListConverter.class )
-	private List<String> waterRequirementTargets;
-
-	@Parameter( names = { "-wrf" }, required = true, description = "The water requirement file list with comma, and order is fixed.",
-			listConverter = FileListConverter.class )
-	private List<String> waterRequirementsFiles;
 }

@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * The model parameter-adapter for running NCHC irrigation-optimize model from Delft-FEWS.
@@ -113,12 +112,6 @@ public class IrrigationOptimizeParameterAdapter extends PiCommandLineExecute {
 					String areaParametersContent = this.createIrrigationAreaParameters( caseParameter, areaControlFilePath );
 					ModelUtils.writeFile( inputPath, executablePath, ModelFileNames.AREA, areaParametersContent );
 
-					logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize ParameterAdapter: Create the water requirement file." );
-					this.createWaterRequirements(
-							logger, inputPath, executablePath,
-							caseParameter, duration,
-							modelArguments.getWaterRequirementTargets(), modelArguments.getWaterRequirementsFiles() );
-
 					logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize ParameterAdapter: Create the hydraulic structures file." );
 					String hydraulicStructuresContent = this.createHydraulicStructures( caseParameter, duration, modelArguments.getHydraulicStructures() );
 					ModelUtils.writeFile( inputPath, executablePath, ModelFileNames.STRUCTURE, hydraulicStructuresContent );
@@ -180,38 +173,6 @@ public class IrrigationOptimizeParameterAdapter extends PiCommandLineExecute {
 				.map( order -> parameterMap.get( order ) )
 				.map( parameter -> parameter.getValue().toString() )
 				.collect( Collectors.joining( StringUtils.TAB ) );
-	}
-
-	/**
-	 * Create the model water requirement files.
-	 *
-	 * @param logger
-	 * @param inputPath
-	 * @param executablePath
-	 * @param caseParameter
-	 * @param duration
-	 * @param targets
-	 * @param files
-	 */
-	private void createWaterRequirements(
-			PiDiagnosticsLogger logger,
-			Path inputPath, Path executablePath,
-			CaseParameter caseParameter, int duration,
-			List<String> targets, List<String> files ){
-		List<Parameter> parameters = ParameterUtils.filterPlanWaterRequirement( caseParameter );
-		IntStream.range( 0, targets.size() ).forEach( i -> {
-			Optional<Parameter> opt = ModelUtils.findParameter( parameters, targets.get( i ) );
-			opt.ifPresent( parameter -> {
-				String fileName = files.get( i );
-				String content = ModelUtils.createDurationContent( parameter.getValue(), duration );
-
-				try {
-					ModelUtils.writeFile( inputPath, executablePath, fileName, content );
-				} catch (IOException e) {
-					logger.log( LogLevel.ERROR, "NCHC Irrigation-Optimize ParameterAdapter: Create the water requirement file: {} has IO problem.", fileName );
-				}
-			} );
-		} );
 	}
 
 	/**
