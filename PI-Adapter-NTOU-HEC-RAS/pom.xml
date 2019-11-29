@@ -17,7 +17,7 @@
 
 	<properties>
 		<commons.version>1.0.0</commons.version>
-		<commons.netcdf.version>0.7.0</commons.netcdf.version>
+		<commons.netcdf.version>0.7.1</commons.netcdf.version>
 	</properties>
 
 	<dependencies>
