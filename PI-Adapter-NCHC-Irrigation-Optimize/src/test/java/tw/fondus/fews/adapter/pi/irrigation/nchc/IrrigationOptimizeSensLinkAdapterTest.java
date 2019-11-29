@@ -24,6 +24,8 @@ public class IrrigationOptimizeSensLinkAdapterTest {
 				"H.simulated",
 				"-u",
 				"m",
+				"-wrb",
+				"",
 				"-wrt",
 				"",
 				"-wrf",
@@ -33,8 +35,7 @@ public class IrrigationOptimizeSensLinkAdapterTest {
 				"-us",
 				"",
 				"-pw",
-				"",
-				"-pullFlag"
+				""
 		};
 
 		SensLinkArgument argument = new SensLinkArgument();
