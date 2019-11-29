@@ -24,6 +24,9 @@ public class SensLinkArgument extends PiIOArguments {
 	@Parameter( names = { "--duration", "-d" }, description = "The time step of water requirement." )
 	private int duration = 30;
 
+	@Parameter( names = { "-wrb" }, required = true, description = "The water requirement senslink id of base time." )
+	private String waterRequirementTimeBase;
+
 	@Parameter( names = { "-wrt" }, required = true, description = "The water requirement senslink id list with comma, and order is fixed.",
 			listConverter = FileListConverter.class )
 	private List<String> waterRequirementTargets;
