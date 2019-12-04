@@ -4,4 +4,5 @@
    <line level="3" description="CreateMapStackXmlAdapter: The meta-information with LocationId: LocationId, ParameterId: Depth, GeoDatum: TWD 1997, FilePattern: dm1d????.asc."/>
    <line level="3" description="CreateMapStackXmlAdapter: The meta-information with Start Time: 2019-12-02T16:00:00.000Z, End Time: 2019-12-02T18:00:00.000Z."/>
    <line level="3" description="CreateMapStackXmlAdapter: Start create meta-information file."/>
+   <line level="3" description="CreateMapStackXmlAdapter: Finished create meta-information file."/>
 </Diag>

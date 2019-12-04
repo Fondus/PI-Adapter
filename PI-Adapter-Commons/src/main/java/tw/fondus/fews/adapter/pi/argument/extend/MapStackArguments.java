@@ -15,11 +15,11 @@ import tw.fondus.fews.adapter.pi.argument.converter.DateTimeConveter;
 @Data
 @EqualsAndHashCode( callSuper = false )
 public class MapStackArguments extends PiIOArguments {
-	@Parameter( names = { "--start", "-st" }, description = "The start date time, format is yyyyMMddHHmm. TimeZone is UTC.", converter = DateTimeConveter.class )
-	private DateTime start = new DateTime();
-
 	@Parameter( names = { "--duration", "-d" }, required = true, description = "The duration relative to the start time with start time." )
 	private int duration;
+
+	@Parameter( names = { "--time-direction", "-td" }, description = "The time direction relative to time zero, support for end and start only, default is end." )
+	private String direction = "end";
 
 	@Parameter( names = { "--time-step", "-ts" }, description = "The time step, support for day, hour and minute only, default is hour." )
 	private String timeStep = "hour";
