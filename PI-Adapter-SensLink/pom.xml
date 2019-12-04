@@ -21,7 +21,7 @@
 	</description>
 
 	<properties>
-		<commons.version>1.0.0</commons.version>
+		<commons.version>1.0.2</commons.version>
 	</properties>
 
 	<dependencies>

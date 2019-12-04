@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<Diag version="1.2" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_diag.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.wldelft.nl/fews/PI">
+   <line level="3" description="GridRestructureAdapter: The user specific T: time, Y: lat, X: lon, V: depth_below_surface_simulate."/>
+   <line level="3" description="GridRestructureAdapter: Start read the input NetCDF."/>
+   <line level="3" description="GridRestructureAdapter: Read dimension values from the input NetCDF."/>
+   <line level="3" description="GridRestructureAdapter: Read grid values from the input NetCDF."/>
+   <line level="3" description="GridRestructureAdapter: Start build restructure NetCDF with path: srctestresourcesOutputFloodNew.nc."/>
+   <line level="3" description="GridRestructureAdapter: Finished build restructure NetCDF with path: srctestresourcesOutputFloodNew.nc."/>
+</Diag>

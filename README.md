@@ -78,6 +78,7 @@ The arguments is extends from the [BasicArguments](https://github.com/Fondus/Com
 | NCHC LongTimeFlow Model | [link](ttps://www.nchc.org.tw/tw/) | NCHC | 1D | [link](/PI-Adapter-NCHC-LongTimeFlow/) |
 | NCHC Grid Merged Model | [link](ttps://www.nchc.org.tw/tw/) | NCHC | - | [link](/PI-Adapter-GridMerge/) |
 | NCHC RTC-2D Model | [link](ttps://www.nchc.org.tw/tw/) | NCHC | 2D | [link](/PI-Adapter-NCHC-RTC-2D/) |
+| NCHC Irrigation Optimize Model | [link](ttps://www.nchc.org.tw/tw/) | NCHC | 1D | [link](/PI-Adapter-NCHC-Irrigation-Optimize/) |
 | SensLink 2.0 & 3.0 Import/Export | [link](http://www.anasystem.com.tw/) | AnaSystem | - | [link](/PI-Adapter-SensLink/) |
 | NCTU DPWE AI Model Import | [link](http://dpwe.nctu.edu.tw/) | NCTU | - | [link](/PI-Adapter-NCTU-AI/) |
 | WRAP Flood Search with GDAL| [link](https://www.wrap.gov.tw/) | WRAP | 2D | [link](/PI-Adapter-WRAP-Search/) |

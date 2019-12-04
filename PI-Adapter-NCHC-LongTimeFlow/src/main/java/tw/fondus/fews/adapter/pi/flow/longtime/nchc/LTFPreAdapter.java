@@ -37,96 +37,102 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 		PiIOArguments arguments = new PiIOArguments();
 		new LTFPreAdapter().execute( args, arguments );
 	}
-	
+
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
 		/** Cast PiArguments to expand arguments **/
 		PiIOArguments modelArguments = (PiIOArguments) arguments;
-		
+
 		try {
 			// Check the XML exists
-			Path rainfallXML = Prevalidated.checkExists( 
-					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+			Path rainfallXML = Prevalidated.checkExists(
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 0 ) ),
 					"NCHC LTF PreAdapter: The XML file of rainfall is not exist." );
-			
-			Path flowXML = Prevalidated.checkExists( 
-					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(1) ),
-					"NCHC LTF PreAdapter: The XML file of flow is not exist." );
-			
-			TimeSeriesArray tempRainfallArray = TimeSeriesLightUtils.readPiTimeSeries( rainfallXML ).get( 0 );
-			TimeSeriesArray tempFlowArray = TimeSeriesLightUtils.readPiTimeSeries( flowXML ).get( 0 );
-			
-			Preconditions.checkState( tempRainfallArray.size() % 10 == 0,"NCHC LTF PreAdapter: The rainfall data are not divisible by 10 days." );
-			Preconditions.checkState( tempFlowArray.size() % 10 == 0, "NCHC LTF PreAdapter: The flow data are not divisible by 10 days." );
-			
-			logger.log( LogLevel.INFO, "NCHC LTF PreAdapter: Start create model input files.");
-			
-			this.writeModelInput( logger, inputPath, tempRainfallArray, tempFlowArray );
-			
-			logger.log( LogLevel.INFO, "NCHC LTF PreAdapter: Finished create model input files.");
-			
+
+			Path waterLevelXML = Prevalidated.checkExists(
+					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 1 ) ),
+					"NCHC LTF PreAdapter: The XML file of water level is not exist." );
+
+			TimeSeriesArray rainfallTimeSeriesArray = TimeSeriesLightUtils.readPiTimeSeries( rainfallXML ).get( 0 );
+			TimeSeriesArray waterLevelTimeSeriesArray = TimeSeriesLightUtils.readPiTimeSeries( waterLevelXML ).get( 0 );
+
+			Preconditions.checkState( rainfallTimeSeriesArray.size() % 10 == 0,
+					"NCHC LTF PreAdapter: The rainfall data are not divisible by 10 days." );
+			Preconditions.checkState( waterLevelTimeSeriesArray.size() % 10 == 0,
+					"NCHC LTF PreAdapter: The water level data are not divisible by 10 days." );
+
+			logger.log( LogLevel.INFO, "NCHC LTF PreAdapter: Start create model input files." );
+
+			this.writeModelInput( logger, inputPath, rainfallTimeSeriesArray, waterLevelTimeSeriesArray,
+					modelArguments.getOutputs() );
+
+			logger.log( LogLevel.INFO, "NCHC LTF PreAdapter: Finished create model input files." );
+
 		} catch (OperationNotSupportedException e) {
-			logger.log( LogLevel.ERROR, "NCHC LTF PreAdapter: Read XML not exists or content empty!");
+			logger.log( LogLevel.ERROR, "NCHC LTF PreAdapter: Read XML not exists or content empty!" );
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "NCHC LTF PreAdapter: Read XML has something faild!" );
-		} 
+		}
 	}
-	
+
 	/**
 	 * Write model input file.
 	 * 
 	 * @param logger
 	 * @param inputPath
 	 * @param rainfallArray
-	 * @param flowArray
+	 * @param waterLevelArray
 	 */
-	private void writeModelInput( PiDiagnosticsLogger logger, Path inputPath, TimeSeriesArray rainfallArray, TimeSeriesArray flowArray ) {
+	private void writeModelInput( PiDiagnosticsLogger logger, Path inputPath, TimeSeriesArray rainfallArray,
+			TimeSeriesArray waterLevelArray, List<String> outputs ) {
 		List<Float> tenDaysRainfall = new ArrayList<>();
-		List<Float> tenDaysFlow = new ArrayList<>();
-		
-		// Calculate the rainfall and flow
+		List<Float> tenDaysWaterLevel = new ArrayList<>();
+
+		// Calculate the rainfall and water level
 		IntStream.range( 0, rainfallArray.size() / 10 ).forEach( tenDays -> {
 			float rainfall = 0;
-			float flow = 0;
+			float waterLevel = 0;
 			for ( int data = 0; data < 10; data++ ) {
 				rainfall += TimeSeriesLightUtils.getValue( rainfallArray, (tenDays * 10) + data, 0 );
-				flow += TimeSeriesLightUtils.getValue( flowArray, (tenDays * 10) + data, 0 );
+				waterLevel += TimeSeriesLightUtils.getValue( waterLevelArray, (tenDays * 10) + data, 0 );
 			}
-			
+
 			tenDaysRainfall.add( rainfall );
-			tenDaysFlow.add( flow / 10 );
-		});
-		
+			tenDaysWaterLevel.add( waterLevel / 10 );
+		} );
+
 		// Create the content and suffix
 		StringJoiner rainfall = new StringJoiner( StringUtils.TAB, StringUtils.BLANK, StringUtils.BREAKLINE );
-		StringJoiner flow = new StringJoiner( StringUtils.TAB, StringUtils.BLANK, StringUtils.BREAKLINE );
+		StringJoiner waterLevel = new StringJoiner( StringUtils.TAB, StringUtils.BLANK, StringUtils.BREAKLINE );
 		StringJoiner endLine = new StringJoiner( StringUtils.TAB, StringUtils.BREAKLINE, StringUtils.BLANK );
 		IntStream.range( 0, tenDaysRainfall.size() ).forEach( tenDaysData -> {
-			rainfall.add( Strman.append( String.valueOf( tenDaysRainfall.get( tenDaysData ) ) ));
-			flow.add( Strman.append( String.valueOf( tenDaysFlow.get( tenDaysData )) ));
-			endLine.add( Strman.append( String.valueOf( "-999" ) ));
+			rainfall.add( Strman.append( String.valueOf( tenDaysRainfall.get( tenDaysData ) ) ) );
+			waterLevel.add( Strman.append( String.valueOf( tenDaysWaterLevel.get( tenDaysData ) ) ) );
+			endLine.add( Strman.append( String.valueOf( "-999" ) ) );
 		} );
-		
+
 		try {
-			StringJoiner rainfallContent = new StringJoiner( StringUtils.BREAKLINE, StringUtils.BLANK, endLine.toString() );
-			StringJoiner flowContent = new StringJoiner( StringUtils.BREAKLINE, StringUtils.BLANK, endLine.toString() );
-			
+			StringJoiner rainfallContent = new StringJoiner( StringUtils.BREAKLINE, StringUtils.BLANK,
+					endLine.toString() );
+			StringJoiner waterLevelContent = new StringJoiner( StringUtils.BREAKLINE, StringUtils.BLANK,
+					endLine.toString() );
+
 			rainfallContent.add( rainfall.toString() );
-			flowContent.add( flow.toString() );
-			
+			waterLevelContent.add( waterLevel.toString() );
+
 			// Write the rainfall input
-			FileUtils.writeText( Strman.append( inputPath.toString(), PATH, "DATA_INP_RAIN.TXT" ),
+			FileUtils.writeText( Strman.append( inputPath.toString(), PATH, outputs.get( 0 ) ),
 					rainfallContent.toString() );
-			// Write the flow input
-			FileUtils.writeText( Strman.append( inputPath.toString(), PATH, "DATA_INP_FLOW.TXT" ),
-					flowContent.toString() );
-			
+			// Write the water level input
+			FileUtils.writeText( Strman.append( inputPath.toString(), PATH, outputs.get( 1 ) ),
+					waterLevelContent.toString() );
+
 			// Write the time meta-information
 			DateTime dateTime = new DateTime( rainfallArray.getEndTime() );
-			FileUtils.writeText( Strman.append( inputPath.toString(), PATH, "INPUT_DATE_DECADE.TXT" ),
+			FileUtils.writeText( Strman.append( inputPath.toString(), PATH, outputs.get( 2 ) ),
 					TimeUtils.toString( dateTime, TimeUtils.YMD_NONSPLITE, TimeUtils.UTC8 ) );
-			
+
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "NCHC LTF PreAdapter: Writing model input file has something wrong." );
 		}

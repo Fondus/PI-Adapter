@@ -14,7 +14,6 @@ import tw.fondus.commons.cli.argument.converter.FileListConverter;
  * 
  * @see PiBasicArguments
  * @author Brad Chen
- * @see PiBasicArguments
  */
 @Data
 @EqualsAndHashCode( callSuper = false )

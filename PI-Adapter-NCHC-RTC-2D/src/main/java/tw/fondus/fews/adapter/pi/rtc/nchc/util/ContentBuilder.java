@@ -3,10 +3,8 @@ package tw.fondus.fews.adapter.pi.rtc.nchc.util;
 import java.util.StringJoiner;
 import java.util.stream.IntStream;
 
-import nl.wldelft.util.timeseries.TimeSeriesArray;
+import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import strman.Strman;
-import tw.fondus.commons.util.coordinate.CoordinatePoint;
-import tw.fondus.commons.util.coordinate.CoordinateUtils;
 import tw.fondus.commons.util.string.StringUtils;
 
 /**
@@ -27,7 +25,8 @@ public class ContentBuilder {
 	public static String buildInputCorr( int numberOfStation, int forecast ) {
 		StringJoiner sj = new StringJoiner( StringUtils.BREAKLINE );
 		sj.add( "3                                   ! NTYPE_SIM_WH" );
-		sj.add( Strman.append( String.valueOf( forecast ),"                                   ! NTIME_VAL (NUMBER OF LEAD TIME)" ));
+		sj.add( Strman.append( String.valueOf( forecast ),
+				"                                   ! NTIME_VAL (NUMBER OF LEAD TIME)" ) );
 		sj.add( Strman.append( String.valueOf( numberOfStation ), "                                   ! NTGAGE_VAL" ) );
 		sj.add( "SUMMARY_FILES_INP_GAGES_DATA.TXT    ! FILENAME_IN_GAGE_EST_OBS" );
 		sj.add( "SUMMARY_FILES_OUT_GAGES_DATA.TXT    ! FILENAME_OUT_GAGE_EST_OBS" );
@@ -37,14 +36,15 @@ public class ContentBuilder {
 	}
 
 	/**
-	 * Build model input data from station of water level (observation and simulation).
+	 * Build model input data from station of water level (observation and
+	 * simulation).
 	 * 
 	 * @param similationTimeSeriesArray
 	 * @param observationTimeSeriesArray
 	 * @return
 	 */
-	public static String buildInputGauges( TimeSeriesArray[] similationTimeSeriesArray,
-			TimeSeriesArray[] observationTimeSeriesArray ) {
+	public static String buildInputGauges( TimeSeriesArrays similationTimeSeriesArrays,
+			TimeSeriesArrays observationTimeSeriesArrays ) {
 		String locationInfo = " ! LOCATION OF GAGE ";
 		String geoInfo = " (X_TM, Y_TM, ELEVATION)";
 		String dataInfo = "                  ! SIMULATED WH, OBSERVED WH";
@@ -52,49 +52,47 @@ public class ContentBuilder {
 		String dataEnd = "	-999    -999                 ! INDICATOR OF STOP READING DATA";
 		StringJoiner sj = new StringJoiner( StringUtils.BREAKLINE );
 
-		IntStream.range( 0, observationTimeSeriesArray.length ).forEach( timeSeries -> {
-			CoordinatePoint point = CoordinateUtils.transformWGS84ToTWD97(
-					observationTimeSeriesArray[timeSeries].getHeader().getGeometry().getX( 0 ),
-					observationTimeSeriesArray[timeSeries].getHeader().getGeometry().getY( 0 ) );
-			sj.add( Strman.append( String.valueOf( point.getX() ), StringUtils.SPACE_WHITE,
-					String.valueOf( point.getY() ), StringUtils.SPACE_WHITE,
-					String.valueOf( observationTimeSeriesArray[timeSeries].getHeader().getGeometry().getZ( 0 ) ),
+		IntStream.range( 0, observationTimeSeriesArrays.size() ).forEach( timeSeries -> {
+			sj.add( Strman.append(
+					getGeometryString( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getX( 0 ) ),
+					StringUtils.SPACE_WHITE,
+					getGeometryString( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getY( 0 ) ),
+					StringUtils.SPACE_WHITE,
+					getGeometryString( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getZ( 0 ) ),
 					locationInfo, String.valueOf( timeSeries + 1 ), geoInfo ) );
-			IntStream.range( 0, similationTimeSeriesArray[timeSeries].size() ).forEach( data -> {
+			IntStream.range( 0, similationTimeSeriesArrays.get( timeSeries ).size() ).forEach( data -> {
 				if ( data == 0 ) {
 					sj.add( Strman.append( StringUtils.SPACE_WHITE,
-							getDataString( similationTimeSeriesArray[timeSeries].getValue( data ) ),
+							getDataString( similationTimeSeriesArrays.get( timeSeries ).getValue( data ) ),
 							StringUtils.SPACE_WHITE,
-							getDataString( observationTimeSeriesArray[timeSeries].getValue( data ) ),
+							getDataString( observationTimeSeriesArrays.get( timeSeries ).getValue( data ) ),
 							StringUtils.SPACE_WHITE, dataInfo ) );
 				} else {
-					if ( data >= observationTimeSeriesArray[timeSeries].size() ) {
+					if ( data >= observationTimeSeriesArrays.get( timeSeries ).size() ) {
 						sj.add( Strman.append( StringUtils.SPACE_WHITE,
-								getDataString( similationTimeSeriesArray[timeSeries].getValue( data ) ),
+								getDataString( similationTimeSeriesArrays.get( timeSeries ).getValue( data ) ),
 								StringUtils.SPACE_WHITE, missingValue ) );
 					} else {
 						sj.add( Strman.append( StringUtils.SPACE_WHITE,
-								getDataString( similationTimeSeriesArray[timeSeries].getValue( data ) ),
+								getDataString( similationTimeSeriesArrays.get( timeSeries ).getValue( data ) ),
 								StringUtils.SPACE_WHITE,
-								getDataString( observationTimeSeriesArray[timeSeries].getValue( data ) ) ) );
+								getDataString( observationTimeSeriesArrays.get( timeSeries ).getValue( data ) ) ) );
 					}
 				}
 			} );
-			
+
 			sj.add( dataEnd );
 			sj.add( StringUtils.BLANK );
 		} );
 
 		return sj.toString();
 	}
+
+	private static String getDataString( float value ) {
+		return Float.isNaN( value ) ? String.valueOf( 0 ) : String.valueOf( value );
+	}
 	
-	private static String getDataString( float value ){
-		String stringData = String.valueOf( value );
-		if( stringData.equals( "NaN" ) ){
-			stringData = "0";
-			return stringData;
-		}else {
-			return stringData;
-		}
+	private static String getGeometryString( double value ) {
+		return Double.isNaN( value ) ? String.valueOf( 0 ) : String.valueOf( value );
 	}
 }

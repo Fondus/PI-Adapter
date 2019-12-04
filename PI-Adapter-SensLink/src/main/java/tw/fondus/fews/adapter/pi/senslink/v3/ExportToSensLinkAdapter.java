@@ -45,13 +45,14 @@ public class ExportToSensLinkAdapter extends PiCommandLineExecute {
 		
 		try {
 			logger.log( LogLevel.INFO, "SensLink 3.0 Export Adapter: Start translate PI-XML to SensLink PhysicalQuantity Data." );
-			
+
+			int start = modelArguments.getStart();
 			int index = modelArguments.getIndex();
 			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( inputXML );
-			List<RawData> datas = SensLinkUtils.toWriteDatas(  timeSeriesArrays, 0, index );
+			List<RawData> data = SensLinkUtils.toWriteDatas(  timeSeriesArrays, start, index );
 			
-			if ( datas.size() > 0 ){
-				logger.log( LogLevel.INFO, "SensLink 3.0 Export Adapter: export {} datas to the SensLink System.", String.valueOf( datas.size() ));
+			if ( data.size() > 0 ){
+				logger.log( LogLevel.INFO, "SensLink 3.0 Export Adapter: export {} datas to the SensLink System.", String.valueOf( data.size() ));
 				
 				String username = modelArguments.getUsername();
 				String password = modelArguments.getPassword();
@@ -67,18 +68,18 @@ public class ExportToSensLinkAdapter extends PiCommandLineExecute {
 					logger.log( LogLevel.INFO, "SensLink 3.0 Export Adapter: The SensLink 3.0 system login successfully, try to write data to the SensLink 3.0 system.");
 					
 					/** Write SensLink 3.0 **/
-					boolean writed = SensLinkUtils.writeFormulaTransferred( host, token, datas.toArray( new RawData[0] ) );
-					if ( writed ){
-						logger.log( LogLevel.INFO, "SensLink 3.0 Export Adapter: success to write {} datas to the SensLink System.", String.valueOf( datas.size() ));
+					boolean wrote = SensLinkUtils.writeFormulaTransferred( host, token, data.toArray( new RawData[0] ) );
+					if ( wrote ){
+						logger.log( LogLevel.INFO, "SensLink 3.0 Export Adapter: success to write {} datas to the SensLink System.", String.valueOf( data.size() ));
 					} else {
-						logger.log( LogLevel.WARN, "SensLink 3.0 Export Adapter: faild to write datas to the SensLink System.");
+						logger.log( LogLevel.WARN, "SensLink 3.0 Export Adapter: failed to write datasto the SensLink System.");
 					}
 					logger.log( LogLevel.INFO, "SensLink 3.0 Export Adapter: Finished Adapter process.");
 				},
 				() -> logger.log( LogLevel.WARN, "SensLink 3.0 Export Adapter: SensLink System Login failed.") );
 				
 			} else {
-				logger.log( LogLevel.WARN, "SensLink 3.0 Export Adapter: PI-XML hasn't datas to export.");
+				logger.log( LogLevel.WARN, "SensLink 3.0 Export Adapter: PI-XML hasn't data to export.");
 			}
 			
 		} catch (OperationNotSupportedException e) {

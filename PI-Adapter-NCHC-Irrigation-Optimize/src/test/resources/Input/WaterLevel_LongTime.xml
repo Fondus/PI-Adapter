@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TimeSeries xmlns="http://www.wldelft.nl/fews/PI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_timeseries.xsd" version="1.2">
+    <timeZone>8.0</timeZone>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>1300H014</locationId>
+            <parameterId>H.simulated</parameterId>
+            <timeStep unit="second" multiplier="86400"/>
+            <startDate date="2019-10-01" time="00:00:00"/>
+            <endDate date="2019-10-30" time="00:00:00"/>
+            <missVal>-999.0</missVal>
+            <stationName>上坪</stationName>
+            <units>m</units>
+        </header>
+        <event date="2019-10-01" time="00:00:00" value="209.919" flag="2"/>
+        <event date="2019-10-02" time="00:00:00" value="209.919" flag="0"/>
+        <event date="2019-10-03" time="00:00:00" value="209.919" flag="0"/>
+        <event date="2019-10-04" time="00:00:00" value="209.919" flag="0"/>
+        <event date="2019-10-05" time="00:00:00" value="209.919" flag="0"/>
+        <event date="2019-10-06" time="00:00:00" value="209.919" flag="0"/>
+        <event date="2019-10-07" time="00:00:00" value="209.919" flag="0"/>
+        <event date="2019-10-08" time="00:00:00" value="209.919" flag="0"/>
+        <event date="2019-10-09" time="00:00:00" value="209.919" flag="0"/>
+        <event date="2019-10-10" time="00:00:00" value="209.919" flag="0"/>
+        <event date="2019-10-11" time="00:00:00" value="209.919" flag="0"/>
+        <event date="2019-10-12" time="00:00:00" value="209.77" flag="0"/>
+        <event date="2019-10-13" time="00:00:00" value="209.77" flag="0"/>
+        <event date="2019-10-14" time="00:00:00" value="209.77" flag="0"/>
+        <event date="2019-10-15" time="00:00:00" value="209.77" flag="0"/>
+        <event date="2019-10-16" time="00:00:00" value="209.77" flag="0"/>
+        <event date="2019-10-17" time="00:00:00" value="209.77" flag="0"/>
+        <event date="2019-10-18" time="00:00:00" value="209.77" flag="0"/>
+        <event date="2019-10-19" time="00:00:00" value="209.77" flag="0"/>
+        <event date="2019-10-20" time="00:00:00" value="209.77" flag="0"/>
+        <event date="2019-10-21" time="00:00:00" value="209.77" flag="0"/>
+        <event date="2019-10-22" time="00:00:00" value="209.152" flag="0"/>
+        <event date="2019-10-23" time="00:00:00" value="209.152" flag="0"/>
+        <event date="2019-10-24" time="00:00:00" value="209.152" flag="0"/>
+        <event date="2019-10-25" time="00:00:00" value="209.152" flag="0"/>
+        <event date="2019-10-26" time="00:00:00" value="209.152" flag="0"/>
+        <event date="2019-10-27" time="00:00:00" value="209.152" flag="0"/>
+        <event date="2019-10-28" time="00:00:00" value="209.152" flag="0"/>
+        <event date="2019-10-29" time="00:00:00" value="209.152" flag="0"/>
+        <event date="2019-10-30" time="00:00:00" value="209.152" flag="0"/>
+    </series>
+</TimeSeries>

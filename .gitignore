@@ -37,17 +37,22 @@ Template/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# ignore eclipse
+# ignore IDE
 .project
 .classpath
 .settings
 .metadata
 bin/
 proguard/
+.factorypath
+.idea
+*.iml
 
-# ignore Maven generated target folders
+# ignore Maven generated target
 target/
 build/
+release.properties
+*.releaseBackup
 
 ## .gitignore for windows
 
