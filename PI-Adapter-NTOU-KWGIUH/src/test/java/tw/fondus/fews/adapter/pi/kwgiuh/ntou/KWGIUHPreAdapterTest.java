@@ -29,7 +29,9 @@ public class KWGIUHPreAdapterTest {
 				"-nc",
 				"0.03",
 				"-w",
-				"80"
+				"80",
+				"-inf",
+				"0.5"
 		};
 	
 		PreAdapterArguments arguments = new PreAdapterArguments();

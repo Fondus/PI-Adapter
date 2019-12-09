@@ -1,5 +1,7 @@
 package tw.fondus.fews.adapter.pi.hecras.ntou.argument;
 
+import java.math.BigDecimal;
+
 import com.beust.jcommander.Parameter;
 
 import lombok.Data;
@@ -23,4 +25,7 @@ public class ProcessArguments extends PiIOArguments {
 	
 	@Parameter( names = { "--case", "-c" }, required = true, description = "The case name for running project of HEC-RAS model." )
 	private String caseName;
+	
+	@Parameter( names = { "--infiltration", "-inf" }, required = true, description = "The infiltration of soil." )
+	private BigDecimal infiltration;
 }
