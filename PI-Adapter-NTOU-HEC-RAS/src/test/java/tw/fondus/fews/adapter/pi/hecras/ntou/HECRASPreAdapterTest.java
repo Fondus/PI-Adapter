@@ -21,7 +21,9 @@ public class HECRASPreAdapterTest {
 				"-o",
 				"TC_1.p03,TC_1.b03,TC_1.u01",
 				"-c",
-				"Toucian"
+				"Toucian",
+				"-inf",
+				"0.5"
 		};
 		
 		ProcessArguments arguments = new ProcessArguments();
