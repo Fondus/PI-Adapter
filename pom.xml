@@ -192,5 +192,6 @@
 		<module>PI-Adapter-NTOU-HEC-RAS</module>
 		<module>PI-Adapter-NCHC-Irrigation-Optimize</module>
 		<module>PI-Adapter-NetCDF</module>
+		<module>PI-Adapter-NTU-2DFIM</module>
 	</modules>
 </project>
