@@ -32,6 +32,8 @@ public class MappingProperties {
 	public static final String HDF5_DEPTH_LEFT = "hdf5.key.depth.left";
 	public static final String HDF5_TIME = "hdf5.key.time";
 	public static final String HDF5_TIME_ATTRIBUTE = "hdf5.key.time.attribute";
+	public static final String HDF5_FLOW_VALUE="hdf5.key.flow.value";
+	public static final String HDF5_FLOW_COORDINATE="hdf5.key.flow.coordinate";
 
 	private static Map<String, String> propertiesMap;
 
@@ -60,6 +62,8 @@ public class MappingProperties {
 			propertiesMap.put( HDF5_DEPTH_LEFT, properties.getProperty( HDF5_DEPTH_LEFT ) );
 			propertiesMap.put( HDF5_TIME, properties.getProperty( HDF5_TIME ) );
 			propertiesMap.put( HDF5_TIME_ATTRIBUTE, properties.getProperty( HDF5_TIME_ATTRIBUTE ) );
+			propertiesMap.put( HDF5_FLOW_VALUE, properties.getProperty( HDF5_FLOW_VALUE ) );
+			propertiesMap.put( HDF5_FLOW_COORDINATE, properties.getProperty( HDF5_FLOW_COORDINATE ) );
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
