@@ -41,4 +41,9 @@ public class ModelFileNames {
 	 * Model output.
 	 */
 	public static final String OUTPUT_SUB = "OUTPUT_HQ_QIN_ZONE.TXT";
+
+	/**
+	 * Model output.
+	 */
+	public static final String OUTPUT_THREE = "OUTPUT_QOUT_HYST_OPT.TXT";
 }

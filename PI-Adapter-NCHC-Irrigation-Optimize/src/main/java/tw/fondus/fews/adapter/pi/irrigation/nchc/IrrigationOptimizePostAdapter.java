@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * The model post-adapter for running NCHC irrigation-optimize model from Delft-FEWS.
@@ -51,8 +52,12 @@ public class IrrigationOptimizePostAdapter extends PiCommandLineExecute {
 				outputPath.resolve( modelArguments.getInputs().get( 1  ) ),
 				"NCHC Irrigation-Optimize PostAdapter: The mode output file not exist." );
 
+		Path modelOutputThree = Prevalidated.checkExists(
+				outputPath.resolve( modelArguments.getInputs().get( 2  ) ),
+				"NCHC Irrigation-Optimize PostAdapter: The mode output file not exist." );
+
 		Path inputXML = Prevalidated.checkExists(
-				inputPath.resolve( modelArguments.getInputs().get( 2  ) ),
+				inputPath.resolve( modelArguments.getInputs().get( 3  ) ),
 				"NCHC Irrigation-Optimize PostAdapter: The XML file is not exist." );
 
 		try {
@@ -66,6 +71,9 @@ public class IrrigationOptimizePostAdapter extends PiCommandLineExecute {
 
 			logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize PostAdapter: Read model sub output file content." );
 			this.readSubModelOutput( outputMap, modelOutputSub, modelArguments.getSubLocationId() );
+
+			logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize PostAdapter: Read model three output file content." );
+			this.readThreeModelOutput( outputMap, modelOutputThree, modelArguments.getThreeLocationIds() );
 
 			logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize PostAdapter: Create PI-XML content from the model output." );
 			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
@@ -128,5 +136,25 @@ public class IrrigationOptimizePostAdapter extends PiCommandLineExecute {
 				.map( temps -> NumberUtils.create( temps[temps.length - 1] ) )
 				.collect( Collectors.toList() );
 		outputMap.putIfAbsent( locationId, values );
+	}
+
+	/**
+	 * Read the model three output and insert to map, key is locationId.
+	 *
+	 * @param outputMap
+	 * @param modelOutput
+	 * @param locationIds
+	 * @throws IOException
+	 */
+	private void readThreeModelOutput( Map<String, List<BigDecimal>> outputMap, Path modelOutput, List<String> locationIds )  throws IOException{
+		List<String> lines = PathUtils.readAllLines( modelOutput );
+		IntStream.range( 0, lines.size() ).forEach( i -> {
+			String locationId = locationIds.get( i );
+			String line = lines.get( i );
+			List<BigDecimal> values = Stream.of( line.trim().split( StringUtils.SPACE_MULTIPLE ) )
+					.map( temp -> NumberUtils.create( temp ) )
+					.collect( Collectors.toList() );
+			outputMap.putIfAbsent( locationId, values.subList( 1, values.size() ) );
+		} );
 	}
 }
