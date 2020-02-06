@@ -34,7 +34,7 @@ public class DPWE_AI_PostAdapter extends PiCommandLineExecute {
 	private static final String LOCATION_ID = "map";
 	private static final String PATTERN = "dm1d????.asc";
 	private static final String GEODATUM = "TWD 1997";
-	private static final String TIME_ZONE = "8.0";
+	private static final String TIME_ZONE = "0.0";
 	private static final String TIME_UNIT = "hour";
 	private static final String TIME_SUFFIX = ":00:00";
 	private static final int TIME_STEP = 1;
