@@ -93,13 +93,21 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 		IntStream.range( 0, rainfallArray.size() / 10 ).forEach( tenDays -> {
 			float rainfall = 0;
 			float waterLevel = 0;
+			int waterLevelCount = 0;
 			for ( int data = 0; data < 10; data++ ) {
 				rainfall += TimeSeriesLightUtils.getValue( rainfallArray, (tenDays * 10) + data, 0 );
-				waterLevel += TimeSeriesLightUtils.getValue( waterLevelArray, (tenDays * 10) + data, 0 );
+				if ( TimeSeriesLightUtils.getValue( waterLevelArray, (tenDays * 10) + data, 0 ) > 0 ) {
+					waterLevel += TimeSeriesLightUtils.getValue( waterLevelArray, (tenDays * 10) + data, 0 );
+					waterLevelCount++;
+				}
 			}
 
 			tenDaysRainfall.add( rainfall );
-			tenDaysWaterLevel.add( waterLevel / 10 );
+			if ( waterLevelCount > 0 ) {
+				tenDaysWaterLevel.add( waterLevel / waterLevelCount );
+			} else {
+				tenDaysWaterLevel.add( (float) 0 );
+			}
 		} );
 
 		// Create the content and suffix
