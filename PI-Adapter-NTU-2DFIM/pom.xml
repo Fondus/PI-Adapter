@@ -16,7 +16,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<commons.netcdf.version>0.7.1</commons.netcdf.version>
+		<commons.netcdf.version>0.7.2</commons.netcdf.version>
 	</properties>
 
 	<dependencies>
