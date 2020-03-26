@@ -92,17 +92,27 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 		// Calculate the rainfall and water level
 		IntStream.range( 0, rainfallArray.size() / 10 ).forEach( tenDays -> {
 			float rainfall = 0;
+			int rainfallCount = 0;
 			float waterLevel = 0;
 			int waterLevelCount = 0;
 			for ( int data = 0; data < 10; data++ ) {
-				rainfall += TimeSeriesLightUtils.getValue( rainfallArray, (tenDays * 10) + data, 0 );
+				if ( TimeSeriesLightUtils.getValue( rainfallArray, (tenDays * 10) + data, 0 ) > 0 ) {
+					rainfall += TimeSeriesLightUtils.getValue( rainfallArray, (tenDays * 10) + data, 0 );
+					rainfallCount++;
+				}
+
 				if ( TimeSeriesLightUtils.getValue( waterLevelArray, (tenDays * 10) + data, 0 ) > 0 ) {
 					waterLevel += TimeSeriesLightUtils.getValue( waterLevelArray, (tenDays * 10) + data, 0 );
 					waterLevelCount++;
 				}
 			}
 
-			tenDaysRainfall.add( rainfall );
+			if ( rainfallCount > 0 ) {
+				tenDaysRainfall.add( (rainfall / rainfallCount) * 10 );
+			} else {
+				tenDaysRainfall.add( (float) 0 );
+			}
+
 			if ( waterLevelCount > 0 ) {
 				tenDaysWaterLevel.add( waterLevel / waterLevelCount );
 			} else {
