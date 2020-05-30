@@ -8,16 +8,21 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import nl.wldelft.util.timeseries.SimpleTimeSeriesContentHandler;
+import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import strman.Strman;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.nc.NetCDFReader;
+import tw.fondus.commons.util.coordinate.CoordinatePoint;
+import tw.fondus.commons.util.coordinate.CoordinateUtils;
 import tw.fondus.commons.util.math.NumberUtils;
 import tw.fondus.commons.util.string.StringUtils;
 import tw.fondus.commons.util.time.TimeUtils;
@@ -27,6 +32,7 @@ import tw.fondus.fews.adapter.pi.hecras.ntou.argument.ProcessArguments;
 import tw.fondus.fews.adapter.pi.hecras.ntou.entity.PointData;
 import tw.fondus.fews.adapter.pi.hecras.ntou.property.MappingProperties;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
+import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 import ucar.ma2.ArrayDouble;
 import ucar.ma2.ArrayFloat;
 
@@ -151,6 +157,33 @@ public class HECRASPostAdapter extends PiCommandLineExecute {
 			}
 			FileUtils.writeStringToFile( outputPath.resolve( processArguments.getOutputs().get( 1 ) ).toFile(),
 					values.stream().collect( Collectors.joining( StringUtils.BREAKLINE ) ) );
+
+			/** Get the flow data from cross section **/
+			TimeSeriesArrays waterLevelTimeSeriesArrays = TimeSeriesLightUtils
+					.readPiTimeSeries( inputPath.resolve( processArguments.getInputs().get( 2 ) ) );
+			ArrayDouble.D2 flowCoordinate = (ArrayDouble.D2) resultReader
+					.readVariable( MappingProperties.getProperty( MappingProperties.HDF5_FLOW_COORDINATE ) )
+					.get();
+			ArrayFloat.D2 flowArray = (ArrayFloat.D2) resultReader
+					.readVariable( MappingProperties.getProperty( MappingProperties.HDF5_FLOW_VALUE ) )
+					.get();
+
+			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
+			IntStream.range( 0, waterLevelTimeSeriesArrays.size() ).forEach( station -> {
+				CoordinatePoint waterLevelPoint = CoordinateUtils.transformWGS84ToTWD97(
+						waterLevelTimeSeriesArrays.get( station ).getHeader().getGeometry().getX( 0 ),
+						waterLevelTimeSeriesArrays.get( station ).getHeader().getGeometry().getY( 0 ) );
+
+				TimeSeriesLightUtils.fillPiTimeSeriesHeader( handler,
+						waterLevelTimeSeriesArrays.get( station ).getHeader().getLocationId(), "Q.simulated", "m3/s" );
+				IntStream.range( 0, flowArray.getShape()[0] ).forEach( i -> {
+					TimeSeriesLightUtils.addPiTimeSeriesValue( handler, dateTime.plusHours( i ).getMillis(),
+							flowArray.get( i, findClosestPoint( waterLevelPoint, flowCoordinate ) ) );
+				} );
+			} );
+			
+			TimeSeriesLightUtils.writePIFile( handler,
+					outputPath.resolve( processArguments.getOutputs().get( 2 ) ).toString() );
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "HECRASPostAdapter: Reading NetCDF file has something wrong." );
 		} catch (Exception e) {
@@ -171,5 +204,34 @@ public class HECRASPostAdapter extends PiCommandLineExecute {
 			time = time.replace( "2400", "0000" );
 		}
 		return time;
+	}
+
+	/**
+	 * Find the closest point to the water level station.
+	 * 
+	 * @param waterLevelPoint
+	 * @param flowCoordinate
+	 * @return
+	 */
+	private int findClosestPoint( CoordinatePoint waterLevelPoint, ArrayDouble.D2 flowCoordinate ) {
+		double distance = 0;
+		int pointIndex = 0;
+		for ( int point = 0; point < flowCoordinate.getShape()[0]; point++ ) {
+			if ( distance == 0 ) {
+				distance = Math.sqrt( Math.pow( waterLevelPoint.getX().doubleValue() - flowCoordinate.get( point, 0 ),
+						2 ) + Math.pow( waterLevelPoint.getY().doubleValue() - flowCoordinate.get( point, 1 ), 2 ) );
+			} else {
+				if ( Math.sqrt( Math.pow( waterLevelPoint.getX().doubleValue() - flowCoordinate.get( point, 0 ), 2 )
+						+ Math.pow( waterLevelPoint.getY().doubleValue() - flowCoordinate.get( point, 1 ),
+								2 ) ) < distance ) {
+					distance = Math.sqrt(
+							Math.pow( waterLevelPoint.getX().doubleValue() - flowCoordinate.get( point, 0 ), 2 ) + Math
+									.pow( waterLevelPoint.getY().doubleValue() - flowCoordinate.get( point, 1 ), 2 ) );
+					/** each cross section has 5 point data **/
+					pointIndex = point / 5;
+				}
+			}
+		}
+		return pointIndex;
 	}
 }

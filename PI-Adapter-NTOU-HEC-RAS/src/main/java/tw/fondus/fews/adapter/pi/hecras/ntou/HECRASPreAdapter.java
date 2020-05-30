@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -67,6 +68,25 @@ public class HECRASPreAdapter extends PiCommandLineExecute {
 			TimeSeriesArray rightRainfallTimeSeriesArray = TimeSeriesLightUtils
 					.readPiTimeSeries( inputPath.resolve( processArguments.getInputs().get( 3 ) ) )
 					.get( 0 );
+
+			IntStream.range( 0, leftRainfallTimeSeriesArray.size() ).forEach( data -> {
+				/** Rainfall minus infiltration value **/
+				float leftValue = TimeSeriesLightUtils.getValue( leftRainfallTimeSeriesArray, data )
+						- processArguments.getInfiltration().floatValue();
+				if ( leftValue < 0 ) {
+					leftRainfallTimeSeriesArray.setFloatValues( data, 1, 0 );
+				} else {
+					leftRainfallTimeSeriesArray.setFloatValues( data, 1, leftValue );
+				}
+				
+				float rightValue = TimeSeriesLightUtils.getValue( rightRainfallTimeSeriesArray, data )
+						- processArguments.getInfiltration().floatValue();
+				if ( rightValue < 0 ) {
+					rightRainfallTimeSeriesArray.setFloatValues( data, 1, 0 );
+				} else {
+					rightRainfallTimeSeriesArray.setFloatValues( data, 1, rightValue );
+				}
+			} );
 
 			Path p03Path = executablePath.resolve( processArguments.getOutputs().get( 0 ) );
 			DateTimeFormatter dtf = DateTimeFormat.forPattern( "ddMMMyyyy,hh" );
@@ -130,6 +150,10 @@ public class HECRASPreAdapter extends PiCommandLineExecute {
 	 * @return
 	 */
 	private String formatTimeSeriesData( TimeSeriesArray timeSeriesArray ) {
+		if ( TimeSeriesLightUtils.getValue( timeSeriesArray, 1, 0 ) == 0 ) {
+			timeSeriesArray.setFloatValues( 1, 1, (float) 0.1 );
+		}
+
 		String format = "%8s";
 		int lineCount = 0;
 		StringJoiner joiner = new StringJoiner( StringUtils.BREAKLINE );

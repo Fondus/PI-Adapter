@@ -36,7 +36,7 @@ public class SearchUtils {
 	 * @param thresholds
 	 * @return
 	 */
-	public static Optional<String> determineRainfallIntensity( float value, List<Double> thresholds ) {
+	public static Optional<String> determineRainfallIntensity( float value, List<Integer> thresholds ) {
 		return thresholds.stream()
 				.filter( threshold -> Double.valueOf( value ) > threshold )
 				.map( threshold -> Strman.append( "r", String.valueOf( threshold ) ) )
@@ -50,10 +50,10 @@ public class SearchUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static List<Double> readQuantitativeRainfallThreshold( Path thresholdPath ) throws IOException {
+	public static List<Integer> readQuantitativeRainfallThreshold( Path thresholdPath ) throws IOException {
 		return PathUtils.readAllLines( thresholdPath ).stream()
 			.map( line -> line.split( StringUtils.COMMA )[1] )
-			.map( thresholdString -> Double.valueOf( thresholdString ) )
+			.map( thresholdString -> Integer.valueOf( thresholdString ) )
 			.collect( Collectors.toList() );
 	}
 

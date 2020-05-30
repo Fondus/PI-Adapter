@@ -34,4 +34,7 @@ public class PreAdapterArguments extends PiIOArguments {
 	
 	@Parameter( names = { "--width", "-w" }, required = true, description = "The width of river outflow." )
 	private BigDecimal width;
+	
+	@Parameter( names = { "--infiltration", "-inf" }, required = true, description = "The infiltration of soil." )
+	private BigDecimal infiltration;
 }

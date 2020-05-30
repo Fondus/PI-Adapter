@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.StringJoiner;
+import java.util.stream.IntStream;
 
 import javax.naming.OperationNotSupportedException;
 
 import org.joda.time.DateTime;
 
 import nl.wldelft.util.timeseries.TimeSeriesArray;
-import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import strman.Strman;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
@@ -46,17 +46,27 @@ public class KWGIUHPreAdapter extends PiCommandLineExecute {
 			Path rainfallPath = Prevalidated.checkExists( inputPath.resolve( preAdapterArguments.getInputs().get( 0 ) ),
 					"KWGIUHPreAdapter: Can not find input XML file of rainfall." );
 
-			TimeSeriesArrays rainfallSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( rainfallPath );
+			TimeSeriesArray rainfallSeriesArray = TimeSeriesLightUtils.readPiTimeSeries( rainfallPath ).get( 0 );
+			IntStream.range( 0, rainfallSeriesArray.size() ).forEach( data -> {
+				/** Rainfall minus infiltration value **/
+				float value = TimeSeriesLightUtils.getValue( rainfallSeriesArray, data )
+						- preAdapterArguments.getInfiltration().floatValue();
+				if ( value < 0 ) {
+					rainfallSeriesArray.setFloatValues( data, 1, 0 );
+				} else {
+					rainfallSeriesArray.setFloatValues( data, 1, value );
+				}
+			} );
 
 			logger.log( LogLevel.INFO, "KWGIUHPreAdapter: Building the model input from XML file of rainfall." );
-			this.buildRainfallInput( rainfallSeriesArrays.get( 0 ), preAdapterArguments.getArea(),
+			this.buildRainfallInput( rainfallSeriesArray, preAdapterArguments.getArea(),
 					inputPath.resolve( preAdapterArguments.getInputs().get( 1 ) ) );
 
 			logger.log( LogLevel.INFO, "KWGIUHPreAdapter: Building the model input arguments." );
 			this.buildTempInput( inputPath,
 					Strman.append( basePath.toString(), StringUtils.PATH, preAdapterArguments.getExecutableDir() ),
 					preAdapterArguments.getGeomorphicFactor(),
-					String.valueOf( rainfallSeriesArrays.get( 0 ).getHeader().getTimeStep().getStepMillis() / 60000 ),
+					String.valueOf( rainfallSeriesArray.getHeader().getTimeStep().getStepMillis() / 60000 ),
 					preAdapterArguments.getInputs().get( 1 ), preAdapterArguments.getOutputs().get( 0 ),
 					preAdapterArguments.getNOverlandFlow(), preAdapterArguments.getNChannel(),
 					preAdapterArguments.getWidth() );

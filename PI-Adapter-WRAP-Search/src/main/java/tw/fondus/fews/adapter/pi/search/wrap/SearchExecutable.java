@@ -68,7 +68,7 @@ public class SearchExecutable extends PiCommandLineExecute {
 			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( inputXML );
 			
 			logger.log( LogLevel.INFO, "WRAP Flood Search GDAL Adapter: Collect the files need to be merge from flood database when cross the rainfall threshold." );
-			List<Double> thresholds = SearchUtils.readQuantitativeRainfallThreshold( thresholdPath );
+			List<Integer> thresholds = SearchUtils.readQuantitativeRainfallThreshold( thresholdPath );
 			List<String> mergeFiles = new ArrayList<>();
 			timeSeriesArrays.forEach( array -> {
 				String loctionID = array.getHeader().getLocationId();
