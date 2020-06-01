@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
-import java.util.stream.IntStream;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -90,7 +89,7 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 		List<Float> tenDaysWaterLevel = new ArrayList<>();
 
 		// Calculate the rainfall and water level
-		IntStream.range( 0, rainfallArray.size() / 10 ).forEach( tenDays -> {
+		for ( int tenDays = 0; tenDays < rainfallArray.size() / 10; tenDays++ ) {
 			float rainfall = 0;
 			int rainfallCount = 0;
 			float waterLevel = 0;
@@ -118,17 +117,20 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 			} else {
 				tenDaysWaterLevel.add( (float) 0 );
 			}
-		} );
+		}
+
+		tenDaysRainfall = this.interpolatedMissingValue( tenDaysRainfall );
+		tenDaysWaterLevel = this.interpolatedMissingValue( tenDaysWaterLevel );
 
 		// Create the content and suffix
 		StringJoiner rainfall = new StringJoiner( StringUtils.TAB, StringUtils.BLANK, StringUtils.BREAKLINE );
 		StringJoiner waterLevel = new StringJoiner( StringUtils.TAB, StringUtils.BLANK, StringUtils.BREAKLINE );
 		StringJoiner endLine = new StringJoiner( StringUtils.TAB, StringUtils.BREAKLINE, StringUtils.BLANK );
-		IntStream.range( 0, tenDaysRainfall.size() ).forEach( tenDaysData -> {
+		for ( int tenDaysData = 0; tenDaysData < tenDaysRainfall.size(); tenDaysData++ ) {
 			rainfall.add( Strman.append( String.valueOf( tenDaysRainfall.get( tenDaysData ) ) ) );
 			waterLevel.add( Strman.append( String.valueOf( tenDaysWaterLevel.get( tenDaysData ) ) ) );
 			endLine.add( Strman.append( String.valueOf( "-999" ) ) );
-		} );
+		}
 
 		try {
 			StringJoiner rainfallContent = new StringJoiner( StringUtils.BREAKLINE, StringUtils.BLANK,
@@ -154,5 +156,30 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "NCHC LTF PreAdapter: Writing model input file has something wrong." );
 		}
+	}
+
+	/**
+	 * Interpolate the missing value.
+	 * 
+	 * @param list
+	 * @return
+	 */
+	private List<Float> interpolatedMissingValue( List<Float> list ) {
+		/** fill start and end value if missing **/
+		if ( list.get( 0 ) == 0 ) {
+			list.set( 0, list.get( 1 ) );
+		}
+		if ( list.get( list.size() - 1 ) == 0 ) {
+			list.set( list.size() - 1, list.get( list.size() - 2 ) );
+		}
+
+		/** fill missing value by average **/
+		for ( int i = 1; i < list.size() - 1; i++ ) {
+			if ( list.get( i ) == 0 ) {
+				list.set( i, (list.get( i - 1 ) + list.get( i + 1 )) / 2 );
+			}
+		}
+
+		return list;
 	}
 }
