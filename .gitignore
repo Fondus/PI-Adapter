@@ -1,15 +1,14 @@
 # Local configuration file (sdk path, etc)
 log4j.properties
+Diagnostics.xml
 Backup/
 Parameters/
-bin/
 Work/
 Tank/
 Programs/
 data/
 data2/
 Template/
-.factorypath
 
 # Compiled class file
 *.class
