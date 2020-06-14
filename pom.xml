@@ -36,13 +36,14 @@
 	
 	<properties>
 		<adapter.version>3.0.0-SNAPSHOT</adapter.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<commons-lang.version>3.8.1</commons-lang.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13</junit.version>
 		<commons.version>1.0.2</commons.version>
 		<commons.utils.version>0.8.5</commons.utils.version>
+		<fondus.sdk.version>2.3.0-SNAPSHOT</fondus.sdk.version>
 	</properties>
 
 	<dependencyManagement>
@@ -64,6 +65,12 @@
 				<groupId>tw.fondus.commons</groupId>
 				<artifactId>commons-utils</artifactId>
 				<version>${commons.utils.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-core</artifactId>
+				<version>${fondus.sdk.version}</version>
 				<scope>provided</scope>
 			</dependency>
 		</dependencies>
@@ -110,7 +117,7 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
-			<!-- Build with 1.8 -->
+			<!-- Build -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
