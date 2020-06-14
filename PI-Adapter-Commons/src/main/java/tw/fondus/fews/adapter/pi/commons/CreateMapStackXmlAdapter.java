@@ -16,7 +16,7 @@ import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.util.time.TimeLightUtils;
 
 import java.nio.file.Path;
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 /**
  * The commons adapter tools it used to create the meta-data PI-XML of map stacks by arguments.
@@ -29,21 +29,21 @@ public class CreateMapStackXmlAdapter extends PiCommandLineExecute {
 	private static final String[] SUPPORTS_DIRECTION = { "end", "start" };
 
 	public static void main( String[] args ) {
-		MapStackArguments arguments = new MapStackArguments();
+		MapStackArguments arguments = MapStackArguments.instance();
 		new CreateMapStackXmlAdapter().execute( args, arguments );
 	}
 
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
-		/** Cast PiArguments to expand arguments **/
+		// Cast PiArguments to expand arguments
 		MapStackArguments modelArguments = (MapStackArguments) arguments;
 
 		String direction = modelArguments.getDirection();
 		String timeStep = modelArguments.getTimeStep();
 		int multiplier = modelArguments.getMultiplier();
 		if ( this.supportTimeStep( timeStep ) ){
-			logger.log( LogLevel.INFO, "CreateMapStackXmlAdapter: The meta-information with TimeStep: {}, Multiplier: {}.", timeStep, String.valueOf( multiplier ) );
+			logger.log( LogLevel.INFO, "CreateMapStackXmlAdapter: The meta-information with TimeStep: {}, Multiplier: {}.", timeStep, multiplier );
 
 			String locationId = modelArguments.getInputs().get( 0 );
 			String parameter = modelArguments.getParameter();
@@ -56,15 +56,12 @@ public class CreateMapStackXmlAdapter extends PiCommandLineExecute {
 				int duration = modelArguments.getDuration();
 				DateTime start;
 				DateTime end;
-				switch ( direction ){
-					case "start":
-						end = modelArguments.getTimeZero();
-						start = this.createTime( end, duration, timeStep, direction );
-						break;
-					default:
-						start = modelArguments.getTimeZero();
-						end = this.createTime( start, duration, timeStep, direction );
-						break;
+				if ( "start".equals( direction ) ) {
+					end = modelArguments.getTimeZero();
+					start = this.createTime( end, duration, timeStep, direction );
+				} else {
+					start = modelArguments.getTimeZero();
+					end = this.createTime( start, duration, timeStep, direction );
 				}
 				logger.log( LogLevel.INFO, "CreateMapStackXmlAdapter: The meta-information with Start Time: {}, End Time: {}.", start.toString(), end.toString() );
 
@@ -92,15 +89,15 @@ public class CreateMapStackXmlAdapter extends PiCommandLineExecute {
 	/**
 	 * Build the MapStacks object.
 	 *
-	 * @param filePattern
-	 * @param start
-	 * @param end
-	 * @param geoDatum
-	 * @param locationId
-	 * @param parameter
-	 * @param timeStep
-	 * @param multiplier
-	 * @return
+	 * @param filePattern file pattern
+	 * @param start start time
+	 * @param end end time
+	 * @param geoDatum geo datum
+	 * @param locationId location id
+	 * @param parameter parameter
+	 * @param timeStep time step
+	 * @param multiplier multiplier
+	 * @return map stacks XML bean
 	 */
 	private MapStacks buildMapStack( String filePattern, DateTime start, DateTime end, String geoDatum, String locationId, String parameter, String timeStep, int multiplier ){
 		// Build part of Map Stack XML
@@ -120,8 +117,8 @@ public class CreateMapStackXmlAdapter extends PiCommandLineExecute {
 	/**
 	 * Create the Pi data-time.
 	 *
-	 * @param time
-	 * @return
+	 * @param time joda time
+	 * @return map stack date time
 	 */
 	private PiDateTime createPiDateTime( DateTime time ){
 		return PiDateTime.of( TimeLightUtils.toString( time, "yyyy-MM-dd", TimeLightUtils.UTC0 ), TimeLightUtils.toString( time, "HH:mm:ss", TimeLightUtils.UTC0 ) );
@@ -130,8 +127,8 @@ public class CreateMapStackXmlAdapter extends PiCommandLineExecute {
 	/**
 	 * Check the time step support or not.
 	 *
-	 * @param timeStep
-	 * @return
+	 * @param timeStep time step
+	 * @return is support time step or not
 	 */
 	private boolean supportTimeStep( String timeStep ){
 		return this.support( SUPPORTS_TIMESTEP, timeStep );
@@ -140,8 +137,8 @@ public class CreateMapStackXmlAdapter extends PiCommandLineExecute {
 	/**
 	 * Check the time direction support or not.
 	 *
-	 * @param direction
-	 * @return
+	 * @param direction direction
+	 * @return is support direction or not
 	 */
 	private boolean supportDirection( String direction ){
 		return this.support( SUPPORTS_DIRECTION, direction );
@@ -150,21 +147,21 @@ public class CreateMapStackXmlAdapter extends PiCommandLineExecute {
 	/**
 	 * Check the target support with white list or not.
 	 *
-	 * @param whiteList
-	 * @param target
-	 * @return
+	 * @param whiteList white list
+	 * @param target target
+	 * @return is support or not
 	 */
 	private boolean support( String[] whiteList, String target ){
-		return Stream.of( whiteList ).anyMatch( support -> support.equals( target ) );
+		return Arrays.asList( whiteList ).contains( target );
 	}
 
 	/**
 	 * Create the end time by duration and time step.
 	 *
-	 * @param base
-	 * @param duration
-	 * @param timeStep
-	 * @return
+	 * @param base base joda time
+	 * @param duration string time duration
+	 * @param timeStep string time step
+	 * @return adjust time
 	 */
 	private DateTime createTime( DateTime base, int duration, String timeStep, String direction ){
 		switch ( timeStep ){

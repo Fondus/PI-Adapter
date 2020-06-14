@@ -8,12 +8,12 @@ import org.joda.time.format.DateTimeFormatter;
 import com.beust.jcommander.IStringConverter;
 
 /**
- * Convert arguments String to DateTime.
+ * Convert arguments string to joda time.
  * 
  * @author Brad Chen
  *
  */
-public class DateTimeConveter implements IStringConverter<DateTime> {
+public class DateTimeConverter implements IStringConverter<DateTime> {
 	private static final String FORMAT = "yyyyMMddHHmm";
 	
 	@Override

@@ -1,11 +1,12 @@
 package tw.fondus.fews.adapter.pi.log;
 
-import org.slf4j.Logger;
-
 import lombok.NonNull;
-import tw.fondus.commons.cli.util.Prevalidated;
+import org.slf4j.Logger;
+import strman.Strman;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.fews.pi.config.xml.log.PiDiagnostics;
+
+import java.util.Objects;
 
 /**
  * The logger is used to synchronous log with slf4j and diagnostics message to Delft-FEWS system.
@@ -14,8 +15,8 @@ import tw.fondus.commons.fews.pi.config.xml.log.PiDiagnostics;
  *
  */
 public class PiDiagnosticsLogger {
-	private PiDiagnostics diagnostics;
-	private Logger logger;
+	private final PiDiagnostics diagnostics;
+	private final Logger logger;
 	
 	private PiDiagnosticsLogger( @NonNull Logger logger, @NonNull PiDiagnostics diagnostics ) {
 		this.logger = logger;
@@ -25,24 +26,24 @@ public class PiDiagnosticsLogger {
 	/**
 	 * Synchronous log with slf4j logger and diagnostics.
 	 * 
-	 * @param level
-	 * @param message
-	 * @param variables
+	 * @param level log level
+	 * @param message log message
+	 * @param variables the variables used to log
 	 */
-	public void log( LogLevel level, String message, String... variables ) {
+	public void log( LogLevel level, String message, Object... variables ) {
 		String logMessage = PiDiagnosticsLogger.buildMessage( message, variables );
-		this.log( level, logMessage );
+		this.slf4j( level, logMessage );
 		this.diagnostics.addMessage( level.value(), logMessage );
 	}
 	
 	/**
 	 * Logging with slf4j logger.
 	 * 
-	 * @param level
-	 * @param message
+	 * @param level log level
+	 * @param message log message
 	 */
-	private void log( LogLevel level, String message ) {
-		Prevalidated.checkNonNull( level, "PiDiagnosticsLogger: LogLevel." );
+	private void slf4j( LogLevel level, String message ) {
+		Objects.requireNonNull( level, "PiDiagnosticsLogger: LogLevel." );
 		switch ( level ) {
 			case DEBUG:
 				this.logger.debug( message );
@@ -65,24 +66,44 @@ public class PiDiagnosticsLogger {
 	/**
 	 * Replace the message {} with variables.
 	 * 
-	 * @param message
-	 * @param variables
-	 * @return
+	 * @param pattern source message pattern
+	 * @param variables the variables used to log
+	 * @return format message
 	 */
-	private static String buildMessage( String message, String... variables ) {
-		String temp = Prevalidated.checkNonNull( message, "PiDiagnosticsLogger: message." );
-		for ( int i = 0; i < variables.length; i++ ){
-			temp = temp.replaceFirst( "\\{\\}", variables[i] );
+	private static String buildMessage( String pattern, Object... variables ) {
+		if ( Strman.isBlank( pattern ) || Objects.isNull( variables ) || variables.length == 0 ){
+			return pattern;
 		}
-		return temp;
+
+		int patternLength = pattern.length();
+		StringBuilder result = new StringBuilder( patternLength + 50 );
+
+		int handledPosition = 0;
+		int delimIndex;
+		for ( Object variable : variables ) {
+			delimIndex = pattern.indexOf( "{", handledPosition );
+			if ( delimIndex == -1 ) {
+				if ( handledPosition == 0 ) {
+					return pattern;
+				}
+				result.append( pattern, handledPosition, patternLength );
+				return result.toString();
+			}
+
+			result.append( pattern, handledPosition, delimIndex );
+			result.append( variable.toString() );
+			handledPosition = delimIndex + 2;
+		}
+		result.append( pattern, handledPosition, pattern.length() );
+		return result.toString();
 	}
 	
 	/**
 	 * Synchronous the slf4j logger and diagnostics.
 	 * 
-	 * @param logger
-	 * @param diagnostics
-	 * @return
+	 * @param logger logger
+	 * @param diagnostics diagnostics
+	 * @return diagnostics logger
 	 */
 	public static PiDiagnosticsLogger synchronous( Logger logger, PiDiagnostics diagnostics ) {
 		return new PiDiagnosticsLogger( logger, diagnostics );
