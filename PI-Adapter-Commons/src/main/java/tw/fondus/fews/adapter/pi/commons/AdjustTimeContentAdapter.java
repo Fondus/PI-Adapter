@@ -34,7 +34,7 @@ public class AdjustTimeContentAdapter extends PiCommandLineExecute {
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
 		// Cast PiArguments to expand arguments
-		AdjustTimeArguments modelArguments = (AdjustTimeArguments) arguments;
+		AdjustTimeArguments modelArguments = this.asArguments( arguments, AdjustTimeArguments.class );
 
 		Path inputXML = Prevalidated.checkExists(
 				inputPath.resolve( modelArguments.getInputs().get( 0 ) ),

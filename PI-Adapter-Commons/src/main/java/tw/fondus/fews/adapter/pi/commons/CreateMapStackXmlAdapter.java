@@ -37,7 +37,7 @@ public class CreateMapStackXmlAdapter extends PiCommandLineExecute {
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
 		// Cast PiArguments to expand arguments
-		MapStackArguments modelArguments = (MapStackArguments) arguments;
+		MapStackArguments modelArguments = this.asArguments( arguments, MapStackArguments.class );
 
 		String direction = modelArguments.getDirection();
 		String timeStep = modelArguments.getTimeStep();

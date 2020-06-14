@@ -10,10 +10,10 @@
 	<artifactId>pi-adapter-example</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>The Example models Published Interface Adapter</name>
+	<name>The Example Model Published Interface Adapter</name>
 	
 	<description>
-		The FEWS Published Interface Adapter of Example model is used to show how to data exchange with Delft-FEWS system.
+		The FEWS Published Interface Adapter of Example Model is used to show how to data exchange with Delft-FEWS system.
 	</description>
 	
 	<dependencies>

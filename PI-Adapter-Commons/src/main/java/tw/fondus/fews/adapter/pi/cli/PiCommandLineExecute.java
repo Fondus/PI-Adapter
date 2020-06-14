@@ -9,6 +9,7 @@ import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.fews.pi.config.xml.log.PiDiagnostics;
 import tw.fondus.commons.fews.pi.config.xml.util.XMLUtils;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
+import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 
 import java.nio.file.Path;
@@ -77,4 +78,29 @@ public abstract class PiCommandLineExecute extends BasicCommandLineExecute {
 	 */
 	protected abstract void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger,
 			Path basePath, Path inputPath, Path outputPath );
+
+	/**
+	 * Cast the basic arguments to IO arguments type.
+	 *
+	 * @param arguments basic arguments
+	 * @return IO type arguments
+	 * @since 3.0.0
+	 */
+	protected PiIOArguments asIOArguments( PiBasicArguments arguments ){
+		return this.asArguments( arguments, PiIOArguments.class );
+	}
+
+	/**
+	 * Cast the basic arguments to target type.
+	 *
+	 * @param arguments basic arguments
+	 * @param clazz class of T
+	 * @param <T> the target arguments type
+	 * @return the target type arguments
+	 * @since 3.0.0
+	 */
+	@SuppressWarnings( "unchecked" )
+	protected <T extends PiBasicArguments> T asArguments( PiBasicArguments arguments, Class<T> clazz ){
+		return (T) arguments;
+	}
 }
