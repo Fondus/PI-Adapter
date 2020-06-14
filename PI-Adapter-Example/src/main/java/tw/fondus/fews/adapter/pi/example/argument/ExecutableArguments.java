@@ -21,4 +21,14 @@ import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 public class ExecutableArguments extends PiIOArguments {
 	@Parameter( names = { "--executable", "-e" }, required = true, description = "The model executable.")
 	private String executable;
+
+	/**
+	 * Create the argument instance.
+	 *
+	 * @return argument instance
+	 * @since 3.0.0
+	 */
+	public static ExecutableArguments instance(){
+		return ExecutableArguments.builder().build();
+	}
 }
