@@ -16,10 +16,6 @@
 		The FEWS Published Interface Adapter of ESRI Grid ASCII merged models is used to data exchange with Delft-FEWS system.
 	</description>
 	
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-	
 	<dependencies>
 		<!-- PI-Adapter Commons -->
 		<dependency>
@@ -29,7 +25,7 @@
 		<!-- FondUS SDK: The open source project can't use this -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-utils</artifactId>
+			<artifactId>commons-core</artifactId>
 		</dependency>
 	</dependencies>
 	
