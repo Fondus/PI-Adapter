@@ -10,15 +10,11 @@
 	<artifactId>pi-adapter-netcdf</artifactId>
 	<packaging>jar</packaging>
 
-	<name>The NetCDF PI Adapter</name>
+	<name>The Common NetCDF Published Interface Adapter</name>
 
 	<description>
 		The FEWS Published Interface Adapter of NetCDF commons used.
 	</description>
-
-	<properties>
-		<commons.netcdf.version>0.7.2</commons.netcdf.version>
-	</properties>
 
 	<dependencies>
 		<!-- PI-Adapter Commons -->
@@ -26,16 +22,15 @@
 			<groupId>tw.fondus.fews.adapter</groupId>
 			<artifactId>pi-adapter-commons</artifactId>
 		</dependency>
-		<!-- Commons-Utils -->
+		<!-- FondUS SDK: The open source project can't use this -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-utils</artifactId>
+			<artifactId>commons-core</artifactId>
 		</dependency>
-		<!-- Commons-NetCDF -->
+		<!-- FondUS SDK: NetCDF -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-netcdf</artifactId>
-			<version>${commons.netcdf.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -45,11 +40,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-			</plugin>
-			<!-- Skip unit tests -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

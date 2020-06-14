@@ -44,6 +44,7 @@
 		<commons.version>1.0.2</commons.version>
 		<commons.utils.version>0.8.5</commons.utils.version>
 		<fondus.sdk.version>2.3.0-SNAPSHOT</fondus.sdk.version>
+		<fondus.sdk.netcdf.version>1.1.6</fondus.sdk.netcdf.version>
 	</properties>
 
 	<dependencyManagement>
@@ -59,6 +60,12 @@
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 				<version>${commons-lang.version}</version>
+			</dependency>
+			<!-- FondUS SDK: NetCDF -->
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-netcdf</artifactId>
+				<version>${fondus.sdk.netcdf.version}</version>
 			</dependency>
 			<!-- FondUS SDK: The open source project can't use this -->
 			<dependency>
