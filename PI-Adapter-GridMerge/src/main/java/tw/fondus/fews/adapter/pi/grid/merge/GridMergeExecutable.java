@@ -17,7 +17,6 @@ import tw.fondus.fews.adapter.pi.grid.merge.argument.RunArguments;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Model executable-adapter for running ESRI Grid ASCII merged model from
@@ -150,18 +148,15 @@ public class GridMergeExecutable extends PiCommandLineExecute {
 	private Map<String, List<String>> readGridFiles( Path base ) throws IOException {
 		Map<String, List<String>> map = new TreeMap<>();
 		// Create mapStack.xml mapping file list
-		try ( Stream<Path> paths = Files.list( base ) ) {
-			paths.forEach( path -> {
-				String name = PathUtils.getNameWithoutExtension( path );
-				if ( PathUtils.equalsExtension( path, FileType.XML ) ) {
-					map.putIfAbsent( name, new ArrayList<>() );
-				} else {
+		PathUtils.list( base )
+				.stream()
+				.filter( path -> !PathUtils.equalsExtension( path, FileType.XML ) )
+				.forEach( path -> {
+					String name = PathUtils.getNameWithoutExtension( path );
 					String key = name.substring( 0, 6 );
 					map.putIfAbsent( key, new ArrayList<>() );
 					map.get( key ).add( path.toString() );
-				}
-			} );
-		}
+				} );
 		return map;
 	}
 }

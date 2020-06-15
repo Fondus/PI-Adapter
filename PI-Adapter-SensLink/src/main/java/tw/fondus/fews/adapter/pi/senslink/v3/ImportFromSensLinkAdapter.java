@@ -86,7 +86,7 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 			logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Finished Adapter process." );
 			
 		} catch (IOException e) {
-			logger.log( LogLevel.ERROR, "SensLink 3.0 Import Adapter: Read XML or write the time meta-information has something failed!" );
+			logger.log( LogLevel.ERROR, "SensLink 3.0 Import Adapter: No time series found in file in the model input files!" );
 		}
 	}
 }
