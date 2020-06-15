@@ -24,26 +24,6 @@
     <series>
         <header>
             <type>instantaneous</type>
-            <locationId>1e06f275-0f2b-46ad-8d3b-a06be8696e07</locationId>
-            <parameterId>H.obs</parameterId>
-            <timeStep unit="second" multiplier="3600"/>
-            <startDate date="2018-08-25" time="01:00:00"/>
-            <endDate date="2018-08-25" time="02:00:00"/>
-            <missVal>-999.0</missVal>
-            <stationName>西新店二中排_中游</stationName>
-            <lat>23.335002124224648</lat>
-            <lon>120.19011875998872</lon>
-            <x>167181.614</x>
-            <y>2581611.541</y>
-            <z>0.0</z>
-            <units>m</units>
-        </header>
-        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
-        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
-    </series>
-    <series>
-        <header>
-            <type>instantaneous</type>
             <locationId>ef2d3337-9007-411b-a6ca-8bcf740494be</locationId>
             <parameterId>H.obs</parameterId>
             <timeStep unit="second" multiplier="3600"/>
@@ -75,26 +55,6 @@
             <lon>120.09997319843578</lon>
             <x>157820.489</x>
             <y>2558693.792</y>
-            <z>0.0</z>
-            <units>m</units>
-        </header>
-        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
-        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
-    </series>
-    <series>
-        <header>
-            <type>instantaneous</type>
-            <locationId>5241832f-bc39-4ee6-9793-328b00821a16</locationId>
-            <parameterId>H.obs</parameterId>
-            <timeStep unit="second" multiplier="3600"/>
-            <startDate date="2018-08-25" time="01:00:00"/>
-            <endDate date="2018-08-25" time="02:00:00"/>
-            <missVal>-999.0</missVal>
-            <stationName>國安一中排_中遊</stationName>
-            <lat>23.12786757954862</lat>
-            <lon>120.09102261674981</lon>
-            <x>156903.935</x>
-            <y>2558732.467</y>
             <z>0.0</z>
             <units>m</units>
         </header>
@@ -144,26 +104,6 @@
     <series>
         <header>
             <type>instantaneous</type>
-            <locationId>62bd07fe-c73b-4cd9-81bf-cac2b6362ab8</locationId>
-            <parameterId>H.obs</parameterId>
-            <timeStep unit="second" multiplier="3600"/>
-            <startDate date="2018-08-25" time="01:00:00"/>
-            <endDate date="2018-08-25" time="02:00:00"/>
-            <missVal>-999.0</missVal>
-            <stationName>雙春四中排中游站</stationName>
-            <lat>23.31564992755628</lat>
-            <lon>120.13400999118542</lon>
-            <x>161430.817</x>
-            <y>2579501.6</y>
-            <z>0.0</z>
-            <units>m</units>
-        </header>
-        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
-        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
-    </series>
-    <series>
-        <header>
-            <type>instantaneous</type>
             <locationId>c87b569f-d735-4c81-b16c-240a5b1852ba</locationId>
             <parameterId>H.obs</parameterId>
             <timeStep unit="second" multiplier="3600"/>
@@ -195,26 +135,6 @@
             <lon>120.16001999818847</lon>
             <x>164260.169</x>
             <y>2608462.99</y>
-            <z>0.0</z>
-            <units>m</units>
-        </header>
-        <event date="2018-08-25" time="01:00:00" value="-999.0" flag="8"/>
-        <event date="2018-08-25" time="02:00:00" value="-999.0" flag="8"/>
-    </series>
-    <series>
-        <header>
-            <type>instantaneous</type>
-            <locationId>501d3b17-1418-466f-be2d-82a9b1a4cc4f</locationId>
-            <parameterId>H.obs</parameterId>
-            <timeStep unit="second" multiplier="3600"/>
-            <startDate date="2018-08-25" time="01:00:00"/>
-            <endDate date="2018-08-25" time="02:00:00"/>
-            <missVal>-999.0</missVal>
-            <stationName>新港北一中排中游站</stationName>
-            <lat>23.575719919383758</lat>
-            <lon>120.15449000047943</lon>
-            <x>163694.641</x>
-            <y>2608291.32</y>
             <z>0.0</z>
             <units>m</units>
         </header>
