@@ -1,8 +1,6 @@
 package tw.fondus.fews.adapter.pi.senslink.v2;
 
 import org.junit.Test;
-
-import tw.fondus.fews.adapter.pi.senslink.v2.ExportToSensLinkAdapter;
 import tw.fondus.fews.adapter.pi.senslink.v2.argument.RunArguments;
 
 /**
@@ -26,15 +24,13 @@ public class ExportToSensLinkAdapterTest {
 				"Rainfall.xml",
 				"-o",
 				"",
-				"-s",
-				"1",
 				"-us",
 				"",
 				"-pw",
 				""
 				};
 		
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new ExportToSensLinkAdapter().execute(args, arguments);
 	}
 

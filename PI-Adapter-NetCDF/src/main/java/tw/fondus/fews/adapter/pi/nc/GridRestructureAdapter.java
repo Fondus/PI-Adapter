@@ -115,7 +115,7 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 	/**
 	 * Define and build the restructure NetCDF.
 	 *
-	 * @param outputNetCDFPath output path of NetCDF.
+	 * @param outputNetCDFPath output path of NetCDF
 	 * @param timeUnit time unit
 	 * @param parameter parameter
 	 * @param unit unit

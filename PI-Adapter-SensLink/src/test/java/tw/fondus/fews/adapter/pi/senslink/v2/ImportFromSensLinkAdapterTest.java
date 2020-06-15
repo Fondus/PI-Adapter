@@ -1,8 +1,6 @@
 package tw.fondus.fews.adapter.pi.senslink.v2;
 
 import org.junit.Test;
-
-import tw.fondus.fews.adapter.pi.senslink.v2.ImportFromSensLinkAdapter;
 import tw.fondus.fews.adapter.pi.senslink.v2.argument.RunArguments;
 
 /**
@@ -32,16 +30,14 @@ public class ImportFromSensLinkAdapterTest {
 				"H.obs",
 				"-u",
 				"m",
-				"-s",
-				"1",
 				"-us",
 				"",
 				"-pw",
 				""
 				};
 		
-		RunArguments arguments = new RunArguments();
-		new ImportFromSensLinkAdapter().execute(args, arguments);
+		RunArguments arguments = RunArguments.instance();
+		new ImportFromSensLinkAdapter().execute( args, arguments );
 	}
 
 }

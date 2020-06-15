@@ -78,7 +78,11 @@
 				<groupId>tw.fondus.commons</groupId>
 				<artifactId>commons-core</artifactId>
 				<version>${fondus.sdk.version}</version>
-				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-rest-senslink</artifactId>
+				<version>${fondus.sdk.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

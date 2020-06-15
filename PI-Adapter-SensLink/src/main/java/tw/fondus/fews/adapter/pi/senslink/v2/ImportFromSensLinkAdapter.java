@@ -1,35 +1,29 @@
 package tw.fondus.fews.adapter.pi.senslink.v2;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.file.Path;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
-import java.util.List;
-import java.util.Optional;
-
-import javax.naming.OperationNotSupportedException;
-
-import org.joda.time.DateTime;
-
-import nl.wldelft.util.timeseries.SimpleTimeSeriesContentHandler;
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
-import strman.Strman;
+import org.joda.time.DateTime;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.fews.pi.util.timeseries.TimeSeriesUtils;
-import tw.fondus.commons.json.senslink.v2.authentication.AuthInfoResponse;
-import tw.fondus.commons.json.senslink.v2.authentication.AuthenticationAction;
-import tw.fondus.commons.json.senslink.v2.station.PQHistoricalData;
-import tw.fondus.commons.json.senslink.v2.util.SensLinkUtils;
-import tw.fondus.commons.util.optional.OptionalUtils;
+import tw.fondus.commons.rest.senslink.v2.feign.SensLinkApiV2;
+import tw.fondus.commons.rest.senslink.v2.feign.SensLinkApiV2Runtime;
+import tw.fondus.commons.rest.senslink.v2.model.auth.AuthInfoRequest;
+import tw.fondus.commons.rest.senslink.v2.model.auth.AuthInfoResult;
+import tw.fondus.commons.rest.senslink.v2.model.record.PQTimeSeriesRecord;
+import tw.fondus.commons.rest.senslink.v2.util.SensLinkApiV2QueryMethod;
+import tw.fondus.commons.rest.senslink.v2.util.SensLinkApiV2QueryTimeZone;
+import tw.fondus.commons.rest.senslink.v2.util.SensLinkApiV2Utils;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.senslink.v2.argument.RunArguments;
-import tw.fondus.fews.adapter.pi.senslink.v2.util.AdapterUtils;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 /**
  * Model adapter for import data from the SensLink 2.0 with Delft-FEWS.
@@ -37,74 +31,73 @@ import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
  * @author Brad Chen
  *
  */
+@SuppressWarnings( "rawtypes" )
 public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 	public static void main(String[] args) {
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new ImportFromSensLinkAdapter().execute(args, arguments);
 	}
 	
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
-		/** Cast PiArguments to expand arguments **/
-		RunArguments modelArguments = (RunArguments) arguments;
+		// Cast PiArguments to expand arguments
+		RunArguments modelArguments = this.asArguments( arguments, RunArguments.class );
 		
-		Path inputXML = Prevalidated.checkExists( 
-				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+		Path inputXML = Prevalidated.checkExists(
+				inputPath.resolve( modelArguments.getInputs().get(0) ),
 				"SensLink 2.0 Import Adapter: The input XML not exists!" );
 		
 		try {
 			// Read PI-XML
-			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( inputXML );
+			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.read( inputXML );
 			List<String> locationIds = TimeSeriesUtils.toLocationIds( timeSeriesArrays );
 			
-			logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Start import {} datas from the SensLink System.", String.valueOf( locationIds.size() ) );
+			logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Try to import {} data from the SensLink System.", locationIds.size() );
 			
 			DateTime timeZero = modelArguments.getTimeZero();
 			String username = modelArguments.getUsername();
 			String password = modelArguments.getPassword();
-			String host = AdapterUtils.getHost( modelArguments.getServer() );
 			
 			// Login SensLink 2.0
-			Optional<AuthInfoResponse> optAuth = SensLinkUtils.login( host, username, password );
-			OptionalUtils.ifPresentOrElse( optAuth, auth -> {
+			SensLinkApiV2 api = SensLinkApiV2Runtime.DEFAULT;
+			AuthInfoResult result = api.login( AuthInfoRequest.builder()
+					.username( username )
+					.password( password )
+					.build() );
+
+			if ( result.getState().isSuccessful() ){
+				logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: The SensLink 2.0 system login successfully, try to get records from the SensLink 2.0 system." );
+
 				try {
-					// Use API authentication to get data from SensLink by PQ Ids 
-					AuthenticationAction authentication = SensLinkUtils.createAuthentication( auth.getKey(), username, SensLinkUtils.GET_HISTORICAL_BYIDS );
-					Optional<List<PQHistoricalData>> optionalDatas = SensLinkUtils.getDataByPQIds( authentication,
-							host,
-							locationIds,
-							timeZero,
-							modelArguments.getDuration(),
-							0 );
-					
-					OptionalUtils.ifPresentOrElse( optionalDatas, datas -> {
-						logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Start translate SensLink PhysicalQuantity Data to PI-XML." );
-						
+					// Use API authentication to get data from SensLink by PQ Ids
+					List<PQTimeSeriesRecord> records = api.readTimeSeriesByPQs( result.getKey(), username, locationIds,
+							timeZero, modelArguments.getDuration(), SensLinkApiV2QueryTimeZone.UTC8,
+							SensLinkApiV2QueryMethod.RAW );
+
+					if ( records.size() > 0 ){
+						logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Start translate SensLink PhysicalQuantity records to PI-XML." );
+						TimeSeriesArrays outputArrays = SensLinkApiV2Utils.fromRecordTimeSeries( records, modelArguments.getParameter(), modelArguments.getUnit() );
 						try {
-							// Write the PI-XML
-							SimpleTimeSeriesContentHandler contentHandler = SensLinkUtils.toTimeSeriesArraysIrregular( datas, modelArguments.getParameter(), modelArguments.getUnit() );
-							TimeSeriesLightUtils.writePIFile( contentHandler,
-									Strman.append( outputPath.toString(), PATH, modelArguments.getOutputs().get( 0 ) ) );
-						} catch (InterruptedException | IOException e) {
-							logger.log( LogLevel.ERROR, "SensLink 2.0 Import Adapter: adapter write PI-XML has something wrong!.");
+							TimeSeriesUtils.write( outputArrays, outputPath.resolve( modelArguments.getOutputs().get( 0 ) ) );
+						} catch ( IOException e ){
+							logger.log( LogLevel.ERROR, "SensLink 2.0 Import Adapter: Write the PI-XML has something wrong." );
 						}
-						
-						logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Finished Adapter process." );
-					},
-					() -> logger.log( LogLevel.WARN, "SensLink 2.0 Import Adapter: Nothing PhysicalQuantity Histroical Data of Station from the SensLink System.") );
-					
-				} catch (InvalidKeyException | SignatureException | NoSuchAlgorithmException
-						| UnsupportedEncodingException e) {
-					logger.log( LogLevel.ERROR, "SensLink 2.0 Import Adapter: adapter has something wrong!." );
-				} 
-			},
-			() -> logger.log( LogLevel.WARN, "SensLink 2.0 Import Adapter: SensLink System Login failed." ) ); 
+					} else {
+						logger.log( LogLevel.WARN, "SensLink 2.0 Import Adapter: Not receive any records from SensLink." );
+					}
+
+				} catch ( NoSuchAlgorithmException | InvalidKeyException e ) {
+					logger.log( LogLevel.ERROR, "SensLink 2.0 Import Adapter: Build the authentication has something wrong." );
+				}
+			} else {
+				logger.log( LogLevel.WARN, "SensLink 2.0 Import Adapter: SensLink System Login failed." );
+			}
+
+			logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Finished Adapter process." );
 			
-		} catch (OperationNotSupportedException e) {
-			logger.log( LogLevel.ERROR, "SensLink 2.0 Import Adapter: Read XML not exists or content empty!" );
 		} catch (IOException e) {
-			logger.log( LogLevel.ERROR, "SensLink 2.0 Import Adapter: Read XML or write the time meta-information has something faild!" );
+			logger.log( LogLevel.ERROR, "SensLink 2.0 Import Adapter: No time series found in file in the model input files!" );
 		}
 	}
 }
