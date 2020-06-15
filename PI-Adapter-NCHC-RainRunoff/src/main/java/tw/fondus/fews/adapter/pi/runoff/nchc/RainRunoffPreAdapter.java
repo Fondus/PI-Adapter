@@ -1,11 +1,5 @@
 package tw.fondus.fews.adapter.pi.runoff.nchc;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
-import javax.naming.OperationNotSupportedException;
-
-import nl.wldelft.util.FileUtils;
 import nl.wldelft.util.timeseries.TimeSeriesArray;
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import nl.wldelft.util.timeseries.TimeStep;
@@ -13,12 +7,17 @@ import strman.Strman;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.util.file.FileType;
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.commons.util.file.PathUtils;
+import tw.fondus.commons.util.file.io.PathWriter;
+import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
+
+import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  * Parent class with Model pre-adapter for running NCHC RR model from Delft-FEWS.
@@ -26,75 +25,67 @@ import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
  * @author Brad Chen
  *
  */
+@SuppressWarnings( "rawtypes" )
 public abstract class RainRunoffPreAdapter extends PiCommandLineExecute {
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
-		PiIOArguments modelArguments = (PiIOArguments) arguments;
+		PiIOArguments modelArguments = this.asIOArguments( arguments );
 		try {
 			Path inputXML = Prevalidated.checkExists( 
-					Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),
+					inputPath.resolve( modelArguments.getInputs().get(0) ),
 					"NCHC RainRunoffPreAdapter: The input XML not exists!" );
 			
-			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.readPiTimeSeries( inputXML );
+			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.read( inputXML );
 			logger.log( LogLevel.INFO, "NCHC RainRunoff PreAdapter: Start create model input files.");
 			
 			// Create model input
-			this.writeModelInput( logger, timeSeriesArrays, inputPath, modelArguments.getOutputs().get(0) );
+			this.writeModelInput( timeSeriesArrays, inputPath, modelArguments.getOutputs().get(0) );
 			
 			logger.log( LogLevel.INFO, "NCHC RainRunoff PreAdapter: Finished create model input files.");
 			
-		} catch (OperationNotSupportedException e) {
-			logger.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: Read XML not exists or content empty!");
 		} catch (IOException e) {
-			logger.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: Read XML or write the time meta-information has something faild!" );
+			logger.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: No time series found in file in the model input files!" );
 		}
 	}
 	
 	/**
 	 * Write the RR model input file with model input folder and name.
-	 * 
-	 * @param logger
-	 * @param timeSeriesArrays
-	 * @param inputPath
-	 * @param fileName
-	 * @throws IOException 
+	 *
+	 * @param timeSeriesArrays time series arrays
+	 * @param inputPath input path
+	 * @param fileName file name
 	 */
-	private void writeModelInput( PiDiagnosticsLogger logger, TimeSeriesArrays timeSeriesArrays,
-			Path inputPath, String fileName ) throws IOException {
-		String modelInputPath = Strman.append( inputPath.toString(), PATH );
-		this.writeTimeMetaInfo( modelInputPath, fileName, timeSeriesArrays.get( 0 ).getTime(0), timeSeriesArrays.get( 0 ).getTimeStep() );
-		
-		timeSeriesArrays.forEach( array -> {
+	private void writeModelInput( TimeSeriesArrays timeSeriesArrays,
+			Path inputPath, String fileName ) {
+		this.writeTimeMetaInfo( inputPath.resolve( fileName ), timeSeriesArrays.get( 0 ).getTime(0), timeSeriesArrays.get( 0 ).getTimeStep() );
+
+		TimeSeriesLightUtils.forEach( timeSeriesArrays, array -> {
 			String modelInput = this.createModelInputContent( array );
-			
-			try {
-				FileUtils.writeText( Strman.append( modelInputPath, array.getHeader().getLocationId(), FileType.TXT.getExtension() ), modelInput );
-			} catch (IOException e) {
-				logger.log( LogLevel.ERROR, "NCHC RainRunoff PreAdapter: Write model input faild!" );
-			}
+			String locationId = array.getHeader().getLocationId();
+			this.getLogger().log( LogLevel.INFO, "NCHC RainRunoff PreAdapter: Create the model input with location id: {}.", locationId );
+			PathWriter.write( inputPath.resolve( locationId + FileType.TXT.getExtension() ), modelInput );
 		} );
 	}
-	
+
 	/**
 	 * Write the temporary time meta-information file to model input folder.
-	 * 
-	 * @param modelInputFolderPath
-	 * @param fileName
-	 * @param time
-	 * @param timeStep
-	 * @throws IOException
+	 *
+	 * @param metaInfoPath time meta info file
+	 * @param time time
+	 * @param timeStep time step
 	 */
-	private void writeTimeMetaInfo( String modelInputPath, String fileName, long time, TimeStep timeStep ) throws IOException {
-		String timeMetaInfo = Strman.append( modelInputPath, fileName );
-		FileUtils.writeText( timeMetaInfo, Strman.append( String.valueOf( time ), StringUtils.SPACE_WHITE, String.valueOf( timeStep.getStepMillis() ) ) );
+	private void writeTimeMetaInfo( Path metaInfoPath, long time, TimeStep timeStep ) {
+		this.getLogger().log( LogLevel.INFO, "NCHC RainRunoff PreAdapter: Create the time-meta information with file: {}.",
+				PathUtils.getNameWithoutExtension( metaInfoPath ) );
+		PathWriter.write( metaInfoPath, Strman.append( String.valueOf( time ), Strings.SPACE, String.valueOf( timeStep.getStepMillis() ) ) );
 	}
 	
 	/**
 	 * Mapping timeSeriesArray -> rain-runoff model input content logic.
 	 * 
-	 * @param array
-	 * @return
+	 * @param array time series array
+	 * @return rain-runoff model input content
 	 */
 	protected abstract String createModelInputContent( TimeSeriesArray array );
 }
