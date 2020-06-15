@@ -35,7 +35,6 @@ public class WuSacramentoPreAdapter extends RainRunoffPreAdapter {
 		IntStream.range(0, array.size()).forEach( i ->
 			content.add(
 					Strman.append( JodaTimeUtils.toString( JodaTimeUtils.toDateTime( array.getTime( i ) ), "ddMMyyyy HHmm " ),
-							//DateFormatUtils.format( array.getTime( i ), "ddMMyyyy HHmm ", TimeZone.getTimeZone( "GMT" ) ),
 					String.valueOf( TimeSeriesLightUtils.getValue( array, i, Numbers.ZERO ) ))
 					)
 		);

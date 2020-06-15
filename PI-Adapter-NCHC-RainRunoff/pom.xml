@@ -18,11 +18,6 @@
 	</description>
 
 	<dependencies>
-		<!-- Apache Commons Lang -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
 		<!-- PI-Adapter Commons -->
 		<dependency>
 			<groupId>tw.fondus.fews.adapter</groupId>

@@ -39,7 +39,6 @@
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<commons-lang.version>3.10</commons-lang.version>
 		<junit.version>4.13</junit.version>
 		<commons.version>1.0.2</commons.version>
 		<commons.utils.version>0.8.5</commons.utils.version>
@@ -54,12 +53,6 @@
 				<groupId>tw.fondus.fews.adapter</groupId>
 				<artifactId>pi-adapter-commons</artifactId>
 				<version>${adapter.version}</version>
-			</dependency>
-			<!-- Apache Commons Lang -->
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>${commons-lang.version}</version>
 			</dependency>
 			<!-- FondUS SDK: NetCDF -->
 			<dependency>
