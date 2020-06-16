@@ -27,6 +27,10 @@
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-spatial</artifactId>
+		</dependency>
 		<!-- FondUS SDK: NetCDF -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
