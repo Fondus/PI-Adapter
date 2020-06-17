@@ -1,13 +1,12 @@
 package tw.fondus.fews.adapter.pi.nc;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import tw.fondus.commons.nc.NetCDFReader;
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
-
-import java.io.IOException;
 
 /**
  * The unit test of TestGridMergeAdapter.
@@ -15,6 +14,7 @@ import java.io.IOException;
  * @author Brad Chen
  *
  */
+@Ignore
 public class TestGridMergeAdapterTest {
 	@Before
 	public void run(){
@@ -27,8 +27,8 @@ public class TestGridMergeAdapterTest {
 				"Merged.nc",
 				"-p",
 				"precipitation_radar",
-				"-u",
-				"m"
+				"-t",
+				"201902061800"
 		};
 
 		PiIOArguments arguments = PiIOArguments.instance();
@@ -36,12 +36,8 @@ public class TestGridMergeAdapterTest {
 	}
 
 	@Test
-	public void test() throws IOException {
-		try ( NetCDFReader reader = NetCDFReader.read( PathUtils.path( "src/test/resources/Output/Merged.nc" ) ) ){
-			reader.findVariable( "precipitation_radar" ).ifPresent( variable -> {
-
-			} );
-		}
+	public void test() {
+		Assert.assertTrue( PathUtils.isExists( "src/test/resources/Output/Merged.nc" ) );
 	}
 
 	@After
