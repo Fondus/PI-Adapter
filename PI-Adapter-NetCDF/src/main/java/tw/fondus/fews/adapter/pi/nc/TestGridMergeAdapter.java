@@ -62,7 +62,7 @@ public class TestGridMergeAdapter extends PiCommandLineExecute {
 				// Prepare to create fake time
 				logger.log( LogLevel.INFO, "TestGridMergeAdapter: Finished to read the input NetCDF grids, prepare to create the fake times." );
 				List<Long> times = grids.stream()
-						.map( grid -> grid.getTime() * grid.getTimeFactor() )
+						.map( StandardGrid::getTime )
 						.sorted( Comparator.naturalOrder() )
 						.collect( Collectors.toList() );
 
@@ -74,7 +74,7 @@ public class TestGridMergeAdapter extends PiCommandLineExecute {
 				IntStream.range( 0, grids.size() )
 						.forEach( i -> {
 							StandardGrid grid = grids.get( i );
-							grid.setProperty( VariableName.TIME, start.plus( timeStep / grid.getTimeFactor() * i ).getMillis() );
+							grid.setProperty( VariableName.TIME, start.plus( timeStep * i ).getMillis() );
 						} );
 
 				Path mergePath = outputPath.resolve( modelArguments.getOutputs().get( 0 ) );
