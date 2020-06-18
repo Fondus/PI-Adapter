@@ -1,7 +1,6 @@
 package tw.fondus.fews.adapter.pi.trigrs;
 
 import org.zeroturnaround.exec.InvalidExitValueException;
-import strman.Strman;
 import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
@@ -29,11 +28,11 @@ public class TRIGRSExecutable extends PiCommandLineExecute {
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
-		/** Cast PiArguments to expand arguments **/
-		RunArguments modelArguments = (RunArguments) arguments;
+		// Cast PiArguments to expand arguments
+		RunArguments modelArguments = this.asArguments( arguments, RunArguments.class );
 		
 		String executeModel = modelArguments.getExecutable();
-		String command = Strman.append( basePath.toString(), PATH, executeModel );
+		String command = basePath.resolve( executeModel ).toString();
 		
 		logger.log( LogLevel.INFO, "TRIGRS Executable Adapter: Start TRIGRS simulation." );
 		
