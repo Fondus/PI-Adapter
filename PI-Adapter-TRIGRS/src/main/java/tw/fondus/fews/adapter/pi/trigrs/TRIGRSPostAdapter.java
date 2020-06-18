@@ -1,16 +1,7 @@
 package tw.fondus.fews.adapter.pi.trigrs;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.IntStream;
-
-import org.joda.time.DateTime;
-
 import nl.wldelft.util.FileUtils;
+import org.joda.time.DateTime;
 import strman.Strman;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
@@ -24,6 +15,14 @@ import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.trigrs.argument.PostArguments;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.IntStream;
+
 /**
  * Model post-adapter for running TRIGRS landslide model from Delft-FEWS.
  * 
@@ -33,15 +32,15 @@ import tw.fondus.fews.adapter.pi.trigrs.argument.PostArguments;
 public class TRIGRSPostAdapter extends PiCommandLineExecute {
 	
 	public static void main(String[] args) {
-		PostArguments arguments = new PostArguments();
+		PostArguments arguments = PostArguments.instance();
 		new TRIGRSPostAdapter().execute(args, arguments);
 	}
 	
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
-		/** Cast PiArguments to expand arguments **/
-		PostArguments modelArguments = (PostArguments) arguments;
+		// Cast PiArguments to expand arguments
+		PostArguments modelArguments = this.asArguments( arguments, PostArguments.class );
 		
 		Path inputXML = Prevalidated.checkExists( 
 				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get(0)),

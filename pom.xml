@@ -74,6 +74,11 @@
 			</dependency>
 			<dependency>
 				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-fews</artifactId>
+				<version>${fondus.sdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
 				<artifactId>commons-spatial</artifactId>
 				<version>${fondus.sdk.version}</version>
 			</dependency>
@@ -207,5 +212,6 @@
 		<module>PI-Adapter-NCHC-Irrigation-Optimize</module>
 		<module>PI-Adapter-NetCDF</module>
 		<module>PI-Adapter-NTU-2DFIM</module>
+		<module>PI-Adapter-StressTest</module>
 	</modules>
 </project>

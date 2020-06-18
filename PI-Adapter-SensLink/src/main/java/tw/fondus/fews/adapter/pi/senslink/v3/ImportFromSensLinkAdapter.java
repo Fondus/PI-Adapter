@@ -51,7 +51,7 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 		try {
 			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.read( inputXML );
 			List<String> locationIds = TimeSeriesUtils.toLocationIds( timeSeriesArrays );
-			logger.log( LogLevel.INFO, "SensLink 3.0 Import Adapter: Try import {} records from the SensLink System.", locationIds.size() );
+			logger.log( LogLevel.INFO, "SensLink 3.0 Import Adapter: Try to import {} records from the SensLink System.", locationIds.size() );
 			
 			DateTime timeZero = modelArguments.getTimeZero();
 			String username = modelArguments.getUsername();
