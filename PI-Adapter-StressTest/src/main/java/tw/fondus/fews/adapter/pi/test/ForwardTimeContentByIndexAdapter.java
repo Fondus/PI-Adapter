@@ -68,7 +68,7 @@ public class ForwardTimeContentByIndexAdapter extends PiCommandLineExecute {
 			int timeZeroIndex = currentIndex;
 			logger.log( LogLevel.INFO, "ForwardTimeContentByIndexAdapter: The current index is {}, it's will be use to create forward to proxy.", currentIndex );
 
-			if ( currentIndex >= length ){
+			if ( (currentIndex + end) >= length ){
 				logger.log( LogLevel.WARN, "ForwardTimeContentByIndexAdapter: The current index {} exceed the time content length {}, will reset to default value.", currentIndex, length );
 				this.resetMetaInfo( metaPath );
 				currentIndex = 0;
