@@ -1,9 +1,12 @@
 package tw.fondus.fews.adapter.pi.irrigation.nchc.argument;
 
 import com.beust.jcommander.Parameter;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import tw.fondus.commons.cli.argument.converter.FileListConverter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import tw.fondus.commons.cli.argument.splitter.CommaSplitter;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 
 import java.util.List;
@@ -15,11 +18,15 @@ import java.util.List;
  *
  */
 @Data
-@EqualsAndHashCode( callSuper = false )
+@SuperBuilder
+@ToString( callSuper = true )
+@EqualsAndHashCode( callSuper = true )
 public class ParameterArguments extends PiBasicArguments {
+	@Builder.Default
 	@Parameter( names = { "--tdir", "-td" }, description = "The template folder, relative to the current working directory." )
 	private String templatePath = "Template/";
 
+	@Builder.Default
 	@Parameter( names = { "--edir", "-ed" }, description = "The executable folder, relative to the current working directory." )
 	private String executablePath = "Work/";
 
@@ -36,6 +43,16 @@ public class ParameterArguments extends PiBasicArguments {
 	private String caseName;
 
 	@Parameter( names = { "-hs" }, required = true, description = "The hydraulic structures list with comma, and order is fixed.",
-			listConverter = FileListConverter.class )
+			splitter = CommaSplitter.class )
 	private List<String> hydraulicStructures;
+
+	/**
+	 * Create the argument instance.
+	 *
+	 * @return argument instance
+	 * @since 3.0.0
+	 */
+	public static ParameterArguments instance(){
+		return ParameterArguments.builder().build();
+	}
 }

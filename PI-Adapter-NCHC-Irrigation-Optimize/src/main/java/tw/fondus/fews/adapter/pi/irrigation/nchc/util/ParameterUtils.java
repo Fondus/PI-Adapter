@@ -21,13 +21,13 @@ public class ParameterUtils {
 	/**
 	 * Collect the parameters to map with key: description, value: parameter.
 	 *
-	 * @param parameters
-	 * @return
+	 * @param parameters parameters
+	 * @return map of description and parameter
 	 */
 	public static Map<String, Parameter> toMap( List<Parameter> parameters ){
 		return parameters.stream()
 				.collect( Collectors.toMap(
-						parameter -> parameter.getDescription(),
+						Parameter::getDescription,
 						parameter -> parameter
 				) );
 	}
@@ -35,8 +35,8 @@ public class ParameterUtils {
 	/**
 	 * Filter the parameter by area key word.
 	 *
-	 * @param caseParameter
-	 * @return
+	 * @param caseParameter case parameter
+	 * @return collection of parameter
 	 */
 	public static List<Parameter> filterArea( CaseParameter caseParameter ){
 		return filter( caseParameter, FilterKeyWord.AREA )
@@ -48,8 +48,8 @@ public class ParameterUtils {
 	/**
 	 * Filter the parameter by draft key word.
 	 *
-	 * @param caseParameter
-	 * @return
+	 * @param caseParameter case parameter
+	 * @return collection of parameter
 	 */
 	public static List<Parameter> filterDraft( CaseParameter caseParameter ){
 		return filter( caseParameter, FilterKeyWord.DRAFT );
@@ -58,8 +58,8 @@ public class ParameterUtils {
 	/**
 	 * Filter the parameter by plan water requirement key word.
 	 *
-	 * @param caseParameter
-	 * @return
+	 * @param caseParameter case parameter
+	 * @return collection of parameter
 	 */
 	public static List<Parameter> filterPlanWaterRequirement( CaseParameter caseParameter ){
 		return filter( caseParameter, FilterKeyWord.PLAN_WATER_REQUIREMENT );
@@ -68,8 +68,8 @@ public class ParameterUtils {
 	/**
 	 * Filter the parameter by user-define key word.
 	 *
-	 * @param caseParameter
-	 * @return
+	 * @param caseParameter case parameter
+	 * @return collection of parameter
 	 */
 	public static List<Parameter> filterUserDefine( CaseParameter caseParameter ){
 		return filter( caseParameter, FilterKeyWord.USER_DEFINE );
@@ -78,9 +78,9 @@ public class ParameterUtils {
 	/**
 	 * Filter the parameter by key word.
 	 *
-	 * @param caseParameter
-	 * @param keyWord
-	 * @return
+	 * @param caseParameter case parameter
+	 * @param keyWord key word
+	 * @return collection of parameter
 	 */
 	public static List<Parameter> filter( CaseParameter caseParameter, FilterKeyWord keyWord ){
 		return caseParameter.getParameters().stream()

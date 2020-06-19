@@ -38,15 +38,15 @@ import java.util.stream.Stream;
 public class IrrigationOptimizeSensLinkAdapter extends PiCommandLineExecute {
 
 	public static void main( String[] args ) {
-		SensLinkArgument argument = new SensLinkArgument();
+		SensLinkArgument argument = SensLinkArgument.instance();
 		new IrrigationOptimizeSensLinkAdapter().execute( args, argument );
 	}
 
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
-		/** Cast PiArguments to expand arguments **/
-		SensLinkArgument modelArguments = (SensLinkArgument) arguments;
+		// Cast PiArguments to expand arguments
+		SensLinkArgument modelArguments = this.asArguments( arguments, SensLinkArgument.class );
 
 		Path executablePath = Prevalidated.checkExists(
 				basePath.resolve( modelArguments.getExecutablePath() ),

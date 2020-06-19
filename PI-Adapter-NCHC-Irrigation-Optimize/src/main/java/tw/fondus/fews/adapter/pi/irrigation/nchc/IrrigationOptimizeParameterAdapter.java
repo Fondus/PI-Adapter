@@ -6,9 +6,9 @@ import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.util.file.PathUtils;
-import tw.fondus.commons.util.optional.OptionalUtils;
+import tw.fondus.commons.util.file.io.PathReader;
 import tw.fondus.commons.util.stream.StreamUtils;
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.irrigation.nchc.argument.ParameterArguments;
@@ -40,15 +40,15 @@ import java.util.stream.Collectors;
 public class IrrigationOptimizeParameterAdapter extends PiCommandLineExecute {
 
 	public static void main( String[] args ) {
-		ParameterArguments arguments = new ParameterArguments();
+		ParameterArguments arguments = ParameterArguments.instance();
 		new IrrigationOptimizeParameterAdapter().execute( args, arguments );
 	}
 
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
-		/** Cast PiArguments to expand arguments **/
-		ParameterArguments modelArguments = (ParameterArguments) arguments;
+		// Cast PiArguments to expand arguments
+		ParameterArguments modelArguments = this.asArguments( arguments, ParameterArguments.class );
 
 		String regionName = modelArguments.getRegion();
 		String caseName = modelArguments.getCaseName();
@@ -72,17 +72,18 @@ public class IrrigationOptimizeParameterAdapter extends PiCommandLineExecute {
 				"NCHC Irrigation-Optimize ParameterAdapter: The area control file not exist." );
 
 		try {
-			/** Connect to external system **/
+			// Connect to external system
 			logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize ParameterAdapter: Load the parameters information from external system." );
 			List<CaseParameter> caseParameters = WebAPIClient.get( modelArguments.getUrl(), modelArguments.getToken() );
 			Optional<CaseParameter> optionalCaseParameter = ModelUtils.findCase( caseParameters, caseName );
-			OptionalUtils.ifPresentOrElse( optionalCaseParameter, caseParameter -> {
+
+			optionalCaseParameter.ifPresentOrElse( caseParameter -> {
 				logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize ParameterAdapter: Found the case parameter: {} with external system.", caseParameter.getDescription() );
 
-				/** Check is user define or not **/
+				// Check is user define or not
 				Path casePath;
 				if ( caseParameter.getDescription().equals( CaseName.CASE_6.getDescription() ) ){
-					/** User define **/
+					// User define
 					int caseIndex = ModelUtils.getUserDefineCaseIndex( caseParameter );
 					String userCase = Strman.append( "Case", String.valueOf( caseIndex ) );
 					casePath = Prevalidated.checkExists(
@@ -99,13 +100,13 @@ public class IrrigationOptimizeParameterAdapter extends PiCommandLineExecute {
 				logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize ParameterAdapter: Start the create the parameter with region: {}, case: {}.",
 						regionName, caseName );
 
-				/** Read the parameter duration **/
+				// Read the parameter duration
 				Path parameterFilePath = Prevalidated.checkExists(
 						casePath.resolve( ModelFileNames.PARAMETER ),
 						"NCHC Irrigation-Optimize ParameterAdapter: The model parameter file not exist." );
 
 				try {
-					int duration = ModelUtils.readModelDuration( parameterFilePath.toString() );
+					int duration = ModelUtils.readModelDuration( parameterFilePath );
 					logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize ParameterAdapter: The model case: {} mapping duration is {}.", caseName, String.valueOf( duration ) );
 
 					logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize ParameterAdapter: Create the irrigation area parameters file." );
@@ -116,19 +117,15 @@ public class IrrigationOptimizeParameterAdapter extends PiCommandLineExecute {
 					String hydraulicStructuresContent = this.createHydraulicStructures( caseParameter, duration, modelArguments.getHydraulicStructures() );
 					ModelUtils.writeFile( inputPath, executablePath, ModelFileNames.STRUCTURE, hydraulicStructuresContent );
 
-					/** Copy the template files **/
+					// Copy the template files
 					logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize ParameterAdapter: Copy the template files from region: {}, case: {} folder.", regionName, caseName );
-					ModelUtils.copyFile( templatePath, executablePath, ModelFileNames.MODEL );
+					PathUtils.copy( templatePath.resolve( ModelFileNames.MODEL ), executablePath );
 					Files.list( casePath ).forEach( caseFile -> {
 						String fileName = PathUtils.getName( caseFile );
-						try {
-							ModelUtils.copyFile( casePath, executablePath, fileName );
-						} catch (IOException e) {
-							logger.log( LogLevel.ERROR, "NCHC Irrigation-Optimize ParameterAdapter: Copy the template file: {} has something wrong.", fileName );
-						}
+						PathUtils.copy( casePath.resolve( fileName ), executablePath );
 					} );
 
-					/** Executable the model **/
+					// Executable the model
 					logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize ParameterAdapter: Start running model with region: {}, case: {}.", regionName, caseName );
 					String command = executablePath.resolve( ModelFileNames.MODEL ).toString();
 					Executions.execute( executor ->
@@ -159,38 +156,38 @@ public class IrrigationOptimizeParameterAdapter extends PiCommandLineExecute {
 	/**
 	 * Create the irrigation area parameters file content.
 	 *
-	 * @param caseParameter
-	 * @param areaControlFilePath
-	 * @return
+	 * @param caseParameter case parameter
+	 * @param areaControlFilePath area control path
+	 * @return area parameters file content
 	 */
-	private String createIrrigationAreaParameters( CaseParameter caseParameter, Path areaControlFilePath  ) throws IOException {
+	private String createIrrigationAreaParameters( CaseParameter caseParameter, Path areaControlFilePath ) {
 		List<Parameter> parameters = ParameterUtils.filterArea( caseParameter );
 		Map<String, Parameter> parameterMap = ParameterUtils.toMap( parameters );
 
-		/** Read the area order file **/
-		List<String> areaOrders = ModelUtils.readAreaOrder( areaControlFilePath.toString() );
+		// Read the area order file
+		List<String> areaOrders = PathReader.readAllLines( areaControlFilePath );
 		return areaOrders.stream()
-				.filter( order -> parameterMap.containsKey( order ) )
-				.map( order -> parameterMap.get( order ) )
+				.filter( parameterMap::containsKey )
+				.map( parameterMap::get )
 				.map( parameter -> parameter.getValue().toString() )
-				.collect( Collectors.joining( StringUtils.TAB ) );
+				.collect( Collectors.joining( Strings.SPLIT_TAB ) );
 	}
 
 	/**
 	 * Create the irrigation hydraulic structures file content.
 	 *
-	 * @param caseParameter
-	 * @param duration
-	 * @param targets
-	 * @return
+	 * @param caseParameter case parameter
+	 * @param duration duration
+	 * @param targets target
+	 * @return hydraulic structures file conten
 	 */
 	private String createHydraulicStructures(
 			CaseParameter caseParameter, int duration,
 			List<String> targets ){
 		List<Parameter> parameters = ParameterUtils.filterDraft( caseParameter );
 		return targets.stream()
-			.flatMap( target -> StreamUtils.streamBoxed( ModelUtils.findParameter( parameters, target ) ) )
+			.flatMap( target -> StreamUtils.boxed( ModelUtils.findParameter( parameters, target ) ) )
 			.map( parameter -> ModelUtils.createDurationContent( parameter.getValue(), duration ) )
-			.collect( Collectors.joining( StringUtils.BREAKLINE ) );
+			.collect( Collectors.joining( Strings.BREAKLINE ) );
 	}
 }

@@ -2,6 +2,7 @@ package tw.fondus.fews.adapter.pi.irrigation.nchc.util;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import tw.fondus.fews.adapter.pi.irrigation.nchc.entity.CaseParameter;
 import tw.fondus.fews.adapter.pi.irrigation.nchc.entity.Parameter;
@@ -17,6 +18,7 @@ import java.util.Optional;
  * @author Brad Chen
  *
  */
+@Ignore
 public class WebAPIClientTest {
 	private final static String URL = "";
 	private final static String TOKEN = "";
