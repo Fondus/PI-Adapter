@@ -42,7 +42,7 @@
 		<junit.version>4.13</junit.version>
 		<commons.version>1.0.2</commons.version>
 		<commons.utils.version>0.8.5</commons.utils.version>
-		<fondus.sdk.version>2.3.0-SNAPSHOT</fondus.sdk.version>
+		<fondus.sdk.version>2.3.0</fondus.sdk.version>
 		<fondus.sdk.netcdf.version>1.1.7</fondus.sdk.netcdf.version>
 	</properties>
 
