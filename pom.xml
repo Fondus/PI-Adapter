@@ -84,6 +84,11 @@
 			</dependency>
 			<dependency>
 				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-json</artifactId>
+				<version>${fondus.sdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
 				<artifactId>commons-rest-senslink</artifactId>
 				<version>${fondus.sdk.version}</version>
 			</dependency>

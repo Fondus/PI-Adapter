@@ -13,26 +13,20 @@
 	<name>PI-Adapter-NTOU-ANNFSM</name>
 	<url>http://maven.apache.org</url>
 
-	<properties>
-		<commons.version>1.0.0</commons.version>
-	</properties>
-
 	<dependencies>
 		<!-- PI-Adapter Commons -->
 		<dependency>
 			<groupId>tw.fondus.fews.adapter</groupId>
 			<artifactId>pi-adapter-commons</artifactId>
 		</dependency>
-		<!-- Commons-Utils -->
+		<!-- FondUS SDK: The open source project can't use this -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-utils</artifactId>
+			<artifactId>commons-core</artifactId>
 		</dependency>
-		<!-- Commons-JSON -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-json</artifactId>
-			<version>${commons.version}</version>
 		</dependency>
 	</dependencies>
 
