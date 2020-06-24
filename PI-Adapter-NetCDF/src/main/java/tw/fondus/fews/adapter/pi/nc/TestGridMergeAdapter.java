@@ -50,7 +50,7 @@ public class TestGridMergeAdapter extends PiCommandLineExecute {
 			List<StandardGrid> grids = CollectionUtils.emptyListArray();
 			paths.forEach( path -> {
 				try ( NetCDFReader reader = NetCDFReader.read( path ) ){
-					grids.addAll( NetCDFGridMapper.fromTYXModel( reader, modelArguments.getParameter(), 0, 72 ) );
+					grids.addAll( NetCDFGridMapper.fromTYXModel( reader, modelArguments.getParameter() ) );
 				} catch ( IOException e){
 					logger.log( LogLevel.ERROR,"TestGridMergeAdapter: Read NetCDF file: {} has IO problem.", path.toString() );
 				}
