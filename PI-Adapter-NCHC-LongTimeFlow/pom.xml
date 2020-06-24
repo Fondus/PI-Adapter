@@ -8,7 +8,6 @@
 	</parent>
 
 	<artifactId>pi-adapter-nchc-longtimeflow</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
 	<name>The NCHC LongTimeFlow model Published Interface Adapter</name>
@@ -22,7 +21,7 @@
 		<!-- FondUS SDK: The open source project can't use this -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-utils</artifactId>
+			<artifactId>commons-core</artifactId>
 		</dependency>
 	</dependencies>
 	
