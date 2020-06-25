@@ -15,7 +15,7 @@ import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.util.file.FileType;
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
@@ -33,7 +33,7 @@ import tw.fondus.fews.adapter.pi.rtc.nchc.util.FileTools;
 public class RTCPreprocessExecutable extends PiCommandLineExecute {
 
 	public static void main( String[] args ) {
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new RTCPreprocessExecutable().execute( args, arguments );
 	}
 	
@@ -42,12 +42,10 @@ public class RTCPreprocessExecutable extends PiCommandLineExecute {
 			Path outputPath ) {
 		RunArguments modelArguments = (RunArguments) arguments;
 		
-		Path executableDir = Prevalidated.checkExists( 
-				Strman.append( basePath.toString(), PATH, modelArguments.getExecutableDir() ),
+		Path executableDir = Prevalidated.checkExists( basePath.resolve( modelArguments.getExecutableDir() ),
 				"NCHC RTC Preprocess ExecutableAdapter: Can not find executable directory." );
 		
-		Path templateDir = Prevalidated.checkExists( 
-				Strman.append( basePath.toString(), PATH, modelArguments.getTemplateDir() ),
+		Path templateDir = Prevalidated.checkExists( basePath.resolve( modelArguments.getTemplateDir() ),
 				"NCHC RTC Preprocess ExecutableAdapter: Can not find template directory." );
 		
 		logger.log( LogLevel.INFO, "NCHC RTC Preprocess ExecutableAdapter: Start executable adapter of NCHC RTC preprocess." );
@@ -69,7 +67,7 @@ public class RTCPreprocessExecutable extends PiCommandLineExecute {
 		
 		/** Run model pre process **/
 		logger.log( LogLevel.INFO, "NCHC RTC Preprocess ExecutableAdapter: Start preprocess." );
-		String command = Strman.append( executableDir.toString(), PATH, modelArguments.getExecutable().get( 0 ) );
+		String command = executableDir.resolve( modelArguments.getExecutable().get( 0 ) ).toAbsolutePath().toString();
 		try {
 			Executions.execute( executor -> executor.directory( executableDir.toFile() ),
 					command );
@@ -84,7 +82,7 @@ public class RTCPreprocessExecutable extends PiCommandLineExecute {
 						String.format( "%03d", timeStep ), FileType.TXT.getExtension() );
 
 				FileTools.copyFile( executableDir, executableDir, fileName,
-						Strman.append( FileUtils.getNameWithoutExt( fileName ), StringUtils.UNDERLINE,
+						Strman.append( FileUtils.getNameWithoutExt( fileName ), Strings.UNDERLINE,
 								modelArguments.getProjectName(), FileType.TXT.getExtension() ) );
 				
 			} catch (IOException e) {
