@@ -8,7 +8,6 @@
 	</parent>
 
 	<artifactId>pi-adapter-ntou-kwgiuh</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>PI-Adapter-NTOU-KWGIUH</name>
@@ -27,10 +26,11 @@
 			<groupId>tw.fondus.fews.adapter</groupId>
 			<artifactId>pi-adapter-commons</artifactId>
 		</dependency>
-		<!-- Commons-Utils -->
+		<!-- FondUS SDK: The open source project can't use this -->
+		<!-- Commons-Core -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-utils</artifactId>
+			<artifactId>commons-core</artifactId>
 		</dependency>
 	</dependencies>
 	
