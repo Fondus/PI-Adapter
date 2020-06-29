@@ -1,6 +1,7 @@
 package tw.fondus.fews.adapter.pi.hecras.ntou;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -9,9 +10,6 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javax.naming.OperationNotSupportedException;
-
-import org.apache.commons.io.FileUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -20,7 +18,8 @@ import strman.Strman;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.util.file.PathUtils;
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.commons.util.file.io.PathWriter;
+import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.hecras.ntou.argument.ProcessArguments;
@@ -34,10 +33,11 @@ import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
  * @author Chao
  *
  */
+@SuppressWarnings( "rawtypes" )
 public class HECRASPreAdapter extends PiCommandLineExecute {
 
 	public static void main( String[] args ) {
-		ProcessArguments arguments = new ProcessArguments();
+		ProcessArguments arguments = ProcessArguments.instance();
 		new HECRASPreAdapter().execute( args, arguments );
 	}
 
@@ -54,24 +54,24 @@ public class HECRASPreAdapter extends PiCommandLineExecute {
 				"HECRASPreAdapter: Can not find the directory of case executable." );
 
 		try {
-			PathUtils.copyDirectory( templatePath, executablePath, true );
+			PathUtils.copies( templatePath, executablePath );
 
 			TimeSeriesArray flowTimeSeriesArray = TimeSeriesLightUtils
-					.readPiTimeSeries( inputPath.resolve( processArguments.getInputs().get( 0 ) ) )
+					.read( inputPath.resolve( processArguments.getInputs().get( 0 ) ) )
 					.get( 0 );
 			TimeSeriesArray tideTimeSeriesArray = TimeSeriesLightUtils
-					.readPiTimeSeries( inputPath.resolve( processArguments.getInputs().get( 1 ) ) )
+					.read( inputPath.resolve( processArguments.getInputs().get( 1 ) ) )
 					.get( 0 );
 			TimeSeriesArray leftRainfallTimeSeriesArray = TimeSeriesLightUtils
-					.readPiTimeSeries( inputPath.resolve( processArguments.getInputs().get( 2 ) ) )
+					.read( inputPath.resolve( processArguments.getInputs().get( 2 ) ) )
 					.get( 0 );
 			TimeSeriesArray rightRainfallTimeSeriesArray = TimeSeriesLightUtils
-					.readPiTimeSeries( inputPath.resolve( processArguments.getInputs().get( 3 ) ) )
+					.read( inputPath.resolve( processArguments.getInputs().get( 3 ) ) )
 					.get( 0 );
 
 			IntStream.range( 0, leftRainfallTimeSeriesArray.size() ).forEach( data -> {
 				/** Rainfall minus infiltration value **/
-				float leftValue = TimeSeriesLightUtils.getValue( leftRainfallTimeSeriesArray, data )
+				float leftValue = TimeSeriesLightUtils.getValue( leftRainfallTimeSeriesArray, data ).floatValue()
 						- processArguments.getInfiltration().floatValue();
 				if ( leftValue < 0 ) {
 					leftRainfallTimeSeriesArray.setFloatValues( data, 1, 0 );
@@ -79,7 +79,7 @@ public class HECRASPreAdapter extends PiCommandLineExecute {
 					leftRainfallTimeSeriesArray.setFloatValues( data, 1, leftValue );
 				}
 				
-				float rightValue = TimeSeriesLightUtils.getValue( rightRainfallTimeSeriesArray, data )
+				float rightValue = TimeSeriesLightUtils.getValue( rightRainfallTimeSeriesArray, data ).floatValue()
 						- processArguments.getInfiltration().floatValue();
 				if ( rightValue < 0 ) {
 					rightRainfallTimeSeriesArray.setFloatValues( data, 1, 0 );
@@ -97,12 +97,11 @@ public class HECRASPreAdapter extends PiCommandLineExecute {
 									Strman.append(
 											dtf.withLocale( Locale.ENGLISH )
 													.print( rightRainfallTimeSeriesArray.getStartTime() ),
-											StringUtils.COMMA,
+											Strings.COMMA,
 											dtf.withLocale( Locale.ENGLISH )
 													.print( rightRainfallTimeSeriesArray.getEndTime() ) ) ) )
 					.collect( Collectors.toList() );
-			FileUtils.writeStringToFile( p03Path.toFile(),
-					p03List.stream().collect( Collectors.joining( StringUtils.BREAKLINE ) ) );
+			PathWriter.write( p03Path, p03List.stream().collect( Collectors.joining( Strings.BREAKLINE ) ) );
 
 			Path b03Path = executablePath.resolve( processArguments.getOutputs().get( 1 ) );
 			List<String> b03List = Files.readAllLines( b03Path );
@@ -110,8 +109,7 @@ public class HECRASPreAdapter extends PiCommandLineExecute {
 					.map( line -> line.replace( MappingProperties.getProperty( MappingProperties.TIME_STEPS ),
 							Strman.append( String.valueOf( rightRainfallTimeSeriesArray.size() - 1 ), ".00000" ) ) )
 					.collect( Collectors.toList() );
-			FileUtils.writeStringToFile( b03Path.toFile(),
-					b03List.stream().collect( Collectors.joining( StringUtils.BREAKLINE ) ) );
+			PathWriter.write( b03Path, b03List.stream().collect( Collectors.joining( Strings.BREAKLINE ) ) );
 
 			Path u01Path = executablePath.resolve( processArguments.getOutputs().get( 2 ) );
 			List<String> u01List = Files.readAllLines( u01Path );
@@ -133,11 +131,7 @@ public class HECRASPreAdapter extends PiCommandLineExecute {
 					.map( line -> line.replace( MappingProperties.getProperty( MappingProperties.RAINFALL_RIGHT ),
 							this.formatTimeSeriesData( rightRainfallTimeSeriesArray ) ) )
 					.collect( Collectors.toList() );
-			FileUtils.writeStringToFile( u01Path.toFile(),
-					u01List.stream().collect( Collectors.joining( StringUtils.BREAKLINE ) ) );
-		} catch (OperationNotSupportedException e) {
-			logger.log( LogLevel.ERROR,
-					"HECRASPreAdapter: Reading timeseries data from XML file has something wrong." );
+			PathWriter.write( u01Path, u01List.stream().collect( Collectors.joining( Strings.BREAKLINE ) ) );
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "HECRASPreAdapter: Reading timeseries or process file has something wrong." );
 		}
@@ -150,24 +144,24 @@ public class HECRASPreAdapter extends PiCommandLineExecute {
 	 * @return
 	 */
 	private String formatTimeSeriesData( TimeSeriesArray timeSeriesArray ) {
-		if ( TimeSeriesLightUtils.getValue( timeSeriesArray, 1, 0 ) == 0 ) {
+		if ( TimeSeriesLightUtils.getValue( timeSeriesArray, 1 ).compareTo( BigDecimal.ZERO ) == 0 ) {
 			timeSeriesArray.setFloatValues( 1, 1, (float) 0.1 );
 		}
 
 		String format = "%8s";
 		int lineCount = 0;
-		StringJoiner joiner = new StringJoiner( StringUtils.BREAKLINE );
-		String line = StringUtils.BLANK;
+		StringJoiner joiner = new StringJoiner( Strings.BREAKLINE );
+		String line = Strings.BLANK;
 		for ( int i = 0; i < timeSeriesArray.size(); i++ ) {
 			if ( lineCount == 9 ) {
 				line = Strman.append( line,
-						String.format( format, TimeSeriesLightUtils.getValue( timeSeriesArray, i, 0 ) ) );
+						String.format( format, TimeSeriesLightUtils.getValue( timeSeriesArray, i ) ) );
 				joiner.add( line );
-				line = StringUtils.BLANK;
+				line = Strings.BLANK;
 				lineCount = 0;
 			} else {
 				line = Strman.append( line,
-						String.format( format, TimeSeriesLightUtils.getValue( timeSeriesArray, i, 0 ) ) );
+						String.format( format, TimeSeriesLightUtils.getValue( timeSeriesArray, i ) ) );
 				lineCount++;
 			}
 		}

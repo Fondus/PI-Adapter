@@ -26,7 +26,7 @@ public class HECRASPreAdapterTest {
 				"0.5"
 		};
 		
-		ProcessArguments arguments = new ProcessArguments();
+		ProcessArguments arguments = ProcessArguments.instance();
 		new HECRASPreAdapter().execute( args, arguments );
 	}
 }

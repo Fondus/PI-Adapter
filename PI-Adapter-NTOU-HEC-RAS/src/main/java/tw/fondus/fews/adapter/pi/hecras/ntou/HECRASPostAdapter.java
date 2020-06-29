@@ -10,10 +10,12 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.locationtech.jts.geom.Coordinate;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.operation.TransformException;
 
 import nl.wldelft.util.timeseries.SimpleTimeSeriesContentHandler;
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
@@ -21,11 +23,13 @@ import strman.Strman;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.nc.NetCDFReader;
-import tw.fondus.commons.util.coordinate.CoordinatePoint;
-import tw.fondus.commons.util.coordinate.CoordinateUtils;
+import tw.fondus.commons.spatial.util.crs.EPSG;
+import tw.fondus.commons.spatial.util.jts.JTSUtils;
+import tw.fondus.commons.util.file.io.PathWriter;
 import tw.fondus.commons.util.math.NumberUtils;
-import tw.fondus.commons.util.string.StringUtils;
-import tw.fondus.commons.util.time.TimeUtils;
+import tw.fondus.commons.util.string.Strings;
+import tw.fondus.commons.util.time.JodaTimeUtils;
+import tw.fondus.commons.util.time.TimeFormats;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.hecras.ntou.argument.ProcessArguments;
@@ -42,10 +46,11 @@ import ucar.ma2.ArrayFloat;
  * @author Chao
  *
  */
+@SuppressWarnings( "rawtypes" )
 public class HECRASPostAdapter extends PiCommandLineExecute {
 
 	public static void main( String[] args ) {
-		ProcessArguments arguments = new ProcessArguments();
+		ProcessArguments arguments = ProcessArguments.instance();
 		new HECRASPostAdapter().execute( args, arguments );
 	}
 	
@@ -102,32 +107,32 @@ public class HECRASPostAdapter extends PiCommandLineExecute {
 			List<String> location = new ArrayList<>();
 			location.add( "locationId,x,y" );
 			for ( int i = 0; i < pointDatas.size(); i++ ) {
-				location.add( Strman.append( processArguments.getCaseName(), StringUtils.UNDERLINE, String.valueOf( i ),
-						StringUtils.COMMA, pointDatas.get( i ).getX().toString(), StringUtils.COMMA,
+				location.add( Strman.append( processArguments.getCaseName(), Strings.UNDERLINE, String.valueOf( i ),
+						Strings.COMMA, pointDatas.get( i ).getX().toString(), Strings.COMMA,
 						pointDatas.get( i ).getY().toString() ) );
 			}
-			FileUtils.writeStringToFile( outputPath.resolve( processArguments.getOutputs().get( 0 ) ).toFile(),
-					location.stream().collect( Collectors.joining( StringUtils.BREAKLINE ) ) );
+			PathWriter.write( outputPath.resolve( processArguments.getOutputs().get( 0 ) ),
+					location.stream().collect( Collectors.joining( Strings.BREAKLINE ) ) );
 
 			/** Write CSV format data of model output **/
 			List<String> values = new ArrayList<>();
-			StringJoiner commaJoiner = new StringJoiner( StringUtils.COMMA );
+			StringJoiner commaJoiner = new StringJoiner( Strings.COMMA );
 			commaJoiner.add( "locationName" );
 			for ( int i = 0; i < pointDatas.size(); i++ ) {
-				commaJoiner.add( Strman.append( processArguments.getCaseName(), StringUtils.UNDERLINE,
-						String.valueOf( i ) ) );
+				commaJoiner
+						.add( Strman.append( processArguments.getCaseName(), Strings.UNDERLINE, String.valueOf( i ) ) );
 			}
 			values.add( commaJoiner.toString() );
 
-			commaJoiner = new StringJoiner( StringUtils.COMMA );
+			commaJoiner = new StringJoiner( Strings.COMMA );
 			commaJoiner.add( "locationId" );
 			for ( int i = 0; i < pointDatas.size(); i++ ) {
-				commaJoiner.add( Strman.append( processArguments.getCaseName(), StringUtils.UNDERLINE,
-						String.valueOf( i ) ) );
+				commaJoiner
+						.add( Strman.append( processArguments.getCaseName(), Strings.UNDERLINE, String.valueOf( i ) ) );
 			}
 			values.add( commaJoiner.toString() );
 
-			commaJoiner = new StringJoiner( StringUtils.COMMA );
+			commaJoiner = new StringJoiner( Strings.COMMA );
 			commaJoiner.add( "Time" );
 			for ( int i = 0; i < pointDatas.size(); i++ ) {
 				commaJoiner.add( processArguments.getParameter() );
@@ -148,19 +153,19 @@ public class HECRASPostAdapter extends PiCommandLineExecute {
 			DateTimeFormatter formatter = DateTimeFormat.forPattern( "ddMMMyyyy HHmm" );
 			DateTime dateTime = formatter.withLocale( Locale.ENGLISH ).parseDateTime( startTime );
 			for ( int time = 0; time < pointDatas.get( 0 ).getValues().size(); time++ ) {
-				commaJoiner = new StringJoiner( StringUtils.COMMA );
-				commaJoiner.add( TimeUtils.toString( dateTime.plusHours( time ), TimeUtils.YMDHMS ) );
+				commaJoiner = new StringJoiner( Strings.COMMA );
+				commaJoiner.add( JodaTimeUtils.toString( dateTime.plusHours( time ), TimeFormats.YMDHMS ) );
 				for ( int i = 0; i < pointDatas.size(); i++ ) {
 					commaJoiner.add( String.valueOf( pointDatas.get( i ).getValues().get( time ) ) );
 				}
 				values.add( commaJoiner.toString() );
 			}
-			FileUtils.writeStringToFile( outputPath.resolve( processArguments.getOutputs().get( 1 ) ).toFile(),
-					values.stream().collect( Collectors.joining( StringUtils.BREAKLINE ) ) );
+			PathWriter.write( outputPath.resolve( processArguments.getOutputs().get( 1 ) ),
+					values.stream().collect( Collectors.joining( Strings.BREAKLINE ) ) );
 
 			/** Get the flow data from cross section **/
 			TimeSeriesArrays waterLevelTimeSeriesArrays = TimeSeriesLightUtils
-					.readPiTimeSeries( inputPath.resolve( processArguments.getInputs().get( 2 ) ) );
+					.read( inputPath.resolve( processArguments.getInputs().get( 2 ) ) );
 			ArrayDouble.D2 flowCoordinate = (ArrayDouble.D2) resultReader
 					.readVariable( MappingProperties.getProperty( MappingProperties.HDF5_FLOW_COORDINATE ) )
 					.get();
@@ -170,20 +175,27 @@ public class HECRASPostAdapter extends PiCommandLineExecute {
 
 			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
 			IntStream.range( 0, waterLevelTimeSeriesArrays.size() ).forEach( station -> {
-				CoordinatePoint waterLevelPoint = CoordinateUtils.transformWGS84ToTWD97(
-						waterLevelTimeSeriesArrays.get( station ).getHeader().getGeometry().getX( 0 ),
-						waterLevelTimeSeriesArrays.get( station ).getHeader().getGeometry().getY( 0 ) );
+				try {
+					Coordinate waterLevelPoint = JTSUtils.transformCRS( JTSUtils.coordinate(
+							NumberUtils.create(
+									waterLevelTimeSeriesArrays.get( station ).getHeader().getGeometry().getX( 0 ) ),
+							NumberUtils.create(
+									waterLevelTimeSeriesArrays.get( station ).getHeader().getGeometry().getY( 0 ) ) ),
+							EPSG.WGS84, EPSG.TWD97 );
 
-				TimeSeriesLightUtils.fillPiTimeSeriesHeader( handler,
-						waterLevelTimeSeriesArrays.get( station ).getHeader().getLocationId(), "Q.simulated", "m3/s" );
-				IntStream.range( 0, flowArray.getShape()[0] ).forEach( i -> {
-					TimeSeriesLightUtils.addPiTimeSeriesValue( handler, dateTime.plusHours( i ).getMillis(),
-							flowArray.get( i, findClosestPoint( waterLevelPoint, flowCoordinate ) ) );
-				} );
+					TimeSeriesLightUtils.addHeader( handler,
+							waterLevelTimeSeriesArrays.get( station ).getHeader().getLocationId(), "Q.simulated",
+							"m3/s" );
+					IntStream.range( 0, flowArray.getShape()[0] ).forEach( i -> {
+						TimeSeriesLightUtils.addValue( handler, dateTime.plusHours( i ).getMillis(), new BigDecimal(
+								flowArray.get( i, findClosestPoint( waterLevelPoint, flowCoordinate ) ) ) );
+					} );
+				} catch (FactoryException | TransformException e) {
+					logger.log( LogLevel.ERROR, "HECRASPostAdapter: Transform coordinate has something wrong." );
+				}
 			} );
-			
-			TimeSeriesLightUtils.writePIFile( handler,
-					outputPath.resolve( processArguments.getOutputs().get( 2 ) ).toString() );
+
+			TimeSeriesLightUtils.write( handler, outputPath.resolve( processArguments.getOutputs().get( 2 ) ) );
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "HECRASPostAdapter: Reading NetCDF file has something wrong." );
 		} catch (Exception e) {
@@ -213,20 +225,18 @@ public class HECRASPostAdapter extends PiCommandLineExecute {
 	 * @param flowCoordinate
 	 * @return
 	 */
-	private int findClosestPoint( CoordinatePoint waterLevelPoint, ArrayDouble.D2 flowCoordinate ) {
+	private int findClosestPoint( Coordinate waterLevelPoint, ArrayDouble.D2 flowCoordinate ) {
 		double distance = 0;
 		int pointIndex = 0;
 		for ( int point = 0; point < flowCoordinate.getShape()[0]; point++ ) {
 			if ( distance == 0 ) {
-				distance = Math.sqrt( Math.pow( waterLevelPoint.getX().doubleValue() - flowCoordinate.get( point, 0 ),
-						2 ) + Math.pow( waterLevelPoint.getY().doubleValue() - flowCoordinate.get( point, 1 ), 2 ) );
+				distance = Math.sqrt( Math.pow( waterLevelPoint.getX() - flowCoordinate.get( point, 0 ), 2 )
+						+ Math.pow( waterLevelPoint.getY() - flowCoordinate.get( point, 1 ), 2 ) );
 			} else {
-				if ( Math.sqrt( Math.pow( waterLevelPoint.getX().doubleValue() - flowCoordinate.get( point, 0 ), 2 )
-						+ Math.pow( waterLevelPoint.getY().doubleValue() - flowCoordinate.get( point, 1 ),
-								2 ) ) < distance ) {
-					distance = Math.sqrt(
-							Math.pow( waterLevelPoint.getX().doubleValue() - flowCoordinate.get( point, 0 ), 2 ) + Math
-									.pow( waterLevelPoint.getY().doubleValue() - flowCoordinate.get( point, 1 ), 2 ) );
+				if ( Math.sqrt( Math.pow( waterLevelPoint.getX() - flowCoordinate.get( point, 0 ), 2 )
+						+ Math.pow( waterLevelPoint.getY() - flowCoordinate.get( point, 1 ), 2 ) ) < distance ) {
+					distance = Math.sqrt( Math.pow( waterLevelPoint.getX() - flowCoordinate.get( point, 0 ), 2 )
+							+ Math.pow( waterLevelPoint.getY() - flowCoordinate.get( point, 1 ), 2 ) );
 					/** each cross section has 5 point data **/
 					pointIndex = point / 5;
 				}
