@@ -8,14 +8,10 @@
 	</parent>
 
 	<artifactId>pi-adapter-ntu-2dfim</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<name>PI-Adapter-NTU-2DFIM</name>
 	<url>http://maven.apache.org</url>
-
-	<properties>
-		<commons.netcdf.version>0.7.2</commons.netcdf.version>
-	</properties>
 
 	<dependencies>
 		<!-- PI-Adapter Commons -->
@@ -26,13 +22,12 @@
 		<!-- FondUS SDK: The open source project can't use this -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-utils</artifactId>
+			<artifactId>commons-core</artifactId>
 		</dependency>
 		<!-- Commons-NetCDF -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-netcdf</artifactId>
-			<version>${commons.netcdf.version}</version>
 		</dependency>
 	</dependencies>
 

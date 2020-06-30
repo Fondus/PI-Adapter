@@ -19,7 +19,6 @@ import tw.fondus.commons.nc.util.key.DimensionName;
 import tw.fondus.commons.nc.util.key.GlobalAttribute;
 import tw.fondus.commons.nc.util.key.VariableAttribute;
 import tw.fondus.commons.nc.util.key.VariableName;
-import tw.fondus.commons.util.optional.OptionalUtils;
 import tw.fondus.fews.adapter.pi.fim.ntu.entity.Coordinate;
 import tw.fondus.fews.adapter.pi.fim.ntu.entity.PointData;
 import ucar.ma2.Array;
@@ -91,7 +90,7 @@ public class DataBuilder {
 				IntStream.range( 0, xList.size() ).forEach( i -> {
 					Optional<PointData> optValue = Optional
 							.ofNullable( map.get( new Coordinate( xList.get( i ), yList.get( j ) ) ) );
-					OptionalUtils.ifPresentOrElse( optValue, ( pointData ) -> {
+					optValue.ifPresentOrElse( ( pointData ) -> {
 						depth.set( t, j, i, pointData.getValue().floatValue() );
 					}, () -> {
 						depth.set( t, j, i, Float.NaN );
@@ -131,30 +130,28 @@ public class DataBuilder {
 				.addVariable( VariableName.TIME, DataType.DOUBLE, new String[] { DimensionName.TIME } )
 				.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_NAME, "time" )
 				.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_NAME_LONG, "time" )
-				.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_TIME )
+				.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_TIME_MINUTES )
 				.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_TIME )
 				.addVariable( VariableName.Y, DataType.DOUBLE, new String[] { DimensionName.Y } )
-				.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME,
-						VariableAttribute.COORDINATES_Y )
+				.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_Y )
 				.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME_LONG, VariableAttribute.NAME_Y_TWD97 )
 				.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_TWD97 )
 				.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_Y )
-				.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_MISSINGVALUE,
-						VariableAttribute.MISSINGVALUE_COORDINATES )
+				.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_MISSING,
+						VariableAttribute.MISSING_COORDINATES )
 				.addVariable( VariableName.X, DataType.DOUBLE, new String[] { DimensionName.X } )
-				.addVariableAttribute( VariableName.X, VariableAttribute.KEY_NAME,
-						VariableAttribute.COORDINATES_X )
+				.addVariableAttribute( VariableName.X, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_X )
 				.addVariableAttribute( VariableName.X, VariableAttribute.KEY_NAME_LONG, VariableAttribute.NAME_X_TWD97 )
 				.addVariableAttribute( VariableName.X, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_TWD97 )
 				.addVariableAttribute( VariableName.X, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_X )
-				.addVariableAttribute( VariableName.X, VariableAttribute.KEY_MISSINGVALUE,
-						VariableAttribute.MISSINGVALUE_COORDINATES )
+				.addVariableAttribute( VariableName.X, VariableAttribute.KEY_MISSING,
+						VariableAttribute.MISSING_COORDINATES )
 				.addVariable( DIMENSION_DEPTH, DataType.FLOAT,
 						new String[] { DimensionName.TIME, DimensionName.Y, DimensionName.X } )
 				.addVariableAttribute( DIMENSION_DEPTH, VariableAttribute.KEY_NAME_LONG, DIMENSION_DEPTH )
 				.addVariableAttribute( DIMENSION_DEPTH, VariableAttribute.KEY_UNITS, "m" )
-				.addVariableAttribute( DIMENSION_DEPTH, VariableAttribute.KEY_MISSINGVALUE,
-						VariableAttribute.MISSINGVALUE )
+				.addVariableAttribute( DIMENSION_DEPTH, VariableAttribute.KEY_MISSING,
+						VariableAttribute.MISSING.doubleValue() )
 				.build() // Finished NetCDF file structures define mode
 				.writeValues( VariableName.TIME, valueMap.get( DimensionName.TIME ) )
 				.writeValues( VariableName.Y, valueMap.get( DimensionName.Y ) )

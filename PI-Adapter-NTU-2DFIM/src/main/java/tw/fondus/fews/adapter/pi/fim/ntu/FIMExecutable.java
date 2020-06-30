@@ -11,7 +11,6 @@ import java.util.Optional;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.IntStream;
 
-import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
 import org.zeroturnaround.exec.InvalidExitValueException;
 
@@ -24,8 +23,8 @@ import tw.fondus.commons.nc.util.NetCDFUtils;
 import tw.fondus.commons.nc.util.key.VariableName;
 import tw.fondus.commons.util.file.FileType;
 import tw.fondus.commons.util.file.PathUtils;
-import tw.fondus.commons.util.optional.OptionalUtils;
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.commons.util.file.io.PathWriter;
+import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.fim.ntu.argument.RunArguments;
@@ -45,7 +44,7 @@ import ucar.ma2.Array;
 public class FIMExecutable extends PiCommandLineExecute {
 
 	public static void main( String[] args ) {
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new FIMExecutable().execute( args, arguments );
 	}
 
@@ -65,20 +64,20 @@ public class FIMExecutable extends PiCommandLineExecute {
 				"FINExecutable: Can not find the file of input NetCDF." );
 		try (NetCDFReader reader = NetCDFReader.read( inputNC.toString() ) ) {
 			Optional<Array> optTimeArray = reader.readVariable( VariableName.TIME );
-			OptionalUtils.ifPresentOrElse( optTimeArray, ( timeArray ) -> {
+			optTimeArray.ifPresentOrElse( ( timeArray ) -> {
 				try {
-					FileUtils.copyDirectory( templatePath.toFile(), executablePath.toFile() );
+					PathUtils.copies( templatePath, executablePath );
 					DateTime endTime = new DateTime(
 							NetCDFUtils.readArrayValue( timeArray, (int) timeArray.getSize() - 1 ).longValue() * 60
 									* 1000 );
 					Files.copy( inputNC,
 							executablePath.resolve(
-									Strman.append( PathUtils.getNameWithoutExtension( inputNC ), StringUtils.UNDERLINE,
+									Strman.append( PathUtils.getNameWithoutExtension( inputNC ), Strings.UNDERLINE,
 											TimeLightUtils.toString( endTime, "yyyyMMdd", TimeLightUtils.UTC0 ),
 											FileType.NETCDF.getExtension() ) ),
 							StandardCopyOption.REPLACE_EXISTING );
-					PathUtils.copyDirectory( inputPath, executablePath, true );
-					FileUtils.writeStringToFile( executablePath.resolve( runArguments.getInputs().get( 1 ) ).toFile(),
+					PathUtils.copies( inputPath, executablePath );
+					PathWriter.write( executablePath.resolve( runArguments.getInputs().get( 1 ) ),
 							runArguments.getForecast().toString() );
 
 					logger.log( LogLevel.INFO, "FINExecutable: Starting running model." );
@@ -110,11 +109,7 @@ public class FIMExecutable extends PiCommandLineExecute {
 					logger.log( LogLevel.INFO, "FINExecutable: Finished process." );
 				} catch (IOException e) {
 					logger.log( LogLevel.ERROR, "FINExecutable: Coping file has something wrong." );
-				} catch (InvalidExitValueException e) {
-					logger.log( LogLevel.ERROR, "FINExecutable: Running model has something wrong." );
-				} catch (InterruptedException e) {
-					logger.log( LogLevel.ERROR, "FINExecutable: Running model has something wrong." );
-				} catch (TimeoutException e) {
+				} catch (InvalidExitValueException | InterruptedException | TimeoutException e) {
 					logger.log( LogLevel.ERROR, "FINExecutable: Running model has something wrong." );
 				} catch (Exception e) {
 					logger.log( LogLevel.ERROR, "FINExecutable: Building NetCDF file has something wrong." );
