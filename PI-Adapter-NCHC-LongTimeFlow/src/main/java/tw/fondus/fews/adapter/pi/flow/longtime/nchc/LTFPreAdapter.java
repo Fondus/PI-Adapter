@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.StringJoiner;
 
 import org.joda.time.DateTime;
@@ -117,7 +118,7 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 		}
 
 		tenDaysRainfall = this.interpolatedMissingValue( tenDaysRainfall );
-		tenDaysWaterLevel = this.interpolatedMissingValue( tenDaysWaterLevel );
+		tenDaysWaterLevel = this.interpolatedMissingValueByAverage( tenDaysWaterLevel );
 
 		// Create the content and suffix
 		StringJoiner rainfall = new StringJoiner( Strings.TAB, Strings.BLANK, Strings.BREAKLINE );
@@ -177,6 +178,24 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 			}
 		}
 
+		return list;
+	}
+	
+	/**
+	 * Interpolate the missing value by average.
+	 * 
+	 * @param list
+	 * @return
+	 */
+	private List<Float> interpolatedMissingValueByAverage( List<Float> list ) {
+		OptionalDouble optAverage = list.stream().filter( v -> v != 0 ).mapToDouble( v -> v ).average();
+		optAverage.ifPresent( average -> {
+			for ( int i = 0; i < list.size(); i++ ) {
+				if ( list.get( i ) == 0 ) {
+					list.set( i, (float) average );
+				}
+			}
+		} );
 		return list;
 	}
 }
