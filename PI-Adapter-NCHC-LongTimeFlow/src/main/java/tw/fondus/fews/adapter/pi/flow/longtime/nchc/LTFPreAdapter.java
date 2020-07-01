@@ -12,11 +12,11 @@ import org.joda.time.DateTime;
 
 import com.google.common.base.Preconditions;
 
-import nl.wldelft.util.FileUtils;
 import nl.wldelft.util.timeseries.TimeSeriesArray;
-import strman.Strman;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
+import tw.fondus.commons.util.file.io.PathWriter;
+import tw.fondus.commons.util.math.NumberUtils;
 import tw.fondus.commons.util.string.Strings;
 import tw.fondus.commons.util.time.JodaTimeUtils;
 import tw.fondus.commons.util.time.TimeFormats;
@@ -93,12 +93,14 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 			float waterLevel = 0;
 			int waterLevelCount = 0;
 			for ( int data = 0; data < 10; data++ ) {
-				if ( TimeSeriesLightUtils.getValue( rainfallArray, (tenDays * 10) + data ).compareTo( BigDecimal.ZERO ) > 0 ) {
+				if ( NumberUtils.greater( TimeSeriesLightUtils.getValue( rainfallArray, (tenDays * 10) + data ),
+						BigDecimal.ZERO ) ) {
 					rainfall += TimeSeriesLightUtils.getValue( rainfallArray, (tenDays * 10) + data ).floatValue();
 					rainfallCount++;
 				}
 
-				if ( TimeSeriesLightUtils.getValue( waterLevelArray, (tenDays * 10) + data ).compareTo( BigDecimal.ZERO ) > 0 ) {
+				if ( NumberUtils.greater( TimeSeriesLightUtils.getValue( waterLevelArray, (tenDays * 10) + data ),
+						BigDecimal.ZERO ) ) {
 					waterLevel += TimeSeriesLightUtils.getValue( waterLevelArray, (tenDays * 10) + data ).floatValue();
 					waterLevelCount++;
 				}
@@ -125,35 +127,26 @@ public class LTFPreAdapter extends PiCommandLineExecute {
 		StringJoiner waterLevel = new StringJoiner( Strings.TAB, Strings.BLANK, Strings.BREAKLINE );
 		StringJoiner endLine = new StringJoiner( Strings.TAB, Strings.BREAKLINE, Strings.BLANK );
 		for ( int tenDaysData = 0; tenDaysData < tenDaysRainfall.size(); tenDaysData++ ) {
-			rainfall.add( Strman.append( String.valueOf( tenDaysRainfall.get( tenDaysData ) ) ) );
-			waterLevel.add( Strman.append( String.valueOf( tenDaysWaterLevel.get( tenDaysData ) ) ) );
-			endLine.add( Strman.append( String.valueOf( "-999" ) ) );
+			rainfall.add( String.valueOf( tenDaysRainfall.get( tenDaysData ) ) );
+			waterLevel.add( String.valueOf( tenDaysWaterLevel.get( tenDaysData ) ) );
+			endLine.add( String.valueOf( "-999" ) );
 		}
 
-		try {
-			StringJoiner rainfallContent = new StringJoiner( Strings.BREAKLINE, Strings.BLANK,
-					endLine.toString() );
-			StringJoiner waterLevelContent = new StringJoiner( Strings.BREAKLINE, Strings.BLANK,
-					endLine.toString() );
+		StringJoiner rainfallContent = new StringJoiner( Strings.BREAKLINE, Strings.BLANK, endLine.toString() );
+		StringJoiner waterLevelContent = new StringJoiner( Strings.BREAKLINE, Strings.BLANK, endLine.toString() );
 
-			rainfallContent.add( rainfall.toString() );
-			waterLevelContent.add( waterLevel.toString() );
+		rainfallContent.add( rainfall.toString() );
+		waterLevelContent.add( waterLevel.toString() );
 
-			// Write the rainfall input
-			FileUtils.writeText( inputPath.resolve( outputs.get( 0 ) ).toAbsolutePath().toString(),
-					rainfallContent.toString() );
-			// Write the water level input
-			FileUtils.writeText( inputPath.resolve( outputs.get( 1 ) ).toAbsolutePath().toString(),
-					waterLevelContent.toString() );
+		// Write the rainfall input
+		PathWriter.write( inputPath.resolve( outputs.get( 0 ) ), rainfallContent.toString() );
+		// Write the water level input
+		PathWriter.write( inputPath.resolve( outputs.get( 1 ) ), waterLevelContent.toString() );
 
-			// Write the time meta-information
-			DateTime dateTime = new DateTime( rainfallArray.getEndTime() );
-			FileUtils.writeText( inputPath.resolve( outputs.get( 2 ) ).toAbsolutePath().toString(),
-					JodaTimeUtils.toString( dateTime, TimeFormats.YMD_UNDIVIDED, JodaTimeUtils.UTC8 ) );
-
-		} catch (IOException e) {
-			logger.log( LogLevel.ERROR, "NCHC LTF PreAdapter: Writing model input file has something wrong." );
-		}
+		// Write the time meta-information
+		DateTime dateTime = new DateTime( rainfallArray.getEndTime() );
+		PathWriter.write( inputPath.resolve( outputs.get( 2 ) ),
+				JodaTimeUtils.toString( dateTime, TimeFormats.YMD_UNDIVIDED, JodaTimeUtils.UTC8 ) );
 	}
 
 	/**

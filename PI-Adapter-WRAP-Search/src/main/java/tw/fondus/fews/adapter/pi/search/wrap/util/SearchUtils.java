@@ -1,6 +1,5 @@
 package tw.fondus.fews.adapter.pi.search.wrap.util;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.ParseException;
@@ -18,6 +17,7 @@ import tw.fondus.commons.fews.pi.config.xml.mapstacks.MapStacks;
 import tw.fondus.commons.fews.pi.config.xml.mapstacks.Pattern;
 import tw.fondus.commons.fews.pi.config.xml.util.XMLUtils;
 import tw.fondus.commons.util.file.FileType;
+import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.file.io.PathReader;
 import tw.fondus.commons.util.string.Strings;
 import tw.fondus.commons.util.time.DateUtils;
@@ -79,8 +79,8 @@ public class SearchUtils {
 		mapStacks.setGeoDatum( "TWD 1997" );
 		mapStacks.setTimeZone( "0.0" );
 		
-		XMLUtils.toXML( new File( Strman.append( exportPath, Strings.PATH, "map", FileType.XML.getExtension() ) ),
-				mapStacks );
+		XMLUtils.toXML( PathUtils.path( Strman.append( exportPath, Strings.PATH, "map", FileType.XML.getExtension() ) )
+				.toFile(), mapStacks );
 	}
 	
 	/**

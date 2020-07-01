@@ -3,10 +3,10 @@ package tw.fondus.fews.adapter.pi.rtc.nchc;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import nl.wldelft.util.FileUtils;
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
+import tw.fondus.commons.util.file.io.PathWriter;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
@@ -67,13 +67,9 @@ public class RTCPreAdapter extends PiCommandLineExecute {
 	 */
 	private void writeModelInput( PiDiagnosticsLogger logger, TimeSeriesArrays similationTimeSeriesArrays,
 			TimeSeriesArrays observationTimeSeriesArrays, Path inputPath, int forecast ) {
-		try {
-			FileUtils.writeText( inputPath.resolve( CommonString.INPUT_CORR_SIM_WH ).toAbsolutePath().toString(),
-					ContentBuilder.buildInputCorr( similationTimeSeriesArrays.size(), forecast ) );
-			FileUtils.writeText( inputPath.resolve( CommonString.INPUT_WH_EST_OBS_GAUGES ).toAbsolutePath().toString(),
-					ContentBuilder.buildInputGauges( similationTimeSeriesArrays, observationTimeSeriesArrays ) );
-		} catch (IOException e) {
-			logger.log( LogLevel.ERROR, "NCHC RTC PreAdapter: Write model input faild." );
-		}
+		PathWriter.write( inputPath.resolve( CommonString.INPUT_CORR_SIM_WH ),
+				ContentBuilder.buildInputCorr( similationTimeSeriesArrays.size(), forecast ) );
+		PathWriter.write( inputPath.resolve( CommonString.INPUT_WH_EST_OBS_GAUGES ),
+				ContentBuilder.buildInputGauges( similationTimeSeriesArrays, observationTimeSeriesArrays ) );
 	}
 }

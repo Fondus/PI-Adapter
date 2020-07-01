@@ -68,16 +68,16 @@ public class SearchExecutable extends PiCommandLineExecute {
 					"WRAP Flood Search GDAL Adapter: Collect the files need to be merge from flood database when cross the rainfall threshold." );
 			List<Integer> thresholds = SearchUtils.readQuantitativeRainfallThreshold( thresholdPath );
 			List<String> mergeFiles = new ArrayList<>();
-			for ( int i = 0; i < timeSeriesArrays.size(); i++ ) {
-				String loctionID = timeSeriesArrays.get( i ).getHeader().getLocationId();
+			TimeSeriesLightUtils.forEach( timeSeriesArrays, array -> { 
+				String loctionID = array.getHeader().getLocationId();
 				
 				Optional<String> optIntensity = SearchUtils
-						.determineRainfallIntensity( timeSeriesArrays.get( i ).getValue( 0 ), thresholds );
+						.determineRainfallIntensity( array.getValue( 0 ), thresholds );
 				optIntensity.ifPresent( intensity -> {
 					mergeFiles.add( Strman.append( loctionID, Strings.UNDERLINE, modelArguments.getDuration(),
 							Strings.UNDERLINE, intensity, FileType.ASC.getExtension() ) );
 				} );
-			}
+			});
 			
 			/** Follow flood map file list to move file **/
 			String depthFileName = "Depth0000.asc";
