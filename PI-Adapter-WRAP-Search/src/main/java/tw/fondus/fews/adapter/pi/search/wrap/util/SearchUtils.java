@@ -18,9 +18,10 @@ import tw.fondus.commons.fews.pi.config.xml.mapstacks.MapStacks;
 import tw.fondus.commons.fews.pi.config.xml.mapstacks.Pattern;
 import tw.fondus.commons.fews.pi.config.xml.util.XMLUtils;
 import tw.fondus.commons.util.file.FileType;
-import tw.fondus.commons.util.file.PathUtils;
-import tw.fondus.commons.util.string.StringUtils;
-import tw.fondus.commons.util.time.TimeUtils;
+import tw.fondus.commons.util.file.io.PathReader;
+import tw.fondus.commons.util.string.Strings;
+import tw.fondus.commons.util.time.DateUtils;
+import tw.fondus.commons.util.time.TimeFormats;
 
 /**
  * The search tools.
@@ -51,8 +52,8 @@ public class SearchUtils {
 	 * @throws IOException
 	 */
 	public static List<Integer> readQuantitativeRainfallThreshold( Path thresholdPath ) throws IOException {
-		return PathUtils.readAllLines( thresholdPath ).stream()
-			.map( line -> line.split( StringUtils.COMMA )[1] )
+		return PathReader.readAllLines( thresholdPath ).stream()
+			.map( line -> line.split( Strings.COMMA )[1] )
 			.map( thresholdString -> Integer.valueOf( thresholdString ) )
 			.collect( Collectors.toList() );
 	}
@@ -78,7 +79,7 @@ public class SearchUtils {
 		mapStacks.setGeoDatum( "TWD 1997" );
 		mapStacks.setTimeZone( "0.0" );
 		
-		XMLUtils.toXML( new File( Strman.append( exportPath, StringUtils.PATH, "map", FileType.XML.getExtension() ) ),
+		XMLUtils.toXML( new File( Strman.append( exportPath, Strings.PATH, "map", FileType.XML.getExtension() ) ),
 				mapStacks );
 	}
 	
@@ -91,6 +92,6 @@ public class SearchUtils {
 	 * @throws ParseException 
 	 */
 	public static String getStringTime( long time ) throws IOException, ParseException {
-		return TimeUtils.toString( new Date( time ), TimeUtils.YMDHMS );
+		return DateUtils.toString( new Date( time ), TimeFormats.YMDHMS );
 	}
 }

@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>pi-adapter-ntou-annfsm</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<name>PI-Adapter-NTOU-ANNFSM</name>
 	<url>http://maven.apache.org</url>
@@ -27,6 +27,11 @@
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-json</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-http</artifactId>
+			<version>${fondus.sdk.version}</version>
 		</dependency>
 	</dependencies>
 

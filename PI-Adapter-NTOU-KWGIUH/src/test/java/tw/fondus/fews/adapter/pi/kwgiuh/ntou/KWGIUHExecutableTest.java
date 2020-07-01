@@ -24,7 +24,7 @@ public class KWGIUHExecutableTest {
 				"KWGIUH_for_FEWS.exe"
 		};
 	
-		ExecutableArguments arguments = new ExecutableArguments();
+		ExecutableArguments arguments = ExecutableArguments.instance();
 		new KWGIUHExecutable().execute( args, arguments );
 	}
 }

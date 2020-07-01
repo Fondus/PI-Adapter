@@ -30,7 +30,7 @@ public class RTCExecutableTest {
 				"ANNAN"
 		};
 		
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new RTCExecutable().execute( args, arguments );
 	}
 }

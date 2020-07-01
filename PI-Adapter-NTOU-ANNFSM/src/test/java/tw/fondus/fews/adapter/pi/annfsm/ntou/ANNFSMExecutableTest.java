@@ -24,7 +24,7 @@ public class ANNFSMExecutableTest {
 				"ANNSFM.exe"
 		};
 	
-		ExecutableArguments arguments = new ExecutableArguments();
+		ExecutableArguments arguments = ExecutableArguments.instance();
 		new ANNFSMExecutable().execute( args, arguments );
 	}
 }

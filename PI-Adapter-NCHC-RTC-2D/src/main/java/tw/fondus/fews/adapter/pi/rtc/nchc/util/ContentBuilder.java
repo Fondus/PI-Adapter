@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import strman.Strman;
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.commons.util.string.Strings;
 
 /**
  * Build model input data content.
@@ -13,6 +13,7 @@ import tw.fondus.commons.util.string.StringUtils;
  * @author Chao
  *
  */
+@SuppressWarnings( "rawtypes" )
 public class ContentBuilder {
 
 	/**
@@ -23,7 +24,7 @@ public class ContentBuilder {
 	 * @return
 	 */
 	public static String buildInputCorr( int numberOfStation, int forecast ) {
-		StringJoiner sj = new StringJoiner( StringUtils.BREAKLINE );
+		StringJoiner sj = new StringJoiner( Strings.BREAKLINE );
 		sj.add( "3                                   ! NTYPE_SIM_WH" );
 		sj.add( Strman.append( String.valueOf( forecast ),
 				"                                   ! NTIME_VAL (NUMBER OF LEAD TIME)" ) );
@@ -50,39 +51,39 @@ public class ContentBuilder {
 		String dataInfo = "                  ! SIMULATED WH, OBSERVED WH";
 		String missingValue = "-999.0";
 		String dataEnd = "	-999    -999                 ! INDICATOR OF STOP READING DATA";
-		StringJoiner sj = new StringJoiner( StringUtils.BREAKLINE );
+		StringJoiner sj = new StringJoiner( Strings.BREAKLINE );
 
 		IntStream.range( 0, observationTimeSeriesArrays.size() ).forEach( timeSeries -> {
 			sj.add( Strman.append(
 					getGeometryString( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getX( 0 ) ),
-					StringUtils.SPACE_WHITE,
+					Strings.SPACE,
 					getGeometryString( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getY( 0 ) ),
-					StringUtils.SPACE_WHITE,
+					Strings.SPACE,
 					getGeometryString( observationTimeSeriesArrays.get( timeSeries ).getHeader().getGeometry().getZ( 0 ) ),
 					locationInfo, String.valueOf( timeSeries + 1 ), geoInfo ) );
 			IntStream.range( 0, similationTimeSeriesArrays.get( timeSeries ).size() ).forEach( data -> {
 				if ( data == 0 ) {
-					sj.add( Strman.append( StringUtils.SPACE_WHITE,
+					sj.add( Strman.append( Strings.SPACE,
 							getDataString( similationTimeSeriesArrays.get( timeSeries ).getValue( data ) ),
-							StringUtils.SPACE_WHITE,
+							Strings.SPACE,
 							getDataString( observationTimeSeriesArrays.get( timeSeries ).getValue( data ) ),
-							StringUtils.SPACE_WHITE, dataInfo ) );
+							Strings.SPACE, dataInfo ) );
 				} else {
 					if ( data >= observationTimeSeriesArrays.get( timeSeries ).size() ) {
-						sj.add( Strman.append( StringUtils.SPACE_WHITE,
+						sj.add( Strman.append( Strings.SPACE,
 								getDataString( similationTimeSeriesArrays.get( timeSeries ).getValue( data ) ),
-								StringUtils.SPACE_WHITE, missingValue ) );
+								Strings.SPACE, missingValue ) );
 					} else {
-						sj.add( Strman.append( StringUtils.SPACE_WHITE,
+						sj.add( Strman.append( Strings.SPACE,
 								getDataString( similationTimeSeriesArrays.get( timeSeries ).getValue( data ) ),
-								StringUtils.SPACE_WHITE,
+								Strings.SPACE,
 								getDataString( observationTimeSeriesArrays.get( timeSeries ).getValue( data ) ) ) );
 					}
 				}
 			} );
 
 			sj.add( dataEnd );
-			sj.add( StringUtils.BLANK );
+			sj.add( Strings.BLANK );
 		} );
 
 		return sj.toString();

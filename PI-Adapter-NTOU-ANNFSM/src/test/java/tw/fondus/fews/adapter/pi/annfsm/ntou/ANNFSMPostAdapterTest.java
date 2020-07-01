@@ -24,7 +24,7 @@ public class ANNFSMPostAdapterTest {
 				""
 		};
 	
-		ExecutableArguments arguments = new ExecutableArguments();
+		ExecutableArguments arguments = ExecutableArguments.instance();
 		new ANNFSMPostAdapter().execute( args, arguments );
 	}
 }

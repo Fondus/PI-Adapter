@@ -26,7 +26,7 @@ public class HECRASPostAdapterTest {
 				"Depth.simulated"
 		};
 		
-		ProcessArguments arguments = new ProcessArguments();
+		ProcessArguments arguments = ProcessArguments.instance();
 		new HECRASPostAdapter().execute( args, arguments );
 	}
 }

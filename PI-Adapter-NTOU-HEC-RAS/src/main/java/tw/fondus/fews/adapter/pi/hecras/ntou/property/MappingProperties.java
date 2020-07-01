@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.commons.util.string.Strings;
 
 /***
  * The properties for mapping variable name and replacing key string.
@@ -76,7 +76,7 @@ public class MappingProperties {
 	 * @return
 	 */
 	public static String getProperty( String key ) {
-		return propertiesMap.containsKey( key ) ? propertiesMap.get( key ) : StringUtils.BLANK;
+		return propertiesMap.containsKey( key ) ? propertiesMap.get( key ) : Strings.BLANK;
 	}
 
 	/**

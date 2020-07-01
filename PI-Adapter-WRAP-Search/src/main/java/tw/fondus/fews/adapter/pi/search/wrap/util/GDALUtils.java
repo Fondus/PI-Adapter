@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import strman.Strman;
 import tw.fondus.commons.util.file.FileType;
 import tw.fondus.commons.util.file.PathUtils;
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.commons.util.string.Strings;
 
 /**
  * The tools is base GADL library to develop.
@@ -39,21 +39,21 @@ public class GDALUtils {
 			String inputFormat ) throws IOException {
 
 		List<String> mergeData = readDataListAttachedFormat( mergedDataPath, checkFileType( inputFormat ) );
-		StringJoiner joiner = new StringJoiner( StringUtils.SPACE_WHITE );
-		joiner.add( Strman.append( GDALPath, StringUtils.PATH, "pythonw.exe" ) );
-		joiner.add( Strman.append( GDALPath, StringUtils.PATH, "gdal_merge.py" ) );
+		StringJoiner joiner = new StringJoiner( Strings.SPACE );
+		joiner.add( Strman.append( GDALPath, Strings.PATH, "pythonw.exe" ) );
+		joiner.add( Strman.append( GDALPath, Strings.PATH, "gdal_merge.py" ) );
 		joiner.add( "-of" );
 		joiner.add( "GTiff" );
 		joiner.add( "-o" );
-		joiner.add( Strman.append( exportPath, StringUtils.PATH, fileName, ".tif" ) );
+		joiner.add( Strman.append( exportPath, Strings.PATH, fileName, ".tif" ) );
 		joiner.add( "-a_nodata" );
 		joiner.add( "-999" );
 		mergeData.forEach( data -> {
 			joiner.add( data );
 		} );
-		joiner.add( StringUtils.BREAKLINE );
+		joiner.add( Strings.BREAKLINE );
 		joiner.add( "exit" );
-		Path exportFilePath = Paths.get( Strman.append( mergedDataPath, StringUtils.PATH, "mergeBatRun.bat" ) );
+		Path exportFilePath = Paths.get( Strman.append( mergedDataPath, Strings.PATH, "mergeBatRun.bat" ) );
 		writeFile( exportFilePath, joiner.toString() );
 		runBatch( exportFilePath );
 	}
@@ -72,24 +72,24 @@ public class GDALUtils {
 			String inputFormat, String outputFormat ) throws IOException {
 		List<String> transformationData = readDataListAttachedFormat( transformationDataPath,
 				checkFileType( inputFormat ) );
-		StringJoiner joiner = new StringJoiner( StringUtils.SPACE_WHITE );
+		StringJoiner joiner = new StringJoiner( Strings.SPACE );
 		transformationData.forEach( data -> {
-			joiner.add( Strman.append( GDALPath, StringUtils.PATH, "gdal_translate.exe" ) );
+			joiner.add( Strman.append( GDALPath, Strings.PATH, "gdal_translate.exe" ) );
 			joiner.add( "-a_nodata" );
 			joiner.add( "-999" );
 			joiner.add( "-of" );
 			joiner.add( outputFormat );
 			joiner.add( data );
 			String dataName = Paths.get( data ).toFile().getName();
-			joiner.add( Strman.append( exportPath, StringUtils.PATH,
-					dataName.substring( 0, dataName.indexOf( StringUtils.DOT ) ), StringUtils.DOT,
+			joiner.add( Strman.append( exportPath, Strings.PATH,
+					dataName.substring( 0, dataName.indexOf( Strings.DOT ) ), Strings.DOT,
 					checkFileType( outputFormat ) ) );
-			joiner.add( StringUtils.BREAKLINE );
+			joiner.add( Strings.BREAKLINE );
 		} );
 
 		joiner.add( "exit" );
 		Path transformationFilePath = Paths
-				.get( Strman.append( transformationDataPath, StringUtils.PATH, "transformationBatRun.bat" ) );
+				.get( Strman.append( transformationDataPath, Strings.PATH, "transformationBatRun.bat" ) );
 		writeFile( transformationFilePath, joiner.toString() );
 		runBatch( transformationFilePath );
 	}
