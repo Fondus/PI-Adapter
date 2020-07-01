@@ -19,6 +19,7 @@ import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.file.io.PathWriter;
+import tw.fondus.commons.util.math.NumberUtils;
 import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
@@ -144,7 +145,7 @@ public class HECRASPreAdapter extends PiCommandLineExecute {
 	 * @return
 	 */
 	private String formatTimeSeriesData( TimeSeriesArray timeSeriesArray ) {
-		if ( TimeSeriesLightUtils.getValue( timeSeriesArray, 1 ).compareTo( BigDecimal.ZERO ) == 0 ) {
+		if ( NumberUtils.equals( TimeSeriesLightUtils.getValue( timeSeriesArray, 1 ), BigDecimal.ZERO ) ) {
 			timeSeriesArray.setFloatValues( 1, 1, (float) 0.1 );
 		}
 
