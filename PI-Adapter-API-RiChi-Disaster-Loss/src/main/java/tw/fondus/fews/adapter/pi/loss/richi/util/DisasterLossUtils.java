@@ -1,14 +1,5 @@
 package tw.fondus.fews.adapter.pi.loss.richi.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.text.ParseException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-
 import nl.wldelft.util.FileUtils;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -24,6 +15,15 @@ import tw.fondus.commons.util.optional.OptionalUtils;
 import tw.fondus.commons.util.string.Strings;
 import tw.fondus.commons.util.time.DateUtils;
 import tw.fondus.commons.util.time.TimeFormats;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.text.ParseException;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The utils of Disaster Loss Adapter.
@@ -168,12 +168,12 @@ public class DisasterLossUtils {
 
 		if ( OptionalUtils.allMatch( optURL, optKeyName, optKeyValue ) ) {
 			List<FormDataPart> formDataParts = CollectionUtils.emptyListArray();
-			FormDataPart formDataPart = FormDataPart.formDataParBuilder()
+			FormDataPart formDataPart = FormDataPart.builder()
+					.path( ascPath )
 					.name( KEY )
 					.value( ascPath.toFile().getName() )
 					.mediaType( MediaTypes.APPLICATION_STREAM )
 					.build();
-			formDataPart.setPath( ascPath );
 			formDataParts.add( formDataPart );
 
 			RequestBody requestBody = OkHttpUtils.bodyMultiPart( formDataParts );
