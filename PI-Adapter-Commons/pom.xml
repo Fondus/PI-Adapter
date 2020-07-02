@@ -18,10 +18,10 @@
 	
 	<properties>
 		<slf4j.version>1.7.30</slf4j.version>
-		<log4j.version>2.13.0</log4j.version>
+		<log4j.version>2.13.2</log4j.version>
 		<guava.version>28.2-jre</guava.version>
 		<jodatime.version>2.10.5</jodatime.version>
-		<fews.version>2018.02</fews.version>
+		<fews.version>2018.02-hotfix1</fews.version>
 		<commons.cli.version>0.4.2</commons.cli.version>
 		<commons.fews.xml.version>1.0.0</commons.fews.xml.version>
 	</properties>
