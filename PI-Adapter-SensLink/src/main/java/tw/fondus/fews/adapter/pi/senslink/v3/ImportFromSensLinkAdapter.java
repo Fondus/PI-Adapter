@@ -59,31 +59,38 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 
 			SensLinkApiV3 api = SensLinkApiV3Runtime.DEFAULT;
 
-			// Login SensLink 3.0 by OAuth 2.0
-			Optional<OAuthToken> optional = api.getAccessToken( username, password, SensLinkApiV3Host.IOW );
-			optional.ifPresentOrElse( token -> {
-				logger.log( LogLevel.INFO, "SensLink 3.0 Import Adapter: The SensLink 3.0 system login successfully, try to get records from the SensLink 3.0 system." );
+			try {
+				// Login SensLink 3.0 by OAuth 2.0
+				Optional<OAuthToken> optional = api.getAccessToken( username, password, SensLinkApiV3Host.IOW );
+				optional.ifPresentOrElse( token -> {
+					logger.log( LogLevel.INFO,
+							"SensLink 3.0 Import Adapter: The SensLink 3.0 system login successfully, try to get records from the SensLink 3.0 system." );
 
-				DateTime start = timeZero.minusDays( modelArguments.getDuration() );
-				List<RecordTimeSeries> records = locationIds.stream()
-						.map( locationId -> api.readTimeSeries( token.getAccess(), locationId, start, timeZero, true, TimeZone.UTC0 ) )
-						.collect( Collectors.toList() );
+					DateTime start = timeZero.minusDays( modelArguments.getDuration() );
+					List<RecordTimeSeries> records = locationIds.stream()
+							.map( locationId -> api.readTimeSeries( token.getAccess(), locationId, start, timeZero, true, TimeZone.UTC0 ) )
+							.collect( Collectors.toList() );
 
-				if ( records.size() > 0 ){
-					logger.log( LogLevel.INFO, "SensLink 3.0 Import Adapter: Start translate SensLink PhysicalQuantity records to PI-XML.");
+					if ( records.size() > 0 ) {
+						logger.log( LogLevel.INFO,
+								"SensLink 3.0 Import Adapter: Start translate SensLink PhysicalQuantity records to PI-XML." );
 
-					TimeSeriesArrays outputArrays = SensLinkApiV3Utils.fromRecordTimeSeries( records, modelArguments.getParameter(), modelArguments.getUnit() );
-					try {
-						TimeSeriesUtils.write( outputArrays, outputPath.resolve( modelArguments.getOutputs().get( 0 ) ) );
-					} catch ( IOException e ){
-						logger.log( LogLevel.ERROR, "SensLink 2.0 Import Adapter: Write the PI-XML has something wrong." );
+						TimeSeriesArrays outputArrays = SensLinkApiV3Utils.fromRecordTimeSeries( records, modelArguments.getParameter(), modelArguments.getUnit() );
+						try {
+							TimeSeriesUtils.write( outputArrays, outputPath.resolve( modelArguments.getOutputs().get( 0 ) ) );
+						} catch (IOException e) {
+							logger.log( LogLevel.ERROR,
+									"SensLink 2.0 Import Adapter: Write the PI-XML has something wrong." );
+						}
+					} else {
+						logger.log( LogLevel.WARN, "SensLink 3.0 Import Adapter: Not receive any records from SensLink." );
 					}
-				} else {
-					logger.log( LogLevel.WARN, "SensLink 3.0 Import Adapter: Not receive any records from SensLink." );
-				}
 
-			}, () -> logger.log( LogLevel.WARN, "SensLink 3.0 Import Adapter: SensLink System Login failed." ) );
-			logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Finished Adapter process." );
+				}, () -> logger.log( LogLevel.WARN, "SensLink 3.0 Import Adapter: SensLink System Login failed." ) );
+				logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Finished Adapter process." );
+			} catch (IOException e) {
+				logger.log( LogLevel.ERROR, "SensLink 3.0 Import Adapter: SensLink System Login failed!" );
+			}
 			
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "SensLink 3.0 Import Adapter: No time series found in file in the model input files!" );
