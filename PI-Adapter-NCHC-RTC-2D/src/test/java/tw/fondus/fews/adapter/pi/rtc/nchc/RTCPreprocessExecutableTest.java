@@ -30,7 +30,7 @@ public class RTCPreprocessExecutableTest {
 				"ANNAN"
 		};
 		
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new RTCPreprocessExecutable().execute( args, arguments );
 	}
 }

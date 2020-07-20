@@ -26,7 +26,7 @@ public class LTFExecutableTest {
 				"ShangPing"
 		};
 		
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new LTFExecutable().execute( args, arguments );
 	}
 }

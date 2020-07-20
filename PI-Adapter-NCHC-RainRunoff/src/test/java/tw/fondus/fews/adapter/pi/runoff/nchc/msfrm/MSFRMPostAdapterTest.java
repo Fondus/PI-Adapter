@@ -1,6 +1,11 @@
 package tw.fondus.fews.adapter.pi.runoff.nchc.msfrm;
 
+import org.junit.Before;
+import org.junit.Test;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
+import tw.fondus.fews.adapter.pi.runoff.nchc.PostAdapterTestCase;
+
+import java.io.IOException;
 
 /**
  * Unit test of Model post-adapter for running NCHC MSFRM model.
@@ -8,10 +13,10 @@ import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
  * @author Brad Chen
  *
  */
-public class MSFRMPostAdapterTest {
+public class MSFRMPostAdapterTest extends PostAdapterTestCase {
 
-//	@Test
-	public void test() {
+	@Before
+	public void run() {
 		String[] args = new String[]{
 				"-b",
 				"src/test/resources/MSFRM",
@@ -25,8 +30,14 @@ public class MSFRMPostAdapterTest {
 				"Discharge (m³/s)"
 				};
 		
-		PiIOArguments arguments = new PiIOArguments();
+		PiIOArguments arguments = PiIOArguments.instance();
 		new MSFRMPostAdapter().execute(args, arguments);
+
+		this.setTestCase( "MSFRM" );
 	}
-	
+
+	@Test
+	public void test() throws IOException {
+		this.testProcess();
+	}
 }

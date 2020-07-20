@@ -1,13 +1,10 @@
 <?xml version="1.0"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>2.0.0</version>
+		<version>3.0.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-senslink</artifactId>
@@ -20,21 +17,16 @@
 		The FEWS Published Interface Adapter of SensLink API is used to data exchange with Delft-FEWS system.
 	</description>
 
-	<properties>
-		<commons.version>1.0.2</commons.version>
-	</properties>
-
 	<dependencies>
 		<!-- PI-Adapter Commons -->
 		<dependency>
 			<groupId>tw.fondus.fews.adapter</groupId>
 			<artifactId>pi-adapter-commons</artifactId>
 		</dependency>
-		<!-- FondUS SDK: Commons-SensLink -->
+		<!-- FondUS SDK: The open source project can't use this -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-senslink</artifactId>
-			<version>${commons.version}</version>
+			<artifactId>commons-rest-senslink</artifactId>
 		</dependency>
 	</dependencies>
 

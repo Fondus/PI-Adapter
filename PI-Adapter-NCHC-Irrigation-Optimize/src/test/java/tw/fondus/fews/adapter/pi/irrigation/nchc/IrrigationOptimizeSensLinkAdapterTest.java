@@ -38,7 +38,7 @@ public class IrrigationOptimizeSensLinkAdapterTest {
 				""
 		};
 
-		SensLinkArgument argument = new SensLinkArgument();
+		SensLinkArgument argument = SensLinkArgument.instance();
 		new IrrigationOptimizeSensLinkAdapter().execute( args, argument );
 	}
 }

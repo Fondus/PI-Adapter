@@ -3,13 +3,12 @@ package tw.fondus.fews.adapter.pi.rtc.nchc.util;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import nl.wldelft.util.FileUtils;
 import strman.Strman;
 import tw.fondus.commons.util.file.FileType;
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.commons.util.string.Strings;
 
 /**
  * The file utils for project PI-Adapter-NCHC-RTC-2D.
@@ -39,9 +38,10 @@ public class FileTools {
 	 * @param outputFileName
 	 * @throws IOException
 	 */
-	public static void copyFile( Path inputPath, Path outputPath, String inputFileName, String outputFileName ) throws IOException {
-		Files.copy( Paths.get( Strman.append( inputPath.toString(), StringUtils.PATH, inputFileName ) ),
-				Paths.get( Strman.append( outputPath.toString(), StringUtils.PATH, outputFileName ) ), StandardCopyOption.REPLACE_EXISTING );
+	public static void copyFile( Path inputPath, Path outputPath, String inputFileName, String outputFileName )
+			throws IOException {
+		Files.copy( inputPath.resolve( inputFileName ), outputPath.resolve( outputFileName ),
+				StandardCopyOption.REPLACE_EXISTING );
 	}
 
 	/**
@@ -60,7 +60,8 @@ public class FileTools {
 	}
 
 	/**
-	 * Backup model output file to directory of template from executable with different file extension.
+	 * Backup model output file to directory of template from executable with
+	 * different file extension.
 	 * 
 	 * @param executableDir
 	 * @param templateDir
@@ -73,8 +74,8 @@ public class FileTools {
 	public static void backupOutputFile( Path executableDir, Path templateDir, String backupFileName,
 			String projectName, int timeStep, FileType fileType ) throws IOException {
 		copyFile( executableDir, templateDir, backupFileName,
-				Strman.append( FileUtils.getNameWithoutExt( backupFileName ), StringUtils.UNDERLINE, "T1",
-						String.format( "%03d", timeStep ), StringUtils.UNDERLINE, projectName, StringUtils.DOT,
+				Strman.append( FileUtils.getNameWithoutExt( backupFileName ), Strings.UNDERLINE, "T1",
+						String.format( "%03d", timeStep ), Strings.UNDERLINE, projectName, Strings.DOT,
 						fileType.getType() ) );
 	}
 
@@ -86,7 +87,7 @@ public class FileTools {
 	 * @return
 	 */
 	public static String getSimulationASCFileName( String fileName, int timeStep ) {
-		return Strman.append( fileName.substring( 0, fileName.indexOf( StringUtils.QUESTION ) ), "0000", StringUtils.DOT,
+		return Strman.append( fileName.substring( 0, fileName.indexOf( Strings.QUESTION ) ), "0000", Strings.DOT,
 				String.format( "%03d", timeStep ) );
 	}
 }

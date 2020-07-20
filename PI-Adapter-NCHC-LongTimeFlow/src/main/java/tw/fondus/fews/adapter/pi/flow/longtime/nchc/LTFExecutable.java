@@ -8,15 +8,14 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.apache.commons.io.FileUtils;
 import org.zeroturnaround.exec.InvalidExitValueException;
 
-import strman.Strman;
 import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.util.file.PathUtils;
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.commons.util.file.io.PathWriter;
+import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.flow.longtime.nchc.argument.RunArguments;
@@ -31,7 +30,7 @@ import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 public class LTFExecutable extends PiCommandLineExecute {
 
 	public static void main( String[] args ) {
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new LTFExecutable().execute( args, arguments );
 	}
 
@@ -41,18 +40,16 @@ public class LTFExecutable extends PiCommandLineExecute {
 		/** Cast PiArguments to expand arguments **/
 		RunArguments modelArguments = (RunArguments) arguments;
 
-		Path executablePath = Prevalidated.checkExists(
-				Strman.append( basePath.toString(), PATH, modelArguments.getExecutableDir() ),
+		Path executablePath = Prevalidated.checkExists( basePath.resolve( modelArguments.getExecutableDir() ),
 				"NCHC LTF Executable: The model executable directory not exist." );
 
-		Path templatePath = Prevalidated.checkExists(
-				Strman.append( basePath.toString(), PATH, modelArguments.getTemplateDir() ),
+		Path templatePath = Prevalidated.checkExists( basePath.resolve( modelArguments.getTemplateDir() ),
 				"NCHC LTF Executable: The template directory is not exist." );
 
 		logger.log( LogLevel.INFO, "NCHC LTF Executable: Start the executable process." );
 
 		try {
-			FileUtils.cleanDirectory( executablePath.toFile() );
+			PathUtils.clean( executablePath );
 
 			/** Copy model input file to executable directory **/
 			PathUtils.copy( inputPath.resolve( modelArguments.getInputs().get( 0 ) ), executablePath );
@@ -60,9 +57,8 @@ public class LTFExecutable extends PiCommandLineExecute {
 			PathUtils.copy( inputPath.resolve( modelArguments.getInputs().get( 2 ) ), executablePath );
 
 			/** Copy model to executable directory from template directory **/
-			PathUtils.copyDirectory( templatePath, executablePath, true );
-			PathUtils.copyDirectory( templatePath.resolve( "Basin" ).resolve( modelArguments.getProjectName() ),
-					executablePath, false );
+			this.copies( templatePath, executablePath, false );
+			this.copies( templatePath.resolve( "Basin" ).resolve( modelArguments.getProjectName() ), executablePath, true );
 
 			/** Replacing arguments of forecast and observed steps. **/
 			List<String> lines = Files.readAllLines( executablePath.resolve( modelArguments.getInputs().get( 3 ) ) );
@@ -75,8 +71,8 @@ public class LTFExecutable extends PiCommandLineExecute {
 							.replace( "{observed_steps}", modelArguments.getObservedSteps().toString() ) );
 				}
 			} );
-			FileUtils.writeStringToFile( executablePath.resolve( modelArguments.getInputs().get( 3 ) ).toFile(),
-					lines.stream().collect( Collectors.joining( StringUtils.BREAKLINE ) ) );
+			PathWriter.write( executablePath.resolve( modelArguments.getInputs().get( 3 ) ),
+					lines.stream().collect( Collectors.joining( Strings.BREAKLINE ) ), Strings.UTF8_CHARSET );
 
 			String command = executablePath.resolve( modelArguments.getExecutable().get( 0 ) ).toString();
 
@@ -90,5 +86,24 @@ public class LTFExecutable extends PiCommandLineExecute {
 		}
 
 		logger.log( LogLevel.INFO, "NCHC LTF Executable: Finished the executable process." );
+	}
+
+	/**
+	 * Copy directory with sub directory or not.
+	 * 
+	 * @param source
+	 * @param dest
+	 * @param withDirectory
+	 */
+	private void copies( Path source, Path dest, boolean withDirectory ) {
+		PathUtils.list( source ).forEach( path -> {
+			if ( PathUtils.isDirectory( path ) ) {
+				if ( withDirectory ) {
+					copies( path, dest, true );
+				}
+			} else {
+				PathUtils.copy( path, dest );
+			}
+		} );
 	}
 }

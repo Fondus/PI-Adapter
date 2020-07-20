@@ -24,7 +24,7 @@ import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 public class ANNFSMExecutable extends PiCommandLineExecute {
 
 	public static void main( String[] args ) {
-		ExecutableArguments arguments = new ExecutableArguments();
+		ExecutableArguments arguments = ExecutableArguments.instance();
 		new ANNFSMExecutable().execute( args, arguments );
 	}
 

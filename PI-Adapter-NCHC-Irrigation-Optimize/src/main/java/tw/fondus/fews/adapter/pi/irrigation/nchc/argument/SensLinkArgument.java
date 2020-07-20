@@ -1,9 +1,12 @@
 package tw.fondus.fews.adapter.pi.irrigation.nchc.argument;
 
 import com.beust.jcommander.Parameter;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import tw.fondus.commons.cli.argument.converter.FileListConverter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import tw.fondus.commons.cli.argument.splitter.CommaSplitter;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 import java.util.ArrayList;
@@ -16,11 +19,15 @@ import java.util.List;
  *
  */
 @Data
-@EqualsAndHashCode( callSuper = false )
+@SuperBuilder
+@ToString( callSuper = true )
+@EqualsAndHashCode( callSuper = true )
 public class SensLinkArgument extends PiIOArguments {
+	@Builder.Default
 	@Parameter( names = { "--edir", "-ed" }, description = "The executable folder, relative to the current working directory." )
 	private String executablePath = "Work/";
 
+	@Builder.Default
 	@Parameter( names = { "--duration", "-d" }, description = "The time step of water requirement." )
 	private int duration = 30;
 
@@ -28,17 +35,19 @@ public class SensLinkArgument extends PiIOArguments {
 	private String waterRequirementTimeBase;
 
 	@Parameter( names = { "-wrt" }, required = true, description = "The water requirement senslink id list with comma, and order is fixed.",
-			listConverter = FileListConverter.class )
+			splitter = CommaSplitter.class )
 	private List<String> waterRequirementTargets;
 
 	@Parameter( names = { "-wrf" }, required = true, description = "The water requirement file list with comma, and order is fixed.",
-			listConverter = FileListConverter.class )
+			splitter = CommaSplitter.class )
 	private List<String> waterRequirementsFiles;
 
+	@Builder.Default
 	@Parameter( names = { "-ids" }, description = "The SensLink system ids will pull, if the pull flag set be true.",
-			listConverter = FileListConverter.class )
+			splitter = CommaSplitter.class )
 	private List<String> sensLinkIds = new ArrayList<>();
 
+	@Builder.Default
 	@Parameter( names = { "-pullFlag" }, description = "Pull the model input from the SensLink system ids or not." )
 	private boolean isPullFromSensLinkFlag = false;
 
@@ -47,4 +56,14 @@ public class SensLinkArgument extends PiIOArguments {
 
 	@Parameter(names = { "--password", "-pw" }, required = true, description = "The account password.")
 	private String password;
+
+	/**
+	 * Create the argument instance.
+	 *
+	 * @return argument instance
+	 * @since 3.0.0
+	 */
+	public static SensLinkArgument instance(){
+		return SensLinkArgument.builder().build();
+	}
 }

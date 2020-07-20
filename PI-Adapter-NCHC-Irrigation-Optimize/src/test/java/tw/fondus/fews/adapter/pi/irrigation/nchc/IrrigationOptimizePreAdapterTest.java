@@ -22,7 +22,7 @@ public class IrrigationOptimizePreAdapterTest {
 				"INPUT_QIN_ZONE.TXT"
 		};
 
-		PreArguments arguments = new PreArguments();
+		PreArguments arguments = PreArguments.instance();
 		new IrrigationOptimizePreAdapter().execute( args, arguments );
 	}
 }

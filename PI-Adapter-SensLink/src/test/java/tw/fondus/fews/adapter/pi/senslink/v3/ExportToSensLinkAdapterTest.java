@@ -1,8 +1,7 @@
 package tw.fondus.fews.adapter.pi.senslink.v3;
 
+import org.junit.Before;
 import org.junit.Test;
-
-import tw.fondus.fews.adapter.pi.senslink.v3.ExportToSensLinkAdapter;
 import tw.fondus.fews.adapter.pi.senslink.v3.argument.RunArguments;
 
 /**
@@ -13,8 +12,8 @@ import tw.fondus.fews.adapter.pi.senslink.v3.argument.RunArguments;
  */
 public class ExportToSensLinkAdapterTest {
 
-	@Test
-	public void test() {
+	@Before
+	public void run() {
 		String[] args = new String[]{
 				"-b",
 				"src/test/resources",
@@ -32,8 +31,12 @@ public class ExportToSensLinkAdapterTest {
 				""
 				};
 		
-		RunArguments arguments = new RunArguments();
-		new ExportToSensLinkAdapter().execute(args, arguments);
+		RunArguments arguments = RunArguments.instance();
+		new ExportToSensLinkAdapter().execute( args, arguments );
 	}
 
+	@Test
+	public void test() {
+		// to do
+	}
 }

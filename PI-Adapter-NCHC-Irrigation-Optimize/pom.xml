@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>pi-adapter</artifactId>
 		<groupId>tw.fondus.fews.adapter</groupId>
-		<version>2.0.0</version>
+		<version>3.0.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-nchc-irrigation-optimize</artifactId>
@@ -19,10 +17,6 @@
 		The FEWS Published Interface Adapter of NCHC Irrigation Optimize model is used to data exchange with Delft-FEWS system.
 	</description>
 
-	<properties>
-		<commons.version>1.0.2</commons.version>
-	</properties>
-
 	<dependencies>
 		<!-- PI-Adapter Commons -->
 		<dependency>
@@ -32,19 +26,7 @@
 		<!-- FondUS SDK: The open source project can't use this -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-utils</artifactId>
-		</dependency>
-		<!-- FondUS SDK: Commons-FEWS -->
-		<dependency>
-			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-fews</artifactId>
-			<version>${commons.version}</version>
-		</dependency>
-		<!-- FondUS SDK: Commons-SensLink -->
-		<dependency>
-			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-senslink</artifactId>
-			<version>${commons.version}</version>
+			<artifactId>commons-rest-senslink</artifactId>
 		</dependency>
 	</dependencies>
 

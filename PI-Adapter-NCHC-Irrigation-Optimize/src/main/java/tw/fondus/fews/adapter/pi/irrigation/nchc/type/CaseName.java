@@ -22,7 +22,7 @@ public enum CaseName {
 	@Getter
 	private String description;
 
-	private CaseName( String name, String description ){
+	CaseName( String name, String description ){
 		this.name = name;
 		this.description = description;
 	}

@@ -1,6 +1,7 @@
 package tw.fondus.fews.adapter.pi.annfsm.ntou.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -73,12 +74,14 @@ public class DataUtils {
 		BigDecimal differentRadius = end.getWindDistribution().getRadius().subtract( startRadius );
 
 		return Point.of( start.getTime().plusHours( hour.intValue() ),
-				startLat.add( differentLat.divide( hours, 2, 2 ).multiply( hour ) ),
-				startLon.add( differentLon.divide( hours, 2, 2 ).multiply( hour ) ),
-				startMaxWind.add( differentMaxWind.divide( hours, 2 ).multiply( hour ) ),
-				startGust.add( differentGust.divide( hours, 2 ).multiply( hour ) ),
-				startCentralPressure.add( differentCentralPressure.divide( hours, 2 ).multiply( hour ) ),
-				WindDistribution.of( "7", startRadius.add( differentRadius.divide( hours, 2 ).multiply( hour ) ) ) );
+				startLat.add( differentLat.divide( hours, 2, RoundingMode.HALF_UP ).multiply( hour ) ),
+				startLon.add( differentLon.divide( hours, 2, RoundingMode.HALF_UP ).multiply( hour ) ),
+				startMaxWind.add( differentMaxWind.divide( hours, 2, RoundingMode.HALF_UP ).multiply( hour ) ),
+				startGust.add( differentGust.divide( hours, 2, RoundingMode.HALF_UP ).multiply( hour ) ),
+				startCentralPressure
+						.add( differentCentralPressure.divide( hours, 2, RoundingMode.HALF_UP ).multiply( hour ) ),
+				WindDistribution.of( "7", startRadius
+						.add( differentRadius.divide( hours, 2, RoundingMode.HALF_UP ).multiply( hour ) ) ) );
 	}
 
 	/**

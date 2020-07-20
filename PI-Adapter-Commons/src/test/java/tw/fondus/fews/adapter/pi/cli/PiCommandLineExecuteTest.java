@@ -1,16 +1,14 @@
 package tw.fondus.fews.adapter.pi.cli;
 
-import java.nio.file.Path;
-import java.util.Objects;
-
+import lombok.Getter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import lombok.Getter;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
+
+import java.nio.file.Path;
 
 /**
  * The unit test of PiCommandLineExecute.
@@ -34,7 +32,7 @@ public class PiCommandLineExecuteTest {
 	
 	@Test
 	public void test() {
-		PiBasicArguments arguments = new PiBasicArguments();
+		PiBasicArguments arguments = PiBasicArguments.instance();
 		new TestCLI().execute( this.getArgs(), arguments );
 	}
 	
@@ -44,13 +42,12 @@ public class PiCommandLineExecuteTest {
 	 * @author Brad Chen
 	 *
 	 */
-	private class TestCLI extends PiCommandLineExecute {
+	private static class TestCLI extends PiCommandLineExecute {
 		@Override
 		protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 				Path outputPath ) {
-			Assert.assertTrue( Objects.nonNull( logger ) );
 			Assert.assertTrue( arguments.getTimeZero().isBeforeNow() );
-			logger.log( LogLevel.INFO, "The PI-CommandLineExecute unit test." );
+			logger.log( LogLevel.INFO, "The PI-CommandLineExecute unit test {}.", 1 );
 		}
 	}
 }

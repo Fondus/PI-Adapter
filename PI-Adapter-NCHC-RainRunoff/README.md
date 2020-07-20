@@ -66,7 +66,7 @@ The models use to simulation rain-runoff of NCHC.
 - RunArguments
 - Execute command
 
-#### Post Adaprer
+#### Post Adapter
 - PiIOArguments
 - Read model output to Output.xml
 

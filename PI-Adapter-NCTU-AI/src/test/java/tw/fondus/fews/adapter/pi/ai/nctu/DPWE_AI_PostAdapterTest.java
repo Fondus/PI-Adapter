@@ -1,13 +1,12 @@
 package tw.fondus.fews.adapter.pi.ai.nctu;
 
-import java.nio.file.Path;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
+
+import java.nio.file.Path;
 
 /**
  * The unit test of DPWE AI Model adapter for post process.
@@ -16,21 +15,21 @@ import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
  *
  */
 public class DPWE_AI_PostAdapterTest {
-	private String folderInput = "src/test/resources/NCTU-AI-DPWE/Input";
-	private String folderOutput = "src/test/resources/NCTU-AI-DPWE/Output";
-	private String folderBackup = "src/test/resources/NCTU-AI-DPWE/Backup";
+	private final String folderInput = "src/test/resources/NCTU-AI-DPWE/Input";
+	private final String folderOutput = "src/test/resources/NCTU-AI-DPWE/Output";
+	private final String folderBackup = "src/test/resources/NCTU-AI-DPWE/Backup";
 	
 	@Before
-	public void setUp() throws Exception {
-		Path pathInput = PathUtils.get( folderInput );
-		Path pathOutput = PathUtils.get( folderOutput );
-		Path pathBackup = PathUtils.get( folderBackup );
+	public void setUp() {
+		Path pathInput = PathUtils.path( folderInput );
+		Path pathOutput = PathUtils.path( folderOutput );
+		Path pathBackup = PathUtils.path( folderBackup );
 		
-		Assert.assertTrue( PathUtils.exists( pathInput ) && PathUtils.exists( pathOutput ) && PathUtils.exists( pathBackup ) );
+		Assert.assertTrue( PathUtils.isExists( pathInput ) && PathUtils.isExists( pathOutput ) && PathUtils.isExists( pathBackup ) );
 		
-		PathUtils.deleteDirectory( pathInput, true );
-		PathUtils.deleteDirectory( pathOutput, true );
-		PathUtils.copyDirectory( pathBackup, pathInput, true );
+		PathUtils.clean( pathInput );
+		PathUtils.clean( pathOutput );
+		PathUtils.copies( pathBackup, pathInput );
 	}
 
 	@Test
@@ -46,7 +45,7 @@ public class DPWE_AI_PostAdapterTest {
 				"Depth.simulated"
 				};
 		
-		PiIOArguments arguments = new PiIOArguments();
+		PiIOArguments arguments = PiIOArguments.instance();
 		new DPWE_AI_PostAdapter().execute( args, arguments );
 	}
 

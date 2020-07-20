@@ -24,7 +24,7 @@ public class RTCPreAdapterTest {
 				"3"
 		};
 		
-		PreAdapterArguments arguments = new PreAdapterArguments();
+		PreAdapterArguments arguments = PreAdapterArguments.instance();
 		new RTCPreAdapter().execute( args, arguments );
 	}
 }

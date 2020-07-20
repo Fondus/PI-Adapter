@@ -22,7 +22,7 @@ public class LTFPreAdapterTest {
 				"DATA_INP_RAIN.txt,DATA_INP_WL.txt,INPUT_DATE_DECADE.TXT"
 		};
 		
-		PiIOArguments arguments = new PiIOArguments();
+		PiIOArguments arguments = PiIOArguments.instance();
 		new LTFPreAdapter().execute( args, arguments );
 	}
 }

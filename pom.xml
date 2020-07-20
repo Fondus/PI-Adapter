@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>tw.fondus.fews.adapter</groupId>
 	<artifactId>pi-adapter</artifactId>
-	<version>2.0.0</version>
+	<version>3.0.0</version>
 	<packaging>pom</packaging>
 
 	<name>The FEWS Published Interface Adapters</name>
@@ -37,14 +35,13 @@
 	</scm>
 	
 	<properties>
-		<adapter.version>2.0.0</adapter.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<adapter.version>3.0.0</adapter.version>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<commons-lang.version>3.8.1</commons-lang.version>
-		<junit.version>4.12</junit.version>
-		<commons.version>1.0.2</commons.version>
-		<commons.utils.version>0.8.5</commons.utils.version>
+		<junit.version>4.13</junit.version>
+		<fondus.sdk.version>2.3.2</fondus.sdk.version>
+		<fondus.sdk.netcdf.version>1.1.8</fondus.sdk.netcdf.version>
 	</properties>
 
 	<dependencyManagement>
@@ -55,18 +52,37 @@
 				<artifactId>pi-adapter-commons</artifactId>
 				<version>${adapter.version}</version>
 			</dependency>
-			<!-- Apache Commons Lang -->
+			<!-- FondUS SDK: NetCDF -->
 			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>${commons-lang.version}</version>
+				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-netcdf</artifactId>
+				<version>${fondus.sdk.netcdf.version}</version>
 			</dependency>
 			<!-- FondUS SDK: The open source project can't use this -->
 			<dependency>
 				<groupId>tw.fondus.commons</groupId>
-				<artifactId>commons-utils</artifactId>
-				<version>${commons.utils.version}</version>
-				<scope>provided</scope>
+				<artifactId>commons-core</artifactId>
+				<version>${fondus.sdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-fews</artifactId>
+				<version>${fondus.sdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-spatial</artifactId>
+				<version>${fondus.sdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-json</artifactId>
+				<version>${fondus.sdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-rest-senslink</artifactId>
+				<version>${fondus.sdk.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -112,7 +128,7 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
-			<!-- Build with 1.8 -->
+			<!-- Build -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
@@ -193,5 +209,6 @@
 		<module>PI-Adapter-NCHC-Irrigation-Optimize</module>
 		<module>PI-Adapter-NetCDF</module>
 		<module>PI-Adapter-NTU-2DFIM</module>
+		<module>PI-Adapter-StressTest</module>
 	</modules>
 </project>

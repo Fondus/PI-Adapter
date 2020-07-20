@@ -1,6 +1,5 @@
 package tw.fondus.fews.adapter.pi.rtc.nchc;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,7 +16,7 @@ import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.fews.pi.config.xml.mapstacks.MapStacks;
 import tw.fondus.commons.fews.pi.config.xml.util.XMLUtils;
 import tw.fondus.commons.util.file.FileType;
-import tw.fondus.commons.util.string.StringUtils;
+import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
@@ -34,7 +33,7 @@ import tw.fondus.fews.adapter.pi.rtc.nchc.util.FileTools;
 public class RTCExecutable extends PiCommandLineExecute {
 	
 	public static void main( String[] args ) {
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new RTCExecutable().execute( args, arguments );
 	}
 	
@@ -43,16 +42,13 @@ public class RTCExecutable extends PiCommandLineExecute {
 			Path outputPath ) {
 		RunArguments modelArguments = (RunArguments) arguments;
 		
-		Path executableDir = Prevalidated.checkExists( 
-				Strman.append( basePath.toString(), PATH, modelArguments.getExecutableDir() ),
+		Path executableDir = Prevalidated.checkExists( basePath.resolve( modelArguments.getExecutableDir() ),
 				"NCHC RTC ExecutableAdapter: Can not find executable directory." );
 		
-		Path templateDir = Prevalidated.checkExists( 
-				Strman.append( basePath.toString(), PATH, modelArguments.getTemplateDir() ),
+		Path templateDir = Prevalidated.checkExists( basePath.resolve( modelArguments.getTemplateDir() ),
 				"NCHC RTC Preprocess ExecutableAdapter: Can not find template directory." );
 		
-		Path mapStacksPath = Prevalidated.checkExists( 
-				Strman.append( inputPath.toString(), PATH, modelArguments.getInputs().get( 0 ) ),
+		Path mapStacksPath = Prevalidated.checkExists( inputPath.resolve( modelArguments.getInputs().get( 0 ) ),
 				"NCHC RTC ExecutableAdapter: Can not find the XML file of mapstacks." );
 		try {
 			MapStacks mapStacks = XMLUtils.fromXML( mapStacksPath.toFile(), MapStacks.class );
@@ -77,8 +73,8 @@ public class RTCExecutable extends PiCommandLineExecute {
 			
 			logger.log( LogLevel.INFO, "NCHC RTC ExecutableAdapter: Start executable adapter of NCHC RTC." );
 			/** Run model **/
-			String commandGrids = Strman.append( executableDir.toString(), PATH, modelArguments.getExecutable().get( 0 ) );
-			String commandRTSIMAP = Strman.append( executableDir.toString(), PATH, modelArguments.getExecutable().get( 1 ) );
+			String commandGrids = executableDir.resolve( modelArguments.getExecutable().get( 0 ) ).toAbsolutePath().toString();
+			String commandRTSIMAP = executableDir.resolve( modelArguments.getExecutable().get( 1 ) ).toAbsolutePath().toString();
 			
 			IntStream.rangeClosed( 0, modelArguments.getForecast() ).forEach( timeStep -> { 
 				try {
@@ -86,11 +82,11 @@ public class RTCExecutable extends PiCommandLineExecute {
 					String projectName = modelArguments.getProjectName();
 					FileTools.copyFile( executableDir, executableDir,
 							Strman.append( CommonString.INPUT_VAL_GRIDS_OBS_EST_T, String.format( "%03d", timeStep ),
-									StringUtils.UNDERLINE, projectName, FileType.TXT.getExtension() ),
+									Strings.UNDERLINE, projectName, FileType.TXT.getExtension() ),
 							CommonString.INPUT_VAL_GRIDS_OBS_EST );
 					FileTools.copyFile( executableDir, executableDir,
 							Strman.append( CommonString.INPUT_VAL_GRIDS_OBS_EST_T, String.format( "%03d", timeStep ),
-									StringUtils.UNDERLINE, projectName, FileType.TXT.getExtension() ),
+									Strings.UNDERLINE, projectName, FileType.TXT.getExtension() ),
 							CommonString.INPUT_LOCATIONS_OBS_GRIDS );
 					
 					/** Run model part1 **/
@@ -117,15 +113,15 @@ public class RTCExecutable extends PiCommandLineExecute {
 					/** Backup part2 output **/
 					FileTools.copyFile( executableDir, executableDir,
 							Strman.append( CommonString.OUTPUT_CORR_SIM_WH, FileType.TXT.getExtension() ),
-							Strman.append( CommonString.OUTPUT_CORR_SIM_WH, StringUtils.UNDERLINE, "T1",
-									String.format( "%03d", timeStep ), StringUtils.UNDERLINE, projectName,
+							Strman.append( CommonString.OUTPUT_CORR_SIM_WH, Strings.UNDERLINE, "T1",
+									String.format( "%03d", timeStep ), Strings.UNDERLINE, projectName,
 									FileType.TXT.getExtension() ) );
 	
 					String modelOutputASC = Strman.append( CommonString.OUTPUT_CORR_SIM_WH, "_1001",
 							FileType.ASC.getExtension() );
 					FileTools.copyFile( executableDir, executableDir, modelOutputASC,
 							Strman.append( CommonString.OUTPUT_CORR_SIM_WH, "_1001_T1", String.format( "%03d", timeStep ),
-									StringUtils.UNDERLINE, projectName, FileType.ASC.getExtension() ) );
+									Strings.UNDERLINE, projectName, FileType.ASC.getExtension() ) );
 					FileTools.copyFile( executableDir, outputPath, modelOutputASC,
 							Strman.append( "Output_ASC0000.", String.format( "%03d", timeStep ) ) );
 				} catch (IOException e) {
@@ -136,7 +132,7 @@ public class RTCExecutable extends PiCommandLineExecute {
 			});
 			
 			mapStacks.getMapStacks().get( 0 ).getFile().getPattern().setFile( "Output_ASC????.???" );
-			XMLUtils.toXML( new File( Strman.append( outputPath.toString(), PATH, "run.xml" ) ), mapStacks );
+			XMLUtils.toXML( outputPath.resolve( "run.xml" ).toFile(), mapStacks );
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "NCHC RTC ExecutableAdapter: Read folders has something wrong." );
 		} catch (Exception e) {

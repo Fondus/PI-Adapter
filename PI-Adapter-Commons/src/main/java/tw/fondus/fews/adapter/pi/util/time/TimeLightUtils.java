@@ -26,14 +26,26 @@ public class TimeLightUtils {
 	public static final DateTimeZone UTC8 = DateTimeZone.forOffsetHours( 8 );
 	
 	private TimeLightUtils() {}
-	
+
 	/**
-	 * Transform DateTime to String using the specified zone.
+	 * Transform joda time to string using the with default time zone.
+	 *
+	 * @param time joda time
+	 * @param format format
+	 * @return time string
+	 * @since 3.0.0
+	 */
+	public static String toString( DateTime time, String format ) {
+		return toString( time, format, UTC0 );
+	}
+
+	/**
+	 * Transform joda time to string using the specified time zone.
 	 * 
-	 * @param time
-	 * @param format
-	 * @param timeZone
-	 * @return
+	 * @param time joda time
+	 * @param format format
+	 * @param timeZone time zone
+	 * @return time string
 	 */
 	public static String toString( DateTime time, String format, DateTimeZone timeZone ) {
 		Preconditions.checkNotNull( time, "TimeUtils: time." );
@@ -44,12 +56,24 @@ public class TimeLightUtils {
 	}
 
 	/**
-	 * Transform String to DateTime using the specified zone.
+	 * Transform string to joda time using the with default time zone.
+	 *
+	 * @param time time string
+	 * @param format format
+	 * @return joda time
+	 * @since 3.0.0
+	 */
+	public static DateTime toDateTime( String time, String format ) {
+		return toDateTime( time, format, UTC0 );
+	}
+
+	/**
+	 * Transform string to joda time using the specified time zone.
 	 * 
-	 * @param time
-	 * @param format
-	 * @param timeZone
-	 * @return
+	 * @param time time string
+	 * @param format format
+	 * @param timeZone time zone
+	 * @return joda time
 	 */
 	public static DateTime toDateTime( String time, String format, DateTimeZone timeZone ) {
 		Preconditions.checkNotNull( time, "TimeUtils: time." );

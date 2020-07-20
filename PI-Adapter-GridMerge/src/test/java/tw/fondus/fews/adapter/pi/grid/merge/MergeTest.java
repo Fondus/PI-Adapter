@@ -1,7 +1,8 @@
 package tw.fondus.fews.adapter.pi.grid.merge;
 
+import org.junit.After;
 import org.junit.Test;
-
+import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.fews.adapter.pi.grid.merge.argument.RunArguments;
 
 /**
@@ -24,12 +25,18 @@ public class MergeTest {
 				"-o",
 				"UNITALL.asc,UNITALL.xml,UNITALL????.asc",
 				"-ed",
-				"/Programs/",
+				"Programs/",
 				"-td",
-				"/Temp/"
+				"Temp/"
 				};
 		
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new GridMergeExecutable().execute( args, arguments );
+	}
+
+	@After
+	public void clean(){
+		PathUtils.clean( "src/test/resources/Input/" );
+		PathUtils.clean( "src/test/resources/Output/" );
 	}
 }

@@ -31,7 +31,7 @@ public class IrrigationOptimizePostAdapterTest {
 				"17,18"
 		};
 
-		PostArguments arguments = new PostArguments();
+		PostArguments arguments = PostArguments.instance();
 		new IrrigationOptimizePostAdapter().execute( args, arguments );
 	}
 }

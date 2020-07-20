@@ -6,7 +6,6 @@ import java.util.concurrent.TimeoutException;
 
 import org.zeroturnaround.exec.InvalidExitValueException;
 
-import strman.Strman;
 import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
@@ -25,7 +24,7 @@ import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 public class KWGIUHExecutable extends PiCommandLineExecute {
 
 	public static void main( String[] args ) {
-		ExecutableArguments arguments = new ExecutableArguments();
+		ExecutableArguments arguments = ExecutableArguments.instance();
 		new KWGIUHExecutable().execute( args, arguments );
 	}
 
@@ -36,8 +35,7 @@ public class KWGIUHExecutable extends PiCommandLineExecute {
 
 		try {
 			logger.log( LogLevel.INFO, "KWGIUHExecutable: Starting KWGIUHExecutable process." );
-			Path executableDir = Prevalidated.checkExists(
-					Strman.append( basePath.toString(), PATH, executableArguments.getExecutableDir() ),
+			Path executableDir = Prevalidated.checkExists( basePath.resolve( executableArguments.getExecutableDir() ),
 					"KWGIUHExecutable: Can not find executable directory." );
 
 			logger.log( LogLevel.INFO, "KWGIUHExecutable: Coping model input file from input directory." );

@@ -1,5 +1,10 @@
 package tw.fondus.fews.adapter.pi.runoff.nchc.tank;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import tw.fondus.commons.util.file.FileType;
+import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.fews.adapter.pi.runoff.nchc.argument.RunArguments;
 
 /**
@@ -10,8 +15,8 @@ import tw.fondus.fews.adapter.pi.runoff.nchc.argument.RunArguments;
  */
 public class TankExecutableAdapterTest {
 
-//	@Test
-	public void test() {
+	@Before
+	public void run() {
 		String[] args = new String[]{
 				"-b",
 				"src/test/resources/Tank",
@@ -27,8 +32,14 @@ public class TankExecutableAdapterTest {
 				"Parameters/"
 				};
 		
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new TankExecutable().execute(args, arguments);
 	}
-	
+
+	@Test
+	public void test(){
+		Assert.assertTrue( PathUtils.list( "src/test/resources/Tank/Output" )
+				.stream()
+				.anyMatch( path -> PathUtils.equalsExtension( path, FileType.TXT ) ) );
+	}
 }
