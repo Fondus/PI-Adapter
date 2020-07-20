@@ -24,7 +24,7 @@ The example implements code as blew:
 public class ExamplePreAdapter extends PiCommandLineExecute {
     // Main process
     public static void main(String[] args) {
-        PiIOArguments arguments = new PiIOArguments();
+        PiIOArguments arguments = PiIOArguments.instance();
         new ExamplePreAdapter().execute( args, arguments );
     }
     
@@ -32,6 +32,7 @@ public class ExamplePreAdapter extends PiCommandLineExecute {
     protected void adapterRun( PiBasicArguments arguments, 
         PiDiagnosticsLogger logger,
         Path basePath, Path inputPath, Path outputPath ) {
+        PiIOArguments modelArguments = this.asIOArguments( arguments );
         // Your adapter logic
     }
 }

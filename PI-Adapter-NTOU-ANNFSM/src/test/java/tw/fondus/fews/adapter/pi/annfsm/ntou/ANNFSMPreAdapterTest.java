@@ -24,7 +24,7 @@ public class ANNFSMPreAdapterTest {
 				"121.0142,24.827"
 		};
 	
-		PreAdapterArguments arguments = new PreAdapterArguments();
+		PreAdapterArguments arguments = PreAdapterArguments.instance();
 		new ANNFSMPreAdapter().execute( args, arguments );
 	}
 }

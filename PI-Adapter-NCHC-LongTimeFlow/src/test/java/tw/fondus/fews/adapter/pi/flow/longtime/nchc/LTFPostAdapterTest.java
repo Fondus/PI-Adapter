@@ -24,7 +24,7 @@ public class LTFPostAdapterTest {
 				"P.forecast,H.simulated"
 		};
 		
-		PiIOArguments arguments = new PiIOArguments();
+		PiIOArguments arguments = PiIOArguments.instance();
 		new LTFPostAdapter().execute( args, arguments );
 	}
 }

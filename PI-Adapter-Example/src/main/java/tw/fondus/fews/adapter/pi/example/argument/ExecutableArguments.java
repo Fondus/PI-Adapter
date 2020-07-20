@@ -4,17 +4,31 @@ import com.beust.jcommander.Parameter;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 /**
  * The Model executable-adapter arguments for running Example model.
- * 
+ *
  * @author Brad Chen
  *
  */
 @Data
-@EqualsAndHashCode( callSuper = false )
+@SuperBuilder
+@ToString( callSuper = true )
+@EqualsAndHashCode( callSuper = true )
 public class ExecutableArguments extends PiIOArguments {
 	@Parameter( names = { "--executable", "-e" }, required = true, description = "The model executable.")
 	private String executable;
+
+	/**
+	 * Create the argument instance.
+	 *
+	 * @return argument instance
+	 * @since 3.0.0
+	 */
+	public static ExecutableArguments instance(){
+		return ExecutableArguments.builder().build();
+	}
 }

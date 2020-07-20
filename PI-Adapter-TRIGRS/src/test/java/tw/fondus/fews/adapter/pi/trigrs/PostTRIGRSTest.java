@@ -32,7 +32,7 @@ public class PostTRIGRSTest {
 				"../Diagnostics/"
 				};
 		
-		PostArguments arguments = new PostArguments();
+		PostArguments arguments = PostArguments.instance();
 		new TRIGRSPostAdapter().execute(args, arguments);
 	}
 }

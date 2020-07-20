@@ -1,18 +1,16 @@
 package tw.fondus.fews.adapter.pi.trigrs;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.concurrent.TimeoutException;
-
 import org.zeroturnaround.exec.InvalidExitValueException;
-
-import strman.Strman;
 import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.trigrs.argument.RunArguments;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Model executable-adapter for running TRIGRS landslide model from Delft-FEWS.
@@ -23,18 +21,18 @@ import tw.fondus.fews.adapter.pi.trigrs.argument.RunArguments;
 public class TRIGRSExecutable extends PiCommandLineExecute {
 	
 	public static void main(String[] args){
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new TRIGRSExecutable().execute(args, arguments);
 	}
 	
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath, Path inputPath,
 			Path outputPath ) {
-		/** Cast PiArguments to expand arguments **/
-		RunArguments modelArguments = (RunArguments) arguments;
+		// Cast PiArguments to expand arguments
+		RunArguments modelArguments = this.asArguments( arguments, RunArguments.class );
 		
 		String executeModel = modelArguments.getExecutable();
-		String command = Strman.append( basePath.toString(), PATH, executeModel );
+		String command = basePath.resolve( executeModel ).toString();
 		
 		logger.log( LogLevel.INFO, "TRIGRS Executable Adapter: Start TRIGRS simulation." );
 		

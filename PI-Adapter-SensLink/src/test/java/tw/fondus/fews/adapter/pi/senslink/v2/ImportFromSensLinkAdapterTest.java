@@ -1,9 +1,15 @@
 package tw.fondus.fews.adapter.pi.senslink.v2;
 
+import nl.wldelft.util.timeseries.TimeSeriesArrays;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-
-import tw.fondus.fews.adapter.pi.senslink.v2.ImportFromSensLinkAdapter;
+import tw.fondus.commons.fews.pi.util.timeseries.TimeSeriesUtils;
+import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.fews.adapter.pi.senslink.v2.argument.RunArguments;
+
+import java.io.IOException;
 
 /**
  * Unit test of Model adapter for import data from the SensLink 2.0.
@@ -13,8 +19,8 @@ import tw.fondus.fews.adapter.pi.senslink.v2.argument.RunArguments;
  */
 public class ImportFromSensLinkAdapterTest {
 	
-	@Test
-	public void test() {
+	@Before
+	public void run() {
 		String[] args = new String[]{
 				"-b",
 				"src/test/resources",
@@ -25,23 +31,34 @@ public class ImportFromSensLinkAdapterTest {
 				"-d",
 				"1",
 				"-i",
-				"Input.xml",
+				"ImportV2.xml",
 				"-o",
-				"Output.xml",
+				"OutputV2.xml",
 				"-p",
 				"H.obs",
 				"-u",
 				"m",
-				"-s",
-				"1",
 				"-us",
 				"",
 				"-pw",
 				""
 				};
 		
-		RunArguments arguments = new RunArguments();
-		new ImportFromSensLinkAdapter().execute(args, arguments);
+		RunArguments arguments = RunArguments.instance();
+		new ImportFromSensLinkAdapter().execute( args, arguments );
 	}
 
+	@SuppressWarnings( "rawtypes" )
+	@Test
+	public void test() throws IOException {
+		TimeSeriesArrays timeSeriesArrays = TimeSeriesUtils.read( "src/test/resources/Output/OutputV2.xml" );
+		Assert.assertFalse( timeSeriesArrays.isEmpty() );
+
+		TimeSeriesUtils.toList( timeSeriesArrays ).forEach( timeSeriesArray -> Assert.assertFalse( timeSeriesArray.isEmpty() ) );
+	}
+
+	@After
+	public void clean(){
+		PathUtils.deleteIfExists( "src/test/resources/Output/OutputV2.xml" );
+	}
 }

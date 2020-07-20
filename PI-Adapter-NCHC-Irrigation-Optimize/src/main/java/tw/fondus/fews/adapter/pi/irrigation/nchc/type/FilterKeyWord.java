@@ -19,7 +19,7 @@ public enum FilterKeyWord {
 	@Getter
 	private String value;
 
-	private FilterKeyWord( String value ){
+	FilterKeyWord( String value ){
 		this.value = value;
 	}
 }

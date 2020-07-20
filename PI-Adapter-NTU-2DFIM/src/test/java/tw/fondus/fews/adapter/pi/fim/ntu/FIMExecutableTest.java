@@ -26,7 +26,7 @@ public class FIMExecutableTest {
 				"run_nchc.bat"
 		};
 		
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new FIMExecutable().execute( args, arguments );
 	}
 }

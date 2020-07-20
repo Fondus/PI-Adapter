@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import strman.Strman;
+import tw.fondus.commons.util.file.io.PathReader;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,15 +38,15 @@ public class ModelUtilsTest {
 	}
 
 	@Test
-	public void testDuration() throws IOException {
-		Assert.assertEquals( ModelUtils.readModelDuration( this.parameterFilePath.toString() ), 24 );
+	public void testDuration() {
+		Assert.assertEquals( ModelUtils.readModelDuration( this.parameterFilePath ), 24 );
 	}
 
 	@Test
-	public void testAreaOrder() throws IOException {
-		List<String> areas = ModelUtils.readAreaOrder( this.areaOrderFilePath.toString() );
+	public void testAreaOrder() {
+		List<String> areas = PathReader.readAllLines( this.areaOrderFilePath );
 		Assert.assertTrue( areas.size() > 0 );
 
-		areas.forEach( area -> System.out.println( area ) );
+		areas.forEach( System.out::println );
 	}
 }

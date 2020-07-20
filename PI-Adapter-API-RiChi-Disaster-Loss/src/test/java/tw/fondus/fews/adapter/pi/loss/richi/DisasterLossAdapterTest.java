@@ -2,7 +2,7 @@ package tw.fondus.fews.adapter.pi.loss.richi;
 
 import org.junit.Test;
 
-import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
+import tw.fondus.fews.adapter.pi.loss.richi.argument.ProcessArguments;
 
 /**
  * The unit test of Disaster Loss Adapter.
@@ -23,7 +23,7 @@ public class DisasterLossAdapterTest {
 				""
 				};
 		
-		PiIOArguments arguments = new PiIOArguments();
+		ProcessArguments arguments = ProcessArguments.instance();
 		new DisasterLossAdapter().execute(args, arguments);
 	}
 }

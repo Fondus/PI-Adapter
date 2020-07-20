@@ -1,7 +1,10 @@
 package tw.fondus.fews.adapter.pi.runoff.nchc.tank;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-
+import tw.fondus.commons.util.file.FileType;
+import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
 /**
@@ -12,8 +15,8 @@ import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
  */
 public class TankPreAdapterTest {
 
-	@Test
-	public void test() {
+	@Before
+	public void run() {
 		String[] args = new String[]{
 				"-b",
 				"src/test/resources/Tank",
@@ -23,8 +26,15 @@ public class TankPreAdapterTest {
 				"Time.DAT"
 				};
 		
-		PiIOArguments arguments = new PiIOArguments();
+		PiIOArguments arguments = PiIOArguments.instance();
 		new TankPreAdapter().execute(args, arguments);
 	}
-	
+
+	@Test
+	public void test(){
+		Assert.assertTrue( PathUtils.isExists( "src/test/resources/Tank/Input/Time.DAT" ) );
+		Assert.assertTrue( PathUtils.list( "src/test/resources/Tank/Input" )
+				.stream()
+				.anyMatch( path -> PathUtils.equalsExtension( path, FileType.TXT ) ) );
+	}
 }

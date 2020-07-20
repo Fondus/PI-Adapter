@@ -1,12 +1,13 @@
 package tw.fondus.fews.adapter.pi.argument;
 
-import java.util.List;
-
 import com.beust.jcommander.Parameter;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import tw.fondus.commons.cli.argument.converter.FileListConverter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import tw.fondus.commons.cli.argument.splitter.CommaSplitter;
+
+import java.util.List;
 
 /**
  * Standard arguments use for the included input, output files, parameter and unit to run the command-Line interface.<br/>
@@ -16,14 +17,16 @@ import tw.fondus.commons.cli.argument.converter.FileListConverter;
  * @author Brad Chen
  */
 @Data
-@EqualsAndHashCode( callSuper = false )
+@SuperBuilder
+@ToString( callSuper = true )
+@EqualsAndHashCode( callSuper = true )
 public class PiIOArguments extends PiBasicArguments {
 	@Parameter( names = { "--input", "-i" }, required = true, description = "The input file list with comma, and order is fixed.",
-			listConverter = FileListConverter.class )
+			splitter = CommaSplitter.class )
 	private List<String> inputs;
 
 	@Parameter( names = { "--output", "-o" }, required = true, description = "The output file list with comma, and order is fixed.",
-			listConverter = FileListConverter.class )
+			splitter = CommaSplitter.class )
 	private List<String> outputs;
 
 	@Parameter( names = { "--parameter", "-p" }, description = "The parameter name of model output, use only when program need it." )
@@ -31,4 +34,14 @@ public class PiIOArguments extends PiBasicArguments {
 
 	@Parameter( names = { "--unit", "-u" }, description = "The unit name of model output, use only when program need it." )
 	private String unit;
+
+	/**
+	 * Create the argument instance.
+	 *
+	 * @return argument instance
+	 * @since 3.0.0
+	 */
+	public static PiIOArguments instance(){
+		return PiIOArguments.builder().build();
+	}
 }

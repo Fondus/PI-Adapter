@@ -1,17 +1,17 @@
 package tw.fondus.fews.adapter.pi.runoff.nchc.tank;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.stream.IntStream;
-
-import org.apache.commons.lang3.StringUtils;
-
 import nl.wldelft.util.timeseries.SimpleTimeSeriesContentHandler;
 import tw.fondus.commons.util.file.PathUtils;
+import tw.fondus.commons.util.file.io.PathReader;
+import tw.fondus.commons.util.math.NumberUtils;
+import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 import tw.fondus.fews.adapter.pi.runoff.nchc.RainRunoffPostAdapter;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
+
+import java.nio.file.Path;
+import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Model post-adapter for running NCHC Tank model from Delft-FEWS.
@@ -22,21 +22,21 @@ import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 public class TankPostAdapter extends RainRunoffPostAdapter {
 	
 	public static void main(String[] args) {
-		PiIOArguments arguments = new PiIOArguments();
+		PiIOArguments arguments = PiIOArguments.instance();
 		new TankPostAdapter().execute(args, arguments);
 	}
 
 	@Override
 	protected void parseModelOutputContent( Path outputPath, SimpleTimeSeriesContentHandler contentHandler,
-			String parameter, String unit, long startTimeMillis, long timeStepMillis ) throws IOException {
+			String parameter, String unit, long startTimeMillis, long timeStepMillis ) {
 		String locationId = PathUtils.getNameWithoutExtension( outputPath );
-		TimeSeriesLightUtils.fillPiTimeSeriesHeader(contentHandler, locationId, parameter, unit, timeStepMillis);
+		TimeSeriesLightUtils.addHeader(contentHandler, locationId, parameter, unit, timeStepMillis);
 		
-		List<String> fileLines = PathUtils.readAllLines( outputPath );
+		List<String> fileLines = PathReader.readAllLines( outputPath );
 		IntStream.range(0, fileLines.size()).forEach(i -> {
-			String[] datas = StringUtils.splitByWholeSeparator(fileLines.get(i), null);
+			String[] data = fileLines.get(i).trim().split( Strings.SPLIT_SPACE_MULTIPLE );
 			
-			TimeSeriesLightUtils.addPiTimeSeriesValue( contentHandler, startTimeMillis + i * timeStepMillis, Float.valueOf( datas[1]  ) );
+			TimeSeriesLightUtils.addValue( contentHandler, startTimeMillis + i * timeStepMillis, NumberUtils.create( data[1] ) );
 		});
 	}
 

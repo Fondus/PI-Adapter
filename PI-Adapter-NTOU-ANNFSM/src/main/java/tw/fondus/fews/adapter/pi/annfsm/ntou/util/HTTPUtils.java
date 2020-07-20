@@ -6,11 +6,13 @@ import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 import java.util.Optional;
 
-import org.apache.commons.io.FileUtils;
-
+import okhttp3.logging.HttpLoggingInterceptor;
 import strman.Strman;
-import tw.fondus.commons.util.http.HttpClient;
-import tw.fondus.commons.util.http.HttpUtils;
+import tw.fondus.commons.http.HttpClient;
+import tw.fondus.commons.http.util.HttpUtils;
+import tw.fondus.commons.http.util.HttpsProtocol;
+import tw.fondus.commons.http.util.OkHttpUtils;
+import tw.fondus.commons.util.file.io.PathWriter;
 import tw.fondus.commons.util.optional.OptionalUtils;
 
 /**
@@ -23,11 +25,14 @@ public class HTTPUtils {
 	private static HttpClient httpClient;
 
 	static {
-		httpClient = new HttpClient();
 		try {
-			httpClient.setClient( HttpUtils.buildSSLClient( httpClient.getClient(),
-					HttpUtils.getTrustAllSSLSocket( HttpUtils.TLS_V1 ), HttpUtils.getTrustAllManager(),
-					HttpUtils.getTrustAllHostVerifier() ) );
+			httpClient = HttpClient.of( OkHttpUtils.builder()
+					.addInterceptor( OkHttpUtils.loggingInterceptor( HttpLoggingInterceptor.Level.BASIC ) )
+					.sslSocketFactory(
+							HttpUtils.getTrustAllSSLSocket( HttpsProtocol.TLS_1_2 ),
+							HttpUtils.getTrustAllManager() )
+					.hostnameVerifier( HttpUtils.getTrustAllHostVerifier() )
+					.build());
 		} catch (GeneralSecurityException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +58,7 @@ public class HTTPUtils {
 				String url = Strman.append( optURL.get(), dataId, optUrlAuthor.get(), token, optUrlFormat.get() );
 
 				String fileString = httpClient.get( url );
-				FileUtils.writeStringToFile( downloadPath.toFile(), fileString );
+				PathWriter.write( downloadPath, fileString );
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

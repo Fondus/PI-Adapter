@@ -28,7 +28,7 @@ public class KWGIUHPostAdapterTest {
 				"m^3/s"
 		};
 	
-		ExecutableArguments arguments = new ExecutableArguments();
+		ExecutableArguments arguments = ExecutableArguments.instance();
 		new KWGIUHPostAdapter().execute( args, arguments );
 	}
 }

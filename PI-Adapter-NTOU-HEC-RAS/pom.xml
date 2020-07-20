@@ -1,24 +1,17 @@
 <?xml version="1.0"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>2.0.0</version>
+		<version>3.0.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-ntou-hec-ras</artifactId>
+	<packaging>jar</packaging>
 
 	<name>PI-Adapter-NTOU-HEC-RAS</name>
 	<url>http://maven.apache.org</url>
-
-	<properties>
-		<commons.version>1.0.0</commons.version>
-		<commons.netcdf.version>0.7.2</commons.netcdf.version>
-	</properties>
 
 	<dependencies>
 		<!-- PI-Adapter Commons -->
@@ -26,16 +19,16 @@
 			<groupId>tw.fondus.fews.adapter</groupId>
 			<artifactId>pi-adapter-commons</artifactId>
 		</dependency>
-		<!-- Commons-Utils -->
+		<!-- FondUS SDK: The open source project can't use this -->
+		<!-- Commons-Core -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-utils</artifactId>
+			<artifactId>commons-core</artifactId>
 		</dependency>
-		<!-- Commons-NetCDF -->
+		<!-- Commons-Spatial -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-netcdf</artifactId>
-			<version>${commons.netcdf.version}</version>
+			<artifactId>commons-spatial</artifactId>
 		</dependency>
 	</dependencies>
 

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding= "UTF-8"?>
-<Diag version="1.2" xsi:schemaLocation="http://www.wldelft.nl/fews/PI HTTP://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_diag.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.wldelft.nl/fews/PI">
-   <line level="3" description="CreateMapStackXmlAdapter: The meta-information with TimeStep: hour, Multiplier: 1."/>
-   <line level="3" description="CreateMapStackXmlAdapter: The meta-information with LocationId: LocationId, ParameterId: Depth, GeoDatum: TWD 1997, FilePattern: dm1d????.asc."/>
-   <line level="3" description="CreateMapStackXmlAdapter: The meta-information with Start Time: 2019-12-02T16:00:00.000Z, End Time: 2019-12-02T18:00:00.000Z."/>
-   <line level="3" description="CreateMapStackXmlAdapter: Start create meta-information file."/>
-   <line level="3" description="CreateMapStackXmlAdapter: Finished create meta-information file."/>
-</Diag>

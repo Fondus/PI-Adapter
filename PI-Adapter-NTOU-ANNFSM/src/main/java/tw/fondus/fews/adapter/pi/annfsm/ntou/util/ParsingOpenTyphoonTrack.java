@@ -1,6 +1,7 @@
 package tw.fondus.fews.adapter.pi.annfsm.ntou.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -155,6 +156,6 @@ public class ParsingOpenTyphoonTrack {
 				intensity.getJSONObject( MAX_WIND ).getBigDecimal( VALUE ),
 				intensity.getJSONObject( GUST ).getBigDecimal( VALUE ),
 				intensity.getJSONObject( CENTRAL_PRESSURE ).getBigDecimal( VALUE ),
-				WindDistribution.of( "7", radius.divide( new BigDecimal( "2" ), 2 ) ) );
+				WindDistribution.of( "7", radius.divide( new BigDecimal( "2" ), 2, RoundingMode.HALF_UP ) ) );
 	}
 }

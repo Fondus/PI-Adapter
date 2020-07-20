@@ -28,7 +28,7 @@ public class ExecutableSearchTest {
 				"-d",
 				"24h"
 		};
-		RunArguments arguments =new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new SearchExecutable().execute( args, arguments );
 	}
 }

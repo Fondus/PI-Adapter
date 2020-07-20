@@ -26,7 +26,7 @@ public class ExecuteTRIGRSTest {
 				"../Diagnostics/"
 				};
 		
-		RunArguments arguments = new RunArguments();
+		RunArguments arguments = RunArguments.instance();
 		new TRIGRSExecutable().execute(args, arguments);
 	}
 }

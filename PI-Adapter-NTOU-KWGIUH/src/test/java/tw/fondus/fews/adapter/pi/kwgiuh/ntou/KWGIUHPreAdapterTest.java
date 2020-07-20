@@ -34,7 +34,7 @@ public class KWGIUHPreAdapterTest {
 				"0.5"
 		};
 	
-		PreAdapterArguments arguments = new PreAdapterArguments();
+		PreAdapterArguments arguments = PreAdapterArguments.instance();
 		new KWGIUHPreAdapter().execute( args, arguments );
 	}
 }

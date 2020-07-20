@@ -28,7 +28,7 @@ public class IrrigationOptimizeParameterAdapterTest {
 				"員崠,寶山"
 		};
 
-		ParameterArguments arguments = new ParameterArguments();
+		ParameterArguments arguments = ParameterArguments.instance();
 		new IrrigationOptimizeParameterAdapter().execute( args, arguments );
 	}
 }
