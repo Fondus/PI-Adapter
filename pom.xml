@@ -210,5 +210,6 @@
 		<module>PI-Adapter-NetCDF</module>
 		<module>PI-Adapter-NTU-2DFIM</module>
 		<module>PI-Adapter-StressTest</module>
+		<module>PI-Adapter-Rainfall-Process</module>
 	</modules>
 </project>
