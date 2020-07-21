@@ -60,7 +60,7 @@ public class RainfallAccumulateAdapter extends PiCommandLineExecute {
 					TimeSeriesLightUtils.addHeader( handler, locationId, parameter, unit, inputTimeStep );
 
 					TimeSeriesLightUtils.addValue( handler,
-							array.getTime( skip ), Aggregations.accumulative( array, skip + start, skip + end + 1 ) );
+							array.getTime( skip - 1 ), Aggregations.accumulative( array, skip + start, skip + end + 1 ) );
 				} );
 
 				logger.log( LogLevel.INFO, "RainfallAccumulateAdapter: Write accumulated series to PI-XML." );

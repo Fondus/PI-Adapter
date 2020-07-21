@@ -29,7 +29,7 @@ public class RainfallAccumulateAdapterTest {
 				"-o",
 				"Output.xml",
 				"-s",
-				"17",
+				"16",
 				"-si",
 				"0",
 				"-ei",
