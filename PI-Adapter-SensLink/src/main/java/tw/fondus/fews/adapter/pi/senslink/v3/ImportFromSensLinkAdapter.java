@@ -8,6 +8,7 @@ import tw.fondus.commons.fews.pi.util.timeseries.TimeSeriesUtils;
 import tw.fondus.commons.json.oauth2.model.OAuthToken;
 import tw.fondus.commons.rest.senslink.v3.feign.SensLinkApiV3;
 import tw.fondus.commons.rest.senslink.v3.feign.SensLinkApiV3Runtime;
+import tw.fondus.commons.rest.senslink.v3.model.quantity.PhysicalQuantity;
 import tw.fondus.commons.rest.senslink.v3.model.record.RecordTimeSeries;
 import tw.fondus.commons.rest.senslink.v3.util.SensLinkApiV3Host;
 import tw.fondus.commons.rest.senslink.v3.util.SensLinkApiV3Utils;
@@ -71,11 +72,15 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 							.map( locationId -> api.readTimeSeries( token.getAccess(), locationId, start, timeZero, true, TimeZone.UTC0 ) )
 							.collect( Collectors.toList() );
 
+					List<PhysicalQuantity> physicalQuantities = locationIds.stream()
+						.map( locationId -> api.getPhysicalQuantity( token.getAccess(), locationId ) )
+						.collect( Collectors.toList() );
+
 					if ( records.size() > 0 ) {
 						logger.log( LogLevel.INFO,
 								"SensLink 3.0 Import Adapter: Start translate SensLink PhysicalQuantity records to PI-XML." );
 
-						TimeSeriesArrays outputArrays = SensLinkApiV3Utils.fromRecordTimeSeries( records, modelArguments.getParameter(), modelArguments.getUnit() );
+						TimeSeriesArrays outputArrays = SensLinkApiV3Utils.fromRecordTimeSeries( records, physicalQuantities, modelArguments.getParameter(), modelArguments.getUnit() );
 						try {
 							TimeSeriesUtils.write( outputArrays, outputPath.resolve( modelArguments.getOutputs().get( 0 ) ) );
 						} catch (IOException e) {
