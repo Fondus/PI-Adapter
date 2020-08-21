@@ -106,9 +106,9 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 					}
 				} );
 		} catch ( IOException e){
-			logger.log( LogLevel.ERROR,"GridRestructureAdapter: Read NetCDF has IO problem." );
+			logger.log( LogLevel.ERROR,"GridRestructureAdapter: Read NetCDF has IO problem. {}", e.toString() );
 		} catch (Exception e) {
-			logger.log( LogLevel.ERROR,"GridRestructureAdapter: Read NetCDF has problem." );
+			logger.log( LogLevel.ERROR,"GridRestructureAdapter: Read NetCDF has problem. {}", e.toString() );
 		}
 	}
 
