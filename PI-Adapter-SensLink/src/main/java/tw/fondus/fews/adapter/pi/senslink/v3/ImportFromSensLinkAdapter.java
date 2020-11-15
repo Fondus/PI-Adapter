@@ -22,7 +22,6 @@ import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -58,23 +57,28 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 			String username = modelArguments.getUsername();
 			String password = modelArguments.getPassword();
 
-			SensLinkApiV3 api = SensLinkApiV3Runtime.DEFAULT;
-
+			SensLinkApiV3 api;
+			OAuthToken token;
 			try {
 				// Login SensLink 3.0 by OAuth 2.0
-				Optional<OAuthToken> optional = api.getAccessToken( username, password, SensLinkApiV3Host.IOW );
-				optional.ifPresentOrElse( token -> {
-					logger.log( LogLevel.INFO,
-							"SensLink 3.0 Import Adapter: The SensLink 3.0 system login successfully, try to get records from the SensLink 3.0 system." );
+				if ( modelArguments.isCustom() ){
+					api = SensLinkApiV3Runtime.buildRuntime( modelArguments.getHost() );
+					token = api.requestAccessToken( username, password, modelArguments.getHost() );
+				} else {
+					api = SensLinkApiV3Runtime.DEFAULT;
+					token = api.requestAccessToken( username, password, SensLinkApiV3Host.IOW );
+				}
 
+				if ( token.isSuccessful() ){
+					logger.log( LogLevel.INFO, "SensLink 3.0 Import Adapter: The SensLink 3.0 system login successfully, try to get records from the SensLink 3.0 system." );
 					DateTime start = timeZero.minusDays( modelArguments.getDuration() );
 					List<RecordTimeSeries> records = locationIds.stream()
 							.map( locationId -> api.readTimeSeries( token.getAccess(), locationId, start, timeZero, true, TimeZone.UTC0 ) )
 							.collect( Collectors.toList() );
 
 					List<PhysicalQuantity> physicalQuantities = locationIds.stream()
-						.map( locationId -> api.getPhysicalQuantity( token.getAccess(), locationId ) )
-						.collect( Collectors.toList() );
+							.map( locationId -> api.getPhysicalQuantity( token.getAccess(), locationId ) )
+							.collect( Collectors.toList() );
 
 					if ( records.size() > 0 ) {
 						logger.log( LogLevel.INFO,
@@ -90,8 +94,9 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 					} else {
 						logger.log( LogLevel.WARN, "SensLink 3.0 Import Adapter: Not receive any records from SensLink." );
 					}
-
-				}, () -> logger.log( LogLevel.WARN, "SensLink 3.0 Import Adapter: SensLink System Login failed." ) );
+				} else {
+					logger.log( LogLevel.WARN, "SensLink 3.0 Import Adapter: SensLink System Login failed." );
+				}
 				logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Finished Adapter process." );
 			} catch (IOException e) {
 				logger.log( LogLevel.ERROR, "SensLink 3.0 Import Adapter: SensLink System Login failed!" );
