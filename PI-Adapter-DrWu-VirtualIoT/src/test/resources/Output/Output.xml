@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TimeSeries xmlns="http://www.wldelft.nl/fews/PI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_timeseries.xsd" version="1.2">
+    <timeZone>0.0</timeZone>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT1</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT2</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="-965.5339" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT3</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="-897.722" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT4</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="-244.5878" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT5</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="-965.7" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT6</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="-751.0323" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT7</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="-949.05" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT8</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT9</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="-891.5075" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT10</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="-119.5711" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT11</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="-972.1527" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>VIOT14</locationId>
+            <parameterId>Depth.simulated</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2020-12-01" time="06:00:00"/>
+            <endDate date="2020-12-01" time="06:00:00"/>
+            <missVal>-999</missVal>
+            <units>m</units>
+        </header>
+        <event date="2020-12-01" time="06:00:00" value="-951.3214" flag="0"/>
+    </series>
+</TimeSeries>

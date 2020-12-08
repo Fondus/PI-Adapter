@@ -156,8 +156,8 @@
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
-                	<autoVersionSubmodules>true</autoVersionSubmodules>
-            	</configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
 			</plugin>
 			<!-- JaCoCo Code Coverage -->
 			<plugin>
@@ -211,5 +211,6 @@
 		<module>PI-Adapter-NTU-2DFIM</module>
 		<module>PI-Adapter-StressTest</module>
 		<module>PI-Adapter-Rainfall-Process</module>
+		<module>PI-Adapter-DrWu-VirtualIoT</module>
 	</modules>
 </project>
