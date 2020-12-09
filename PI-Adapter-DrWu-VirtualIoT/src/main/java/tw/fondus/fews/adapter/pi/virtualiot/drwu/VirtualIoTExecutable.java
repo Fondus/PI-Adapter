@@ -14,7 +14,6 @@ import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.virtualiot.drwu.argument.ExecutableArguments;
-import tw.fondus.fews.adapter.pi.virtualiot.drwu.util.DataUtils;
 
 /**
  * Model executable for running Virtual IoT model from Delft-FEWS.
@@ -48,8 +47,8 @@ public class VirtualIoTExecutable extends PiCommandLineExecute {
 		logger.log( LogLevel.INFO, "VirtualIotExecutable: Clean executable directory and copy template file." );
 		PathUtils.clean( executablePath );
 		PathUtils.copy( inputPath.resolve( executableArguments.getInputs().get( 0 ) ), executablePath );
-		DataUtils.copiesWithoutDirectory( templatePath, executablePath );
-		DataUtils.copiesWithSubDirectory( basinTemplatePath, executablePath );
+		PathUtils.copiesWithoutSubDirectory( templatePath, executablePath );
+		PathUtils.copiesFileFlattenWithSubDirectory( basinTemplatePath, executablePath );
 
 		try {
 			logger.log( LogLevel.INFO, "VirtualIotExecutable: Running model." );
