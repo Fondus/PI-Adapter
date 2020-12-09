@@ -1,6 +1,7 @@
 package tw.fondus.fews.adapter.pi.virtualiot.drwu;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +84,7 @@ public class VirtualIoTPreAdapter extends PiCommandLineExecute {
 				.map( id -> {
 					TimeSeriesArray timeSeriesArray = timeSeriesMap.get( id );
 					return IntStream.range( 0, timeSeriesArray.size() )
-							.mapToObj( i -> TimeSeriesLightUtils.getValue( timeSeriesArray, i ).toString() )
+							.mapToObj( i -> TimeSeriesLightUtils.getValue( timeSeriesArray, i, BigDecimal.ZERO ).toString() )
 							.collect( Collectors.joining( Strings.COMMA ) );
 				} )
 				.collect( Collectors.toList() );
