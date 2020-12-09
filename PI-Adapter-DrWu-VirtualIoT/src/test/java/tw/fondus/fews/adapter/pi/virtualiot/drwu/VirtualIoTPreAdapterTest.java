@@ -20,11 +20,11 @@ public class VirtualIoTPreAdapterTest {
 			"-b",
 			"src/test/resources",
 			"-i",
-			"input.xml,inputOrder.txt",
+			"Input.xml,InputOrder.txt",
 			"-o",
 			"INPUT_OBS_FDEP_GAGE_OBS_T1001.TXT",
 			"-ba",
-			"Ylian"
+			"Yilan"
 		};
 		
 		PreAdapterArguments arguments = PreAdapterArguments.instance();

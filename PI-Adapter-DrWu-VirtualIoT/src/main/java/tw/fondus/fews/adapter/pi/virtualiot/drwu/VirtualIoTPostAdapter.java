@@ -1,10 +1,5 @@
 package tw.fondus.fews.adapter.pi.virtualiot.drwu;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.stream.IntStream;
-
 import nl.wldelft.util.timeseries.SimpleTimeSeriesContentHandler;
 import nl.wldelft.util.timeseries.TimeSeriesArray;
 import tw.fondus.commons.cli.util.Prevalidated;
@@ -18,6 +13,11 @@ import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 import tw.fondus.fews.adapter.pi.virtualiot.drwu.argument.PostAdapterArguments;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Model post-adapter for running Virtual IoT model from Delft-FEWS.
@@ -43,7 +43,7 @@ public class VirtualIoTPostAdapter extends PiCommandLineExecute {
 			PathUtils.clean( outputPath );
 			
 			Path depthPath = Prevalidated.checkExists( inputPath.resolve( adapterArguments.getInputs().get( 0 ) ),
-					"VirtualIotPostAdapter: Can not find executable directory." );
+					"VirtualIotPostAdapter: Can not find Input.xml." );
 			TimeSeriesArray timeSeriesArray = TimeSeriesLightUtils.read( depthPath ).get( 0 );
 
 			Path executablePath = Prevalidated.checkExists( basePath.resolve( adapterArguments.getExecutableDir() ),

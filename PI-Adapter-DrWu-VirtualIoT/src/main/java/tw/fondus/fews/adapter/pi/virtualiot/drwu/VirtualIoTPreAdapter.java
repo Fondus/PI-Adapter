@@ -1,13 +1,5 @@
 package tw.fondus.fews.adapter.pi.virtualiot.drwu;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import nl.wldelft.util.timeseries.TimeSeriesArray;
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import tw.fondus.commons.cli.util.Prevalidated;
@@ -21,6 +13,14 @@ import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 import tw.fondus.fews.adapter.pi.virtualiot.drwu.argument.PreAdapterArguments;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Model pre-adapter for running Virtual IoT model from Delft-FEWS.
@@ -78,9 +78,8 @@ public class VirtualIoTPreAdapter extends PiCommandLineExecute {
 	 * @return model input content
 	 */
 	private List<String> buildModelInput( List<String> inputOrder, Map<String, TimeSeriesArray> timeSeriesMap ) {
-		return IntStream.range( 0, inputOrder.size() )
-				.mapToObj( i -> inputOrder.get( i ) )
-				.filter( id -> timeSeriesMap.containsKey( id ) )
+		return inputOrder.stream()
+				.filter( timeSeriesMap::containsKey )
 				.map( id -> {
 					TimeSeriesArray timeSeriesArray = timeSeriesMap.get( id );
 					return IntStream.range( 0, timeSeriesArray.size() )

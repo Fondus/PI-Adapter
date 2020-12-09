@@ -28,7 +28,6 @@
 			<artifactId>pi-adapter-commons</artifactId>
 		</dependency>
 		<!-- FondUS SDK: The open source project can't use this -->
-		<!-- Commons-Core -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-core</artifactId>

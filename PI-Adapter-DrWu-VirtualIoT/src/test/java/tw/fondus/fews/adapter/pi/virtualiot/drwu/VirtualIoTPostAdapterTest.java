@@ -20,7 +20,7 @@ public class VirtualIoTPostAdapterTest {
 			"-b",
 			"src/test/resources",
 			"-i",
-			"input.xml,OUTPUT_EST_FDEP_GRID_ANN_T1001.TXT,outputOrder.txt",
+			"Input.xml,OUTPUT_EST_FDEP_GRID_ANN_T1001.TXT,OutputOrder.txt",
 			"-o",
 			"Output.xml",
 			"-p",

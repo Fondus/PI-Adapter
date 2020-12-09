@@ -24,7 +24,7 @@ public class VirtualIoTExecutableTest {
 			"-o",
 			"",
 			"-ba",
-			"Ylian",
+			"Yilan",
 			"-e",
 			"PRO_EST_FDEP_VIOT.exe"
 		};
