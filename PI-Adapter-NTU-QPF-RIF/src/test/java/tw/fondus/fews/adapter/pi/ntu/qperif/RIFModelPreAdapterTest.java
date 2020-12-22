@@ -25,7 +25,7 @@ public class RIFModelPreAdapterTest {
 				"-id",
 				"InputData/",
 				"-od",
-				"FloodDepth/",
+				"InputData/",
 				"-i",
 				"Tide.xml,Sensor.xml,InputOrder.csv",
 				"-o",

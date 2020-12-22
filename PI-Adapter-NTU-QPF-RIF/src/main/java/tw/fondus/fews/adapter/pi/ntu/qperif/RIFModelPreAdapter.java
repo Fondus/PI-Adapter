@@ -64,10 +64,10 @@ public class RIFModelPreAdapter extends PiCommandLineExecute {
 					logger.log( LogLevel.ERROR, "RIFModelPreAdapter: Sensor order file is empty!" );
 				} else {
 					TimeSeriesArray tideTimeSeriesArray = TimeSeriesLightUtils.read( tideXmlPath ).get( 0 );
-					this.writeTideInput( tideTimeSeriesArray, inputPath.resolve( outputs.get( 0 ) ) );
+					this.writeTideInput( tideTimeSeriesArray, outputPath.resolve( outputs.get( 0 ) ) );
 
 					TimeSeriesArrays sensorTimeSeriesArrays = TimeSeriesLightUtils.read( sensorXmlPath );
-					this.writeSensorInput( sensorTimeSeriesArrays, mappings, inputPath.resolve( outputs.get( 1 ) ) );
+					this.writeSensorInput( sensorTimeSeriesArrays, mappings, outputPath.resolve( outputs.get( 1 ) ) );
 				}
 			} catch ( IOException e ) {
 				logger.log( LogLevel.ERROR, "RIFModelPreAdapter: Read the input XML has something wrong.", e );
