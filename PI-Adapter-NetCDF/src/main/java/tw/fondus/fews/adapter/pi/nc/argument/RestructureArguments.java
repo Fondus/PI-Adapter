@@ -44,6 +44,10 @@ public class RestructureArguments extends PiIOArguments {
 	private int tOrder = 0;
 
 	@Builder.Default
+	@Parameter( names = { "-isTWD97" }, description = "The flag use to setting output coordinate meta-data to TWD97." )
+	private boolean isTWD97 = false;
+
+	@Builder.Default
 	@Parameter( names = { "-tzFlag" }, description = "The flag use to append time zone to time unit." )
 	private boolean isTimeZoneFlag = false;
 

@@ -49,7 +49,7 @@ public class ExportAllToSensLinkAdapter extends ParentExportToSensLinkAdapter {
 				records.addAll( SensLinkApiV3Utils.toRecords( timeSeriesArrays, i, i ) )
 			);
 
-			this.exportRecords( modelArguments.getUsername(), modelArguments.getPassword(), records );
+			this.exportRecords( modelArguments, modelArguments.getUsername(), modelArguments.getPassword(), records );
 			logger.log( LogLevel.INFO, "SensLink 3.0 Export All Adapter: Finished Adapter process.");
 
 		} catch (IOException e) {

@@ -1,6 +1,7 @@
 package tw.fondus.fews.adapter.pi.senslink.v3.argument;
 
 import com.beust.jcommander.Parameter;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -26,6 +27,13 @@ public class ExportArguments extends PiIOArguments {
 
 	@Parameter( names = { "--password", "-pw" }, required = true, description = "The account password." )
 	private String password;
+
+	@Builder.Default
+	@Parameter( names = { "--custom" }, description = "Use the custom host." )
+	private boolean custom = false;
+
+	@Parameter( names = { "--host-url", "-hu" }, description = "The host URL." )
+	private String host;
 
 	/**
 	 * Create the argument instance.

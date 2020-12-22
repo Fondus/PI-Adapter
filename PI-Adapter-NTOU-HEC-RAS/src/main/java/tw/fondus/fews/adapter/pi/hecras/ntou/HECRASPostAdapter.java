@@ -1,24 +1,11 @@
 package tw.fondus.fews.adapter.pi.hecras.ntou;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
+import nl.wldelft.util.timeseries.SimpleTimeSeriesContentHandler;
+import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.locationtech.jts.geom.Coordinate;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.operation.TransformException;
-
-import nl.wldelft.util.timeseries.SimpleTimeSeriesContentHandler;
-import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import strman.Strman;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
@@ -39,6 +26,15 @@ import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 import ucar.ma2.ArrayDouble;
 import ucar.ma2.ArrayFloat;
+
+import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Model Post-Adapter for running NTOU HEC-RAS model from Delft-FEWS.
@@ -175,29 +171,23 @@ public class HECRASPostAdapter extends PiCommandLineExecute {
 
 			SimpleTimeSeriesContentHandler handler = new SimpleTimeSeriesContentHandler();
 			IntStream.range( 0, waterLevelTimeSeriesArrays.size() ).forEach( station -> {
-				try {
-					Coordinate waterLevelPoint = JTSUtils.transformCRS( JTSUtils.coordinate(
-							NumberUtils.create(
-									waterLevelTimeSeriesArrays.get( station ).getHeader().getGeometry().getX( 0 ) ),
-							NumberUtils.create(
-									waterLevelTimeSeriesArrays.get( station ).getHeader().getGeometry().getY( 0 ) ) ),
-							EPSG.WGS84, EPSG.TWD97 );
+				Coordinate waterLevelPoint = JTSUtils.transformCRS( JTSUtils.coordinate(
+						NumberUtils.create(
+								waterLevelTimeSeriesArrays.get( station ).getHeader().getGeometry().getX( 0 ) ),
+						NumberUtils.create(
+								waterLevelTimeSeriesArrays.get( station ).getHeader().getGeometry().getY( 0 ) ) ),
+						EPSG.WGS84, EPSG.TWD97 );
 
-					TimeSeriesLightUtils.addHeader( handler,
-							waterLevelTimeSeriesArrays.get( station ).getHeader().getLocationId(), "Q.simulated",
-							"m3/s" );
-					IntStream.range( 0, flowArray.getShape()[0] ).forEach( i -> {
-						TimeSeriesLightUtils.addValue( handler, dateTime.plusHours( i ).getMillis(), new BigDecimal(
-								flowArray.get( i, findClosestPoint( waterLevelPoint, flowCoordinate ) ) ) );
-					} );
-				} catch (FactoryException | TransformException e) {
-					logger.log( LogLevel.ERROR, "HECRASPostAdapter: Transform coordinate has something wrong." );
-				}
+				TimeSeriesLightUtils.addHeader( handler,
+						waterLevelTimeSeriesArrays.get( station ).getHeader().getLocationId(), "Q.simulated",
+						"m3/s" );
+				IntStream.range( 0, flowArray.getShape()[0] ).forEach( i -> {
+					TimeSeriesLightUtils.addValue( handler, dateTime.plusHours( i ).getMillis(), new BigDecimal(
+							flowArray.get( i, findClosestPoint( waterLevelPoint, flowCoordinate ) ) ) );
+				} );
 			} );
 
 			TimeSeriesLightUtils.write( handler, outputPath.resolve( processArguments.getOutputs().get( 2 ) ) );
-		} catch (IOException e) {
-			logger.log( LogLevel.ERROR, "HECRASPostAdapter: Reading NetCDF file has something wrong." );
 		} catch (Exception e) {
 			logger.log( LogLevel.ERROR, "HECRASPostAdapter: Reading NetCDF file has something wrong." );
 		}

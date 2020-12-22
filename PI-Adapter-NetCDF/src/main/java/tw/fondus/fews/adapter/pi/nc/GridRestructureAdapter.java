@@ -30,11 +30,12 @@ import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
 /**
- * The model adapter use to restructure the grid type of NetCDF, let can be import to Delft-FEWS.
+ * The model adapter used to restructure dimension order of grid type NetCDF, let can be import to Delft-FEWS.
  *
  * @author Brad Chen
  *
@@ -55,10 +56,11 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 				inputPath.resolve( modelArguments.getInputs().get( 0 ) ),
 				"GridRestructureAdapter: The input NetCDf do not exist." );
 
-		String timeName =  modelArguments.getTName();
-		String yName =  modelArguments.getYName();
-		String xName =  modelArguments.getXName();
-		String variableName =  modelArguments.getVariableName();
+		String timeName = modelArguments.getTName();
+		String yName = modelArguments.getYName();
+		String xName = modelArguments.getXName();
+		String variableName = modelArguments.getVariableName();
+		boolean isTWD97 = modelArguments.isTWD97();
 
 		logger.log( LogLevel.INFO,"GridRestructureAdapter: The user specific T: {}, Y: {}, X: {}, V: {}.", timeName, yName, xName, variableName );
 		try ( NetCDFReader reader = NetCDFReader.read( netcdfPath ) ){
@@ -90,13 +92,13 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 						logger.log( LogLevel.INFO,"GridRestructureAdapter: Read grid values from the input NetCDF." );
 						List<List<BigDecimal>> timeGrids = this.readGridValues( variableArray,
 								modelArguments.getTOrder(), modelArguments.getYOrder(), modelArguments.getXOrder() );
-						if ( timeGrids != null ){
+						if ( Objects.nonNull( timeGrids ) ){
 							// Build the restructure NetCDF
 							String outputNetCDF = modelArguments.getOutputs().get( 0 );
 							Path outputNetCDFPath = outputPath.resolve( outputNetCDF );
 
 							logger.log( LogLevel.INFO,"GridRestructureAdapter: Start build restructure NetCDF with path: {}.", outputNetCDF );
-							this.buildNetCDF( outputNetCDFPath, timeUnit, parameter, unit, times, yCoordinates, xCoordinates, timeGrids );
+							this.buildNetCDF( outputNetCDFPath, timeUnit, parameter, unit, times, yCoordinates, xCoordinates, timeGrids, isTWD97 );
 							logger.log( LogLevel.INFO,"GridRestructureAdapter: Finished build restructure NetCDF with path: {}.", outputNetCDF );
 						} else {
 							logger.log( LogLevel.WARN,"GridRestructureAdapter: The NetCDF shape not same as user inputs." );
@@ -123,34 +125,56 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 	 * @param yCoordinates y coordinates
 	 * @param xCoordinates x coordinates
 	 * @param timeGrids time grids
+	 * @param isTWD97 setting meta-data to TWD97 or not
 	 * @throws IOException has IO Exception
 	 */
 	private void buildNetCDF( Path outputNetCDFPath, String timeUnit, String parameter, String unit,
 			List<BigDecimal> times, List<BigDecimal> yCoordinates,
-			List<BigDecimal> xCoordinates, List<List<BigDecimal>> timeGrids )
+			List<BigDecimal> xCoordinates, List<List<BigDecimal>> timeGrids, boolean isTWD97 )
 			throws IOException {
-		NetCDFWriter writer = NetCDFBuilder.create( outputNetCDFPath.toString() )
-			.addGlobalAttribute( GlobalAttribute.CONVENTIONS, "CF-1.6" )
-			.addGlobalAttribute( GlobalAttribute.TITLE, "Restructure file" )
-			.addDimension( DimensionName.TIME, times.size() )
-			.addDimension( DimensionName.Y, yCoordinates.size() )
-			.addDimension( DimensionName.X, xCoordinates.size() )
-			.addVariable( VariableName.TIME, DataType.DOUBLE, DimensionName.TIME )
-			.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_NAME, DimensionName.TIME )
-			.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_UNITS, timeUnit )
-			.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_TIME )
-			.addVariable( VariableName.Y, DataType.DOUBLE, DimensionName.Y )
-			.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_Y_WGS84 )
-			.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_Y_WGS84 )
-			.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_Y )
-			.addVariable( VariableName.X, DataType.DOUBLE, DimensionName.X )
-			.addVariableAttribute( VariableName.X, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_X_WGS84 )
-			.addVariableAttribute( VariableName.X, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_X_WGS84 )
-			.addVariableAttribute( VariableName.X, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_X )
-			.addVariable( parameter, DataType.FLOAT, DimensionName.TIME, DimensionName.Y, DimensionName.X )
-			.addVariableAttribute( parameter, VariableAttribute.KEY_NAME_LONG, parameter )
-			.addVariableAttribute( parameter, VariableAttribute.KEY_UNITS, unit )
-			.build();
+		NetCDFBuilder.NetCDFDefiner definer = NetCDFBuilder.create( outputNetCDFPath.toString() )
+				.addGlobalAttribute( GlobalAttribute.CONVENTIONS, "CF-1.6" )
+				.addGlobalAttribute( GlobalAttribute.TITLE, "Restructure file" )
+				.addDimension( DimensionName.TIME, times.size() )
+				.addDimension( DimensionName.Y, yCoordinates.size() )
+				.addDimension( DimensionName.X, xCoordinates.size() )
+				.addVariable( VariableName.TIME, DataType.DOUBLE, DimensionName.TIME )
+				.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_NAME, DimensionName.TIME )
+				.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_UNITS, timeUnit )
+				.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_TIME );
+
+		NetCDFWriter writer;
+		if ( isTWD97 ){
+			writer = definer.addVariable( VariableName.Y, DataType.DOUBLE, DimensionName.Y )
+					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_Y  )
+					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME_LONG, VariableAttribute.NAME_Y_TWD97  )
+					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_TWD97 )
+					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_Y )
+					.addVariable( VariableName.X, DataType.DOUBLE, DimensionName.X )
+					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_X )
+					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_NAME_LONG, VariableAttribute.NAME_X_TWD97 )
+					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_TWD97 )
+					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_X )
+					.addVariable( parameter, DataType.FLOAT, DimensionName.TIME, DimensionName.Y, DimensionName.X )
+					.addVariableAttribute( parameter, VariableAttribute.KEY_NAME_LONG, parameter )
+					.addVariableAttribute( parameter, VariableAttribute.KEY_UNITS, unit )
+					.build();
+		} else {
+			writer = definer.addVariable( VariableName.Y, DataType.DOUBLE, DimensionName.Y )
+					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_Y_WGS84 )
+					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME_LONG, VariableAttribute.NAME_Y_WGS84  )
+					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_Y_WGS84 )
+					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_Y )
+					.addVariable( VariableName.X, DataType.DOUBLE, DimensionName.X )
+					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_X_WGS84 )
+					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME_LONG, VariableAttribute.NAME_X_WGS84  )
+					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_X_WGS84 )
+					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_X )
+					.addVariable( parameter, DataType.FLOAT, DimensionName.TIME, DimensionName.Y, DimensionName.X )
+					.addVariableAttribute( parameter, VariableAttribute.KEY_NAME_LONG, parameter )
+					.addVariableAttribute( parameter, VariableAttribute.KEY_UNITS, unit )
+					.build();
+		}
 		// Write data into NetCDF
 		try {
 			this.writeNetCDF( writer, parameter, times, yCoordinates, xCoordinates, timeGrids );
@@ -205,7 +229,7 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 	 * @param array array
 	 * @param tOrder time order
 	 * @param yOrder y order
-	 * @param xOrder x otder
+	 * @param xOrder x order
 	 * @return time grid data
 	 */
 	private List<List<BigDecimal>> readGridValues( Array array, int tOrder, int yOrder, int xOrder ){

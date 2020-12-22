@@ -46,7 +46,7 @@ public class ExportToSensLinkAdapter extends ParentExportToSensLinkAdapter {
 			TimeSeriesArrays timeSeriesArrays = TimeSeriesLightUtils.read( inputXML );
 			List<Record> records = SensLinkApiV3Utils.toRecords( timeSeriesArrays, start, index );
 
-			this.exportRecords( modelArguments.getUsername(), modelArguments.getPassword(), records );
+			this.exportRecords( modelArguments, modelArguments.getUsername(), modelArguments.getPassword(), records );
 			logger.log( LogLevel.INFO, "SensLink 3.0 Export Adapter: Finished Adapter process.");
 
 		} catch (IOException e) {
