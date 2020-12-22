@@ -2,6 +2,7 @@ package tw.fondus.fews.adapter.pi.argument;
 
 import org.junit.Assert;
 import org.junit.Test;
+import tw.fondus.commons.cli.util.JCommanderRunner;
 import tw.fondus.fews.adapter.pi.argument.extend.AdjustTimeArguments;
 import tw.fondus.fews.adapter.pi.argument.extend.MapStackArguments;
 
@@ -106,5 +107,21 @@ public class ArgumentsTest {
 		Assert.assertEquals( "Output1.txt", arguments.getOutputs().get( 0 ) );
 		Assert.assertEquals( "Output2.txt", arguments.getOutputs().get( 1 ) );
 		Assert.assertEquals( 1, arguments.getMode() );
+	}
+
+	@Test
+	public void testCommand(){
+		String[] args = {
+				"-b",
+				"src/test/resources",
+				"-c",
+				"cd src/test/resources"
+		};
+
+		JCommanderRunner.execute( args, PiCommandArguments.instance(), "testCommand", arguments -> {
+			String command = arguments.getCommand();
+			Assert.assertEquals( Paths.get( "src/test/resources" ), arguments.getBasePath() );
+			Assert.assertEquals( "cd src/test/resources", command );
+		} );
 	}
 }
