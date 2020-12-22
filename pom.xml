@@ -40,12 +40,19 @@
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.13.1</junit.version>
-		<fondus.sdk.version>2.3.8-SNAPSHOT</fondus.sdk.version>
-		<fondus.sdk.netcdf.version>1.1.9</fondus.sdk.netcdf.version>
+		<fondus.sdk.version>2.4.0-SNAPSHOT</fondus.sdk.version>
+		<fondus.sdk.netcdf.version>1.2.0</fondus.sdk.netcdf.version>
+		<opencsv.version>5.3</opencsv.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- OpenCSV -->
+			<dependency>
+				<groupId>com.opencsv</groupId>
+				<artifactId>opencsv</artifactId>
+				<version>${opencsv.version}</version>
+			</dependency>
 			<!-- PI-Adapter Commons -->
 			<dependency>
 				<groupId>tw.fondus.fews.adapter</groupId>
@@ -209,6 +216,7 @@
 		<module>PI-Adapter-NCHC-Irrigation-Optimize</module>
 		<module>PI-Adapter-NetCDF</module>
 		<module>PI-Adapter-NTU-2DFIM</module>
+		<module>PI-Adapter-NTU-QPF-RIF</module>
 		<module>PI-Adapter-StressTest</module>
 		<module>PI-Adapter-Rainfall-Process</module>
 		<module>PI-Adapter-DrWu-VirtualIoT</module>
