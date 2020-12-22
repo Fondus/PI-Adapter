@@ -41,7 +41,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.13.1</junit.version>
 		<fondus.sdk.version>2.4.0-SNAPSHOT</fondus.sdk.version>
-		<fondus.sdk.netcdf.version>1.2.0</fondus.sdk.netcdf.version>
+		<fondus.sdk.netcdf.version>1.2.1</fondus.sdk.netcdf.version>
 		<opencsv.version>5.3</opencsv.version>
 	</properties>
 
