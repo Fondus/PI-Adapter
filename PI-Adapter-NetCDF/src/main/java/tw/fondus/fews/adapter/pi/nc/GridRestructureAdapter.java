@@ -34,7 +34,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 /**
- * The model adapter use to restructure the grid type of NetCDF, let can be import to Delft-FEWS.
+ * The model adapter used to restructure dimension order of grid type NetCDF, let can be import to Delft-FEWS.
  *
  * @author Brad Chen
  *
@@ -55,10 +55,10 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 				inputPath.resolve( modelArguments.getInputs().get( 0 ) ),
 				"GridRestructureAdapter: The input NetCDf do not exist." );
 
-		String timeName =  modelArguments.getTName();
-		String yName =  modelArguments.getYName();
-		String xName =  modelArguments.getXName();
-		String variableName =  modelArguments.getVariableName();
+		String timeName = modelArguments.getTName();
+		String yName = modelArguments.getYName();
+		String xName = modelArguments.getXName();
+		String variableName = modelArguments.getVariableName();
 
 		logger.log( LogLevel.INFO,"GridRestructureAdapter: The user specific T: {}, Y: {}, X: {}, V: {}.", timeName, yName, xName, variableName );
 		try ( NetCDFReader reader = NetCDFReader.read( netcdfPath ) ){
@@ -205,7 +205,7 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 	 * @param array array
 	 * @param tOrder time order
 	 * @param yOrder y order
-	 * @param xOrder x otder
+	 * @param xOrder x order
 	 * @return time grid data
 	 */
 	private List<List<BigDecimal>> readGridValues( Array array, int tOrder, int yOrder, int xOrder ){

@@ -33,7 +33,7 @@ public class GridRestructureAdapterTest {
 				"-u",
 				"m",
 				"-vn",
-				"depth_below_surface_simulate",
+				"depth_simulate",
 				"-tn",
 				"time",
 				"-yn",
@@ -48,7 +48,7 @@ public class GridRestructureAdapterTest {
 				"1",
 				"-tzFlag",
 				"-tz",
-				"+0800"
+				"+0000"
 		};
 
 		RestructureArguments arguments = RestructureArguments.instance();
@@ -58,11 +58,12 @@ public class GridRestructureAdapterTest {
 	@Test
 	public void test() throws IOException {
 		try ( NetCDFReader reader = NetCDFReader.read( PathUtils.path( "src/test/resources/Output/FloodNew.nc" ) ) ){
-			reader.findVariable( "depth_below_surface_simulate" ).ifPresent( variable -> {
+			Assert.assertTrue( reader.findVariable( "depth_below_surface_simulated" ).isPresent() );
+			reader.findVariable( "depth_below_surface_simulated" ).ifPresent( variable -> {
 				int[] shape = variable.getShape();
 				Assert.assertEquals( 3, shape[0] );
 				Assert.assertEquals( 838, shape[1] );
-				Assert.assertEquals( 588, shape[2] );
+				Assert.assertEquals( 584, shape[2] );
 			} );
 		}
 	}
