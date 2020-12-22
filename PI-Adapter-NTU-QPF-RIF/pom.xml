@@ -10,7 +10,6 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>pi-adapter-ntu-qpfrif</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
 
 	<name>The NTU QPF-RIF Flood Model Published Interface Adapter</name>
 	<url>http://maven.apache.org</url>
