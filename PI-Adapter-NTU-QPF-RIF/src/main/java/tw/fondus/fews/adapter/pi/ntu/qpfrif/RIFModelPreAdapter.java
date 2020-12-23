@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.ntu.qperif;
+package tw.fondus.fews.adapter.pi.ntu.qpfrif;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import nl.wldelft.util.timeseries.TimeSeriesArray;
@@ -16,7 +16,7 @@ import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
-import tw.fondus.fews.adapter.pi.ntu.qperif.vo.SensorIdMapping;
+import tw.fondus.fews.adapter.pi.ntu.qpfrif.vo.SensorIdMapping;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 
 import java.io.FileReader;

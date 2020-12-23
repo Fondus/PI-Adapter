@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.ntu.qperif;
+package tw.fondus.fews.adapter.pi.ntu.qpfrif;
 
 import org.junit.After;
 import org.junit.Assert;
