@@ -1,11 +1,11 @@
 package tw.fondus.fews.adapter.pi.commons;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.zeroturnaround.exec.InvalidExitValueException;
 import org.zeroturnaround.exec.stream.slf4j.Slf4jStream;
 import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.cli.util.JCommanderRunner;
+import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.fews.adapter.pi.argument.PiCommandArguments;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.util.logger.PiDiagnosticsUtils;
@@ -22,9 +22,6 @@ import java.util.concurrent.TimeoutException;
  */
 @Slf4j
 public class RunCommandAdapter {
-	@Getter
-	private PiDiagnosticsLogger logger;
-
 	public static void main( String[] args ){
 		PiCommandArguments arguments = PiCommandArguments.instance();
 		new RunCommandAdapter().execute( args, arguments );
@@ -41,12 +38,12 @@ public class RunCommandAdapter {
 			Path basePath = commandArguments.getBasePath();
 
 			// Initialize Logger
-			this.logger = PiDiagnosticsUtils.initializeLogger( basePath, commandArguments.getLogPath(),
+			PiDiagnosticsLogger logger = PiDiagnosticsUtils.initializeLogger( basePath, commandArguments.getLogPath(),
 					commandArguments.getDiagnostics() );
 
-			PiDiagnosticsUtils.adapterProcessInLoggerScope( this.logger, () -> {
+			PiDiagnosticsUtils.adapterProcessInLoggerScope( logger, () -> {
 				String command = commandArguments.getCommand();
-				log.info( "RunCommandAdapter: Try to run the command {}.", command );
+				logger.log( LogLevel.INFO, "RunCommandAdapter: Try to run the command {}.", command );
 
 				try {
 					Executions.execute( executor -> executor
@@ -54,10 +51,10 @@ public class RunCommandAdapter {
 									.redirectOutput( Slf4jStream.of( getClass() ).asInfo() ),
 							command.split( " " ) );
 				} catch (InvalidExitValueException | IOException | InterruptedException | TimeoutException e) {
-					log.error( "RunCommandAdapter: Running command has something wrong.", e );
+					logger.log( LogLevel.ERROR, "RunCommandAdapter: Running command has something wrong." );
 				}
 
-				log.info( "RunCommandAdapter: Finished to run the command {}.", command );
+				logger.log( LogLevel.INFO, "RunCommandAdapter: Finished to run the command {}.", command );
 			} );
 		} );
 	}
