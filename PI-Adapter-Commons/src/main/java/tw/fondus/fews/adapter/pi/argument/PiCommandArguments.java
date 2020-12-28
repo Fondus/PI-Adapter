@@ -30,6 +30,10 @@ public class PiCommandArguments extends BasicNoIOArguments {
 	@Parameter( names = { "--ldir", "-ld" }, description = "The diagnostics folder, relative to the current working directory." )
 	private String logPath = "Diagnostics/";
 
+	@Builder.Default
+	@Parameter( names = { "--command-log", "-cl" }, description = "Write command log into diagnostics or not, default is false." )
+	private boolean writeCommandLogging = false;
+
 	/**
 	 * Create the argument instance.
 	 *

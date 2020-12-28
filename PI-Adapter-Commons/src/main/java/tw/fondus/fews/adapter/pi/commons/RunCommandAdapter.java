@@ -46,10 +46,20 @@ public class RunCommandAdapter {
 				logger.log( LogLevel.INFO, "RunCommandAdapter: Try to run the command {}.", command );
 
 				try {
-					Executions.execute( executor -> executor
-									.directory( basePath.toFile() )
-									.redirectOutput( Slf4jStream.of( getClass() ).asInfo() ),
-							command.split( " " ) );
+					if ( commandArguments.isWriteCommandLogging() ){
+						var processOutput = Executions.execute( executor -> executor
+										.directory( basePath.toFile() )
+										.redirectOutput( Slf4jStream.of( getClass() ).asInfo() )
+										.readOutput( true ),
+								command.split( " " ) );
+
+						logger.log( LogLevel.INFO, "RunCommandAdapter: Command process output is {}.", processOutput.outputUTF8() );
+					} else {
+						Executions.execute( executor -> executor
+										.directory( basePath.toFile() )
+										.redirectOutput( Slf4jStream.of( getClass() ).asInfo() ),
+								command.split( " " ) );
+					}
 				} catch (InvalidExitValueException | IOException | InterruptedException | TimeoutException e) {
 					logger.log( LogLevel.ERROR, "RunCommandAdapter: Running command has something wrong." );
 				}
