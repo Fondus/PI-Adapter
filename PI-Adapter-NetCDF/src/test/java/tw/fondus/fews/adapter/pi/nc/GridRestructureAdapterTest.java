@@ -48,7 +48,8 @@ public class GridRestructureAdapterTest {
 				"1",
 				"-tzFlag",
 				"-tz",
-				"+0000"
+				"+0000",
+				"-isTWD97"
 		};
 
 		RestructureArguments arguments = RestructureArguments.instance();

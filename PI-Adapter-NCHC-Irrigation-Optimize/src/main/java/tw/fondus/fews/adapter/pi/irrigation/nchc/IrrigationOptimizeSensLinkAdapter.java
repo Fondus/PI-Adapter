@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -62,8 +61,8 @@ public class IrrigationOptimizeSensLinkAdapter extends PiCommandLineExecute {
 
 		try {
 			// Login SensLink 3.0 by OAuth 2.0
-			Optional<OAuthToken> optional = this.api.getAccessToken( username, password, SensLinkApiV3Host.IOW );
-			optional.ifPresentOrElse( token -> {
+			OAuthToken token = this.api.requestAccessToken( username, password, SensLinkApiV3Host.IOW );
+			if ( token.isSuccessful() ) {
 				logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize SensLinkAdapter: The SensLink 3.0 system login successfully." );
 				logger.log( LogLevel.INFO, "NCHC Irrigation-Optimize SensLinkAdapter: Try to get the water requirement data from the SensLink 3.0 system." );
 
@@ -80,11 +79,12 @@ public class IrrigationOptimizeSensLinkAdapter extends PiCommandLineExecute {
 					this.createModelInput( modelArguments, inputPath, token.getAccess(), ids );
 				}
 
-			},
-			() -> logger.log( LogLevel.WARN, "NCHC Irrigation-Optimize SensLinkAdapter: SensLink System Login failed.") );
+			} else {
+				logger.log( LogLevel.WARN, "NCHC Irrigation-Optimize SensLinkAdapter: SensLink System Login failed.");
+			}
 
 		} catch (IOException e) {
-			logger.log( LogLevel.ERROR, "NCHC Irrigation-Optimize SensLinkAdapter: Adapter connect to external system has IO problem." );
+			logger.log( LogLevel.ERROR, "NCHC Irrigation-Optimize SensLinkAdapter: Adapter connect to external system has IO problem. {}", e.fillInStackTrace() );
 		}
 	}
 
