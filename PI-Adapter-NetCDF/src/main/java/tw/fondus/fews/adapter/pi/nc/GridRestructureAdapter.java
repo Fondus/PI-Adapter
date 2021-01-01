@@ -164,7 +164,7 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 		ArrayDouble.D1 timeArray = NetCDFUtils.create1DArrayDouble( times );
 		ArrayFloat.D3 gridArray = NetCDFUtils.create3DArrayFloat( timeGrids, yCoordinates.size(), xCoordinates.size() );
 
-		writer.writeGridTYX( parameter, timeArray, yArray, xArray, gridArray );
+		writer.writeGridTYX( parameter, timeArray, yArray, xArray, gridArray ).close();
 	}
 
 	/**
