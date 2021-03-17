@@ -91,6 +91,11 @@
 				<artifactId>commons-rest-senslink</artifactId>
 				<version>${fondus.sdk.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-minio</artifactId>
+				<version>${fondus.sdk.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -220,5 +225,6 @@
 		<module>PI-Adapter-StressTest</module>
 		<module>PI-Adapter-Rainfall-Process</module>
 		<module>PI-Adapter-DrWu-VirtualIoT</module>
+		<module>PI-Adapter-S3</module>
 	</modules>
 </project>
