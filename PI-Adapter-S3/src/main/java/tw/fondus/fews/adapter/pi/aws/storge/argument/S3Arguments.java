@@ -18,6 +18,9 @@ import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 @ToString( callSuper = true )
 @EqualsAndHashCode( callSuper = true )
 public class S3Arguments extends PiIOArguments {
+	@Parameter( names = { "--host", "-host" }, description = "The S3 host URL." )
+	private String host;
+
 	@Parameter( names = { "--bucket" }, required = true, description = "The storage bucket." )
 	private String bucket;
 
@@ -29,4 +32,13 @@ public class S3Arguments extends PiIOArguments {
 
 	@Parameter( names = { "--password", "-pw" }, required = true, description = "The account password." )
 	private String password;
+
+	/**
+	 * Create the argument instance.
+	 *
+	 * @return argument instance
+	 */
+	public static S3Arguments instance(){
+		return S3Arguments.builder().build();
+	}
 }
