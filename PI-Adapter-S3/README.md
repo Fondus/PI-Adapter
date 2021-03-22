@@ -7,7 +7,11 @@ The adapter of Amazon S3 API to show how to integrate with Delft-FEWS system.
 
 | Argument | Description | Default | Required |
 |:------ |:----------- |:-----------:|:-----------:|
-| -ti / --timeindex | The time index of the TimeSeriesArray index position. | - | true |
+| -host / --host | The host of S3 API. | - | true |
+| --bucket | The bucket of S3 API. | - | true |
+| --object | The object name of bucket. | - | true |
+| -us / --username | The account username. | - | true |
+| -pw / --password | The account password. | - | true |
 
 #### Model Folder Structure:
 - **Work/**: The model main work folder.
