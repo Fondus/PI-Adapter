@@ -30,6 +30,12 @@
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-minio</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>simple-xml-safe</artifactId>
+					<groupId>com.carrotsearch.thirdparty</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
