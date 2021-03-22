@@ -7,8 +7,6 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 
-import java.util.Objects;
-
 /**
  * Model adapter arguments for data exchange with S3 REST API.
  *
@@ -20,7 +18,7 @@ import java.util.Objects;
 @ToString( callSuper = true )
 @EqualsAndHashCode( callSuper = true )
 public class S3Arguments extends PiIOArguments {
-	@Parameter( names = { "--host", "-host" }, description = "The S3 host URL." )
+	@Parameter( names = { "--host", "-host" }, required = true, description = "The S3 host URL." )
 	private String host;
 
 	@Parameter( names = { "--bucket" }, required = true, description = "The storage bucket." )
@@ -42,25 +40,5 @@ public class S3Arguments extends PiIOArguments {
 	 */
 	public static S3Arguments instance(){
 		return S3Arguments.builder().build();
-	}
-
-	public String getHost(){
-		return Objects.requireNonNull( this.host, "Host can not be null." );
-	}
-
-	public String getBucket(){
-		return Objects.requireNonNull( this.bucket, "Bucket can not be null." );
-	}
-
-	public String getObject(){
-		return Objects.requireNonNull( this.object, "Object can not be null." );
-	}
-
-	public String getUsername(){
-		return Objects.requireNonNull( this.username, "Username can not be null." );
-	}
-
-	public String getPassword(){
-		return Objects.requireNonNull( this.password, "Password can not be null." );
 	}
 }
