@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.aws.storge;
+package tw.fondus.fews.adapter.pi.aws.storage;
 
 import io.minio.MinioClient;
 import org.junit.jupiter.api.AfterAll;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tw.fondus.commons.minio.MinioHighLevelClient;
-import tw.fondus.fews.adapter.pi.aws.storge.argument.S3Arguments;
+import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
 
 /**
  * The integration test of ExportToS3Adapter.

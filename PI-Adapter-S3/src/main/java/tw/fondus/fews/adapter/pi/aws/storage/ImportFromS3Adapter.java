@@ -1,12 +1,12 @@
-package tw.fondus.fews.adapter.pi.aws.storge;
+package tw.fondus.fews.adapter.pi.aws.storage;
 
 import io.minio.MinioClient;
 import io.minio.errors.MinioException;
-import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.minio.MinioHighLevelClient;
+import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
-import tw.fondus.fews.adapter.pi.aws.storge.argument.S3Arguments;
+import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 
@@ -14,15 +14,15 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * FEWS adapter used to export data to S3 API with Delft-FEWS.
+ * FEWS adapter used for import data from the S3 API with Delft-FEWS.
  *
  * @author Brad Chen
  *
  */
-public class ExportToS3Adapter extends PiCommandLineExecute {
+public class ImportFromS3Adapter extends PiCommandLineExecute {
 	public static void main( String[] args ){
 		S3Arguments arguments = S3Arguments.instance();
-		new ExportToS3Adapter().execute( args, arguments );
+		new ImportFromS3Adapter().execute( args, arguments );
 	}
 
 	@Override
@@ -45,26 +45,24 @@ public class ExportToS3Adapter extends PiCommandLineExecute {
 				.defaultBucket( bucket )
 				.build();
 
-		Path input = Prevalidated.checkExists(
-				inputPath.resolve( modelArguments.getInputs().get( 0 ) ),
-				"S3 Export Adapter: The input resource not exists!" );
+		Path output = outputPath.resolve( modelArguments.getOutputs().get( 0 ) );
 		try {
-			logger.log( LogLevel.INFO, "S3 Export Adapter: Start to upload object: {} with S3 API.", object );
+			logger.log( LogLevel.INFO, "S3 Import Adapter: Start to download object: {} with S3 API.", object );
 			if ( client.isExistsBucket() ) {
-				boolean state = client.uploadObject( object, input );
-				if ( state ){
-					logger.log( LogLevel.INFO, "S3 Export Adapter: Succeeded to upload object: {} with S3 API.", object );
+				Path saved = client.getObjectAndSave( object, output );
+				if ( PathUtils.isExists( saved ) ){
+					logger.log( LogLevel.INFO, "S3 Import Adapter: Succeeded to download object: {} with S3 API.", object );
 				} else {
-					logger.log( LogLevel.WARN, "S3 Export Adapter: Failed to upload object: {} with S3 API.", object );
+					logger.log( LogLevel.WARN, "S3 Import Adapter: Failed to download object: {} with S3 API.", object );
 				}
 			} else {
-				logger.log( LogLevel.WARN, "S3 Export Adapter: The target bucket: {} not exist, will ignore the adapter process.", bucket );
+				logger.log( LogLevel.WARN, "S3 Import Adapter: The target bucket: {} not exist, will ignore the adapter process.", bucket );
 			}
-			logger.log( LogLevel.INFO, "S3 Export Adapter: Finished to upload object: {} with S3 API." );
+			logger.log( LogLevel.INFO, "S3 Import Adapter: Finished to download object: {} with S3 API." );
 		} catch (IOException e) {
-			logger.log( LogLevel.ERROR, "S3 Export Adapter: Upload object: {} with S3 API has IOException! {}", object, e );
+			logger.log( LogLevel.ERROR, "S3 Import Adapter: Download object: {} with S3 API has IOException! {}", object, e );
 		} catch (MinioException e) {
-			logger.log( LogLevel.ERROR, "S3 Export Adapter: Working with S3 API has something wrong! {}", e );
+			logger.log( LogLevel.ERROR, "S3 Import Adapter: Working with S3 API has something wrong! {}", e );
 		}
 	}
 }

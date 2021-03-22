@@ -4,4 +4,4 @@
  * @author Brad Chen
  *
  */
-package tw.fondus.fews.adapter.pi.aws.storge.argument;
+package tw.fondus.fews.adapter.pi.aws.storage.argument;

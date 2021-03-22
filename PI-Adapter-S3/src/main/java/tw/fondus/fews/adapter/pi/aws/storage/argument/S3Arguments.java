@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.aws.storge.argument;
+package tw.fondus.fews.adapter.pi.aws.storage.argument;
 
 import com.beust.jcommander.Parameter;
 import lombok.Data;
