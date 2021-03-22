@@ -114,7 +114,7 @@ public class ImportFromSensLinkAdapter extends PiCommandLineExecute {
 				}
 				logger.log( LogLevel.INFO, "SensLink 2.0 Import Adapter: Finished Adapter process." );
 			} catch (IOException e) {
-				logger.log( LogLevel.ERROR, "SensLink 3.0 Import Adapter: SensLink System Login failed!" );
+				logger.log( LogLevel.ERROR, "SensLink 3.0 Import Adapter: SensLink System Login failed! {}", e.fillInStackTrace() );
 			}
 			
 		} catch (IOException e) {

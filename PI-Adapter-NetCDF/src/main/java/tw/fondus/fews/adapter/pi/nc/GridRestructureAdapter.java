@@ -3,14 +3,13 @@ package tw.fondus.fews.adapter.pi.nc;
 import strman.Strman;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
-import tw.fondus.commons.nc.NetCDFBuilder;
 import tw.fondus.commons.nc.NetCDFReader;
-import tw.fondus.commons.nc.NetCDFWriter;
 import tw.fondus.commons.nc.util.NetCDFUtils;
-import tw.fondus.commons.nc.util.key.DimensionName;
-import tw.fondus.commons.nc.util.key.GlobalAttribute;
 import tw.fondus.commons.nc.util.key.VariableAttribute;
-import tw.fondus.commons.nc.util.key.VariableName;
+import tw.fondus.commons.spatial.util.crs.EPSG;
+import tw.fondus.commons.spatial.util.nc.PiNetCDFBuilder;
+import tw.fondus.commons.spatial.util.nc.PiNetCDFWriter;
+import tw.fondus.commons.util.math.Numbers;
 import tw.fondus.commons.util.optional.OptionalUtils;
 import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
@@ -20,7 +19,6 @@ import tw.fondus.fews.adapter.pi.nc.argument.RestructureArguments;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayDouble;
 import ucar.ma2.ArrayFloat;
-import ucar.ma2.DataType;
 import ucar.ma2.Index;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Variable;
@@ -132,49 +130,12 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 			List<BigDecimal> times, List<BigDecimal> yCoordinates,
 			List<BigDecimal> xCoordinates, List<List<BigDecimal>> timeGrids, boolean isTWD97 )
 			throws IOException {
-		NetCDFBuilder.NetCDFDefiner definer = NetCDFBuilder.create( outputNetCDFPath.toString() )
-				.addGlobalAttribute( GlobalAttribute.CONVENTIONS, "CF-1.6" )
-				.addGlobalAttribute( GlobalAttribute.TITLE, "Restructure file" )
-				.addDimension( DimensionName.TIME, times.size() )
-				.addDimension( DimensionName.Y, yCoordinates.size() )
-				.addDimension( DimensionName.X, xCoordinates.size() )
-				.addVariable( VariableName.TIME, DataType.DOUBLE, DimensionName.TIME )
-				.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_NAME, DimensionName.TIME )
-				.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_UNITS, timeUnit )
-				.addVariableAttribute( VariableName.TIME, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_TIME );
-
-		NetCDFWriter writer;
-		if ( isTWD97 ){
-			writer = definer.addVariable( VariableName.Y, DataType.DOUBLE, DimensionName.Y )
-					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_Y  )
-					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME_LONG, VariableAttribute.NAME_Y_TWD97  )
-					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_TWD97 )
-					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_Y )
-					.addVariable( VariableName.X, DataType.DOUBLE, DimensionName.X )
-					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_X )
-					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_NAME_LONG, VariableAttribute.NAME_X_TWD97 )
-					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_TWD97 )
-					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_X )
-					.addVariable( parameter, DataType.FLOAT, DimensionName.TIME, DimensionName.Y, DimensionName.X )
-					.addVariableAttribute( parameter, VariableAttribute.KEY_NAME_LONG, parameter )
-					.addVariableAttribute( parameter, VariableAttribute.KEY_UNITS, unit )
-					.build();
-		} else {
-			writer = definer.addVariable( VariableName.Y, DataType.DOUBLE, DimensionName.Y )
-					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_Y_WGS84 )
-					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME_LONG, VariableAttribute.NAME_Y_WGS84  )
-					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_Y_WGS84 )
-					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_Y )
-					.addVariable( VariableName.X, DataType.DOUBLE, DimensionName.X )
-					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_NAME, VariableAttribute.COORDINATES_X_WGS84 )
-					.addVariableAttribute( VariableName.Y, VariableAttribute.KEY_NAME_LONG, VariableAttribute.NAME_X_WGS84  )
-					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_UNITS, VariableAttribute.UNITS_X_WGS84 )
-					.addVariableAttribute( VariableName.X, VariableAttribute.KEY_AXIS, VariableAttribute.AXIS_X )
-					.addVariable( parameter, DataType.FLOAT, DimensionName.TIME, DimensionName.Y, DimensionName.X )
-					.addVariableAttribute( parameter, VariableAttribute.KEY_NAME_LONG, parameter )
-					.addVariableAttribute( parameter, VariableAttribute.KEY_UNITS, unit )
-					.build();
-		}
+		PiNetCDFWriter writer = PiNetCDFBuilder.create( outputNetCDFPath, "Restructure file" )
+				.dimensionsGridTYX( times.size(), yCoordinates.size(), xCoordinates.size() )
+				.variableTime( timeUnit )
+				.variableXY( isTWD97 ? EPSG.TWD97_TM2_121 : EPSG.WGS84, false )
+				.variableValueGridTYX( parameter, unit, Numbers.MISSING )
+				.build();
 		// Write data into NetCDF
 		try {
 			this.writeNetCDF( writer, parameter, times, yCoordinates, xCoordinates, timeGrids );
@@ -195,7 +156,7 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 	 * @throws IOException has IO Exception
 	 * @throws InvalidRangeException has InvalidRange Exception
 	 */
-	private void writeNetCDF( NetCDFWriter writer, String parameter, List<BigDecimal> times, List<BigDecimal> yCoordinates,
+	private void writeNetCDF( PiNetCDFWriter writer, String parameter, List<BigDecimal> times, List<BigDecimal> yCoordinates,
 			List<BigDecimal> xCoordinates, List<List<BigDecimal>> timeGrids )
 			throws IOException, InvalidRangeException {
 		ArrayDouble.D1 yArray = NetCDFUtils.create1DArrayDouble( yCoordinates );
@@ -203,11 +164,7 @@ public class GridRestructureAdapter extends PiCommandLineExecute {
 		ArrayDouble.D1 timeArray = NetCDFUtils.create1DArrayDouble( times );
 		ArrayFloat.D3 gridArray = NetCDFUtils.create3DArrayFloat( timeGrids, yCoordinates.size(), xCoordinates.size() );
 
-		writer.writeValues( VariableName.TIME, timeArray )
-				.writeValues( VariableName.Y, yArray )
-				.writeValues( VariableName.X, xArray )
-				.writeValues( parameter, gridArray )
-				.close();
+		writer.writeGridTYX( parameter, timeArray, yArray, xArray, gridArray ).close();
 	}
 
 	/**

@@ -1,11 +1,13 @@
 package tw.fondus.fews.adapter.pi.log;
 
+import lombok.Getter;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import strman.Strman;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.fews.pi.config.xml.log.PiDiagnostics;
 
+import java.nio.file.Path;
 import java.util.Objects;
 
 /**
@@ -15,12 +17,16 @@ import java.util.Objects;
  *
  */
 public class PiDiagnosticsLogger {
+	@Getter
 	private final PiDiagnostics diagnostics;
+	@Getter
+	private final Path path;
 	private final Logger logger;
 	
-	private PiDiagnosticsLogger( @NonNull Logger logger, @NonNull PiDiagnostics diagnostics ) {
+	private PiDiagnosticsLogger( @NonNull Logger logger, @NonNull PiDiagnostics diagnostics, @NonNull Path path ) {
 		this.logger = logger;
 		this.diagnostics = diagnostics;
+		this.path = path;
 	}
 	
 	/**
@@ -103,9 +109,10 @@ public class PiDiagnosticsLogger {
 	 * 
 	 * @param logger logger
 	 * @param diagnostics diagnostics
+	 * @param path diagnostics path
 	 * @return diagnostics logger
 	 */
-	public static PiDiagnosticsLogger synchronous( Logger logger, PiDiagnostics diagnostics ) {
-		return new PiDiagnosticsLogger( logger, diagnostics );
+	public static PiDiagnosticsLogger synchronous( Logger logger, PiDiagnostics diagnostics, Path path ) {
+		return new PiDiagnosticsLogger( logger, diagnostics, path );
 	}
 }

@@ -5,7 +5,10 @@ import org.zeroturnaround.exec.InvalidExitValueException;
 import org.zeroturnaround.exec.stream.slf4j.Slf4jStream;
 import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.cli.util.JCommanderRunner;
+import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.fews.adapter.pi.argument.PiCommandArguments;
+import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
+import tw.fondus.fews.adapter.pi.util.logger.PiDiagnosticsUtils;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -33,19 +36,36 @@ public class RunCommandAdapter {
 	public void execute( String[] args, PiCommandArguments arguments ) {
 		JCommanderRunner.execute( args, arguments, this.getClass().getSimpleName(), commandArguments -> {
 			Path basePath = commandArguments.getBasePath();
-			String command = commandArguments.getCommand();
-			log.info( "RunCommandAdapter: Try to run the command {}.", command );
 
-			try {
-				Executions.execute( executor -> executor
-								.directory( basePath.toFile() )
-								.redirectOutput( Slf4jStream.of( getClass() ).asInfo() ),
-						command.split( " " ) );
-			} catch (InvalidExitValueException | IOException | InterruptedException | TimeoutException e) {
-				log.error( "RunCommandAdapter: Running command has something wrong.", e );
-			}
+			// Initialize Logger
+			PiDiagnosticsLogger logger = PiDiagnosticsUtils.initializeLogger( basePath, commandArguments.getLogPath(),
+					commandArguments.getDiagnostics() );
 
-			log.info( "RunCommandAdapter: Finished to run the command {}.", command );
+			PiDiagnosticsUtils.adapterProcessInLoggerScope( logger, () -> {
+				String command = commandArguments.getCommand();
+				logger.log( LogLevel.INFO, "RunCommandAdapter: Try to run the command {}.", command );
+
+				try {
+					if ( commandArguments.isWriteCommandLogging() ){
+						var processOutput = Executions.execute( executor -> executor
+										.directory( basePath.toFile() )
+										.redirectOutput( Slf4jStream.of( getClass() ).asInfo() )
+										.readOutput( true ),
+								command.split( " " ) );
+
+						logger.log( LogLevel.INFO, "RunCommandAdapter: Command process output is {}.", processOutput.outputUTF8() );
+					} else {
+						Executions.execute( executor -> executor
+										.directory( basePath.toFile() )
+										.redirectOutput( Slf4jStream.of( getClass() ).asInfo() ),
+								command.split( " " ) );
+					}
+				} catch (InvalidExitValueException | IOException | InterruptedException | TimeoutException e) {
+					logger.log( LogLevel.ERROR, "RunCommandAdapter: Running command has something wrong." );
+				}
+
+				logger.log( LogLevel.INFO, "RunCommandAdapter: Finished to run the command {}.", command );
+			} );
 		} );
 	}
 }

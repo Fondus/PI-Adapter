@@ -149,7 +149,7 @@ public class IrrigationOptimizeParameterAdapter extends PiCommandLineExecute {
 			}, () -> logger.log( LogLevel.WARN, "NCHC Irrigation-Optimize ParameterAdapter: Not found case parameter with user assign case." ));
 
 		} catch ( IOException e ){
-			logger.log( LogLevel.ERROR, "NCHC Irrigation-Optimize ParameterAdapter: Adapter connect to external system has IO problem." );
+			logger.log( LogLevel.ERROR, "NCHC Irrigation-Optimize ParameterAdapter: Adapter connect to external system has IO problem. {}", e.fillInStackTrace() );
 		}
 	}
 

@@ -9,32 +9,18 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>pi-adapter-ntu-qpfrif</artifactId>
+	<artifactId>pi-adapter-s3</artifactId>
+	<version>3.0.0</version>
+	<packaging>jar</packaging>
 
-	<name>The NTU QPF-RIF Flood Model Published Interface Adapter</name>
-	<url>http://maven.apache.org</url>
+	<name>The S3 Published Interface Adapter</name>
+	<url>https://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html/</url>
 
-	<properties>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
-	</properties>
+	<description>
+		The FEWS Published Interface Adapter of S3 REST API is used to data exchange with Delft-FEWS system.
+	</description>
 
 	<dependencies>
-		<!-- OpenCSV -->
-		<dependency>
-			<groupId>com.opencsv</groupId>
-			<artifactId>opencsv</artifactId>
-			<exclusions>
-				<exclusion>
-					<artifactId>commons-logging</artifactId>
-					<groupId>commons-logging</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>commons-collections</artifactId>
-					<groupId>commons-collections</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<!-- PI-Adapter Commons -->
 		<dependency>
 			<groupId>tw.fondus.fews.adapter</groupId>
@@ -43,11 +29,13 @@
 		<!-- FondUS SDK: The open source project can't use this -->
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>tw.fondus.commons</groupId>
-			<artifactId>commons-fews</artifactId>
+			<artifactId>commons-minio</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>simple-xml-safe</artifactId>
+					<groupId>com.carrotsearch.thirdparty</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 

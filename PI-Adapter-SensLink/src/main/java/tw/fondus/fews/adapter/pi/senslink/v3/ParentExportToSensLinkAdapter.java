@@ -56,7 +56,7 @@ public abstract class ParentExportToSensLinkAdapter extends PiCommandLineExecute
 					this.getLogger().log( LogLevel.WARN, "SensLink 3.0 Export Adapter: SensLink System Login failed." );
 				}
 			} catch ( IOException e ){
-				this.getLogger().log( LogLevel.ERROR, "SensLink 3.0 Export Adapter: Connection to SensLink 3.0 system timeout.") ;
+				this.getLogger().log( LogLevel.ERROR, "SensLink 3.0 Export Adapter: Connection to SensLink 3.0 system timeout. {}", e ) ;
 			}
 		} else {
 			this.getLogger().log( LogLevel.WARN, "SensLink 3.0 Export Adapter: PI-XML hasn't data to export." );

@@ -1,4 +1,4 @@
-package tw.fondus.fews.adapter.pi.ntu.qperif.vo;
+package tw.fondus.fews.adapter.pi.ntu.qpfrif.vo;
 
 import com.opencsv.bean.CsvBindByPosition;
 import lombok.AllArgsConstructor;
