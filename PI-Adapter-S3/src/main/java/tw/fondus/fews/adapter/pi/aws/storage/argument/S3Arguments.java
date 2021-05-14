@@ -1,6 +1,7 @@
 package tw.fondus.fews.adapter.pi.aws.storage.argument;
 
 import com.beust.jcommander.Parameter;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -32,6 +33,10 @@ public class S3Arguments extends PiIOArguments {
 
 	@Parameter( names = { "--password", "-pw" }, required = true, description = "The account password." )
 	private String password;
+
+	@Builder.Default
+	@Parameter( names = { "--bucket-create" }, description = "Should create storage bucket or not." )
+	private boolean create = false;
 
 	/**
 	 * Create the argument instance.
