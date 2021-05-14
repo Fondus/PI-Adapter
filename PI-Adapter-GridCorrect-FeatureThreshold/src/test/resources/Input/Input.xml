@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TimeSeries xmlns="http://www.wldelft.nl/fews/PI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_timeseries.xsd" version="1.25" xmlns:fs="http://www.wldelft.nl/fews/fs">
+    <timeZone>0.0</timeZone>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000010</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000010</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>306429.75</x>
+            <y>2772581.2</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.07" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.4" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.03" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000020</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000020</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>307758.2</x>
+            <y>2769091.8</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000030</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000030</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>304885.06</x>
+            <y>2768837.8</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000040</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000040</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>305043.12</x>
+            <y>2773502.0</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.07" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.44" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.05" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000050</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000050</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>302540.38</x>
+            <y>2769120.5</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000060</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000060</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>301808.7</x>
+            <y>2773022.8</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000070</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000070</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>300259.0</x>
+            <y>2769134.5</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000080</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000080</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>308075.3</x>
+            <y>2764581.8</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000090</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000090</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>312772.5</x>
+            <y>2770162.5</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000100</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000100</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>309551.06</x>
+            <y>2775147.8</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.02" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000110</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000110</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>303696.94</x>
+            <y>2780821.0</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.02" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+    <series>
+        <header>
+            <type>instantaneous</type>
+            <locationId>63000120</locationId>
+            <parameterId>precipitation_merged</parameterId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2019-08-31" time="00:00:00"/>
+            <endDate date="2019-08-31" time="23:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>63000120</stationName>
+            <lat>-999.0</lat>
+            <lon>-999.0</lon>
+            <x>302161.94</x>
+            <y>2782830.2</y>
+            <z>-999.0</z>
+            <units>mm</units>
+        </header>
+        <event date="2019-08-31" time="00:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="01:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="02:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="03:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="04:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="05:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="06:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="07:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="08:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="09:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="10:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="11:00:00" value="0.01" flag="0"/>
+        <event date="2019-08-31" time="12:00:00" value="0.05" flag="0"/>
+        <event date="2019-08-31" time="13:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="14:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="15:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="16:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="17:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="18:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="19:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="20:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="21:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="22:00:00" value="0.0" flag="0"/>
+        <event date="2019-08-31" time="23:00:00" value="0.0" flag="0"/>
+    </series>
+</TimeSeries>
