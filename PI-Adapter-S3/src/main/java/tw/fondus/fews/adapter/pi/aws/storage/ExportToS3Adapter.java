@@ -49,6 +49,11 @@ public class ExportToS3Adapter extends PiCommandLineExecute {
 				inputPath.resolve( modelArguments.getInputs().get( 0 ) ),
 				"S3 Export Adapter: The input resource not exists!" );
 		try {
+			if ( client.isNotExistsBucket() && modelArguments.isCreate() ){
+				logger.log( LogLevel.INFO, "S3 Export Adapter: The target bucket: {} created by adapter.", bucket );
+				client.createBucket();
+			}
+
 			logger.log( LogLevel.INFO, "S3 Export Adapter: Start to upload object: {} with S3 API.", object );
 			if ( client.isExistsBucket() ) {
 				boolean state = client.uploadObject( object, input );
