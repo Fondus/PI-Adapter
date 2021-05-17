@@ -15,7 +15,13 @@ import tw.fondus.fews.adapter.pi.grid.correct.argument.RunArguments;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-public class GridCorrectFeatureThresholdAdapterTest {
+/**
+ * The unit test of GridCorrectFeatureAccumulateThresholdAdapter.
+ *
+ * @author Brad Chen
+ *
+ */
+public class GridCorrectFeatureAccumulateThresholdAdapterTest {
 	@BeforeAll
 	public static void run() {
 		String[] args = new String[]{
@@ -36,7 +42,7 @@ public class GridCorrectFeatureThresholdAdapterTest {
 		};
 
 		RunArguments arguments = RunArguments.instance();
-		new GridCorrectFeatureThresholdAdapter().execute( args, arguments );
+		new GridCorrectFeatureAccumulateThresholdAdapter().execute( args, arguments );
 	}
 
 	@Test

@@ -20,7 +20,7 @@ import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 @EqualsAndHashCode( callSuper = true )
 public class RunArguments extends PiIOArguments {
 	@Builder.Default
-	@Parameter(names = { "--duration", "-d" }, required = true, description = "The time-series duration should contain.")
+	@Parameter(names = { "--duration", "-d" }, required = true, description = "The time-series duration should contain, it's used to accumulate.")
 	private int duration = 12;
 
 	@Builder.Default
