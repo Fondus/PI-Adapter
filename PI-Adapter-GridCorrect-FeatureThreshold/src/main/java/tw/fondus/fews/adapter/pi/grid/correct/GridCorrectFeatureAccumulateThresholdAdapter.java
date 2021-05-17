@@ -39,10 +39,10 @@ import java.util.stream.Collectors;
  *
  */
 @SuppressWarnings( "rawtypes" )
-public class GridCorrectFeatureThresholdAdapter extends PiCommandLineExecute {
+public class GridCorrectFeatureAccumulateThresholdAdapter extends PiCommandLineExecute {
 	public static void main( String[] args ){
 		RunArguments arguments = RunArguments.instance();
-		new GridCorrectFeatureThresholdAdapter().execute( args, arguments );
+		new GridCorrectFeatureAccumulateThresholdAdapter().execute( args, arguments );
 	}
 
 	@Override
