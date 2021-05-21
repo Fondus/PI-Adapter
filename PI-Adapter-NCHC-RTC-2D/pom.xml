@@ -9,6 +9,7 @@
 
 	<artifactId>pi-adapter-nchc-rtc-2d</artifactId>
 	<packaging>jar</packaging>
+	<version>3.0.1</version>
 
 	<name>The NCHC RTC 2D Published Interface Adapter</name>
 	
