@@ -1,8 +1,5 @@
 package tw.fondus.fews.adapter.pi.rtc.nchc;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
@@ -14,6 +11,9 @@ import tw.fondus.fews.adapter.pi.rtc.nchc.argument.PreAdapterArguments;
 import tw.fondus.fews.adapter.pi.rtc.nchc.util.CommonString;
 import tw.fondus.fews.adapter.pi.rtc.nchc.util.ContentBuilder;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
+
+import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  * Model pre-adapter for running NCHC RTC model from Delft-FEWS.
@@ -41,13 +41,13 @@ public class RTCPreAdapter extends PiCommandLineExecute {
 				"NCHC RTC PreAdapter: The XML file of observation is not exist!" );
 		
 		try {
-			TimeSeriesArrays similationTimeSeriesArrays = TimeSeriesLightUtils.read( simulationXMLPath );
+			TimeSeriesArrays simulationTimeSeriesArrays = TimeSeriesLightUtils.read( simulationXMLPath );
 			TimeSeriesArrays observationTimeSeriesArrays = TimeSeriesLightUtils.read( observationXMLPath );
 			
 			logger.log( LogLevel.INFO, "NCHC RTC PreAdapter: Start create model input files." );
 			
-			/** Write model input **/
-			this.writeModelInput( logger, similationTimeSeriesArrays,
+			// Write model input
+			this.writeModelInput( simulationTimeSeriesArrays,
 					observationTimeSeriesArrays, inputPath, modelArguments.getForecast() );
 			
 			logger.log( LogLevel.INFO, "NCHC RTC PreAdapter: Finished create model input files." );
@@ -58,18 +58,17 @@ public class RTCPreAdapter extends PiCommandLineExecute {
 	
 	/**
 	 * Write the model inputs.
-	 * 
-	 * @param logger
-	 * @param similationTimeSeriesArray
-	 * @param observationTimeSeriesArray
+	 *
+	 * @param simulationTimeSeriesArrays
+	 * @param observationTimeSeriesArrays
 	 * @param inputPath
 	 * @param forecast
 	 */
-	private void writeModelInput( PiDiagnosticsLogger logger, TimeSeriesArrays similationTimeSeriesArrays,
+	private void writeModelInput( TimeSeriesArrays simulationTimeSeriesArrays,
 			TimeSeriesArrays observationTimeSeriesArrays, Path inputPath, int forecast ) {
 		PathWriter.write( inputPath.resolve( CommonString.INPUT_CORR_SIM_WH ),
-				ContentBuilder.buildInputCorr( similationTimeSeriesArrays.size(), forecast ) );
+				ContentBuilder.buildInputCorr( simulationTimeSeriesArrays.size(), forecast ) );
 		PathWriter.write( inputPath.resolve( CommonString.INPUT_WH_EST_OBS_GAUGES ),
-				ContentBuilder.buildInputGauges( similationTimeSeriesArrays, observationTimeSeriesArrays ) );
+				ContentBuilder.buildInputGauges( simulationTimeSeriesArrays, observationTimeSeriesArrays ) );
 	}
 }
