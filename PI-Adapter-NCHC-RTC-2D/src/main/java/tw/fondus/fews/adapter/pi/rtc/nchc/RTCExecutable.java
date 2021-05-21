@@ -16,6 +16,7 @@ import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.fews.pi.config.xml.mapstacks.MapStacks;
 import tw.fondus.commons.fews.pi.config.xml.util.XMLUtils;
 import tw.fondus.commons.util.file.FileType;
+import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
@@ -48,6 +49,9 @@ public class RTCExecutable extends PiCommandLineExecute {
 		Path templateDir = Prevalidated.checkExists( basePath.resolve( modelArguments.getTemplateDir() ),
 				"NCHC RTC Preprocess ExecutableAdapter: Can not find template directory." );
 		
+		Path DEMDir = Prevalidated.checkExists( templateDir.resolve( "../DEM" ),
+				"NCHC RTC Preprocess ExecutableAdapter: Can not find DEM directory." );
+		
 		Path mapStacksPath = Prevalidated.checkExists( inputPath.resolve( modelArguments.getInputs().get( 0 ) ),
 				"NCHC RTC ExecutableAdapter: Can not find the XML file of mapstacks." );
 		try {
@@ -57,18 +61,20 @@ public class RTCExecutable extends PiCommandLineExecute {
 			/** Copy template file to executable directory **/
 			logger.log( LogLevel.INFO, "NCHC RTC ExecutableAdapter: Copy template file to executable directory." );
 			try ( Stream<Path> paths = Files.list( templateDir ) ) {
-				String DEMFileName = modelArguments.getInputs().get( 1 );
 				paths.forEach( path -> {
 					try {
-						if ( path.getFileName().toString().equals( DEMFileName ) ) {
-							FileTools.copyFile( templateDir, executableDir, path.getFileName().toString(),
-									CommonString.INPUT_LOCATION_GRIDS_EST );
-						}
 						FileTools.copyFile( templateDir, executableDir, path.getFileName().toString() );
 					} catch (IOException e) {
 						logger.log( LogLevel.ERROR, "NCHC RTC ExecutableAdapter: Copying template file has something wrong." );
 					}
 				} );
+			}
+			Path DEMPath = DEMDir.resolve( modelArguments.getInputs().get( 1 ) );
+			if ( PathUtils.isExists( DEMPath ) ) {
+				PathUtils.copy( DEMPath, executableDir.resolve( CommonString.INPUT_LOCATION_GRIDS_EST ) );
+			} else {
+				logger.log( LogLevel.ERROR,
+						"NCHC RTC ExecutableAdapter: Copying template DEM file has something wrong." );
 			}
 			
 			logger.log( LogLevel.INFO, "NCHC RTC ExecutableAdapter: Start executable adapter of NCHC RTC." );
@@ -125,6 +131,7 @@ public class RTCExecutable extends PiCommandLineExecute {
 					FileTools.copyFile( executableDir, outputPath, modelOutputASC,
 							Strman.append( "Output_ASC0000.", String.format( "%03d", timeStep ) ) );
 				} catch (IOException e) {
+					e.printStackTrace();
 					logger.log( LogLevel.ERROR, "NCHC RTC ExecutableAdapter: Something wrong when copy output file." );
 				} catch (InvalidExitValueException | InterruptedException | TimeoutException e) {
 					logger.log( LogLevel.ERROR, "NCHC RTC ExecutableAdapter: Execute has something wrong." );
