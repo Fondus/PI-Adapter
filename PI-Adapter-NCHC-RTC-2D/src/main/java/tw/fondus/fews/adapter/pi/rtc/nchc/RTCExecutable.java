@@ -58,7 +58,7 @@ public class RTCExecutable extends PiCommandLineExecute {
 			MapStacks mapStacks = XMLUtils.fromXML( mapStacksPath.toFile(), MapStacks.class );
 			String simulationASCFileName = mapStacks.getMapStacks().get( 0 ).getFile().getPattern().getFile();
 			
-			/** Copy template file to executable directory **/
+			// Copy template file to executable directory
 			logger.log( LogLevel.INFO, "NCHC RTC ExecutableAdapter: Copy template file to executable directory." );
 			try ( Stream<Path> paths = Files.list( templateDir ) ) {
 				paths.forEach( path -> {
@@ -78,13 +78,13 @@ public class RTCExecutable extends PiCommandLineExecute {
 			}
 			
 			logger.log( LogLevel.INFO, "NCHC RTC ExecutableAdapter: Start executable adapter of NCHC RTC." );
-			/** Run model **/
+			// Run model
 			String commandGrids = executableDir.resolve( modelArguments.getExecutable().get( 0 ) ).toAbsolutePath().toString();
 			String commandRTSIMAP = executableDir.resolve( modelArguments.getExecutable().get( 1 ) ).toAbsolutePath().toString();
 			
 			IntStream.rangeClosed( 0, modelArguments.getForecast() ).forEach( timeStep -> { 
 				try {
-					/** Copy preporcess output to executable directory **/
+					// Copy preporcess output to executable directory
 					String projectName = modelArguments.getProjectName();
 					FileTools.copyFile( executableDir, executableDir,
 							Strman.append( CommonString.INPUT_VAL_GRIDS_OBS_EST_T, String.format( "%03d", timeStep ),
@@ -95,28 +95,28 @@ public class RTCExecutable extends PiCommandLineExecute {
 									Strings.UNDERLINE, projectName, FileType.TXT.getExtension() ),
 							CommonString.INPUT_LOCATIONS_OBS_GRIDS );
 					
-					/** Run model part1 **/
+					// Run model part1
 					Executions.execute( executor -> executor.directory( executableDir.toFile() ),
 							commandGrids );
 	
-					/** Backup part1 output **/
+					// Backup part1 output
 					FileTools.backupOutputFile( executableDir, executableDir, CommonString.OUTPUT_EST_VAL_GRIDS_PARS,
 							projectName, timeStep );
 					FileTools.backupOutputFile( executableDir, executableDir, CommonString.OUTPUT_EST_VAL_GRIDS_APP,
 							projectName, timeStep );
 	
-					/** Change file name for part2 input **/
+					// Change file name for part2 input
 					FileTools.copyFile( inputPath, executableDir,
 							FileTools.getSimulationASCFileName( simulationASCFileName, timeStep ),
 							CommonString.OUTPUT_SIM_WH );
 					FileTools.copyFile( executableDir, executableDir,
 							CommonString.OUTPUT_EST_VAL_GRIDS_APP, CommonString.OUTPUT_ERR_SIM_WH );
 	
-					/** Run model part2 **/
+					// Run model part2
 					Executions.execute( executor -> executor.directory( executableDir.toFile() ),
 							commandRTSIMAP );
 	
-					/** Backup part2 output **/
+					// Backup part2 output
 					FileTools.copyFile( executableDir, executableDir,
 							Strman.append( CommonString.OUTPUT_CORR_SIM_WH, FileType.TXT.getExtension() ),
 							Strman.append( CommonString.OUTPUT_CORR_SIM_WH, Strings.UNDERLINE, "T1",
