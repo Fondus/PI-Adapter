@@ -5,8 +5,11 @@ import io.minio.errors.MinioException;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.minio.MinioHighLevelClient;
+import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
-import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
+import tw.fondus.fews.adapter.pi.aws.storage.argument.ExportS3Arguments;
+import tw.fondus.fews.adapter.pi.aws.storage.util.PredefinePrefix;
+import tw.fondus.fews.adapter.pi.aws.storage.util.PredefinePrefixUtils;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 
@@ -21,7 +24,7 @@ import java.nio.file.Path;
  */
 public class ExportToS3Adapter extends PiCommandLineExecute {
 	public static void main( String[] args ){
-		S3Arguments arguments = S3Arguments.instance();
+		ExportS3Arguments arguments = ExportS3Arguments.instance();
 		new ExportToS3Adapter().execute( args, arguments );
 	}
 
@@ -29,11 +32,10 @@ public class ExportToS3Adapter extends PiCommandLineExecute {
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath,
 			Path inputPath, Path outputPath ) {
 		// Cast PiArguments to expand arguments
-		S3Arguments modelArguments = this.asArguments( arguments, S3Arguments.class );
+		ExportS3Arguments modelArguments = this.asArguments( arguments, ExportS3Arguments.class );
 
 		String host = modelArguments.getHost();
 		String bucket = modelArguments.getBucket();
-		String object = modelArguments.getObject();
 		String username = modelArguments.getUsername();
 		String password = modelArguments.getPassword();
 
@@ -48,6 +50,9 @@ public class ExportToS3Adapter extends PiCommandLineExecute {
 		Path input = Prevalidated.checkExists(
 				inputPath.resolve( modelArguments.getInputs().get( 0 ) ),
 				"S3 Export Adapter: The input resource not exists!" );
+
+		String object = this.createObjectWithPrefix( modelArguments, input );
+
 		try {
 			if ( client.isNotExistsBucket() && modelArguments.isCreate() ){
 				logger.log( LogLevel.INFO, "S3 Export Adapter: The target bucket: {} created by adapter.", bucket );
@@ -71,5 +76,39 @@ public class ExportToS3Adapter extends PiCommandLineExecute {
 		} catch (MinioException e) {
 			logger.log( LogLevel.ERROR, "S3 Export Adapter: Working with S3 API has something wrong! {}", e );
 		}
+	}
+
+	/**
+	 * Create the full text of object.
+	 *
+	 * @param arguments arguments
+	 * @param input input file
+	 * @return full text of object
+	 */
+	private String createObjectWithPrefix( ExportS3Arguments arguments, Path input ){
+		PredefinePrefix predefinePrefix = arguments.getPredefinePrefix();
+		String object;
+		switch ( predefinePrefix ) {
+		case TIME_FROM_NAME_DMY_THREE_TIER:
+			object = arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameThreeTierDMY( input, false, false ) + Strings.SLASH + arguments.getObject();
+			break;
+		case TIME_FROM_NAME_DMY_THREE_TIER_IOW:
+			object = arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameThreeTierDMY( input, false, true ) + Strings.SLASH + arguments.getObject();
+			break;
+		case TIME_FROM_NAME_DMY_THREE_TIER_GMT8:
+			object = arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameThreeTierDMY( input, true, false ) + Strings.SLASH + arguments.getObject();
+			break;
+		case TIME_FROM_NAME_DMY_THREE_TIER_GMT8_IOW:
+			object = arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameThreeTierDMY( input, true, true ) + Strings.SLASH + arguments.getObject();
+			break;
+		default:
+			object = arguments.getObjectPrefix() + arguments.getObject();
+		}
+		this.getLogger().log( LogLevel.INFO, "S3 Export Adapter: The target object with prefix is: {}.", object );
+		return object;
 	}
 }
