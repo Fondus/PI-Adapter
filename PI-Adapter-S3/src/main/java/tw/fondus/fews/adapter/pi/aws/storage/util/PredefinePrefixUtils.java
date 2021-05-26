@@ -31,8 +31,8 @@ public class PredefinePrefixUtils {
 		DateTime time = isGMT8 ? JodaTimeUtils.toDateTime( name, "yyyyMMddHHmm", JodaTimeUtils.UTC8 ) :
 				JodaTimeUtils.toDateTime( name, "yyyyMMddHHmm" );
 		String year = String.valueOf( time.getYear() );
-		String month = String.valueOf( time.getMonthOfYear() );
-		String day = String.valueOf( time.getDayOfMonth() );
+		String month = String.format( "%02d", time.getMonthOfYear() );
+		String day = String.format( "%02d", time.getDayOfMonth() );
 		Stream<String> stream = isIoWFormat ? Stream.of( "Y" + year, "M" + month, "D" + day ) :
 				Stream.of( year, month, day );
 		return stream.collect( Collectors.joining( Strings.SLASH ) );
