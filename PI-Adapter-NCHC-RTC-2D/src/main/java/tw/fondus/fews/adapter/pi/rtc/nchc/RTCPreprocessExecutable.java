@@ -1,15 +1,7 @@
 package tw.fondus.fews.adapter.pi.rtc.nchc;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.concurrent.TimeoutException;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import org.zeroturnaround.exec.InvalidExitValueException;
-
 import nl.wldelft.util.FileUtils;
+import org.zeroturnaround.exec.InvalidExitValueException;
 import strman.Strman;
 import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.cli.util.Prevalidated;
@@ -22,6 +14,13 @@ import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.rtc.nchc.argument.RunArguments;
 import tw.fondus.fews.adapter.pi.rtc.nchc.util.CommonString;
 import tw.fondus.fews.adapter.pi.rtc.nchc.util.FileTools;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.concurrent.TimeoutException;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Model preprocess executable-adapter for running NCHC RTC model from
@@ -65,7 +64,7 @@ public class RTCPreprocessExecutable extends PiCommandLineExecute {
 			logger.log( LogLevel.ERROR, "NCHC RTC Preprocess ExecutableAdapter: Copying input file has something worng." );
 		}
 		
-		/** Run model pre process **/
+		// Run model pre process
 		logger.log( LogLevel.INFO, "NCHC RTC Preprocess ExecutableAdapter: Start preprocess." );
 		String command = executableDir.resolve( modelArguments.getExecutable().get( 0 ) ).toAbsolutePath().toString();
 		try {
@@ -75,7 +74,7 @@ public class RTCPreprocessExecutable extends PiCommandLineExecute {
 			logger.log( LogLevel.ERROR, "NCHC RTC Preprocess ExecutableAdapter: The preprocess has something wrong." );
 		}
 		
-		/** Backup data of model preprocess output **/
+		// Backup data of model preprocess output
 		IntStream.rangeClosed( 0, modelArguments.getForecast() ).forEach( timeStep -> {
 			try {
 				String fileName = Strman.append( CommonString.INPUT_VAL_GRIDS_OBS_EST_T,
