@@ -53,7 +53,7 @@ public class DeleteS3ObjectAdapter extends PiCommandLineExecute {
 				} else {
 					boolean state = client.removeObject( object );
 					if ( state ){
-						logger.log( LogLevel.INFO, "S3 Delete Adapter: Successes to delete target object: {}.", object );
+						logger.log( LogLevel.INFO, "S3 Delete Adapter: Successful to delete target object: {}.", object );
 					} else {
 						logger.log( LogLevel.WARN, "S3 Delete Adapter: Failed to delete target object: {}.", object );
 					}
