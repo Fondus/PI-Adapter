@@ -69,7 +69,7 @@ public class ExportToS3Adapter extends PiCommandLineExecute {
 			} else {
 				logger.log( LogLevel.WARN, "S3 Export Adapter: The target bucket: {} not exist, will ignore the adapter process.", bucket );
 			}
-			logger.log( LogLevel.INFO, "S3 Export Adapter: Finished to upload object: {} with S3 API." );
+			logger.log( LogLevel.INFO, "S3 Export Adapter: Finished to upload object: {} with S3 API.", object );
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "S3 Export Adapter: Upload object: {} with S3 API has IOException! {}", object, e );
 		} catch (MinioException e) {
