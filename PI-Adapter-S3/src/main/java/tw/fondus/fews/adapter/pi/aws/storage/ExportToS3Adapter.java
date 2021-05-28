@@ -5,7 +5,6 @@ import io.minio.errors.MinioException;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.minio.MinioHighLevelClient;
-import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.aws.storage.argument.ExportS3Arguments;
 import tw.fondus.fews.adapter.pi.aws.storage.util.PredefinePrefix;
@@ -89,21 +88,37 @@ public class ExportToS3Adapter extends PiCommandLineExecute {
 		PredefinePrefix predefinePrefix = arguments.getPredefinePrefix();
 		String object;
 		switch ( predefinePrefix ) {
-		case TIME_FROM_NAME_DMY_THREE_TIER:
+		case TIME_FROM_NAME_YMD_THREE_TIER:
 			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierDMY( input, false, false ) + Strings.SLASH + arguments.getObject();
+					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, false, false ) + arguments.getObject();
 			break;
-		case TIME_FROM_NAME_DMY_THREE_TIER_IOW:
+		case TIME_FROM_NAME_YMD_THREE_TIER_IOW:
 			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierDMY( input, false, true ) + Strings.SLASH + arguments.getObject();
+					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, false, true ) + arguments.getObject();
 			break;
-		case TIME_FROM_NAME_DMY_THREE_TIER_GMT8:
+		case TIME_FROM_NAME_YMD_THREE_TIER_GMT8:
 			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierDMY( input, true, false ) + Strings.SLASH + arguments.getObject();
+					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, true, false ) + arguments.getObject();
 			break;
-		case TIME_FROM_NAME_DMY_THREE_TIER_GMT8_IOW:
+		case TIME_FROM_NAME_YMD_THREE_TIER_GMT8_IOW:
 			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierDMY( input, true, true ) + Strings.SLASH + arguments.getObject();
+					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, true, true ) + arguments.getObject();
+			break;
+		case TIME_FROM_NAME_YM_TWO_TIER:
+			object = arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameTwoTierYM( input, false, false ) + arguments.getObject();
+			break;
+		case TIME_FROM_NAME_YM_TWO_TIER_IOW:
+			object = arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameTwoTierYM( input, false, true ) + arguments.getObject();
+			break;
+		case TIME_FROM_NAME_YM_TWO_TIER_GMT8:
+			object = arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameTwoTierYM( input, true, false ) + arguments.getObject();
+			break;
+		case TIME_FROM_NAME_YM_TWO_TIER_GMT8_IOW:
+			object = arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameTwoTierYM( input, true, true ) + arguments.getObject();
 			break;
 		default:
 			object = arguments.getObjectPrefix() + arguments.getObject();
