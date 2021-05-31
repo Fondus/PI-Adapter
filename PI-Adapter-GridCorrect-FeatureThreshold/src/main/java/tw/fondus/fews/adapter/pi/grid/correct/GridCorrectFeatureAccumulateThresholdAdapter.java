@@ -71,7 +71,7 @@ public class GridCorrectFeatureAccumulateThresholdAdapter extends PiCommandLineE
 				featureFolder.resolve( modelArguments.getFeatureFile() ),
 				"GridCorrectFeatureThresholdAdapter: The features file do not exists in features folder." );
 
-		logger.log( LogLevel.INFO, "GridCorrectFeatureThresholdAdapter:: Start the correct adapter process." );
+		logger.log( LogLevel.INFO, "GridCorrectFeatureThresholdAdapter: Start the correct adapter process." );
 
 		Map<String, Geometry> geometryMap = this.readFeatures( featureFile );
 		if ( geometryMap.isEmpty() ){
@@ -160,6 +160,8 @@ public class GridCorrectFeatureAccumulateThresholdAdapter extends PiCommandLineE
 				.peek( grid ->
 					aggregationMap.forEach( (id, value) -> {
 						if ( NumberUtils.less( value, threshold ) && geometryMap.containsKey( id ) ){
+							this.getLogger().log( LogLevel.INFO,
+									"GridCorrectFeatureThresholdAdapter: Grid got correct because features id: {}, value: {} less than threshold: {}.", id, value, threshold );
 							Geometry geometry = geometryMap.get( id );
 							grid.forEachGridIndexed( (index, c) -> {
 								Point point = JTSUtils.point( c );
@@ -168,6 +170,9 @@ public class GridCorrectFeatureAccumulateThresholdAdapter extends PiCommandLineE
 								}
 							},
 							index -> grid.isNotMissing( index.getCol(), index.getRow() ) );
+						} else {
+							this.getLogger().log( LogLevel.INFO,
+									"GridCorrectFeatureThresholdAdapter: Grid skip correct because features id: {}, value: {} greater than threshold: {}.", id, value, threshold );
 						}
 					} )
 				)
