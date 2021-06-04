@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tw.fondus.commons.minio.MinioHighLevelClient;
-import tw.fondus.fews.adapter.pi.aws.storage.argument.ExportS3Arguments;
+import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
 
 /**
  * The integration test of ExportToS3Adapter.
@@ -42,7 +42,7 @@ public class ExportToS3AdapterTest {
 				PASSWORD
 		};
 
-		ExportS3Arguments arguments = ExportS3Arguments.instance();
+		S3Arguments arguments = S3Arguments.instance();
 		new ExportToS3Adapter().execute( args, arguments );
 	}
 

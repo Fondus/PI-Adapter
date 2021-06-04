@@ -33,9 +33,10 @@ public class ImportFromS3Adapter extends PiCommandLineExecute {
 
 		String host = modelArguments.getHost();
 		String bucket = modelArguments.getBucket();
-		String object = modelArguments.getObject();
 		String username = modelArguments.getUsername();
 		String password = modelArguments.getPassword();
+		String object = modelArguments.getObjectPrefix() + modelArguments.getObject();
+		logger.log( LogLevel.INFO, "S3 Import Adapter: The target object with prefix is: {}.", object );
 
 		MinioHighLevelClient client = MinioHighLevelClient.builder()
 				.client( MinioClient.builder()
