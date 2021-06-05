@@ -1,6 +1,7 @@
 package tw.fondus.fews.adapter.pi.nc.argument;
 
 import com.beust.jcommander.Parameter;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -23,6 +24,10 @@ public class MergeArguments extends PiIOArguments {
 
 	@Parameter( names = { "-tr", "--time-range" }, required = true, description = "The time range will used to read from file, if file time lower than index will cause exception." )
 	private int timeRange;
+
+	@Builder.Default
+	@Parameter( names = { "--delete-inputs" }, description = "Delete inputs after process." )
+	private boolean deleteInputs = false;
 
 	/**
 	 * Create the argument instance.
