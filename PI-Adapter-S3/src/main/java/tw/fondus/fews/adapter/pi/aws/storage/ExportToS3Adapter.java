@@ -8,10 +8,10 @@ import tw.fondus.commons.minio.MinioHighLevelClient;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
 import tw.fondus.fews.adapter.pi.aws.storage.util.PredefinePrefixUtils;
+import tw.fondus.fews.adapter.pi.aws.storage.util.S3ProcessUtils;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 /**
@@ -53,25 +53,15 @@ public class ExportToS3Adapter extends PiCommandLineExecute {
 		logger.log( LogLevel.INFO, "S3 Export Adapter: The target object with prefix is: {}.", object );
 
 		try {
-			if ( client.isNotExistsBucket() && modelArguments.isCreate() ){
-				logger.log( LogLevel.INFO, "S3 Export Adapter: The target bucket: {} created by adapter.", bucket );
-				client.createBucket();
-			}
+			S3ProcessUtils.isCreateS3BucketBefore( "S3 Export Adapter", logger, client, bucket, modelArguments.isCreate() );
 
 			logger.log( LogLevel.INFO, "S3 Export Adapter: Start to upload object: {} with S3 API.", object );
 			if ( client.isExistsBucket() ) {
-				boolean state = client.uploadObject( object, input );
-				if ( state ){
-					logger.log( LogLevel.INFO, "S3 Export Adapter: Succeeded to upload object: {} with S3 API.", object );
-				} else {
-					logger.log( LogLevel.WARN, "S3 Export Adapter: Failed to upload object: {} with S3 API.", object );
-				}
+				S3ProcessUtils.uploadS3Object( "S3 Export Adapter", logger, client, object, input );
 			} else {
 				logger.log( LogLevel.WARN, "S3 Export Adapter: The target bucket: {} not exist, will ignore the adapter process.", bucket );
 			}
 			logger.log( LogLevel.INFO, "S3 Export Adapter: Finished to upload object: {} with S3 API.", object );
-		} catch (IOException e) {
-			logger.log( LogLevel.ERROR, "S3 Export Adapter: Upload object: {} with S3 API has IOException! {}", object, e );
 		} catch (MinioException e) {
 			logger.log( LogLevel.ERROR, "S3 Export Adapter: Working with S3 API has something wrong! {}", e );
 		}

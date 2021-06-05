@@ -15,15 +15,15 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
- * FEWS adapter used to export folder data to S3 API with Delft-FEWS.
+ * FEWS adapter used to folder file names to delete data to S3 API with Delft-FEWS.
  *
  * @author Brad Chen
  *
  */
-public class ExportFolderToS3Adapter extends PiCommandLineExecute {
+public class DeleteS3ObjectWithFolderFilesAdapter extends PiCommandLineExecute {
 	public static void main( String[] args ){
 		S3FolderArguments arguments = S3FolderArguments.instance();
-		new ExportFolderToS3Adapter().execute( args, arguments );
+		new DeleteS3ObjectWithFolderFilesAdapter().execute( args, arguments );
 	}
 
 	@Override
@@ -31,6 +31,7 @@ public class ExportFolderToS3Adapter extends PiCommandLineExecute {
 			Path inputPath, Path outputPath ) {
 		// Cast PiArguments to expand arguments
 		S3FolderArguments modelArguments = this.asArguments( arguments, S3FolderArguments.class );
+
 		String host = modelArguments.getHost();
 		String bucket = modelArguments.getBucket();
 		String username = modelArguments.getUsername();
@@ -45,22 +46,23 @@ public class ExportFolderToS3Adapter extends PiCommandLineExecute {
 				.defaultBucket( bucket )
 				.build();
 
+		logger.log( LogLevel.INFO, "S3 Delete FolderFiles Adapter: The adapter process try to find delete objects inside target bucket: {} with folder: {}.", bucket, inputPath );
 		try {
-			S3ProcessUtils.isCreateS3BucketBefore( "S3 Export Folder Adapter", logger, client, bucket, modelArguments.isCreate() );
-
-			logger.log( LogLevel.INFO, "S3 Export Folder Adapter: Start to upload folder: {} to prefix: {} with S3 API.", inputPath, prefix );
-			if ( client.isExistsBucket() ) {
-				List<Path> paths = PathUtils.list( inputPath );
-				paths.forEach( path -> {
-					String object = prefix + PathUtils.getName( path );
-					S3ProcessUtils.uploadS3Object( "S3 Export Folder Adapter", logger, client, object, path );
-				} );
+			if ( client.isNotExistsBucket() ) {
+				logger.log( LogLevel.WARN, "S3 Delete FolderFiles Adapter: The target bucket: {} not exist, will skip process.", bucket );
 			} else {
-				logger.log( LogLevel.WARN, "S3 Export Folder Adapter: The target bucket: {} not exist, will ignore the adapter process.", bucket );
+				List<Path> paths = PathUtils.list( inputPath );
+				if ( paths.isEmpty() ){
+					logger.log( LogLevel.WARN, "S3 Delete FolderFiles Adapter: The folder: {} is empty, will skip process.", inputPath );
+				} else {
+					paths.forEach( path -> {
+						String object = prefix + PathUtils.getName( path );
+						S3ProcessUtils.deleteS3Object( "S3 Delete FolderFiles Adapter", logger, client, object );
+					} );
+				}
 			}
-			logger.log( LogLevel.INFO, "S3 Export Folder Adapter: Finished to upload folder: {} to prefix: {} with S3 API.", inputPath, prefix );
 		} catch (MinioException e) {
-			logger.log( LogLevel.ERROR, "S3 Export Adapter: Working with S3 API has something wrong! {}", e );
+			logger.log( LogLevel.ERROR, "S3 Delete FolderFiles Adapter: Working with S3 API has something wrong! {}", e );
 		}
 	}
 }

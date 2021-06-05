@@ -1,11 +1,10 @@
 package tw.fondus.fews.adapter.pi.aws.storage;
 
-import io.minio.MinioClient;
+import io.minio.errors.MinioException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import tw.fondus.commons.minio.MinioHighLevelClient;
 import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
 
 /**
@@ -14,12 +13,8 @@ import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
  * @author Brad Chen
  *
  */
-public class ExportToS3AdapterTest {
-	private static final String HOST = "http://localhost:9000";
-	private static final String BUCKET = "demo-bucket";
-	private static final String OBJECT = "test";
-	private static final String USERNAME = "";
-	private static final String PASSWORD = "";
+public class ExportToS3AdapterTest extends SetUpS3Test {
+	private static final String OBJECT = "Upload.txt";
 
 	@BeforeAll
 	public static void run() {
@@ -48,19 +43,11 @@ public class ExportToS3AdapterTest {
 
 	@Test
 	public void test() {
-		MinioHighLevelClient client = MinioHighLevelClient.builder()
-				.client( MinioClient.builder()
-						.endpoint( HOST )
-						.credentials( USERNAME, PASSWORD )
-						.build() )
-				.defaultBucket( BUCKET )
-				.build();
-
 		Assertions.assertTrue( client.isExistsObject( OBJECT ) );
 	}
 
 	@AfterAll
-	public static void after(){
-
+	public static void after() throws MinioException {
+		client.removeObject( OBJECT );
 	}
 }
