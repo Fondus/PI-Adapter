@@ -6,6 +6,7 @@ import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.minio.MinioHighLevelClient;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
+import tw.fondus.fews.adapter.pi.aws.storage.util.S3ProcessUtils;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 
@@ -48,16 +49,7 @@ public class DeleteS3ObjectAdapter extends PiCommandLineExecute {
 			if ( client.isNotExistsBucket() ) {
 				logger.log( LogLevel.WARN, "S3 Delete Adapter: The target bucket: {} not exist, will skip process.", bucket );
 			} else {
-				if ( client.isNotExistsObject( object ) ){
-					logger.log( LogLevel.WARN, "S3 Delete Adapter: The target object: {} not exist, will skip process.", object );
-				} else {
-					boolean state = client.removeObject( object );
-					if ( state ){
-						logger.log( LogLevel.INFO, "S3 Delete Adapter: Successful to delete target object: {}.", object );
-					} else {
-						logger.log( LogLevel.WARN, "S3 Delete Adapter: Failed to delete target object: {}.", object );
-					}
-				}
+				S3ProcessUtils.deleteS3Object( "S3 Delete Adapter", logger, client, object );
 			}
 		} catch (MinioException e) {
 			logger.log( LogLevel.ERROR, "S3 Delete Adapter: Working with S3 API has something wrong! {}", e );

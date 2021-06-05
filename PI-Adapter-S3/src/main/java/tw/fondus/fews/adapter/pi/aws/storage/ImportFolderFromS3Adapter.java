@@ -5,14 +5,13 @@ import io.minio.errors.MinioException;
 import io.minio.messages.Item;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.minio.MinioHighLevelClient;
-import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.aws.storage.argument.S3FolderArguments;
+import tw.fondus.fews.adapter.pi.aws.storage.util.S3ProcessUtils;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -58,23 +57,15 @@ public class ImportFolderFromS3Adapter extends PiCommandLineExecute {
 				} else {
 					objects.forEach( objectItem -> {
 						String objectName = objectItem.objectName();
-						logger.log( LogLevel.INFO, "S3 Import Folder Adapter: Start to download object: {} with S3 API.", objectName );
-						try {
-							Path saved = client.getObjectAndSave( objectName, outputPath.resolve( objectName.replace( prefix,
-									Strings.BLANK ) ) );
-							if ( PathUtils.isExists( saved ) ){
-								logger.log( LogLevel.INFO, "S3 Import Folder Adapter: Succeeded to download object: {} with S3 API.", objectName );
-							} else {
-								logger.log( LogLevel.WARN, "S3 Import Folder Adapter: Failed to download object: {} with S3 API.", objectName );
-							}
-						} catch (MinioException | IOException e) {
-							logger.log( LogLevel.ERROR, "S3 Import Folder Adapter: Download object: {} with S3 API has IOException! {}", objectName, e );
-						}
+						S3ProcessUtils.downloadS3Object( "S3 Import Folder Adapter", logger, client, objectName, outputPath.resolve( objectName.replace( prefix,
+								Strings.BLANK ) ) );
 					} );
 				}
 			} else {
 				logger.log( LogLevel.WARN, "S3 Import Folder Adapter: The target bucket: {} not exist, will ignore the adapter process.", bucket );
 			}
+			logger.log( LogLevel.INFO,
+					"S3 Import Folder Adapter: Finished to download objects with folder prefix: {} with S3 API.", prefix );
 		} catch (MinioException e) {
 			logger.log( LogLevel.ERROR, "S3 Import Folder Adapter: Working with S3 API has something wrong! {}", e );
 		}

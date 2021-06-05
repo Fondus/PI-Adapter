@@ -1,23 +1,29 @@
 package tw.fondus.fews.adapter.pi.aws.storage;
 
 import io.minio.errors.MinioException;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.fews.adapter.pi.aws.storage.argument.S3FolderArguments;
 
+import java.io.IOException;
+
 /**
- * The integration test of ExportToS3Adapter.
+ * The unit test of DeleteS3ObjectWithFolderFilesAdapter.
  *
  * @author Brad Chen
  *
  */
-public class ExportFolderToS3AdapterTest extends SetUpS3Test {
-	private static final String PREFIX = "Inundation/NC/";
-
+@Disabled
+public class DeleteS3ObjectWithFolderFilesAdapterTest extends SetUpS3Test {
 	@BeforeAll
-	public static void run() {
+	public static void run() throws MinioException, IOException {
+		if ( client.isNotExistsObject( PREFIX + OBJECT ) ){
+			client.uploadObject( PREFIX + OBJECT, PathUtils.path( "src/test/resources/Input/Upload.txt" ) );
+		}
+
 		String[] args = new String[]{
 				"-b",
 				"src/test/resources",
@@ -34,21 +40,15 @@ public class ExportFolderToS3AdapterTest extends SetUpS3Test {
 				"-pw",
 				PASSWORD,
 				"--object-prefix",
-				"PREFIX",
-				"--bucket-create"
+				"PREFIX"
 		};
 
 		S3FolderArguments arguments = S3FolderArguments.instance();
-		new ExportFolderToS3Adapter().execute( args, arguments );
+		new DeleteS3ObjectWithFolderFilesAdapter().execute( args, arguments );
 	}
 
 	@Test
 	public void test() {
-		Assertions.assertFalse( client.listObjects( PREFIX ).isEmpty() );
-	}
-
-	@AfterAll
-	public static void after() throws MinioException {
-		client.removeObject( PREFIX + OBJECT );
+		Assertions.assertTrue( client.isNotExistsObject( PREFIX + OBJECT ) );
 	}
 }

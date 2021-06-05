@@ -1,24 +1,23 @@
 package tw.fondus.fews.adapter.pi.aws.storage;
 
 import io.minio.errors.MinioException;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import tw.fondus.commons.util.file.PathUtils;
-import tw.fondus.fews.adapter.pi.aws.storage.argument.S3FolderArguments;
+import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
 
 /**
- * The integration test of ImportFromS3Adapter.
+ * The unit test of DeleteS3ObjectAdapter.
  *
  * @author Brad Chen
  *
  */
-public class ImportFolderFromS3AdapterTest extends SetUpS3Test {
+@Disabled
+public class DeleteS3ObjectAdapterTest extends SetUpS3Test {
 	@BeforeAll
 	public static void run() throws MinioException, IOException {
 		if ( client.isNotExistsObject( PREFIX + OBJECT ) ){
@@ -32,6 +31,8 @@ public class ImportFolderFromS3AdapterTest extends SetUpS3Test {
 				HOST,
 				"--bucket",
 				BUCKET,
+				"--object",
+				OBJECT,
 				"-i",
 				"",
 				"-o",
@@ -44,19 +45,12 @@ public class ImportFolderFromS3AdapterTest extends SetUpS3Test {
 				PREFIX
 		};
 
-		S3FolderArguments arguments = S3FolderArguments.instance();
-		new ImportFolderFromS3Adapter().execute( args, arguments );
+		S3Arguments arguments = S3Arguments.instance();
+		new DeleteS3ObjectAdapter().execute( args, arguments );
 	}
 
 	@Test
 	public void test() {
-		List<Path> paths = PathUtils.list( "src/test/resources/Output" );
-		Assertions.assertFalse( paths.isEmpty() );
-	}
-
-	@AfterAll
-	public static void after() throws MinioException {
-		PathUtils.clean( "src/test/resources/Output" );
-		client.removeObject( PREFIX + OBJECT );
+		Assertions.assertTrue( client.isNotExistsObject( PREFIX + OBJECT ) );
 	}
 }
