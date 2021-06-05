@@ -35,6 +35,10 @@ public class S3FolderArguments extends PiIOArguments {
 	@Parameter( names = { "--object-prefix" }, description = "The prefix of storage object." )
 	private String objectPrefix = "";
 
+	@Builder.Default
+	@Parameter( names = { "--bucket-create" }, description = "Should create storage bucket or not." )
+	private boolean create = false;
+
 	/**
 	 * Create the argument instance.
 	 *
