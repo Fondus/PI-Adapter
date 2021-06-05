@@ -58,6 +58,12 @@ public class GridMergeAdapter extends PiCommandLineExecute {
 					logger.log( LogLevel.ERROR, "NetCDF GridMergeAdapter: Write the merge NetCDF grid with Path {} has something wrong.", mergePath.toString() );
 				}
 			}
+
+			if ( modelArguments.isDeleteInputs() ){
+				logger.log( LogLevel.INFO, "NetCDF GridMergeAdapter: Start to delete inputs." );
+				paths.forEach( PathUtils::deleteIfExists );
+				logger.log( LogLevel.INFO, "NetCDF GridMergeAdapter: Finished to delete inputs." );
+			}
 		}
 	}
 }
