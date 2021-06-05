@@ -5,7 +5,7 @@ import io.minio.errors.MinioException;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.minio.MinioHighLevelClient;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
-import tw.fondus.fews.adapter.pi.aws.storage.argument.ExportS3Arguments;
+import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 
@@ -19,7 +19,7 @@ import java.nio.file.Path;
  */
 public class DeleteS3ObjectAdapter extends PiCommandLineExecute {
 	public static void main( String[] args ){
-		ExportS3Arguments arguments = ExportS3Arguments.instance();
+		S3Arguments arguments = S3Arguments.instance();
 		new DeleteS3ObjectAdapter().execute( args, arguments );
 	}
 
@@ -27,7 +27,7 @@ public class DeleteS3ObjectAdapter extends PiCommandLineExecute {
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath,
 			Path inputPath, Path outputPath ) {
 		// Cast PiArguments to expand arguments
-		ExportS3Arguments modelArguments = this.asArguments( arguments, ExportS3Arguments.class );
+		S3Arguments modelArguments = this.asArguments( arguments, S3Arguments.class );
 
 		String host = modelArguments.getHost();
 		String bucket = modelArguments.getBucket();

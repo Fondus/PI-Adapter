@@ -7,7 +7,6 @@ import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.file.io.PathReader;
-import tw.fondus.commons.util.stream.StreamUtils;
 import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
@@ -186,7 +185,7 @@ public class IrrigationOptimizeParameterAdapter extends PiCommandLineExecute {
 			List<String> targets ){
 		List<Parameter> parameters = ParameterUtils.filterDraft( caseParameter );
 		return targets.stream()
-			.flatMap( target -> StreamUtils.boxed( ModelUtils.findParameter( parameters, target ) ) )
+			.flatMap( target -> ModelUtils.findParameter( parameters, target ).stream() )
 			.map( parameter -> ModelUtils.createDurationContent( parameter.getValue(), duration ) )
 			.collect( Collectors.joining( Strings.BREAKLINE ) );
 	}

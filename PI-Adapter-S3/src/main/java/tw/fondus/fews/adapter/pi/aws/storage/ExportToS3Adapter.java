@@ -6,8 +6,7 @@ import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.minio.MinioHighLevelClient;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
-import tw.fondus.fews.adapter.pi.aws.storage.argument.ExportS3Arguments;
-import tw.fondus.fews.adapter.pi.aws.storage.util.PredefinePrefix;
+import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
 import tw.fondus.fews.adapter.pi.aws.storage.util.PredefinePrefixUtils;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
@@ -23,7 +22,7 @@ import java.nio.file.Path;
  */
 public class ExportToS3Adapter extends PiCommandLineExecute {
 	public static void main( String[] args ){
-		ExportS3Arguments arguments = ExportS3Arguments.instance();
+		S3Arguments arguments = S3Arguments.instance();
 		new ExportToS3Adapter().execute( args, arguments );
 	}
 
@@ -31,7 +30,7 @@ public class ExportToS3Adapter extends PiCommandLineExecute {
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath,
 			Path inputPath, Path outputPath ) {
 		// Cast PiArguments to expand arguments
-		ExportS3Arguments modelArguments = this.asArguments( arguments, ExportS3Arguments.class );
+		S3Arguments modelArguments = this.asArguments( arguments, S3Arguments.class );
 
 		String host = modelArguments.getHost();
 		String bucket = modelArguments.getBucket();
@@ -50,7 +49,8 @@ public class ExportToS3Adapter extends PiCommandLineExecute {
 				inputPath.resolve( modelArguments.getInputs().get( 0 ) ),
 				"S3 Export Adapter: The input resource not exists!" );
 
-		String object = this.createObjectWithPrefix( modelArguments, input );
+		String object = PredefinePrefixUtils.createObjectWithPrefix( modelArguments, input );
+		logger.log( LogLevel.INFO, "S3 Export Adapter: The target object with prefix is: {}.", object );
 
 		try {
 			if ( client.isNotExistsBucket() && modelArguments.isCreate() ){
@@ -75,55 +75,5 @@ public class ExportToS3Adapter extends PiCommandLineExecute {
 		} catch (MinioException e) {
 			logger.log( LogLevel.ERROR, "S3 Export Adapter: Working with S3 API has something wrong! {}", e );
 		}
-	}
-
-	/**
-	 * Create the full text of object.
-	 *
-	 * @param arguments arguments
-	 * @param input input file
-	 * @return full text of object
-	 */
-	private String createObjectWithPrefix( ExportS3Arguments arguments, Path input ){
-		PredefinePrefix predefinePrefix = arguments.getPredefinePrefix();
-		String object;
-		switch ( predefinePrefix ) {
-		case TIME_FROM_NAME_YMD_THREE_TIER:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, false, false ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YMD_THREE_TIER_IOW:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, false, true ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YMD_THREE_TIER_GMT8:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, true, false ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YMD_THREE_TIER_GMT8_IOW:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, true, true ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YM_TWO_TIER:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameTwoTierYM( input, false, false ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YM_TWO_TIER_IOW:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameTwoTierYM( input, false, true ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YM_TWO_TIER_GMT8:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameTwoTierYM( input, true, false ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YM_TWO_TIER_GMT8_IOW:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameTwoTierYM( input, true, true ) + arguments.getObject();
-			break;
-		default:
-			object = arguments.getObjectPrefix() + arguments.getObject();
-		}
-		this.getLogger().log( LogLevel.INFO, "S3 Export Adapter: The target object with prefix is: {}.", object );
-		return object;
 	}
 }
