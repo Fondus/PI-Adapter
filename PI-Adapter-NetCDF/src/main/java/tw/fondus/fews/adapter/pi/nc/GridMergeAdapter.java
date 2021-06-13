@@ -17,6 +17,12 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * The model adapter use to merge the grid type of NetCDF.
+ *
+ * @author Brad Chen
+ *
+ */
 public class GridMergeAdapter extends PiCommandLineExecute {
 	public static void main( String[] args ) {
 		MergeArguments arguments = MergeArguments.instance();
