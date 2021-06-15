@@ -68,6 +68,7 @@ public class RenameNetCDFByTimeValueAdapter extends PiCommandLineExecute {
 			logger.log( LogLevel.ERROR, "Rename NetCDF Adapter: Read NetCDF has IO problem. {}", e.toString() );
 		}
 
+		PathUtils.deleteIfExists( netcdfPath );
 		logger.log( LogLevel.INFO,
 				"Rename NetCDF Adapter: Finished the to rename NetCDF process with time-format: {}, index: {}, and time zone {}.",
 				format, index, isGMT8 ? "GMT8" : "UTC0" );
