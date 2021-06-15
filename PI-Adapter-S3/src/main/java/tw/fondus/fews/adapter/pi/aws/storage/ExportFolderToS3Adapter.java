@@ -7,6 +7,7 @@ import tw.fondus.commons.minio.MinioHighLevelClient;
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.fews.adapter.pi.argument.PiBasicArguments;
 import tw.fondus.fews.adapter.pi.aws.storage.argument.S3FolderArguments;
+import tw.fondus.fews.adapter.pi.aws.storage.util.PredefinePrefixUtils;
 import tw.fondus.fews.adapter.pi.aws.storage.util.S3ProcessUtils;
 import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
@@ -35,7 +36,6 @@ public class ExportFolderToS3Adapter extends PiCommandLineExecute {
 		String bucket = modelArguments.getBucket();
 		String username = modelArguments.getUsername();
 		String password = modelArguments.getPassword();
-		String prefix = modelArguments.getObjectPrefix();
 
 		MinioHighLevelClient client = MinioHighLevelClient.builder()
 				.client( MinioClient.builder()
@@ -48,17 +48,18 @@ public class ExportFolderToS3Adapter extends PiCommandLineExecute {
 		try {
 			S3ProcessUtils.isCreateS3BucketBefore( "S3 Export Folder Adapter", logger, client, bucket, modelArguments.isCreate() );
 
-			logger.log( LogLevel.INFO, "S3 Export Folder Adapter: Start to upload folder: {} to prefix: {} with S3 API.", inputPath, prefix );
+			logger.log( LogLevel.INFO, "S3 Export Folder Adapter: Start to upload folder: {} with S3 API.", inputPath );
 			if ( client.isExistsBucket() ) {
 				List<Path> paths = PathUtils.list( inputPath );
 				paths.forEach( path -> {
+					String prefix = PredefinePrefixUtils.createPredefinePrefix( modelArguments, path );
 					String object = prefix + PathUtils.getName( path );
 					S3ProcessUtils.uploadS3Object( "S3 Export Folder Adapter", logger, client, object, path );
 				} );
 			} else {
 				logger.log( LogLevel.WARN, "S3 Export Folder Adapter: The target bucket: {} not exist, will ignore the adapter process.", bucket );
 			}
-			logger.log( LogLevel.INFO, "S3 Export Folder Adapter: Finished to upload folder: {} to prefix: {} with S3 API.", inputPath, prefix );
+			logger.log( LogLevel.INFO, "S3 Export Folder Adapter: Finished to upload folder: {} with S3 API.", inputPath );
 		} catch (MinioException e) {
 			logger.log( LogLevel.ERROR, "S3 Export Adapter: Working with S3 API has something wrong! {}", e );
 		}
