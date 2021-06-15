@@ -87,7 +87,7 @@ public class GridDirectMergeAdapter extends PiCommandLineExecute {
 										NetCDFUtils.create1DArrayDouble( totalTimes ),
 										NetCDFUtils.create1DArrayDouble( yxInfo.y ),
 										NetCDFUtils.create1DArrayDouble( yxInfo.x ),
-										NetCDFUtils.create3DArrayShort( totalTYX, yxInfo.y.size(), yxInfo.x.size() ) )
+										NetCDFUtils.create3DArrayDouble( totalTYX, yxInfo.y.size(), yxInfo.x.size() ) )
 								.close();
 					} catch (IOException | InvalidRangeException e){
 						logger.log( LogLevel.ERROR, "NetCDF GridMergeAdapter: Write the merge NetCDF grid with Path {} has something wrong.", mergePath.toString() );
@@ -132,7 +132,7 @@ public class GridDirectMergeAdapter extends PiCommandLineExecute {
 					BigDecimal missing = NetCDFUtils.readVariableAttributeAsNumber( variable, VariableAttribute.KEY_MISSING, VariableAttribute.MISSING );
 					Array array = variable.read();
 					IntStream.range( 0, timeRange ).forEach( i -> {
-						List<BigDecimal> grid = NetCDFUtils.sliceTDimensionArrayYXValues( array, i, yxInfo.getScale(), yxInfo.getScale(), missing, false );
+						List<BigDecimal> grid = NetCDFUtils.sliceTDimensionArrayYXValues( array, i, yxInfo.scale, yxInfo.offset, missing, false );
 						totalTYX.add( grid );
 					} );
 				} else{

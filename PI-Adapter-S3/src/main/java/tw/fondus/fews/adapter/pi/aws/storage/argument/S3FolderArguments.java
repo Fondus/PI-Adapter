@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
+import tw.fondus.fews.adapter.pi.aws.storage.converter.PredefinePrefixConverter;
+import tw.fondus.fews.adapter.pi.aws.storage.util.PredefinePrefix;
 
 /**
  * Model adapter arguments for data exchange with S3 REST API.
@@ -34,6 +36,10 @@ public class S3FolderArguments extends PiIOArguments {
 	@Builder.Default
 	@Parameter( names = { "--object-prefix" }, description = "The prefix of storage object." )
 	private String objectPrefix = "";
+
+	@Builder.Default
+	@Parameter( names = { "--predefine-prefix" }, description = "Use the predefine prefix of storage object.", converter = PredefinePrefixConverter.class )
+	private PredefinePrefix predefinePrefix = PredefinePrefix.USER;
 
 	@Builder.Default
 	@Parameter( names = { "--bucket-create" }, description = "Should create storage bucket or not." )

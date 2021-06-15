@@ -5,6 +5,7 @@ import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.string.Strings;
 import tw.fondus.commons.util.time.JodaTimeUtils;
 import tw.fondus.fews.adapter.pi.aws.storage.argument.S3Arguments;
+import tw.fondus.fews.adapter.pi.aws.storage.argument.S3FolderArguments;
 
 import java.nio.file.Path;
 import java.util.stream.Collectors;
@@ -20,6 +21,45 @@ public class PredefinePrefixUtils {
 	private PredefinePrefixUtils(){}
 
 	/**
+	 * Create the predefine prefix.
+	 *
+	 * @param arguments arguments
+	 * @param input input file
+	 * @return predefine prefix
+	 */
+	public static String createPredefinePrefix( S3FolderArguments arguments, Path input ){
+		PredefinePrefix predefinePrefix = arguments.getPredefinePrefix();
+		switch ( predefinePrefix ) {
+		case TIME_FROM_NAME_YMD_THREE_TIER:
+			return arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, false, false );
+		case TIME_FROM_NAME_YMD_THREE_TIER_IOW:
+			return arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, false, true );
+		case TIME_FROM_NAME_YMD_THREE_TIER_GMT8:
+			return arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, true, false );
+		case TIME_FROM_NAME_YMD_THREE_TIER_GMT8_IOW:
+			return arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, true, true );
+		case TIME_FROM_NAME_YM_TWO_TIER:
+			return arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameTwoTierYM( input, false, false );
+		case TIME_FROM_NAME_YM_TWO_TIER_IOW:
+			return arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameTwoTierYM( input, false, true );
+		case TIME_FROM_NAME_YM_TWO_TIER_GMT8:
+			return arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameTwoTierYM( input, true, false );
+		case TIME_FROM_NAME_YM_TWO_TIER_GMT8_IOW:
+			return arguments.getObjectPrefix() +
+					PredefinePrefixUtils.fromFileNameTwoTierYM( input, true, true );
+		default:
+			return arguments.getObjectPrefix();
+		}
+	}
+
+	/**
 	 * Create the full text of object.
 	 *
 	 * @param arguments arguments
@@ -27,45 +67,7 @@ public class PredefinePrefixUtils {
 	 * @return full text of object
 	 */
 	public static String createObjectWithPrefix( S3Arguments arguments, Path input ){
-		PredefinePrefix predefinePrefix = arguments.getPredefinePrefix();
-		String object;
-		switch ( predefinePrefix ) {
-		case TIME_FROM_NAME_YMD_THREE_TIER:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, false, false ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YMD_THREE_TIER_IOW:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, false, true ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YMD_THREE_TIER_GMT8:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, true, false ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YMD_THREE_TIER_GMT8_IOW:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameThreeTierYMD( input, true, true ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YM_TWO_TIER:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameTwoTierYM( input, false, false ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YM_TWO_TIER_IOW:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameTwoTierYM( input, false, true ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YM_TWO_TIER_GMT8:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameTwoTierYM( input, true, false ) + arguments.getObject();
-			break;
-		case TIME_FROM_NAME_YM_TWO_TIER_GMT8_IOW:
-			object = arguments.getObjectPrefix() +
-					PredefinePrefixUtils.fromFileNameTwoTierYM( input, true, true ) + arguments.getObject();
-			break;
-		default:
-			object = arguments.getObjectPrefix() + arguments.getObject();
-		}
-		return object;
+		return createPredefinePrefix( arguments, input ) + arguments.getObject();
 	}
 
 	/**
