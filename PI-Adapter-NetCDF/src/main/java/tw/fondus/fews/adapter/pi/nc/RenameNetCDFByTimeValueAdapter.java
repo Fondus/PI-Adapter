@@ -5,6 +5,7 @@ import org.joda.time.DateTimeZone;
 import tw.fondus.commons.cli.util.Prevalidated;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.nc.NetCDFReader;
+import tw.fondus.commons.nc.util.TimeFactor;
 import tw.fondus.commons.util.file.FileType;
 import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.string.StringFormatter;
@@ -48,14 +49,14 @@ public class RenameNetCDFByTimeValueAdapter extends PiCommandLineExecute {
 
 		try ( NetCDFReader reader = NetCDFReader.read( netcdfPath ) ) {
 			if ( reader.hasTime() ) {
-				List<Long> times = reader.findTimes();
+				List<Long> times = reader.findTimes( TimeFactor.ARCHIVE );
 				if ( times.size() <= index ){
 					logger.log( LogLevel.ERROR, "Rename NetCDF Adapter: User input index: {} greater equals than NetCDF time size: {}.", index, times.size() );
 					throw new IllegalArgumentException( StringFormatter.format( "Rename NetCDF Adapter: User input index: {} greater equals than NetCDF time size: {}.", index, times.size()  ) );
 				} else {
 					DateTimeZone timeZone = isGMT8 ? JodaTimeUtils.UTC8 : JodaTimeUtils.UTC0;
 					DateTime time = JodaTimeUtils.toDateTime( times.get( index ), timeZone );
-					String fileName = JodaTimeUtils.toString( time, format );
+					String fileName = JodaTimeUtils.toString( time, format, timeZone );
 					Path output = outputPath.resolve( fileName + FileType.NETCDF.getExtension() );
 					PathUtils.copy( netcdfPath, output );
 

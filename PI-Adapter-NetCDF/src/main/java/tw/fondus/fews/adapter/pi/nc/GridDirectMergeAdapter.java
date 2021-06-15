@@ -5,6 +5,7 @@ import lombok.Getter;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.nc.NetCDFReader;
 import tw.fondus.commons.nc.util.NetCDFUtils;
+import tw.fondus.commons.nc.util.TimeFactor;
 import tw.fondus.commons.nc.util.key.VariableAttribute;
 import tw.fondus.commons.spatial.model.grid.StandardGrid;
 import tw.fondus.commons.spatial.util.crs.EPSG;
@@ -117,7 +118,7 @@ public class GridDirectMergeAdapter extends PiCommandLineExecute {
 	private void readTXYGridValues( Path path, List<BigDecimal> totalTimes, List<List<BigDecimal>> totalTYX, XYInformation yxInfo, String parameter, int timeRange )
 			throws IOException {
 		try ( NetCDFReader reader = NetCDFReader.read( path ) ){
-			List<Long> times = reader.findTimes();
+			List<Long> times = reader.findTimes( TimeFactor.ARCHIVE );
 			if ( times.size() < timeRange ){
 				this.getLogger().log( LogLevel.WARN, "NetCDF GridMergeAdapter: The NetCDF grid time size: {} not exceed than user inputs time range: {}, skip process.",
 						times.size(), timeRange );
