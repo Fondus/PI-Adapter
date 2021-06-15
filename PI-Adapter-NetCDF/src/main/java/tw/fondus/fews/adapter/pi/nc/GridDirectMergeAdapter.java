@@ -5,7 +5,6 @@ import lombok.Getter;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.nc.NetCDFReader;
 import tw.fondus.commons.nc.util.NetCDFUtils;
-import tw.fondus.commons.nc.util.TimeFactor;
 import tw.fondus.commons.nc.util.key.VariableAttribute;
 import tw.fondus.commons.spatial.model.grid.StandardGrid;
 import tw.fondus.commons.spatial.util.crs.EPSG;
@@ -88,7 +87,7 @@ public class GridDirectMergeAdapter extends PiCommandLineExecute {
 										NetCDFUtils.create1DArrayDouble( totalTimes ),
 										NetCDFUtils.create1DArrayDouble( yxInfo.y ),
 										NetCDFUtils.create1DArrayDouble( yxInfo.x ),
-										NetCDFUtils.create3DArrayShort( totalTYX, yxInfo.y.size(), yxInfo.x.size() ) )
+										NetCDFUtils.create3DArrayDouble( totalTYX, yxInfo.y.size(), yxInfo.x.size() ) )
 								.close();
 					} catch (IOException | InvalidRangeException e){
 						logger.log( LogLevel.ERROR, "NetCDF GridMergeAdapter: Write the merge NetCDF grid with Path {} has something wrong.", mergePath.toString() );
@@ -118,7 +117,7 @@ public class GridDirectMergeAdapter extends PiCommandLineExecute {
 	private void readTXYGridValues( Path path, List<BigDecimal> totalTimes, List<List<BigDecimal>> totalTYX, XYInformation yxInfo, String parameter, int timeRange )
 			throws IOException {
 		try ( NetCDFReader reader = NetCDFReader.read( path ) ){
-			List<Long> times = reader.findTimes( TimeFactor.ARCHIVE );
+			List<Long> times = reader.findTimes();
 			if ( times.size() < timeRange ){
 				this.getLogger().log( LogLevel.WARN, "NetCDF GridMergeAdapter: The NetCDF grid time size: {} not exceed than user inputs time range: {}, skip process.",
 						times.size(), timeRange );
@@ -133,7 +132,7 @@ public class GridDirectMergeAdapter extends PiCommandLineExecute {
 					BigDecimal missing = NetCDFUtils.readVariableAttributeAsNumber( variable, VariableAttribute.KEY_MISSING, VariableAttribute.MISSING );
 					Array array = variable.read();
 					IntStream.range( 0, timeRange ).forEach( i -> {
-						List<BigDecimal> grid = NetCDFUtils.sliceTDimensionArrayYXValues( array, i, yxInfo.getScale(), yxInfo.getScale(), missing, false );
+						List<BigDecimal> grid = NetCDFUtils.sliceTDimensionArrayYXValues( array, i, yxInfo.scale, yxInfo.offset, missing, false );
 						totalTYX.add( grid );
 					} );
 				} else{
