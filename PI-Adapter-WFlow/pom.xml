@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>tw.fondus.fews.adapter</groupId>
+		<artifactId>pi-adapter</artifactId>
+		<version>3.0.0</version>
+	</parent>
+
+	<artifactId>pi-adapter-wflow</artifactId>
+
+	<name>PI-Adapter-WFlow</name>
+	<url>http://maven.apache.org</url>
+
+	<dependencies>
+		<!-- PI-Adapter S3 -->
+		<dependency>
+			<groupId>tw.fondus.fews.adapter</groupId>
+			<artifactId>pi-adapter-s3</artifactId>
+		</dependency>
+		<!-- FondUS SDK: The open source project can't use this -->
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-spatial</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>tw.fondus.commons</groupId>
+			<artifactId>commons-rest-pijson</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<!-- Copy dependencies to target folder -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+			<!-- Skip unit tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
