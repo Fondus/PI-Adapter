@@ -123,7 +123,7 @@ public class MulticaseRunUploadS3Process extends PiCommandLineExecute {
 					PathUtils.clean( modelOutputPath );
 					PathUtils.clean( outputPath );
 					Executions.execute( executor -> executor.directory( basePath.toFile() ), "docker-compose", "run",
-							"model" );
+							"WFlow" );
 
 					Path modelOutputNC = Prevalidated.checkExists(
 							modelOutputPath.resolve( processArguments.getOutputs().get( 0 ) ),
