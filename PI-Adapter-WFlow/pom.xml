@@ -10,9 +10,10 @@
 	</parent>
 
 	<artifactId>pi-adapter-wflow</artifactId>
+	<packaging>jar</packaging>
 
-	<name>PI-Adapter-WFlow</name>
-	<url>http://maven.apache.org</url>
+	<name>The WFlow Published Interface Adapter</name>
+	<url>https://wflow.readthedocs.io/en/latest/</url>
 
 	<dependencies>
 		<!-- PI-Adapter S3 -->

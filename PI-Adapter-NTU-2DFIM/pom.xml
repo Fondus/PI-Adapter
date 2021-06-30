@@ -4,14 +4,13 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>3.0.0</version>
+		<version>3.1.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-ntu-2dfim</artifactId>
 	<packaging>jar</packaging>
 
 	<name>PI-Adapter-NTU-2DFIM</name>
-	<url>http://maven.apache.org</url>
 
 	<dependencies>
 		<!-- PI-Adapter Commons -->
