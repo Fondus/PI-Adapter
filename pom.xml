@@ -36,6 +36,7 @@
 	
 	<properties>
 		<adapter.version>3.0.0</adapter.version>
+		<adapter.s3.version>3.3.1</adapter.s3.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -59,6 +60,12 @@
 				<groupId>tw.fondus.fews.adapter</groupId>
 				<artifactId>pi-adapter-commons</artifactId>
 				<version>${adapter.version}</version>
+			</dependency>
+			<!-- PI-Adapter S3 -->
+			<dependency>
+				<groupId>tw.fondus.fews.adapter</groupId>
+				<artifactId>pi-adapter-s3</artifactId>
+				<version>${adapter.s3.version}</version>
 			</dependency>
 			<!-- FondUS SDK: NetCDF -->
 			<dependency>
@@ -95,6 +102,11 @@
 			<dependency>
 				<groupId>tw.fondus.commons</groupId>
 				<artifactId>commons-minio</artifactId>
+				<version>${fondus.sdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-rest-pijson</artifactId>
 				<version>${fondus.sdk.version}</version>
 			</dependency>
 		</dependencies>
@@ -253,5 +265,6 @@
 		<module>PI-Adapter-DrWu-VirtualIoT</module>
 		<module>PI-Adapter-S3</module>
 		<module>PI-Adapter-GridCorrect-FeatureThreshold</module>
+		<module>PI-Adapter-WFlow</module>
 	</modules>
 </project>
