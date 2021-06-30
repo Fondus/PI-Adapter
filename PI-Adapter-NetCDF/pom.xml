@@ -36,6 +36,12 @@
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-netcdf</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>jcommander</artifactId>
+					<groupId>com.beust</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
