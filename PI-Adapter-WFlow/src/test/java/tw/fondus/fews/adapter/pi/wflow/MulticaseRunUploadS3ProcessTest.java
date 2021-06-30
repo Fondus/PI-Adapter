@@ -10,7 +10,7 @@ import tw.fondus.fews.adapter.pi.wflow.argument.MulticaseArguments;
  * @author Chao
  *
  */
-public class MulticaseProcessTest {	
+public class MulticaseRunUploadS3ProcessTest {	
 	@Test
 	public void test() {
 		String[] args = new String[] { 
@@ -27,13 +27,13 @@ public class MulticaseProcessTest {
 				"-o", 
 				"wflow_outputs.nc,Output.nc,Simulation.json,Parameter.zip", 
 				"-us",
-				"username", 
+				"minio", 
 				"-pw", 
-				"password", 
+				"minio123", 
 				"--object-prefix", 
 				"07RMO/Shanping/201609290000" };
 
 		MulticaseArguments arguments = MulticaseArguments.instance();
-		new MulticaseProcess().execute( args, arguments );
+		new MulticaseRunUploadS3Process().execute( args, arguments );
 	}
 }

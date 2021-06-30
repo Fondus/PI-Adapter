@@ -52,12 +52,12 @@ import tw.fondus.fews.adapter.pi.wflow.argument.MulticaseArguments;
  *
  */
 @SuppressWarnings( "rawtypes" )
-public class MulticaseProcess extends PiCommandLineExecute {
+public class MulticaseRunUploadS3Process extends PiCommandLineExecute {
 	private GsonMapper mapper;
 
 	public static void main( String[] args ) {
 		MulticaseArguments arguments = MulticaseArguments.instance();
-		new MulticaseProcess().execute( args, arguments );
+		new MulticaseRunUploadS3Process().execute( args, arguments );
 	}
 
 	@Override
@@ -66,34 +66,34 @@ public class MulticaseProcess extends PiCommandLineExecute {
 		MulticaseArguments processArguments = this.asArguments( arguments, MulticaseArguments.class );
 
 		Path parameterPath = Prevalidated.checkExists( basePath.resolve( processArguments.getParameterPath() ),
-				"MulticaseProcess: Can not find the parameter directory." );
+				"MulticaseRunUploadS3Process: Can not find the parameter directory." );
 
 		Path modelPath = Prevalidated.checkExists( basePath.resolve( "model" ),
-				"MulticaseProcess: Can not find the model directory of WFlow." );
+				"MulticaseRunUploadS3Process: Can not find the model directory of WFlow." );
 
 		Path modelParameterPath = Prevalidated.checkExists( modelPath.resolve( "intbl" ),
-				"MulticaseProcess: Can not find the parameter directory of WFlow." );
+				"MulticaseRunUploadS3Process: Can not find the parameter directory of WFlow." );
 
 		Path modelOutputPath = Prevalidated.checkExists( modelPath.resolve( "SBM" ).resolve( "outmaps" ),
-				"MulticaseProcess: Can not find the output directory of WFlow." );
+				"MulticaseRunUploadS3Process: Can not find the output directory of WFlow." );
 
 		Path modelInputPath = Prevalidated.checkExists( modelPath.resolve( "inmaps" ),
-				"MulticaseProcess: Can not find the input directory of WFlow." );
+				"MulticaseRunUploadS3Process: Can not find the input directory of WFlow." );
 
 		Path waterLevelAttributePath = Prevalidated.checkExists(
 				inputPath.resolve( processArguments.getInputs().get( 0 ) ),
-				"MulticaseProcess: Can not find the water level attribute CSV file." );
+				"MulticaseRunUploadS3Process: Can not find the water level attribute CSV file." );
 		Map<String, Coordinate> coordinateMap = PathReader.readAllLines( waterLevelAttributePath )
 				.stream()
 				.map( line -> line.split( Strings.COMMA ) )
 				.collect( Collectors.toMap( split -> split[0], split -> JTSUtils
 						.coordinate( NumberUtils.create( split[2] ), NumberUtils.create( split[3] ) ) ) );
 		Path rainfallPath = Prevalidated.checkExists( modelInputPath.resolve( processArguments.getInputs().get( 1 ) ),
-				"MulticaseProcess: Can not find rainfall NetCDF file of model input." );
+				"MulticaseRunUploadS3Process: Can not find rainfall NetCDF file of model input." );
 		PathUtils.copy( rainfallPath, inputPath.resolve( processArguments.getInputs().get( 2 ) ) );
 
 		Path waterLevelPath = Prevalidated.checkExists( modelInputPath.resolve( processArguments.getInputs().get( 3 ) ),
-				"MulticaseProcess: Can not find obervation water level file." );
+				"MulticaseRunUploadS3Process: Can not find obervation water level file." );
 
 		this.mapper = GsonMapperRuntime.ISO8601;
 
@@ -114,11 +114,11 @@ public class MulticaseProcess extends PiCommandLineExecute {
 			List<Path> parameterPaths = PathUtils.list( parameterPath );
 			String prefixTemplate = processArguments.getObjectPrefix();
 			parameterPaths.stream().filter( path -> PathUtils.equalsExtension( path, FileType.ZIP ) ).forEach( path -> {
-				logger.log( LogLevel.INFO, "MulticaseProcess: Running case {}",
+				logger.log( LogLevel.INFO, "MulticaseRunUploadS3Process: Running case {}",
 						PathUtils.getNameWithoutExtension( path ) );
 				ZipUtils.unzip( path, modelParameterPath );
 
-				logger.log( LogLevel.INFO, "MulticaseProcess: Running WFlow model." );
+				logger.log( LogLevel.INFO, "MulticaseRunUploadS3Process: Running WFlow model." );
 				try {
 					PathUtils.clean( modelOutputPath );
 					PathUtils.clean( outputPath );
@@ -127,19 +127,21 @@ public class MulticaseProcess extends PiCommandLineExecute {
 
 					Path modelOutputNC = Prevalidated.checkExists(
 							modelOutputPath.resolve( processArguments.getOutputs().get( 0 ) ),
-							"MulticaseProcess: Can not find the output file of WFlow." );
+							"MulticaseRunUploadS3Process: Can not find the output file of WFlow." );
 					PathUtils.copy( modelOutputNC, outputPath.resolve( processArguments.getOutputs().get( 1 ) ) );
-					this.getFlowDataFromModelOutput( logger, modelOutputNC, coordinateMap,
-							timeSeriesArrays, outputPath.resolve( processArguments.getOutputs().get( 2 ) ) );
+					this.getFlowDataFromModelOutput( modelOutputNC, coordinateMap, timeSeriesArrays,
+							outputPath.resolve( processArguments.getOutputs().get( 2 ) ) );
 				} catch (InvalidExitValueException | IOException | InterruptedException | TimeoutException e) {
-					logger.log( LogLevel.ERROR, "MulticaseProcess: Running WFlow model has something wrong." );
+					logger.log( LogLevel.ERROR,
+							"MulticaseRunUploadS3Process: Running WFlow model has something wrong." );
 				}
 
 				try {
-					S3ProcessUtils.isCreateS3BucketBefore( "MulticaseProcess", logger, client, bucket,
+					S3ProcessUtils.isCreateS3BucketBefore( "MulticaseRunUploadS3Process", logger, client, bucket,
 							processArguments.isCreate() );
 
-					logger.log( LogLevel.INFO, "MulticaseProcess: Start to upload folder: {} and {} with S3 API.",
+					logger.log( LogLevel.INFO,
+							"MulticaseRunUploadS3Process: Start to upload folder: {} and {} with S3 API.",
 							modelInputPath, outputPath );
 					if ( client.isExistsBucket() ) {
 						processArguments.setObjectPrefix( Strman.append( prefixTemplate, Strings.UNDERLINE,
@@ -147,33 +149,35 @@ public class MulticaseProcess extends PiCommandLineExecute {
 						PathUtils.list( inputPath ).forEach( p -> {
 							String prefix = PredefinePrefixUtils.createPredefinePrefix( processArguments, path );
 							String object = prefix + PathUtils.getName( p );
-							S3ProcessUtils.uploadS3Object( "MulticaseProcess", logger, client, object, p );
+							S3ProcessUtils.uploadS3Object( "MulticaseRunUploadS3Process", logger, client, object, p );
 						} );
 
 						PathUtils.list( outputPath ).forEach( p -> {
 							String prefix = PredefinePrefixUtils.createPredefinePrefix( processArguments, p );
 							String object = prefix + PathUtils.getName( p );
-							S3ProcessUtils.uploadS3Object( "MulticaseProcess", logger, client, object, p );
+							S3ProcessUtils.uploadS3Object( "MulticaseRunUploadS3Process", logger, client, object, p );
 						} );
 
 						String prefix = PredefinePrefixUtils.createPredefinePrefix( processArguments, path );
 						String object = prefix + processArguments.getOutputs().get( 3 );
-						S3ProcessUtils.uploadS3Object( "MulticaseProcess", logger, client, object, path );
+						S3ProcessUtils.uploadS3Object( "MulticaseRunUploadS3Process", logger, client, object, path );
 					} else {
 						logger.log( LogLevel.WARN,
-								"MulticaseProcess: The target bucket: {} not exist, will ignore the adapter process.",
+								"MulticaseRunUploadS3Process: The target bucket: {} not exist, will ignore the adapter process.",
 								bucket );
 					}
-					logger.log( LogLevel.INFO, "MulticaseProcess: Finished to upload folder: {} with S3 API.",
-							inputPath );
+					logger.log( LogLevel.INFO,
+							"MulticaseRunUploadS3Process: Finished to upload folder: {} with S3 API.", inputPath );
 				} catch (MinioException e) {
-					logger.log( LogLevel.ERROR, "MulticaseProcess: Working with S3 API has something wrong! {}", e );
+					logger.log( LogLevel.ERROR,
+							"MulticaseRunUploadS3Process: Working with S3 API has something wrong! {}", e );
 				}
 
 			} );
 
 		} catch (IOException e) {
-			logger.log( LogLevel.ERROR, "MulticaseProcess: Reading time series XML file has something wrong." );
+			logger.log( LogLevel.ERROR,
+					"MulticaseRunUploadS3Process: Reading time series XML file has something wrong." );
 		}
 	}
 
@@ -186,12 +190,12 @@ public class MulticaseProcess extends PiCommandLineExecute {
 	 * @param timeSeriesArrays observation flow time series arrays
 	 * @param outputJSONPath output simulation JSON path
 	 */
-	private void getFlowDataFromModelOutput( PiDiagnosticsLogger logger, Path modelOutputNC,
-			Map<String, Coordinate> coordinateMap, TimeSeriesArrays timeSeriesArrays, Path outputJSONPath ) {
+	private void getFlowDataFromModelOutput( Path modelOutputNC, Map<String, Coordinate> coordinateMap,
+			TimeSeriesArrays timeSeriesArrays, Path outputJSONPath ) {
 		try (NetCDFReader reader = NetCDFReader.read( modelOutputNC ) ) {
 			List<StandardGrid> grids = NetCDFGridMapper.fromTYXModel( reader, "runR" );
 
-			logger.log( LogLevel.INFO, "MulticaseProcess: Getting flow value from model output." );
+			this.getLogger().log( LogLevel.INFO, "MulticaseRunUploadS3Process: Getting flow value from model output." );
 			PiTimeSeriesCollection outputCollection = PiSeriesMapper.toPiTimeSeriesCollection( timeSeriesArrays );
 			outputCollection.getCollection().forEach( collection -> {
 				String id = collection.getHeader().getLocationId();
@@ -216,10 +220,10 @@ public class MulticaseProcess extends PiCommandLineExecute {
 					} );
 				} );
 			} );
-			
+
 			PathWriter.write( outputJSONPath, this.mapper.toString( outputCollection ) );
 		} catch (IOException e) {
-			logger.log( LogLevel.INFO, "MulticaseProcess: Reading NetCDF has something wrong." );
+			this.getLogger().log( LogLevel.INFO, "MulticaseRunUploadS3Process: Reading NetCDF has something wrong." );
 		}
 	}
 }
