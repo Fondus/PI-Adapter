@@ -6,13 +6,14 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>3.0.0</version>
+		<version>3.1.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-wflow</artifactId>
+	<packaging>jar</packaging>
 
-	<name>PI-Adapter-WFlow</name>
-	<url>http://maven.apache.org</url>
+	<name>The WFlow Published Interface Adapter</name>
+	<url>https://wflow.readthedocs.io/en/latest/</url>
 
 	<dependencies>
 		<!-- PI-Adapter S3 -->
