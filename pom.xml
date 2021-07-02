@@ -4,7 +4,7 @@
 
 	<groupId>tw.fondus.fews.adapter</groupId>
 	<artifactId>pi-adapter</artifactId>
-	<version>3.0.0</version>
+	<version>3.1.0</version>
 	<packaging>pom</packaging>
 
 	<name>The FEWS Published Interface Adapters</name>
@@ -35,14 +35,15 @@
 	</scm>
 	
 	<properties>
-		<adapter.version>3.0.0</adapter.version>
+		<adapter.version>3.1.0</adapter.version>
+		<adapter.s3.version>3.3.1</adapter.s3.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.13.1</junit.version>
 		<junit5.version>5.7.1</junit5.version>
-		<fondus.sdk.version>2.4.3</fondus.sdk.version>
-		<fondus.sdk.netcdf.version>1.2.2</fondus.sdk.netcdf.version>
+		<fondus.sdk.version>2.4.4</fondus.sdk.version>
+		<fondus.sdk.netcdf.version>1.2.3</fondus.sdk.netcdf.version>
 		<opencsv.version>5.4</opencsv.version>
 	</properties>
 
@@ -59,6 +60,12 @@
 				<groupId>tw.fondus.fews.adapter</groupId>
 				<artifactId>pi-adapter-commons</artifactId>
 				<version>${adapter.version}</version>
+			</dependency>
+			<!-- PI-Adapter S3 -->
+			<dependency>
+				<groupId>tw.fondus.fews.adapter</groupId>
+				<artifactId>pi-adapter-s3</artifactId>
+				<version>${adapter.s3.version}</version>
 			</dependency>
 			<!-- FondUS SDK: NetCDF -->
 			<dependency>
@@ -97,6 +104,11 @@
 				<artifactId>commons-minio</artifactId>
 				<version>${fondus.sdk.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>tw.fondus.commons</groupId>
+				<artifactId>commons-rest-pijson</artifactId>
+				<version>${fondus.sdk.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -105,7 +117,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.18</version>
+			<version>1.18.20</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- JUnit -->
@@ -253,5 +265,6 @@
 		<module>PI-Adapter-DrWu-VirtualIoT</module>
 		<module>PI-Adapter-S3</module>
 		<module>PI-Adapter-GridCorrect-FeatureThreshold</module>
+		<module>PI-Adapter-WFlow</module>
 	</modules>
 </project>

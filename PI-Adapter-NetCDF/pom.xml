@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>pi-adapter</artifactId>
 		<groupId>tw.fondus.fews.adapter</groupId>
-		<version>3.0.0</version>
+		<version>3.1.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
@@ -36,6 +36,12 @@
 		<dependency>
 			<groupId>tw.fondus.commons</groupId>
 			<artifactId>commons-netcdf</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>jcommander</artifactId>
+					<groupId>com.beust</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
