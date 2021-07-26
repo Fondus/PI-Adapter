@@ -91,8 +91,12 @@ public class MulticaseRunUploadS3Process extends PiCommandLineExecute {
 		Path rainfallPath = Prevalidated.checkExists( modelInputPath.resolve( processArguments.getInputs().get( 1 ) ),
 				"MulticaseRunUploadS3Process: Can not find rainfall NetCDF file of model input." );
 		PathUtils.copy( rainfallPath, inputPath.resolve( processArguments.getInputs().get( 2 ) ) );
+		Path catchmentRainfallPath = Prevalidated.checkExists(
+				modelInputPath.resolve( processArguments.getInputs().get( 3 ) ),
+				"MulticaseRunUploadS3Process: Can not find catchment rainfall XML file of model input." );
+		PathUtils.copy( catchmentRainfallPath, inputPath );
 
-		Path waterLevelPath = Prevalidated.checkExists( modelInputPath.resolve( processArguments.getInputs().get( 3 ) ),
+		Path waterLevelPath = Prevalidated.checkExists( modelInputPath.resolve( processArguments.getInputs().get( 4 ) ),
 				"MulticaseRunUploadS3Process: Can not find obervation water level file." );
 
 		this.mapper = GsonMapperRuntime.ISO8601;
