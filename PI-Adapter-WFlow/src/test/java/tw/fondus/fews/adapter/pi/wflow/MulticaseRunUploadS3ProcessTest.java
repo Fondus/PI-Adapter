@@ -23,15 +23,15 @@ public class MulticaseRunUploadS3ProcessTest {
 				"--object", 
 				"", 
 				"-i", 
-				"WaterLevelAttribute.csv,fews2wflow.nc,Input.nc,Observation.xml", 
+				"WaterLevelAttribute.csv,fews2wflow.nc,Input.nc,Input.xml,Observation.xml", 
 				"-o", 
 				"wflow_outputs.nc,Output.nc,Simulation.json,Parameter.zip", 
 				"-us",
-				"minio", 
+				"username", 
 				"-pw", 
-				"minio123", 
+				"password", 
 				"--object-prefix", 
-				"07RMO/Shanping/201609290000" };
+				"02RMO/Neiwen/201609290000" };
 
 		MulticaseArguments arguments = MulticaseArguments.instance();
 		new MulticaseRunUploadS3Process().execute( args, arguments );
