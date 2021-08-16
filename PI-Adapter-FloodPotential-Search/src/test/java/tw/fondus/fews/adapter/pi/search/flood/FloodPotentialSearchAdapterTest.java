@@ -1,11 +1,11 @@
 package tw.fondus.fews.adapter.pi.search.flood;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.fews.adapter.pi.search.flood.argument.FloodPotentialSearchArguments;
-
-import java.io.IOException;
 
 /**
  * The unit test of FloodPotentialSearchAdapter.
@@ -32,7 +32,9 @@ public class FloodPotentialSearchAdapterTest {
 				"-zi",
 				"Pingtung",
 				"-ad",
-				"06h"
+				"06h",
+				"-t",
+				"202108050500"
 		};
 
 		FloodPotentialSearchArguments arguments = FloodPotentialSearchArguments.instance();
@@ -40,12 +42,12 @@ public class FloodPotentialSearchAdapterTest {
 	}
 
 	@Test
-	public void test() throws IOException {
-
+	public void test() {
+		Assertions.assertTrue( PathUtils.isExists( "src/test/resources/Output/Output.nc" ) );
 	}
 
 	@AfterAll
 	public static void after(){
-
+		PathUtils.deleteIfExists( "src/test/resources/Output/Output.nc" );
 	}
 }
