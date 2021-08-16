@@ -1,0 +1,928 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TimeSeries xmlns="http://www.wldelft.nl/fews/PI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.wldelft.nl/fews/PI http://fews.wldelft.nl/schemas/version1.0/pi-schemas/pi_timeseries.xsd" version="1.19" xmlns:fs="http://www.wldelft.nl/fews/fs">
+    <timeZone>0.0</timeZone>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013010</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣屏東市</stationName>
+            <lat>22.666293970768887</lat>
+            <lon>120.48188785377306</lon>
+            <x>196756.9633</x>
+            <y>2507424.42312</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="4.96" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="18.9" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="35.7" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="9.23" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="8.11" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="10.66" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013020</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣潮州鎮</stationName>
+            <lat>22.534748645484637</lat>
+            <lon>120.5570153769307</lon>
+            <x>204434.17126</x>
+            <y>2492833.48964</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0.36" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.64" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="8.98" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="32.19" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="18.25" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="13.43" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013030</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣東港鎮</stationName>
+            <lat>22.4636367946595</lat>
+            <lon>120.46911970983888</lon>
+            <x>195365.04872</x>
+            <y>2484988.76661</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0.01" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.38" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="15.22" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="21.49" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="11.16" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="10.64" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013040</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣恆春鎮</stationName>
+            <lat>21.97914712940454</lat>
+            <lon>120.77888044425124</lon>
+            <x>227165.62529</x>
+            <y>2431264.7786</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.19" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="0" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="0.03" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="1.02" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="0.04" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013050</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣萬丹鄉</stationName>
+            <lat>22.577598148405517</lat>
+            <lon>120.47841727549735</lon>
+            <x>196365.91609</x>
+            <y>2497604.29851</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="1.98" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="10.05" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="30.93" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="14.34" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="9.42" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="5.71" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013060</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣長治鄉</stationName>
+            <lat>22.69110966853896</lat>
+            <lon>120.56191542364776</lon>
+            <x>204989.10416</x>
+            <y>2510145.83815</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="11.4" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="8.8" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="40.55" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="23.42" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="14.62" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="13.34" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013070</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣麟洛鄉</stationName>
+            <lat>22.645829739669928</lat>
+            <lon>120.53373411126388</lon>
+            <x>202077.85254</x>
+            <y>2505140.76521</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="10.2" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="4.91" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="34.84" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="21.59" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="15.22" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="6.38" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013080</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣九如鄉</stationName>
+            <lat>22.730440782330167</lat>
+            <lon>120.49418297185238</lon>
+            <x>198044.67476</x>
+            <y>2514523.16363</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="5.81" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="27.83" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="27.76" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="7.8" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="8.68" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="14.73" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013090</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣里港鄉</stationName>
+            <lat>22.79706483217767</lat>
+            <lon>120.51051407246136</lon>
+            <x>199746.55131</x>
+            <y>2521894.98107</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="10.4" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="29.5" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="26.38" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="8.68" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="9.61" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="14.6" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013100</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣鹽埔鄉</stationName>
+            <lat>22.739741816372263</lat>
+            <lon>120.5696902557855</lon>
+            <x>205803.55601</x>
+            <y>2515528.59812</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="11.11" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="13.73" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="38.32" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="24.68" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="12.22" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="16.09" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013110</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣高樹鄉</stationName>
+            <lat>22.802401724972324</lat>
+            <lon>120.59645404411323</lon>
+            <x>208571.37121</x>
+            <y>2522459.30313</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="18.19" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="9.91" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="46.16" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="32.6" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="12.22" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="19.19" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013120</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣萬巒鄉</stationName>
+            <lat>22.587839842515663</lat>
+            <lon>120.58959108346487</lon>
+            <x>207801.13886</x>
+            <y>2498702.65401</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="1.06" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="1.44" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="7.91" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="33.36" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="24.45" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="13.78" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013130</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣內埔鄉</stationName>
+            <lat>22.646361571410544</lat>
+            <lon>120.59339728611225</lon>
+            <x>208210.18831</x>
+            <y>2505181.66962</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="4.95" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="1.66" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="23.63" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="43.91" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="21.89" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="10.02" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013140</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣竹田鄉</stationName>
+            <lat>22.592294577266806</lat>
+            <lon>120.52604502833752</lon>
+            <x>201268.7068</x>
+            <y>2499215.29562</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="4.26" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="2.26" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="30.08" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="31.17" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="14.82" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="7" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013150</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣新埤鄉</stationName>
+            <lat>22.48574757822077</lat>
+            <lon>120.58224903722856</lon>
+            <x>207014.61792</x>
+            <y>2487400.21557</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0.02" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.36" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="3.09" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="26.31" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="18.07" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="15.05" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013160</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣枋寮鄉</stationName>
+            <lat>22.39915407154634</lat>
+            <lon>120.5901410450622</lon>
+            <x>207800.50848</x>
+            <y>2477809.71255</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0.02" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.01" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="1.57" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="19.48" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="21.04" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="22.2" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013170</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣新園鄉</stationName>
+            <lat>22.513357992920756</lat>
+            <lon>120.45364757057818</lon>
+            <x>193792.79845</x>
+            <y>2490500.08655</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0.25" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="5.52" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="24.99" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="15.92" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="9.18" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="6.06" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013180</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣崁頂鄉</stationName>
+            <lat>22.518483787397688</lat>
+            <lon>120.49776355773517</lon>
+            <x>198333.31876</x>
+            <y>2491051.75919</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0.34" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.96" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="18.63" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="26.49" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="11.49" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="10.05" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013190</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣林邊鄉</stationName>
+            <lat>22.440188624428185</lat>
+            <lon>120.51170995197116</lon>
+            <x>199739.80412</x>
+            <y>2482377.49652</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.35" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="6.25" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="22.77" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="16.11" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="12.38" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013200</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣南州鄉</stationName>
+            <lat>22.481124854662887</lat>
+            <lon>120.51677420851304</lon>
+            <x>200275.68784</x>
+            <y>2486908.60765</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.46" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="8.01" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="27.51" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="15.36" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="13.21" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013210</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣佳冬鄉</stationName>
+            <lat>22.42970835809499</lat>
+            <lon>120.54346581118283</lon>
+            <x>203004.98951</x>
+            <y>2481206.75359</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.14" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="3.35" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="20.25" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="17.48" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="15.14" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013220</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣琉球鄉</stationName>
+            <lat>22.339117633175174</lat>
+            <lon>120.37105340321033</lon>
+            <x>185214.71623</x>
+            <y>2471239.86515</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0.03" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.17" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="17.03" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="20.66" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="12.39" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="9.56" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013230</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣車城鄉</stationName>
+            <lat>22.076249038239734</lat>
+            <lon>120.7402071021212</lon>
+            <x>223190.20657</x>
+            <y>2442022.21357</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="1.57" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="0.14" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="0.27" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="2.96" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="0.19" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013240</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣滿州鄉</stationName>
+            <lat>22.057844144382926</lat>
+            <lon>120.83604950950368</lon>
+            <x>233078.66997</x>
+            <y>2439970.66961</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.78" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="0.11" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="0.17" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="0.72" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="3.5" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013250</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣枋山鄉</stationName>
+            <lat>22.24931176658803</lat>
+            <lon>120.66153981777232</lon>
+            <x>215114.63688</x>
+            <y>2461200.13209</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0.03" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.02" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="1.2" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="17.1" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="27.72" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="27.5" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013260</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣三地門鄉</stationName>
+            <lat>22.786578547911652</lat>
+            <lon>120.70070108000425</lon>
+            <x>219270.06167</x>
+            <y>2520681.74459</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="7.69" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="3.22" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="28.6" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="46.23" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="26.9" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="21.51" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013270</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣霧臺鄉</stationName>
+            <lat>22.74813997379929</lat>
+            <lon>120.80297803684667</lon>
+            <x>229765.5233</x>
+            <y>2516407.81966</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="1.27" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="1.9" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="5.11" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="13.96" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="21.55" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="18.78" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013280</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣瑪家鄉</stationName>
+            <lat>22.669511736451344</lat>
+            <lon>120.68825822000213</lon>
+            <x>217965.25636</x>
+            <y>2507721.53874</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="1.74" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="5.05" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="10.04" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="40.47" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="44.06" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="15.05" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013290</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣泰武鄉</stationName>
+            <lat>22.598259641230946</lat>
+            <lon>120.69261753050911</lon>
+            <x>218396.93513</x>
+            <y>2499830.9341</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0.79" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="1.76" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="3.67" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="23.56" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="30.91" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="20.06" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013300</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣來義鄉</stationName>
+            <lat>22.50221589181237</lat>
+            <lon>120.68663064605316</lon>
+            <x>217759.0923</x>
+            <y>2489197.49514</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="1.04" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="1.9" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="1.52" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="20.72" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="27.79" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="22.94" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013310</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣春日鄉</stationName>
+            <lat>22.406040055579805</lat>
+            <lon>120.70277128810717</lon>
+            <x>219398.62779</x>
+            <y>2478544.90058</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="3.01" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="2.75" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="1.91" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="20.1" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="39.81" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="29.64" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013320</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣獅子鄉</stationName>
+            <lat>22.239376079912272</lat>
+            <lon>120.7463082992654</lon>
+            <x>223849.99631</x>
+            <y>2460082.92471</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="1.16" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="0.88" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="0.74" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="16.15" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="36.58" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="24.8" flag="2"/>
+    </series>
+    <series>
+        <header>
+            <type>accumulative</type>
+            <moduleInstanceId>Taiwan_Catchment_Average</moduleInstanceId>
+            <locationId>10013330</locationId>
+            <parameterId>P.merged</parameterId>
+            <qualifierId>Forecast</qualifierId>
+            <timeStep unit="second" multiplier="3600"/>
+            <startDate date="2021-08-05" time="01:00:00"/>
+            <endDate date="2021-08-05" time="06:00:00"/>
+            <forecastDate date="2021-08-05" time="05:00:00"/>
+            <missVal>-999</missVal>
+            <stationName>屏東縣牡丹鄉</stationName>
+            <lat>22.15282667699005</lat>
+            <lon>120.81596070071677</lon>
+            <x>231018.01103</x>
+            <y>2450489.59862</y>
+            <units>mm</units>
+            <creationDate>2021-08-16</creationDate>
+            <creationTime>05:24:45</creationTime>
+        </header>
+        <event date="2021-08-05" time="01:00:00" value="0.09" flag="0"/>
+        <event date="2021-08-05" time="02:00:00" value="1.76" flag="0"/>
+        <event date="2021-08-05" time="03:00:00" value="0.29" flag="0"/>
+        <event date="2021-08-05" time="04:00:00" value="1.88" flag="0"/>
+        <event date="2021-08-05" time="05:00:00" value="8.65" flag="0"/>
+        <event date="2021-08-05" time="06:00:00" value="0.87" flag="2"/>
+    </series>
+</TimeSeries>
