@@ -92,7 +92,6 @@ The arguments is extends from the [BasicArguments](https://github.com/Fondus/Com
 | S3 Import/Export | [link](https://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html) | Amazon | - | [link](/PI-Adapter-S3/) |
 | NCTU DPWE AI Model Import | [link](http://dpwe.nctu.edu.tw/) | NCTU | - | [link](/PI-Adapter-NCTU-AI/) |
 | WRAP Flood Potential Map Search | [link](https://www.wrap.gov.tw/) | WRAP | 2D | [link](/PI-Adapter-FloodPotential-Search/) |
-| WRAP Flood Search with GDAL | [link](https://www.wrap.gov.tw/) | WRAP | 2D | [link](/PI-Adapter-WRAP-Search/) |
 | WFLOW | [link](https://wflow.readthedocs.io/en/latest/) | FondUS | 2D | [link](/PI-Adapter-WFlow/) |
 
 ## Dependencies

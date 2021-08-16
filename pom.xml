@@ -248,15 +248,15 @@
 		<module>PI-Adapter-NCHC-RainRunoff</module>
 		<module>PI-Adapter-NCHC-RTC-2D</module>
 		<module>PI-Adapter-NCHC-LongTimeFlow</module>
+		<module>PI-Adapter-NCHC-Irrigation-Optimize</module>
 		<module>PI-Adapter-NCTU-AI</module>
 		<module>PI-Adapter-GridMerge</module>
+		<module>PI-Adapter-GridCorrect-FeatureThreshold</module>
 		<module>PI-Adapter-SensLink</module>
 		<module>PI-Adapter-API-RiChi-Disaster-Loss</module>
-		<module>PI-Adapter-WRAP-Search</module>
 		<module>PI-Adapter-NTOU-KWGIUH</module>
 		<module>PI-Adapter-NTOU-ANNFSM</module>
 		<module>PI-Adapter-NTOU-HEC-RAS</module>
-		<module>PI-Adapter-NCHC-Irrigation-Optimize</module>
 		<module>PI-Adapter-NetCDF</module>
 		<module>PI-Adapter-NTU-2DFIM</module>
 		<module>PI-Adapter-NTU-QPF-RIF</module>
@@ -264,7 +264,6 @@
 		<module>PI-Adapter-Rainfall-Process</module>
 		<module>PI-Adapter-DrWu-VirtualIoT</module>
 		<module>PI-Adapter-S3</module>
-		<module>PI-Adapter-GridCorrect-FeatureThreshold</module>
 		<module>PI-Adapter-WFlow</module>
 		<module>PI-Adapter-FloodPotential-Search</module>
 	</modules>
