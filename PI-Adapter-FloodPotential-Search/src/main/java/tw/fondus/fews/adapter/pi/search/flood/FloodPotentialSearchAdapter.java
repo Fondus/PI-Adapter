@@ -190,7 +190,7 @@ public class FloodPotentialSearchAdapter extends PiCommandLineExecute {
 	 * @return map contain id and geometry
 	 */
 	private Map<String, Geometry> readFeatures( Path featureFile ){
-		this.getLogger().log( LogLevel.INFO, "FloodPotentialSearchAdapter: Try to read the features from file: {}.", featureFile );
+		this.getLogger().log( LogLevel.INFO, "FloodPotentialSearchAdapter: Read the features from file: {}.", featureFile );
 		FeatureCollection collection = GsonMapperRuntime.GEOJSON.toBean( PathReader.readString( featureFile ), FeatureCollection.class );
 		return collection.stream()
 				.collect( Collectors.toMap(
