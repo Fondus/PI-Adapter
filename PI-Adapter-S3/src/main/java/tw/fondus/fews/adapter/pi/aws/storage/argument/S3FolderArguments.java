@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import tw.fondus.commons.util.string.Strings;
 import tw.fondus.fews.adapter.pi.argument.PiIOArguments;
 import tw.fondus.fews.adapter.pi.aws.storage.converter.PredefinePrefixConverter;
 import tw.fondus.fews.adapter.pi.aws.storage.util.PredefinePrefix;
@@ -44,6 +45,14 @@ public class S3FolderArguments extends PiIOArguments {
 	@Builder.Default
 	@Parameter( names = { "--bucket-create" }, description = "Should create storage bucket or not." )
 	private boolean create = false;
+
+	@Builder.Default
+	@Parameter( names = { "--file-prefix" }, description = "The allow prefix of files in the folder." )
+	private String filePrefix = Strings.EMPTY;
+
+	@Builder.Default
+	@Parameter( names = { "--file-suffix" }, description = "The allow extension suffix without dot of files in the folder." )
+	private String fileSuffix = Strings.EMPTY;
 
 	/**
 	 * Create the argument instance.

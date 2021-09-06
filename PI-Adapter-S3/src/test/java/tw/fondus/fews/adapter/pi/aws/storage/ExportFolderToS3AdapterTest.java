@@ -34,8 +34,12 @@ public class ExportFolderToS3AdapterTest extends SetUpS3Test {
 				"-pw",
 				PASSWORD,
 				"--object-prefix",
-				"PREFIX",
-				"--bucket-create"
+				PREFIX,
+				"--bucket-create",
+				"--file-prefix",
+				"",
+				"--file-suffix",
+				"txt"
 		};
 
 		S3FolderArguments arguments = S3FolderArguments.instance();
