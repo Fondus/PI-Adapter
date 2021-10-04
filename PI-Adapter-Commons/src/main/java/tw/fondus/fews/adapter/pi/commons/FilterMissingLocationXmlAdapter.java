@@ -68,6 +68,9 @@ public class FilterMissingLocationXmlAdapter extends PiCommandLineExecute {
 				IntStream.range( 0, size )
 						.forEach( i -> TimeSeriesLightUtils.addValue( handler, timeSeriesArray.getTime( i ),
 								new BigDecimal( String.valueOf( timeSeriesArray.getValue( i ) ) ) ) );
+			} else {
+				this.getLogger().log( LogLevel.INFO, "FilterMissingLocationXmlPreAdapter: Location: {} contain missing value, will be filter drop.",
+						timeSeriesArray.getHeader().getLocationId() );
 			}
 		} );
 		this.getLogger().log( LogLevel.INFO, "FilterMissingLocationXmlPreAdapter: End to filter location with contain missing value." );
