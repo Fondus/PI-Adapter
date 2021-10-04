@@ -1,5 +1,6 @@
 package tw.fondus.fews.adapter.pi.commons;
 
+import nl.wldelft.fews.pi.PiVersion;
 import nl.wldelft.util.timeseries.SimpleTimeSeriesContentHandler;
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import nl.wldelft.util.timeseries.TimeSeriesHeader;
@@ -12,7 +13,6 @@ import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.stream.IntStream;
 
@@ -43,7 +43,7 @@ public class FilterMissingLocationXmlAdapter extends PiCommandLineExecute {
 		try {
 			TimeSeriesArrays inputTimeSeriesArrays = TimeSeriesLightUtils.read( inputXML );
 			SimpleTimeSeriesContentHandler handler = this.filterMissingLocation( inputTimeSeriesArrays );
-			TimeSeriesLightUtils.write( handler, outputXML );
+			TimeSeriesLightUtils.write( handler, outputXML, TimeSeriesLightUtils.MISSING_VALUE, PiVersion.VERSION_1_3 );
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "FilterMissingLocationXmlPreAdapter: Adapter read XML has something wrong." );
 		}
@@ -67,7 +67,7 @@ public class FilterMissingLocationXmlAdapter extends PiCommandLineExecute {
 				TimeSeriesLightUtils.addHeader( handler, header );
 				IntStream.range( 0, size )
 						.forEach( i -> TimeSeriesLightUtils.addValue( handler, timeSeriesArray.getTime( i ),
-								new BigDecimal( String.valueOf( timeSeriesArray.getValue( i ) ) ) ) );
+								TimeSeriesLightUtils.getValue( timeSeriesArray, i ) ) );
 			} else {
 				this.getLogger().log( LogLevel.INFO, "FilterMissingLocationXmlPreAdapter: Location: {} contain missing value, will be filter drop.",
 						timeSeriesArray.getHeader().getLocationId() );
