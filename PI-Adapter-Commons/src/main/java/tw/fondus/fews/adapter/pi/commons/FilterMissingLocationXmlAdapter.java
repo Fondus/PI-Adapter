@@ -1,6 +1,7 @@
 package tw.fondus.fews.adapter.pi.commons;
 
 import nl.wldelft.fews.pi.PiVersion;
+import nl.wldelft.util.timeseries.DefaultTimeSeriesHeader;
 import nl.wldelft.util.timeseries.SimpleTimeSeriesContentHandler;
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import nl.wldelft.util.timeseries.TimeSeriesHeader;
@@ -43,7 +44,7 @@ public class FilterMissingLocationXmlAdapter extends PiCommandLineExecute {
 		try {
 			TimeSeriesArrays inputTimeSeriesArrays = TimeSeriesLightUtils.read( inputXML );
 			SimpleTimeSeriesContentHandler handler = this.filterMissingLocation( inputTimeSeriesArrays );
-			TimeSeriesLightUtils.write( handler, outputXML, TimeSeriesLightUtils.MISSING_VALUE, PiVersion.VERSION_1_3 );
+			TimeSeriesLightUtils.write( handler, outputXML, TimeSeriesLightUtils.MISSING_VALUE, PiVersion.VERSION_1_19 );
 		} catch (IOException e) {
 			logger.log( LogLevel.ERROR, "FilterMissingLocationXmlPreAdapter: Adapter read XML has something wrong." );
 		}
@@ -64,7 +65,14 @@ public class FilterMissingLocationXmlAdapter extends PiCommandLineExecute {
 					.anyMatch( timeSeriesArray::isMissingValue );
 			if ( !containMissing ){
 				TimeSeriesHeader header = timeSeriesArray.getHeader();
-				TimeSeriesLightUtils.addHeader( handler, header.getLocationId(), header.getParameterId(), header.getUnit(), header.getTimeStep().getStepMillis() );
+				TimeSeriesHeader newHeader = TimeSeriesLightUtils.headerHandler( header.getLocationId(),
+						header.getParameterId(),
+						header.getUnit(),
+						header.getTimeStep(),
+						TimeSeriesLightUtils.TYPE_INSTANTANEOUS );
+				((DefaultTimeSeriesHeader) newHeader).setLocationName( header.getLocationName() );
+
+				TimeSeriesLightUtils.addHeader( handler, newHeader );
 				IntStream.range( 0, size )
 						.forEach( i -> TimeSeriesLightUtils.addValue( handler, timeSeriesArray.getTime( i ),
 								TimeSeriesLightUtils.getValue( timeSeriesArray, i ) ) );
