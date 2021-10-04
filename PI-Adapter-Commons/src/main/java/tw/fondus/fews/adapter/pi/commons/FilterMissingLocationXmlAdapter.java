@@ -64,7 +64,7 @@ public class FilterMissingLocationXmlAdapter extends PiCommandLineExecute {
 					.anyMatch( timeSeriesArray::isMissingValue );
 			if ( !containMissing ){
 				TimeSeriesHeader header = timeSeriesArray.getHeader();
-				TimeSeriesLightUtils.addHeader( handler, header );
+				TimeSeriesLightUtils.addHeader( handler, header.getLocationId(), header.getParameterId(), header.getUnit(), header.getTimeStep().getStepMillis() );
 				IntStream.range( 0, size )
 						.forEach( i -> TimeSeriesLightUtils.addValue( handler, timeSeriesArray.getTime( i ),
 								TimeSeriesLightUtils.getValue( timeSeriesArray, i ) ) );
