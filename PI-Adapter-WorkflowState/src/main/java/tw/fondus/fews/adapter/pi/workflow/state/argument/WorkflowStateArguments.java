@@ -1,6 +1,7 @@
 package tw.fondus.fews.adapter.pi.workflow.state.argument;
 
 import com.beust.jcommander.Parameter;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -20,8 +21,15 @@ import java.util.List;
 @ToString( callSuper = true )
 @EqualsAndHashCode( callSuper = true )
 public class WorkflowStateArguments extends PiIOArguments {
+	@Parameter( names = { "--task-id", "-td" }, required = true, description = "The task run id of workflow." )
+	private String taskRunId;
+
 	@Parameter( names = { "--state" }, required = true, description = "The state of workflow state." )
 	private boolean state;
+
+	@Builder.Default
+	@Parameter( names = { "--write-input" }, description = "Write workflow state at input folder." )
+	private boolean writeInput = true;
 
 	@Parameter( names = { "--properties" },
 				description = "The properties with comma, and format is key:value.",

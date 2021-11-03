@@ -19,7 +19,9 @@ public class WorkflowStateArgumentsTest {
 				"-i",
 				"",
 				"-o",
-				"",
+				"state.json",
+				"--task-id",
+				"test",
 				"--state",
 				"--properties",
 				"key1:value1,key2:value2,key3:value3"
@@ -27,6 +29,7 @@ public class WorkflowStateArgumentsTest {
 
 		JCommanderRunner.execute( args, WorkflowStateArguments.instance(), "test", arguments -> {
 			Assertions.assertTrue( arguments.isState() );
+			Assertions.assertEquals( "test", arguments.getTaskRunId() );
 			Assertions.assertEquals( 3, arguments.getProperties().size() );
 			Assertions.assertEquals( "key2", arguments.getProperties().get( 1 ).getKey() );
 			Assertions.assertEquals( "value2", arguments.getProperties().get( 1 ).getValue() );
