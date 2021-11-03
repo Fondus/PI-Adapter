@@ -20,6 +20,9 @@ import java.util.List;
 @ToString( callSuper = true )
 @EqualsAndHashCode( callSuper = true )
 public class WorkflowStateArguments extends PiIOArguments {
+	@Parameter( names = { "--state" }, required = true, description = "The state of workflow state." )
+	private boolean state;
+
 	@Parameter( names = { "--properties" },
 				description = "The properties with comma, and format is key:value.",
 				listConverter = PropertiesConverter.class )

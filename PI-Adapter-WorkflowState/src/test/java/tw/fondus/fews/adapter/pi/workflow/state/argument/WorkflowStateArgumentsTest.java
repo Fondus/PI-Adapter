@@ -20,11 +20,13 @@ public class WorkflowStateArgumentsTest {
 				"",
 				"-o",
 				"",
+				"--state",
 				"--properties",
 				"key1:value1,key2:value2,key3:value3"
 		};
 
 		JCommanderRunner.execute( args, WorkflowStateArguments.instance(), "test", arguments -> {
+			Assertions.assertTrue( arguments.isState() );
 			Assertions.assertEquals( 3, arguments.getProperties().size() );
 			Assertions.assertEquals( "key2", arguments.getProperties().get( 1 ).getKey() );
 			Assertions.assertEquals( "value2", arguments.getProperties().get( 1 ).getValue() );
