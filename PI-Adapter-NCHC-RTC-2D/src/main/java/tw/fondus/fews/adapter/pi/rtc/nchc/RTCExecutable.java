@@ -123,8 +123,7 @@ public class RTCExecutable extends PiCommandLineExecute {
 					FileTools.copyFile( executableDir, outputPath, modelOutputASC,
 							Strman.append( "Output_ASC0000.", String.format( "%03d", timeStep ) ) );
 				} catch (IOException e) {
-					e.printStackTrace();
-					logger.log( LogLevel.ERROR, "NCHC RTC ExecutableAdapter: Something wrong when copy output file." );
+					logger.log( LogLevel.ERROR, "NCHC RTC ExecutableAdapter: Something wrong when copy output file. {}", e.fillInStackTrace() );
 				} catch (InvalidExitValueException | InterruptedException | TimeoutException e) {
 					logger.log( LogLevel.ERROR, "NCHC RTC ExecutableAdapter: Execute has something wrong." );
 				}

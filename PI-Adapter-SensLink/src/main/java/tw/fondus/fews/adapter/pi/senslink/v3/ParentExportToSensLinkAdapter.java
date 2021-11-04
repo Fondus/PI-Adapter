@@ -46,7 +46,7 @@ public abstract class ParentExportToSensLinkAdapter extends PiCommandLineExecute
 				}
 				if ( token.isSuccessful() ){
 					this.getLogger().log( LogLevel.INFO, "SensLink 3.0 Export Adapter: The SensLink 3.0 system login successfully, try to write records to the SensLink 3.0 system." );
-					ResultMessage message = api.writeFormulaTransferred( token.getAccess(), records );
+					ResultMessage message = api.write( token.getAccess(), records );
 					if ( message.isSuccessful() ) {
 						this.getLogger().log( LogLevel.INFO,"SensLink 3.0 Export Adapter: success to write {} records to the SensLink System.", records.size() );
 					} else {

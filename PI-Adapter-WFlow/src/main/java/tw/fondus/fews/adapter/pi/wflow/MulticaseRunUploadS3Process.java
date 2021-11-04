@@ -1,20 +1,10 @@
 package tw.fondus.fews.adapter.pi.wflow;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.TimeoutException;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import org.locationtech.jts.geom.Coordinate;
-import org.zeroturnaround.exec.InvalidExitValueException;
-
 import io.minio.MinioClient;
 import io.minio.errors.MinioException;
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
+import org.locationtech.jts.geom.Coordinate;
+import org.zeroturnaround.exec.InvalidExitValueException;
 import strman.Strman;
 import tw.fondus.commons.cli.exec.Executions;
 import tw.fondus.commons.cli.util.Prevalidated;
@@ -44,6 +34,15 @@ import tw.fondus.fews.adapter.pi.cli.PiCommandLineExecute;
 import tw.fondus.fews.adapter.pi.log.PiDiagnosticsLogger;
 import tw.fondus.fews.adapter.pi.util.timeseries.TimeSeriesLightUtils;
 import tw.fondus.fews.adapter.pi.wflow.argument.MulticaseArguments;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * The main process of WFlow model multi-case run.
@@ -91,8 +90,12 @@ public class MulticaseRunUploadS3Process extends PiCommandLineExecute {
 		Path rainfallPath = Prevalidated.checkExists( modelInputPath.resolve( processArguments.getInputs().get( 1 ) ),
 				"MulticaseRunUploadS3Process: Can not find rainfall NetCDF file of model input." );
 		PathUtils.copy( rainfallPath, inputPath.resolve( processArguments.getInputs().get( 2 ) ) );
+		Path catchmentRainfallPath = Prevalidated.checkExists(
+				modelInputPath.resolve( processArguments.getInputs().get( 3 ) ),
+				"MulticaseRunUploadS3Process: Can not find catchment rainfall XML file of model input." );
+		PathUtils.copy( catchmentRainfallPath, inputPath );
 
-		Path waterLevelPath = Prevalidated.checkExists( modelInputPath.resolve( processArguments.getInputs().get( 3 ) ),
+		Path waterLevelPath = Prevalidated.checkExists( modelInputPath.resolve( processArguments.getInputs().get( 4 ) ),
 				"MulticaseRunUploadS3Process: Can not find obervation water level file." );
 
 		this.mapper = GsonMapperRuntime.ISO8601;
@@ -123,7 +126,7 @@ public class MulticaseRunUploadS3Process extends PiCommandLineExecute {
 					PathUtils.clean( modelOutputPath );
 					PathUtils.clean( outputPath );
 					Executions.execute( executor -> executor.directory( basePath.toFile() ), "docker-compose", "run",
-							"WFlow" );
+							"--rm", "WFlow" );
 
 					Path modelOutputNC = Prevalidated.checkExists(
 							modelOutputPath.resolve( processArguments.getOutputs().get( 0 ) ),

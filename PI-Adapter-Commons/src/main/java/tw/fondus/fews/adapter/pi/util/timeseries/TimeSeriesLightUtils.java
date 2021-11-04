@@ -3,6 +3,7 @@ package tw.fondus.fews.adapter.pi.util.timeseries;
 import com.google.common.base.Preconditions;
 import nl.wldelft.fews.pi.PiTimeSeriesParser;
 import nl.wldelft.fews.pi.PiTimeSeriesSerializer;
+import nl.wldelft.fews.pi.PiVersion;
 import nl.wldelft.util.FileUtils;
 import nl.wldelft.util.timeseries.DefaultTimeSeriesHeader;
 import nl.wldelft.util.timeseries.IrregularTimeStep;
@@ -437,6 +438,23 @@ public class TimeSeriesLightUtils {
 	@SuppressWarnings( "rawtypes" )
 	public static Path write( SimpleTimeSeriesContentHandler contentHandler, Path outputPath,
 			BigDecimal missingValue ) throws IOException {
+		return write( contentHandler, outputPath, missingValue, PiVersion.getLatestVersion() );
+	}
+
+	/**
+	 * Write series data into PI-XML with output path with missing value.
+	 *
+	 * @param contentHandler content handler
+	 * @param outputPath output path of PI-XML file
+	 * @param missingValue default missing value in PI-XML file
+	 * @param version version of pi document
+	 * @return wrote PI-XML file path
+	 * @throws IOException has IO problem
+	 * @since 3.1.0
+	 */
+	@SuppressWarnings( "rawtypes" )
+	public static Path write( SimpleTimeSeriesContentHandler contentHandler, Path outputPath,
+			BigDecimal missingValue, PiVersion version ) throws IOException {
 		Preconditions.checkNotNull( contentHandler, "TimeSeriesUtils: contentHandler." );
 
 		TimeSeriesArrays timeSeriesArrays = contentHandler.getTimeSeriesArrays();
@@ -444,7 +462,9 @@ public class TimeSeriesLightUtils {
 		content.setOmitMissingValues( true );
 		content.setDefaultMissingValue( missingValue.floatValue() );
 
-		FileUtils.write( outputPath.toFile(), content, new PiTimeSeriesSerializer() );
+		PiTimeSeriesSerializer serializer = new PiTimeSeriesSerializer();
+		serializer.setVersion( version );
+		FileUtils.write( outputPath.toFile(), content, serializer );
 		return outputPath;
 	}
 
