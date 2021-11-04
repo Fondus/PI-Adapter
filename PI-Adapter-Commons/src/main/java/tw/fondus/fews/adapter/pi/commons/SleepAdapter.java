@@ -17,18 +17,19 @@ import java.nio.file.Path;
 public class SleepAdapter extends PiCommandLineExecute {
 	public static void main( String[] args ){
 		SleepArguments arguments = SleepArguments.instance();
-		new PiIOFileMoveAdapter().execute( args, arguments );
+		new SleepAdapter().execute( args, arguments );
 	}
 
 	@Override
 	protected void adapterRun( PiBasicArguments arguments, PiDiagnosticsLogger logger, Path basePath,
 			Path inputPath, Path outputPath ) {
 		SleepArguments modelArguments = this.asArguments( arguments, SleepArguments.class );
-		logger.log( LogLevel.INFO, "SleepAdapter: Sleep thread with {} millisecond.", modelArguments.getSleep() );
+		logger.log( LogLevel.INFO, "SleepAdapter: Start sleep thread with {} millisecond.", modelArguments.getSleep() );
 		try {
 			Thread.sleep( modelArguments.getSleep() );
 		} catch (InterruptedException e) {
 			logger.log( LogLevel.WARN, "SleepAdapter: Interrupted sleep thread by external process." );
 		}
+		logger.log( LogLevel.INFO, "SleepAdapter: End sleep thread with {} millisecond.", modelArguments.getSleep() );
 	}
 }
