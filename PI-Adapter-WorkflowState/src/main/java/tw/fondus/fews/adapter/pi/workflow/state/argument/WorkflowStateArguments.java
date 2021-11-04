@@ -24,8 +24,9 @@ public class WorkflowStateArguments extends PiIOArguments {
 	@Parameter( names = { "--task-id", "-td" }, required = true, description = "The task run id of workflow." )
 	private String taskRunId;
 
-	@Parameter( names = { "--state" }, required = true, description = "The state of workflow state." )
-	private boolean state;
+	@Builder.Default
+	@Parameter( names = { "--state" }, description = "The state of workflow state." )
+	private boolean state = false;
 
 	@Builder.Default
 	@Parameter( names = { "--write-input" }, description = "Write workflow state at input folder." )

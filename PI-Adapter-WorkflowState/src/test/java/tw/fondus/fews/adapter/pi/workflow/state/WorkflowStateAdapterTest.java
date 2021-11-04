@@ -50,7 +50,7 @@ public class WorkflowStateAdapterTest {
 
 		WorkflowState state = GsonMapperRuntime.DEFAULT.toBean( jsonContent, WorkflowState.class );
 		Assertions.assertTrue( state.isState() );
-		Assertions.assertEquals( "test", state.getTaskRunId() );
+		Assertions.assertEquals( "test", state.getTaskId() );
 		Assertions.assertTrue( state.getProperties().containsKey( "key2" ) );
 		Assertions.assertEquals( "value2", state.getProperties().get( "key2" ) );
 	}

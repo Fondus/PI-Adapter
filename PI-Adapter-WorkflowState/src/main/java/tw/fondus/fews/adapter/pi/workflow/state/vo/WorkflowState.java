@@ -24,6 +24,6 @@ public class WorkflowState implements IObjectProperties<String> {
 	private Map<String, Object> properties = CollectionUtils.emptyMapHash();
 	@Builder.Default
 	private boolean state = false;
-	private String taskRunId;
+	private String taskId;
 	private String timeZero;
 }

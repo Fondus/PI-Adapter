@@ -35,7 +35,7 @@ public class WorkflowStateAdapter extends PiCommandLineExecute {
 		String taskId = modelArguments.getTaskRunId();
 		logger.log( LogLevel.INFO, "WorkflowStateAdapter: Start to create workflow with task id: {}, state: {}.", taskId, modelArguments.isState() );
 		WorkflowState.WorkflowStateBuilder builder = WorkflowState.builder()
-				.taskRunId( taskId )
+				.taskId( taskId )
 				.timeZero( JodaTimeUtils.toStringISO8601( modelArguments.getTimeZero() ) )
 				.state( modelArguments.isState() );
 
