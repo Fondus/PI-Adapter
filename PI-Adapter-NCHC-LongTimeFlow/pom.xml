@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>3.1.0</version>
+		<version>3.2.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-nchc-longtimeflow</artifactId>
 	<packaging>jar</packaging>
-	
+
 	<name>The NCHC LongTimeFlow model Published Interface Adapter</name>
 
 	<dependencies>
@@ -24,7 +24,7 @@
 			<artifactId>commons-core</artifactId>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<!-- Copy dependencies to target folder -->

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>3.1.0</version>
+		<version>3.2.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-wflow</artifactId>
@@ -31,7 +31,7 @@
 			<artifactId>commons-rest-pijson</artifactId>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<!-- Copy dependencies to target folder -->

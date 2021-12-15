@@ -4,18 +4,18 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>3.1.0</version>
+		<version>3.2.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-grid-merge</artifactId>
 	<packaging>jar</packaging>
 
 	<name>The ESRI Grid ASCII merged models Published Interface Adapter</name>
-	
+
 	<description>
 		The FEWS Published Interface Adapter of ESRI Grid ASCII merged models is used to data exchange with Delft-FEWS system.
 	</description>
-	
+
 	<dependencies>
 		<!-- PI-Adapter Commons -->
 		<dependency>
@@ -28,7 +28,7 @@
 			<artifactId>commons-core</artifactId>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<!-- Copy dependencies to target folder -->
