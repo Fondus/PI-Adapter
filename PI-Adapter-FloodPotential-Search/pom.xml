@@ -5,12 +5,12 @@
 	<parent>
 		<artifactId>pi-adapter</artifactId>
 		<groupId>tw.fondus.fews.adapter</groupId>
-		<version>3.1.0</version>
+		<version>3.2.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>pi-adapter-flood-potential-search</artifactId>
-	<version>3.1.0</version>
+	<version>3.2.0</version>
 	<packaging>jar</packaging>
 
 	<name>The Search Flood Potential Published Interface Adapter</name>

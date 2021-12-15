@@ -4,7 +4,7 @@
 
 	<groupId>tw.fondus.fews.adapter</groupId>
 	<artifactId>pi-adapter</artifactId>
-	<version>3.1.0</version>
+	<version>3.2.0</version>
 	<packaging>pom</packaging>
 
 	<name>The FEWS Published Interface Adapters</name>
@@ -26,24 +26,24 @@
 			<email>vipcube@gmail.com</email>
 		</developer>
 	</developers>
-	
+
 	<scm>
 		<url>https://github.com/Fondus/PI-Adapter</url>
 		<connection>scm:git:https://github.com/Fondus/PI-Adapter.git</connection>
 		<developerConnection>scm:git:https://github.com/Fondus/PI-Adapter.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
-	
+
 	<properties>
-		<adapter.version>3.1.0</adapter.version>
+		<adapter.version>3.2.0</adapter.version>
 		<adapter.s3.version>3.3.1</adapter.s3.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<junit.version>4.13.1</junit.version>
-		<junit5.version>5.7.1</junit5.version>
-		<fondus.sdk.version>2.4.4</fondus.sdk.version>
-		<fondus.sdk.netcdf.version>1.2.3</fondus.sdk.netcdf.version>
+		<junit.version>4.13.2</junit.version>
+		<junit5.version>5.8.2</junit5.version>
+		<fondus.sdk.version>2.4.7</fondus.sdk.version>
+		<fondus.sdk.netcdf.version>1.2.4</fondus.sdk.netcdf.version>
 		<opencsv.version>5.4</opencsv.version>
 	</properties>
 
@@ -117,16 +117,10 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.20</version>
+			<version>1.18.22</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- JUnit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.junit.vintage</groupId>
 			<artifactId>junit-vintage-engine</artifactId>

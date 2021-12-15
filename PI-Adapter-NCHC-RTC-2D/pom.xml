@@ -4,22 +4,22 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>3.1.0</version>
+		<version>3.2.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-nchc-rtc-2d</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0.1</version>
+	<version>3.2.0</version>
 
 	<name>The NCHC RTC 2D Published Interface Adapter</name>
-	
+
 	<developers>
 		<developer>
 			<name>Bo-Chao Liang</name>
 			<organization>FondUS Technology Co., Ltd., TW</organization>
 		</developer>
 	</developers>
-	
+
 	<dependencies>
 		<!-- PI-Adapter Commons -->
 		<dependency>
@@ -32,7 +32,7 @@
 			<artifactId>commons-core</artifactId>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<!-- Copy dependencies to target folder -->

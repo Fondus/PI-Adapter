@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>3.1.0</version>
+		<version>3.2.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-api-richi-disaster-loss</artifactId>
@@ -15,14 +15,14 @@
 	<description>
 		The FEWS Published Interface Adapter of RiChi Disaster Loss API is used to data exchange with Delft-FEWS system.
 	</description>
-	
+
 	<developers>
 		<developer>
 			<name>Bo-Chao Liang</name>
 			<organization>FondUS Technology Co., Ltd., TW</organization>
 		</developer>
 	</developers>
-	
+
 	<dependencies>
 		<!-- PI-Adapter Commons -->
 		<dependency>

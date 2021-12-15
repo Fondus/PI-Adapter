@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>tw.fondus.fews.adapter</groupId>
 		<artifactId>pi-adapter</artifactId>
-		<version>3.1.0</version>
+		<version>3.2.0</version>
 	</parent>
 
 	<artifactId>pi-adapter-ntou-kwgiuh</artifactId>
 	<packaging>jar</packaging>
 
 	<name>PI-Adapter-NTOU-KWGIUH</name>
-	
+
 	<developers>
 		<developer>
 			<name>Bo-Chao Liang</name>
@@ -32,7 +32,7 @@
 			<artifactId>commons-core</artifactId>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<!-- Copy dependencies to target folder -->
