@@ -18,7 +18,7 @@
 
 	<properties>
 		<slf4j.version>1.7.32</slf4j.version>
-		<log4j.version>2.16.0</log4j.version>
+		<log4j.version>2.17.0</log4j.version>
 		<guava.version>31.0.1-jre</guava.version>
 		<jodatime.version>2.10.13</jodatime.version>
 		<fews.version>2018.02-hotfix3</fews.version>
