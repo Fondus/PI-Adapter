@@ -45,6 +45,8 @@
 		<fondus.sdk.version>2.5.0-SNAPSHOT</fondus.sdk.version>
 		<fondus.sdk.netcdf.version>1.2.7</fondus.sdk.netcdf.version>
 		<opencsv.version>5.4</opencsv.version>
+		<jxls.version>2.10.0</jxls.version>
+		<jfreechart.version>1.5.3</jfreechart.version>
 	</properties>
 
 	<dependencyManagement>
@@ -108,6 +110,18 @@
 				<groupId>tw.fondus.commons</groupId>
 				<artifactId>commons-rest-pijson</artifactId>
 				<version>${fondus.sdk.version}</version>
+			</dependency>
+			<!-- JXLS -->
+			<dependency>
+				<groupId>org.jxls</groupId>
+				<artifactId>jxls-poi</artifactId>
+				<version>${jxls.version}</version>
+			</dependency>
+			<!-- JFreeChart -->
+			<dependency>
+				<groupId>org.jfree</groupId>
+				<artifactId>jfreechart</artifactId>
+				<version>${jfreechart.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -255,5 +269,6 @@
 		<module>PI-Adapter-WFlow</module>
 		<module>PI-Adapter-FloodPotential-Search</module>
 		<module>PI-Adapter-WorkflowState</module>
+		<module>Pi-Adapter-Reporter-07RMO</module>
 	</modules>
 </project>
