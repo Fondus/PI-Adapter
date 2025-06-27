@@ -130,11 +130,8 @@ public class PiXmlGenerateProcess extends PiCommandLineExecute {
 					int size = timeSeriesArray.size();
 					if (timeStep.getMinimumStepMillis() == THIRTY_MINUTES_MILLIS && isForce1HFormat) {
 						TimeSeriesUtils.addHeader(handler, crossSectionId, header.getParameterId(), header.getUnit());
-						for (int i = 0; i < size; i++) {
-							Minute minute = new Minute(new Date(timeSeriesArray.getTime(i)));
-							if (minute.getMinute() == 30) {
-								TimeSeriesUtils.addValue(handler, timeSeriesArray.getTime(i), timeSeriesArray.getValue(i));
-							}
+						for (int i = 0; i < size; i += 2) {
+							TimeSeriesUtils.addValue(handler, timeSeriesArray.getTime(i), timeSeriesArray.getValue(i));
 						}
 					} else {
 						TimeSeriesUtils.addHeader(handler, crossSectionId, header.getParameterId(), header.getUnit(), header.getTimeStep());
