@@ -13,6 +13,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.joda.time.DateTime;
+import org.joda.time.Minutes;
 import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 
@@ -51,6 +52,11 @@ import tw.fondus.fews.adapter.pi.report.rmo07.vo.report.WaterlevelReport;
 public class ExcelReportProcess extends PiCommandLineExecute {
 	private final static String REPORT_HEADER_TIME_FORMAT = "MM/dd HH";
 	private Map<String, WaterlevelMetaInfo> metaInfos;
+	private int index02End = 1;
+	private int index06End = 5;
+	private int index12End = 11;
+	private int index24End = 23;
+	private int index07To24Start = 6;
 
 	public static void main( String[] args ) {
 		ProcessArguments arguments = ProcessArguments.instance();
@@ -77,9 +83,19 @@ public class ExcelReportProcess extends PiCommandLineExecute {
 					processArguments.getPrefix(), Strings.UNDERLINE,
 					JodaTimeUtils.toString( timeZero, TimeFormats.YMDH_UNDIVIDED, timeZero.getZone() ),
 					Strings.UNDERLINE, processArguments.getSuffix(), FileType.EXCEL_XLSX.getExtension() );
-			this.generate( logger, outputPath, zonedCollection, fileName, start, end, templateReport, 20,
-					processArguments.getSpecialCases() );
-		} );
+
+			// Check time step is 30min or not
+			int timeStepMinutes = Minutes.minutesBetween(collection.get(0).get(0).getTime(), collection.get(0).get(1).getTime()).getMinutes();
+			if (timeStepMinutes == 30) {
+				index02End = 2;
+				index06End = 11;
+				index12End = 23;
+				index24End = 47;
+				index07To24Start = 12;
+			}
+			this.generate(logger, outputPath, zonedCollection, fileName, start, end, templateReport, processArguments.getTimeZeroIndex(),
+					processArguments.getSpecialCases());
+		});
 	}
 
 	private Path generate( PiDiagnosticsLogger logger, Path base, PiTimeSeriesCollection collection, String fileName,
@@ -128,15 +144,15 @@ public class ExcelReportProcess extends PiCommandLineExecute {
 			logger.log( LogLevel.INFO, "ExcelReportService: Prepare to create report entities with records." );
 			List<WaterlevelReport> reports = CollectionUtils.emptyListArray();
 			reports.add( createReportEntities( logger, rangeMax01To02, WaterlevelReport.NAMES[0], array.get( 0 ).getTime(),
-					array.get( 1 ).getTime() ) );
+					array.get(index02End).getTime() ) );
 			reports.add( createReportEntities( logger, rangeMax01To06, WaterlevelReport.NAMES[1], array.get( 0 ).getTime(),
-					array.get( 5 ).getTime() ) );
+					array.get(index06End).getTime() ) );
 			reports.add( createReportEntities( logger, rangeMax01To12, WaterlevelReport.NAMES[2], array.get( 0 ).getTime(),
-					array.get( 11 ).getTime() ) );
-			reports.add( createReportEntities( logger, rangeMax07To24, WaterlevelReport.NAMES[3], array.get( 6 ).getTime(),
-					array.get( 23 ).getTime() ) );
+					array.get(index12End).getTime() ) );
+			reports.add( createReportEntities( logger, rangeMax07To24, WaterlevelReport.NAMES[3], array.get(index07To24Start).getTime(),
+					array.get(index24End).getTime() ) );
 			reports.add( createReportEntities( logger, rangeMax01To24, WaterlevelReport.NAMES[4], array.get( 0 ).getTime(),
-					array.get( 23 ).getTime() ) );
+					array.get(index24End).getTime() ) );
 
 			// Generate Excel Report
 			generateReport( logger, outputPath, reports, templatePath );
@@ -363,21 +379,21 @@ public class ExcelReportProcess extends PiCommandLineExecute {
 						.build();
 			} else {
 				logger.log( LogLevel.INFO, "ExcelReportService: Statistics with normal cases: {}.", locationId );
-				BigDecimal rangeMax01To02 = NumberUtils.max( PiSeriesUtils.getValuesClosed( array, 0, 1 ) );
-				BigDecimal rangeMax01To06 = NumberUtils.max( PiSeriesUtils.getValuesClosed( array, 0, 5 ) );
-				BigDecimal rangeMax01To12 = NumberUtils.max( PiSeriesUtils.getValuesClosed( array, 0, 11 ) );
-				BigDecimal rangeMax01To24 = NumberUtils.max( PiSeriesUtils.getValuesClosed( array, 0, 23 ) );
-				BigDecimal rangeMax07To24 = NumberUtils.max( PiSeriesUtils.getValuesClosed( array, 6, 23 ) );
+				BigDecimal rangeMax01To02 = NumberUtils.max( PiSeriesUtils.getValuesClosed( array, 0, index02End) );
+				BigDecimal rangeMax01To06 = NumberUtils.max( PiSeriesUtils.getValuesClosed( array, 0, index06End) );
+				BigDecimal rangeMax01To12 = NumberUtils.max( PiSeriesUtils.getValuesClosed( array, 0, index12End) );
+				BigDecimal rangeMax01To24 = NumberUtils.max( PiSeriesUtils.getValuesClosed( array, 0, index24End) );
+				BigDecimal rangeMax07To24 = NumberUtils.max( PiSeriesUtils.getValuesClosed( array, index07To24Start, index24End) );
 
-				int rangeMaxIndex01To02 = PiSeriesUtils.findValueIndexAtRangeClosed( array, 0, 1, rangeMax01To02 )
+				int rangeMaxIndex01To02 = PiSeriesUtils.findValueIndexAtRangeClosed( array, 0, index02End, rangeMax01To02 )
 						.orElse( -1 );
-				int rangeMaxIndex01To06 = PiSeriesUtils.findValueIndexAtRangeClosed( array, 0, 5, rangeMax01To06 )
+				int rangeMaxIndex01To06 = PiSeriesUtils.findValueIndexAtRangeClosed( array, 0, index06End, rangeMax01To06 )
 						.orElse( -1 );
-				int rangeMaxIndex01To12 = PiSeriesUtils.findValueIndexAtRangeClosed( array, 0, 11, rangeMax01To12 )
+				int rangeMaxIndex01To12 = PiSeriesUtils.findValueIndexAtRangeClosed( array, 0, index12End, rangeMax01To12 )
 						.orElse( -1 );
-				int rangeMaxIndex01To24 = PiSeriesUtils.findValueIndexAtRangeClosed( array, 0, 23, rangeMax01To24 )
+				int rangeMaxIndex01To24 = PiSeriesUtils.findValueIndexAtRangeClosed( array, 0, index24End, rangeMax01To24 )
 						.orElse( -1 );
-				int rangeMaxIndex07To24 = PiSeriesUtils.findValueIndexAtRangeClosed( array, 6, 23, rangeMax07To24 )
+				int rangeMaxIndex07To24 = PiSeriesUtils.findValueIndexAtRangeClosed( array, index07To24Start, index24End, rangeMax07To24 )
 						.orElse( -1 );
 
 				return InstantStatistics.builder()

@@ -2,18 +2,22 @@ package tw.fondus.fews.adapter.pi.report.rmo07;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import nl.wldelft.util.timeseries.TimeStep;
+import org.jfree.data.time.Minute;
 import org.joda.time.DateTime;
 
 import nl.wldelft.fews.pi.PiVersion;
 import nl.wldelft.util.timeseries.SimpleTimeSeriesContentHandler;
 import nl.wldelft.util.timeseries.TimeSeriesArrays;
 import nl.wldelft.util.timeseries.TimeSeriesHeader;
+import org.joda.time.DateTimeZone;
 import strman.Strman;
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
 import tw.fondus.commons.fews.pi.util.timeseries.TimeSeriesUtils;
@@ -25,6 +29,7 @@ import tw.fondus.commons.util.file.PathUtils;
 import tw.fondus.commons.util.file.io.PathReader;
 import tw.fondus.commons.util.file.io.PathWriter;
 import tw.fondus.commons.util.math.Numbers;
+import tw.fondus.commons.util.string.StringUtils;
 import tw.fondus.commons.util.string.Strings;
 import tw.fondus.commons.util.time.JodaTimeUtils;
 import tw.fondus.commons.util.time.TimeFormats;
@@ -44,6 +49,7 @@ import tw.fondus.fews.adapter.pi.report.rmo07.vo.meta.WaterlevelMetaInfo;
  */
 public class PiXmlGenerateProcess extends PiCommandLineExecute {
 	private Map<String, WaterlevelMetaInfo> metaInfos;
+	final long THIRTY_MINUTES_MILLIS = 30 * 60 * 1000L;
 
 	public static void main( String[] args ) {
 		ProcessArguments arguments = ProcessArguments.instance();
@@ -70,19 +76,19 @@ public class PiXmlGenerateProcess extends PiCommandLineExecute {
 					processArguments.getPrefix(), Strings.UNDERLINE,
 					JodaTimeUtils.toString( timeZero, TimeFormats.YMDH_UNDIVIDED, timeZero.getZone() ),
 					Strings.UNDERLINE, processArguments.getSuffix(), FileType.XML.getExtension() );
-			this.generate( logger, outputPath, zonedCollection, fileName, start, end );
+			this.generate( logger, outputPath, zonedCollection, fileName, start, end, processArguments.isForce1HFormat() );
 		} );
 	}
 
 	@SuppressWarnings( "rawtypes" )
 	private Path generate( PiDiagnosticsLogger logger, Path base, PiTimeSeriesCollection collection, String fileName,
-			int start, int end) {
+			int start, int end, boolean isForce1HFormat) {
 		Path outputPath = base.resolve( fileName );
 		if ( collection.size() > 0 && collection.get( 0 ).size() >= end && start >= 0 ){
 			PiTimeSeriesCollection subset = collection.subset( start, end );
 
 			// Write the PI-XML
-			TimeSeriesArrays timeSeriesArrays = this.renameCrossSectionIds( logger, PiSeriesMapper.from( subset ) );
+			TimeSeriesArrays timeSeriesArrays = this.renameCrossSectionIds( logger, PiSeriesMapper.from( subset ), isForce1HFormat );
 			try {
 				TimeSeriesUtils.write( timeSeriesArrays, outputPath, Numbers.MISSING, PiVersion.VERSION_1_3, JodaTimeUtils.UTC8 );
 			} catch (IOException e){
@@ -107,9 +113,11 @@ public class PiXmlGenerateProcess extends PiCommandLineExecute {
 	 * @since 1.0.3
 	 */
 	@SuppressWarnings( "rawtypes" )
-	private TimeSeriesArrays renameCrossSectionIds( PiDiagnosticsLogger logger, TimeSeriesArrays timeSeriesArrays ){
+	private TimeSeriesArrays renameCrossSectionIds( PiDiagnosticsLogger logger, TimeSeriesArrays timeSeriesArrays, boolean isForce1HFormat ){
 		logger.log( LogLevel.INFO, "PiXmlGenerateService: Rename timeseries location id into cross-section id." );
+		TimeStep timeStep = timeSeriesArrays.get(0).getTimeStep();
 		SimpleTimeSeriesContentHandler handler = TimeSeriesUtils.seriesHandler();
+		handler.setOverrulingTimeStep(timeStep);
 		TimeSeriesUtils.toList( timeSeriesArrays )
 				.forEach( timeSeriesArray -> {
 					TimeSeriesHeader header = timeSeriesArray.getHeader();
@@ -118,11 +126,21 @@ public class PiXmlGenerateProcess extends PiCommandLineExecute {
 							.map( WaterlevelMetaInfo::getCrossSectionId )
 							.filter( id -> StringUtils.isNotBlank( id ) )
 							.orElse( locationId );
-					TimeSeriesUtils.addHeader( handler, crossSectionId, header.getParameterId(), header.getUnit() );
 
 					int size = timeSeriesArray.size();
-					IntStream.range( 0, size )
-							.forEach( i -> TimeSeriesUtils.addValue( handler, timeSeriesArray.getTime( i ), timeSeriesArray.getValue( i ) ) );
+					if (timeStep.getMinimumStepMillis() == THIRTY_MINUTES_MILLIS && isForce1HFormat) {
+						TimeSeriesUtils.addHeader(handler, crossSectionId, header.getParameterId(), header.getUnit());
+						for (int i = 0; i < size; i++) {
+							Minute minute = new Minute(new Date(timeSeriesArray.getTime(i)));
+							if (minute.getMinute() == 30) {
+								TimeSeriesUtils.addValue(handler, timeSeriesArray.getTime(i), timeSeriesArray.getValue(i));
+							}
+						}
+					} else {
+						TimeSeriesUtils.addHeader(handler, crossSectionId, header.getParameterId(), header.getUnit(), header.getTimeStep());
+						IntStream.range(0, size)
+								.forEach(i -> TimeSeriesUtils.addValue(handler, timeSeriesArray.getTime(i), timeSeriesArray.getValue(i)));
+					}
 		} );
 		return handler.getTimeSeriesArrays();
 	}

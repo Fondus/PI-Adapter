@@ -43,6 +43,14 @@ public class ProcessArguments extends PiBasicArguments {
 			splitter = CommaSplitter.class )
 	private List<String> specialCases = CollectionUtils.emptyListArray();
 
+	@Builder.Default
+	@Parameter( names = { "--timeZeroIndex", "-tzi" }, description = "Index of time zero of input data." )
+	private int timeZeroIndex = 20;
+
+	@Builder.Default
+	@Parameter(names = { "--force1HFormat", "-f1h" }, description = "Whether to force formatting data to 1-hour interval, even if original data is 30-minute interval.")
+	private boolean force1HFormat = false;
+
 	/**
 	 * Create the argument instance.
 	 *

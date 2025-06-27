@@ -28,12 +28,14 @@ import org.jfree.chart.ui.RectangleAnchor;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.time.Hour;
+import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.locationtech.jts.geom.Coordinate;
 
 import tw.fondus.commons.fews.pi.config.xml.log.LogLevel;
@@ -84,7 +86,7 @@ public class CrossSectionChartProcess extends PiCommandLineExecute {
 			PiTimeSeriesCollection collection = GsonMapperRuntime.ISO8601.toBean( PathReader.readString( path ),
 					PiTimeSeriesCollection.class );
 			PiTimeSeriesCollection zonedCollection = collection.withZone( JodaTimeUtils.UTC8 );
-			this.generate( logger, outputPath, zonedCollection, start, end, templateCrossSection, 20,
+			this.generate( logger, outputPath, zonedCollection, start, end, templateCrossSection, processArguments.getTimeZeroIndex(),
 					processArguments.getWidth(), processArguments.getHeight() );
 		} );
 	}
@@ -269,18 +271,15 @@ public class CrossSectionChartProcess extends PiCommandLineExecute {
 		TimeSeries observation = new TimeSeries( "觀測水位" );
 		TimeSeries forecasting = new TimeSeries( "預測水位" );
 
-		DateTime startTime = array.get( 0 ).getTime();
-		Hour hour = new Hour( startTime.toDate() );
-
 		for ( int i = 0; i < array.size(); i++ ) {
+			Minute minute = new Minute(array.get( i ).getTime().withZone(DateTimeZone.forID("Asia/Taipei")).toDate());
 			if ( i <= timeZero ){
-				observation.add( hour, PiSeriesUtils.getValue( array, i, null ) );
+				observation.add( minute, PiSeriesUtils.getValue( array, i, null ) );
 			}
 
 			if ( i >= timeZero ){
-				forecasting.add( hour, PiSeriesUtils.getValue( array, i, null ) );
+				forecasting.add( minute, PiSeriesUtils.getValue( array, i, null ) );
 			}
-			hour = (Hour) hour.next();
 		}
 
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
