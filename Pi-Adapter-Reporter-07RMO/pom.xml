@@ -9,6 +9,7 @@
 
 	<artifactId>Pi-Adapter-reporter-07rmo</artifactId>
 	<name>Pi-Adapter-Reporter-07RMO</name>
+	<version>3.2.1</version>
 
 	<dependencies>
 		<!-- PI-Adapter Commons -->
